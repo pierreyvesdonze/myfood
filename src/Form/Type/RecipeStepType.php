@@ -19,14 +19,6 @@ class RecipeStepType extends AbstractType
                 "label" => "Description de l'étape"
             ]
         );
-
-        $builder->add(
-            'photo',
-            TextType::class,
-            [
-                "label" => "Ajouter une photo"
-            ]
-        );
     }
 
     public function configureOptions(OptionsResolver $resolver)

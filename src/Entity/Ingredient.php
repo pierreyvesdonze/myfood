@@ -33,7 +33,7 @@ class Ingredient
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $quantity;
+    private $amount;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
@@ -75,14 +75,14 @@ class Ingredient
         return $this;
     }
 
-    public function getQuantity(): ?int
+    public function getAmount(): ?int
     {
-        return $this->quantity;
+        return $this->amount;
     }
 
-    public function setQuantity(?int $quantity): self
+    public function setAmount(?int $amount): self
     {
-        $this->quantity = $quantity;
+        $this->amount = $amount;
 
         return $this;
     }

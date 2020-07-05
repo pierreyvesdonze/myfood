@@ -6,6 +6,7 @@ use App\Entity\Ingredient;
 use App\Entity\Recipe;
 use App\Entity\RecipeStep;
 use App\Form\Type\RecipeType;
+use App\Repository\RecipeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,11 +27,24 @@ class RecipeController extends AbstractController
     }
 
     /**
-     * @Route("/list/{id}", name="recipe_list")
+     * @Route("/list", name="recipe_list")
      */
-    public function recipeList(Recipe $recipe)
+    public function recipeList(RecipeRepository $recipeRepository)
     {
-        return $this->render('recipies/view.html.twig', [
+
+        $recipies = $recipeRepository->findAll();
+
+        return $this->render('recipe/list.html.twig', [
+            'recipies' => $recipies
+        ]);
+    }
+
+    /**
+     * @Route("/view/{id}", name="recipe_view", methods={"GET"})
+     */
+    public function recipeView(Recipe $recipe): Response
+    {
+        return $this->render('recipe/view.html.twig', [
             'recipe' => $recipe
         ]);
     }
@@ -64,8 +78,11 @@ class RecipeController extends AbstractController
 
             $entityManager->flush();
 
-            $this->addFlash("success", "Merci d'avoir ajouté une nouvelle recette ! ");
-            return $this->redirectToRoute('homepage');
+            $this->addFlash("success", "Ta nouvelle recette " . $recipe->getName() . "a bien été ajoutée !");
+            
+            return $this->redirectToRoute('recipe_view', [
+                'id'=>$recipe->getId()
+                ]);
         }
 
         return $this->render('recipe/create.html.twig', [

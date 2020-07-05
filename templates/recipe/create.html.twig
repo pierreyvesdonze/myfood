@@ -19,8 +19,7 @@
   data-prototype="{{ form_widget(form.recipeSteps.vars.prototype)|e('html_attr') }}">
   {# iterate over each existing step and render its only field: name #} 
   {% for step in form.recipeSteps %}
-    <li>{{ form_row(step.text) }}</li>
-    <li>{{ form_row(step.photo) }}</li>
+    <li class="li-step">{{ form_row(step.text) }}</li>
   {% endfor %}
 </ul>
 
@@ -29,15 +28,24 @@
   data-prototype="{{ form_widget(form.ingredients.vars.prototype)|e('html_attr') }}">
   {# iterate over each existing step and render its only field: name #} 
   {% for ingredient in form.ingredients %}
-    <li>{{ form_row(ingredient.name) }}</li>
-    <li>{{ form_row(ingredient.quantity) }}</li>
+    <li class="li-ingredient">{{ form_row(ingredient.name) }}</li>
+    <li>{{ form_row(ingredient.amount) }}</li>
     <li>{{ form_row(ingredient.unit) }}</li>
   {% endfor %}
 </ul>
 
+{# How Many Guests #}
+<div class="recipe-guest-range">
+    {{ form_row(form.person) }}
+</div>
+
+{# Times #}
+{{ form_row(form.timeCook) }}
+{{ form_row(form.timePrepa) }}
 
 <div class="col">
   {{ form_widget(form.save) }}
   {{ form_end(form) }}
 </div>
 {% endblock %}
+

@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=RecipeRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\RecipeRepository")
  */
 class Recipe
 {
@@ -49,6 +49,21 @@ class Recipe
      * @ORM\OneToMany(targetEntity=RecipeStep::class, mappedBy="recipe", cascade={"persist"})
      */
     private $recipeSteps;
+
+    /**
+     * @ORM\Column(type="time", nullable=true)
+     */
+    private $timeCook;
+
+    /**
+     * @ORM\Column(type="time", nullable=true)
+     */
+    private $timePrepa;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $person;
 
     public function __construct()
     {
@@ -166,6 +181,42 @@ class Recipe
                 $recipeStep->setRecipe(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTimeCook(): ?\DateTimeInterface
+    {
+        return $this->timeCook;
+    }
+
+    public function setTimeCook(?\DateTimeInterface $timeCook): self
+    {
+        $this->timeCook = $timeCook;
+
+        return $this;
+    }
+
+    public function getTimePrepa(): ?\DateTimeInterface
+    {
+        return $this->timePrepa;
+    }
+
+    public function setTimePrepa(?\DateTimeInterface $timePrepa): self
+    {
+        $this->timePrepa = $timePrepa;
+
+        return $this;
+    }
+
+    public function getPerson(): ?int
+    {
+        return $this->person;
+    }
+
+    public function setPerson(int $person): self
+    {
+        $this->person = $person;
 
         return $this;
     }

@@ -25,10 +25,12 @@ class User implements UserInterface
      */
     private $email;
 
-    /**
-     * @ORM\Column(type="json")
+     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Role")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $roles = [];
+    private $role;
+
 
     /**
      * @var string The hashed password
@@ -41,7 +43,7 @@ class User implements UserInterface
      */
     private $username;
 
-        /**
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\ShoppingList", mappedBy="user")
      */
     private $shoppingLists;
@@ -76,20 +78,26 @@ class User implements UserInterface
 
 
     /**
-     * @see UserInterface
+     * Get the value of roles
      */
-    public function getRoles(): array
+    public function getRolesCollection()
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
+        return $this->roles;
     }
 
-    public function setRoles(array $roles): self
+    public function getRoles()
     {
-        $this->roles = $roles;
+        return array($this->getRole()->getRoleString());
+    }
+
+    public function getRole(): ?Role
+    {
+        return $this->role;
+    }
+
+    public function setRole(?Role $role): self
+    {
+        $this->role = $role;
 
         return $this;
     }
@@ -135,7 +143,7 @@ class User implements UserInterface
     {
         return (string) $this->email;
     }
-    
+
     public function setUsername(string $username): self
     {
         $this->username = $username;
@@ -143,7 +151,7 @@ class User implements UserInterface
         return $this;
     }
 
-      /**
+    /**
      * @return Collection|ShoppingList[]
      */
     public function getShoppingLists(): Collection

@@ -22,10 +22,10 @@ class IngredientType extends AbstractType
         );
 
         $builder->add(
-            'quantity',
+            'amount',
             IntegerType::class,
             [
-                "label" => "Quantité d'ingrédient"
+                "label" => "Quantité d'ingrédient(s)"
             ]
         );
 

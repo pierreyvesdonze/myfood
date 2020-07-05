@@ -1,0 +1,72 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+{# Title #}
+{% block title %}
+<h1>
+    {{ recipe.name }}
+</h1>
+{% endblock %}
+
+{# Picture #}
+{% if recipe.photo %}
+<div class="photo-recipe-view">
+    {{ recipe.photo }}
+</div>
+{% endif %}
+
+{# Summary #}
+<div class="recipe-summary">
+    <table>
+        <thead>
+            <tr>
+                <th>Portions</th>
+                <th>Temps de cuisson</th>
+                <th>Temps de préparation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ recipe.person }} personne(s)</td>
+                <td>
+                    {% if recipe.timeCook %}
+                    {{ recipe.timeCook|date('h') }} h
+                    {{ recipe.timeCook|date('i') }} min
+                    {% else %}
+                    -
+                    {% endif %}
+                </td>
+                <td>
+                    {% if recipe.timePrepa %}
+                        {{ recipe.timePrepa|date('h') }} h
+                        {{ recipe.timePrepa|date('i') }} min
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+
+</div>
+
+{# Description #}
+<div class="recipe-view-description">
+    {{ recipe.description }}
+</div>
+
+{# Steps #}
+<div class="recipe-view-steps">
+    <ol>
+        {% for step in recipe.recipesteps %}
+        <li>
+            {{ step.text }}
+        </li>
+        {% endfor %}
+    </ol>
+</div>
+
+
+{% endblock %}

@@ -34,7 +34,7 @@ class ShoppingList
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="shoppinglists")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="shoppingLists")
      */
     private $user;
 

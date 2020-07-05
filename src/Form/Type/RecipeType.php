@@ -5,9 +5,12 @@ namespace App\Form\Type;
 use App\Entity\Recipe;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\RangeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RecipeType extends AbstractType
@@ -37,6 +40,26 @@ class RecipeType extends AbstractType
             'allow_delete'  => true,
         ]);
 
+        $builder->add('person', IntegerType::class, [
+            'label' => 'Nb de personnes',
+            'attr' => [
+                'min' => 1,
+                'max' => 12
+            ]
+        ]);
+
+        $builder->add('timePrepa', TimeType::class, [
+            'label'  => 'Temps de préparation',
+            'input'  => 'datetime',
+            'widget' => 'choice',
+        ]);
+
+        $builder->add('timeCook', TimeType::class, [
+            'label'  => 'Temps de cuisson',
+            'input'  => 'datetime',
+            'widget' => 'choice',
+        ]);
+        
         $builder->add(
             'description',
             TextareaType::class,
