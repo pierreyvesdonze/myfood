@@ -52,12 +52,14 @@ class RecipeType extends AbstractType
             'label'  => 'Temps de préparation',
             'input'  => 'datetime',
             'widget' => 'choice',
+            'html5'   => 'true'
         ]);
 
         $builder->add('timeCook', TimeType::class, [
             'label'  => 'Temps de cuisson',
             'input'  => 'datetime',
             'widget' => 'choice',
+            'html5'   => 'true'
         ]);
         
         $builder->add(

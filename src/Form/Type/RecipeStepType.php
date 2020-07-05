@@ -4,7 +4,7 @@ namespace App\Form\Type;
 
 use App\Entity\RecipeStep;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RecipeStepType extends AbstractType
@@ -14,7 +14,7 @@ class RecipeStepType extends AbstractType
 
         $builder->add(
             'text',
-            TextType::class,
+            TextareaType::class,
             [
                 "label" => "Description de l'étape"
             ]

@@ -44,8 +44,19 @@ class RecipeController extends AbstractController
      */
     public function recipeView(Recipe $recipe): Response
     {
+        $timePrepa      = $recipe->getTimePrepa();
+        $hoursPrepa     = $timePrepa->format('H');
+        $minutesPrepa   = $timePrepa->format('i');
+        $timeCook       = $recipe->getTimeCook();
+        $hoursCook      = $timeCook->format('H');
+        $minutesCook    = $timeCook->format('i');
+
         return $this->render('recipe/view.html.twig', [
-            'recipe' => $recipe
+            'recipe'        => $recipe,
+            'hoursPrepa'    => $hoursPrepa,
+            'minutesPrepa'  => $minutesPrepa,
+            'hoursCook'     => $hoursCook,
+            'minutesCook'   => $minutesCook,
         ]);
     }
 
@@ -79,10 +90,10 @@ class RecipeController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash("success", "Ta nouvelle recette " . $recipe->getName() . "a bien été ajoutée !");
-            
+
             return $this->redirectToRoute('recipe_view', [
-                'id'=>$recipe->getId()
-                ]);
+                'id' => $recipe->getId()
+            ]);
         }
 
         return $this->render('recipe/create.html.twig', [
@@ -91,19 +102,21 @@ class RecipeController extends AbstractController
         ]);
     }
 
-     /**
+    /**
      * @Route("/{id}/update", name="recipe_update", methods={"GET","POST"})
-     * @IsGranted("ROLE_USER")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function recipeUpdate(Request $request, Recipe $recipe)
     {
-        $this->denyAccessUnlessGranted('edit', $recipe);
+        //dd($recipe);
+        //$this->denyAccessUnlessGranted('edit', $recipe);
 
         $manager = $this->getDoctrine()->getManager();
 
-        if (null === $recipe ){
-            throw $this->createNotFoundException('No task found for id '.$recipe->getId);
+        if (null === $recipe) {
+            throw $this->createNotFoundException('No task found for id ' . $recipe->getId);
         }
+
 
         $originalIngredients = new ArrayCollection();
         $originalSteps = new ArrayCollection();
@@ -113,43 +126,44 @@ class RecipeController extends AbstractController
             $originalSteps->add($step);
         }
 
-        foreach ($recipe->getIngredients() as $ingredient) {
-            $originalIngredients->add($ingredient);
+        if (!null === $recipe->getIngredients()) {
+            foreach ($recipe->getIngredients() as $ingredient) {
+                $originalIngredients->add($ingredient);
+            }
         }
-    
-        $form = $this->createForm(ShoppingListType::class, $recipe);
+
+        $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             foreach ($originalSteps as $step) {
                 if (false === $recipe->getRecipeSteps()->contains($step)) {
-               
                     $step->setRecipe(null);
                     $manager->persist($step);
-
                 }
             }
 
             foreach ($originalIngredients as $ingredient) {
                 if (false === $recipe->getIngredients()->contains($ingredient)) {
-               
+
                     $ingredient->setRecipe(null);
                     $manager->persist($ingredient);
-                    //$manager->remove($ingredient);
                 }
             }
-    
+
             $manager->persist($step);
-            $manager->persist($ingredient);
             $manager->flush();
 
-            $this->addFlash("success", "Ta recette a bien été mise à jour");
-            return $this->redirectToRoute('hompage');
+            $this->addFlash("success", "La recette a bien été mise à jour !");
+
+            return $this->redirectToRoute('recipe_view', [
+                'id' => $recipe->getId()
+            ]);
         }
 
         return $this->render(
-            "recipies/update.html.twig",
+            "recipe/_edit.html.twig",
             [
                 "recipe" => $recipe,
                 "form"   => $form->createView()

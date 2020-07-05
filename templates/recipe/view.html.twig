@@ -5,9 +5,14 @@
 {# Title #}
 {% block title %}
 <h1>
-    {{ recipe.name }}
+    {{ recipe.name }} - 
 </h1>
 {% endblock %}
+
+<a href="{{ path('recipe_update',{'id': recipe.id}) }}" class="button">
+    <span class="backto">Editer</span>
+</a>
+
 
 {# Picture #}
 {% if recipe.photo %}
@@ -27,20 +32,24 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
+            <tr>    
                 <td>{{ recipe.person }} personne(s)</td>
                 <td>
                     {% if recipe.timeCook %}
-                    {{ recipe.timeCook|date('h') }} h
-                    {{ recipe.timeCook|date('i') }} min
+                        {% if hoursCook > 0 %}
+                            {{ hoursCook }} h
+                        {% endif %}
+                        {{ minutesCook }} min
                     {% else %}
                     -
                     {% endif %}
                 </td>
                 <td>
                     {% if recipe.timePrepa %}
-                        {{ recipe.timePrepa|date('h') }} h
-                        {{ recipe.timePrepa|date('i') }} min
+                        {% if hoursPrepa > 0 %}
+                            {{ hoursPrepa }} h
+                        {% endif %}
+                        {{ minutesPrepa }} min
                     {% else %}
                         -
                     {% endif %}
@@ -48,8 +57,6 @@
             </tr>
         </tbody>
     </table>
-    
-
 </div>
 
 {# Description #}
