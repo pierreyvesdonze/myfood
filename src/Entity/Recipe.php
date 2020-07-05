@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\RecetteRepository;
+use App\Repository\RecipeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=RecetteRepository::class)
+ * @ORM\Entity(repositoryClass=RecipeRepository::class)
  */
-class Recette
+class Recipe
 {
     /**
      * @ORM\Id()
@@ -25,24 +25,21 @@ class Recette
     private $name;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $quantity;
-
-    /**
-     * @ORM\Column(type="string", length=24, nullable=true)
-     */
-    private $unit;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $photo;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Ingredient::class, mappedBy="recipe")
+     * @ORM\OneToMany(targetEntity=Ingredient::class, mappedBy="recipe", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true)
      */
     private $ingredients;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="recipes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
 
     public function __construct()
     {
@@ -62,30 +59,6 @@ class Recette
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getQuantity(): ?int
-    {
-        return $this->quantity;
-    }
-
-    public function setQuantity(?int $quantity): self
-    {
-        $this->quantity = $quantity;
-
-        return $this;
-    }
-
-    public function getUnit(): ?string
-    {
-        return $this->unit;
-    }
-
-    public function setUnit(?string $unit): self
-    {
-        $this->unit = $unit;
 
         return $this;
     }
@@ -114,7 +87,7 @@ class Recette
     {
         if (!$this->ingredients->contains($ingredient)) {
             $this->ingredients[] = $ingredient;
-            $ingredient->addRecipe($this);
+            $ingredient->setRecipe($this);
         }
 
         return $this;
@@ -124,8 +97,22 @@ class Recette
     {
         if ($this->ingredients->contains($ingredient)) {
             $this->ingredients->removeElement($ingredient);
-            $ingredient->removeRecipe($this);
+            if ($ingredient->getRecipe() === $this) {
+                $ingredient->setRecipe(null);
+            }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

@@ -25,9 +25,20 @@ class Ingredient
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Recette::class, inversedBy="ingredients")
+     * @ORM\ManyToOne(targetEntity=Recipe::class, inversedBy="ingredients")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $recipe;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $quantity;
+
+    /**
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    private $unit;
 
     public function __construct()
     {
@@ -51,28 +62,39 @@ class Ingredient
         return $this;
     }
 
-    /**
-     * @return Collection|Recette[]
-     */
-    public function getRecipe(): Collection
+
+    public function getRecipe(): ?Recipe
     {
         return $this->recipe;
     }
 
-    public function addRecipe(Recette $recipe): self
+    public function setRecipe(?Recipe $recipe): self
     {
-        if (!$this->recipe->contains($recipe)) {
-            $this->recipe[] = $recipe;
-        }
+        $this->recipe = $recipe;
 
         return $this;
     }
 
-    public function removeRecipe(Recette $recipe): self
+    public function getQuantity(): ?int
     {
-        if ($this->recipe->contains($recipe)) {
-            $this->recipe->removeElement($recipe);
-        }
+        return $this->quantity;
+    }
+
+    public function setQuantity(?int $quantity): self
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    public function getUnit(): ?string
+    {
+        return $this->unit;
+    }
+
+    public function setUnit(?string $unit): self
+    {
+        $this->unit = $unit;
 
         return $this;
     }
