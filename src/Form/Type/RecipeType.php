@@ -2,7 +2,7 @@
 
 namespace App\Form\Type;
 
-use App\Entity\ShoppingList;
+use App\Entity\Recipe;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -21,6 +21,14 @@ class RecipeType extends AbstractType
             ]
         );
 
+        $builder->add('recipeSteps', CollectionType::class, [
+            'entry_type'    => RecipeStepType::class,
+            'entry_options' => ['label' => false],
+            'allow_add'     => true,
+            'by_reference'  => false,
+            'allow_delete'  => true,
+        ]);
+
         $builder->add('ingredients', CollectionType::class, [
             'entry_type'    => IngredientType::class,
             'entry_options' => ['label' => false],
@@ -33,7 +41,7 @@ class RecipeType extends AbstractType
             'description',
             TextareaType::class,
             [
-                "label" => "Commentaires",
+                "label" => "Description de la recette",
             ]
         );
        
@@ -52,7 +60,7 @@ class RecipeType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => ShoppingList::class,
+            'data_class' => Recipe::class,
             'attr' => [
                 'novalidate' => 'novalidate'
             ],

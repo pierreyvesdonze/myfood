@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Ingredient;
 use App\Entity\Recipe;
+use App\Entity\RecipeStep;
+use App\Form\Type\RecipeType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,13 +36,17 @@ class RecipeController extends AbstractController
     }
 
     /**
-     * @Route("/add/{id}", name="recipe_add", methods={"GET","POST"})
+     * @Route("/add", name="recipe_add", methods={"GET","POST"})
      */
     public function recipeAdd(Request $request): Response
     {
         $recipe = new Recipe();
         $user = $this->getUser();
-        /* $recipe->setUser($user); */
+        $recipe->setUser($user);
+
+        $newStep = new RecipeStep();
+        $newStep->setRecipe($recipe);
+        $recipe->getRecipeSteps()->add($newStep);
 
         $ingredient = new Ingredient();
         $ingredient->setRecipe($recipe);
@@ -53,17 +59,16 @@ class RecipeController extends AbstractController
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($recipe);
+            $entityManager->persist($newStep);
             $entityManager->persist($ingredient);
 
             $entityManager->flush();
-
-            $this->addFlash('success', 'Enregistré.');
 
             $this->addFlash("success", "Merci d'avoir ajouté une nouvelle recette ! ");
             return $this->redirectToRoute('homepage');
         }
 
-        return $this->render('recipies/create.html.twig', [
+        return $this->render('recipe/create.html.twig', [
             'recipe' => $recipe,
             'form'   => $form->createView(),
         ]);
@@ -84,8 +89,13 @@ class RecipeController extends AbstractController
         }
 
         $originalIngredients = new ArrayCollection();
+        $originalSteps = new ArrayCollection();
 
         // Create an ArrayCollection of the current Ingredient objects in the database
+        foreach ($recipe->getRecipeSteps() as $step) {
+            $originalSteps->add($step);
+        }
+
         foreach ($recipe->getIngredients() as $ingredient) {
             $originalIngredients->add($ingredient);
         }
@@ -94,6 +104,15 @@ class RecipeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            foreach ($originalSteps as $step) {
+                if (false === $recipe->getRecipeSteps()->contains($step)) {
+               
+                    $step->setRecipe(null);
+                    $manager->persist($step);
+
+                }
+            }
 
             foreach ($originalIngredients as $ingredient) {
                 if (false === $recipe->getIngredients()->contains($ingredient)) {
@@ -104,6 +123,7 @@ class RecipeController extends AbstractController
                 }
             }
     
+            $manager->persist($step);
             $manager->persist($ingredient);
             $manager->flush();
 

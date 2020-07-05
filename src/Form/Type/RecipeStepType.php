@@ -2,38 +2,29 @@
 
 namespace App\Form\Type;
 
-use App\Entity\Ingredient;
+use App\Entity\RecipeStep;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class IngredientType extends AbstractType
+class RecipeStepType extends AbstractType
 {
     public function buildForm(\Symfony\Component\Form\FormBuilderInterface $builder, array $options)
     {
 
         $builder->add(
-            'name',
+            'text',
             TextType::class,
             [
-                "label" => "Nom de l'ingrédient"
+                "label" => "Description de l'étape"
             ]
         );
 
         $builder->add(
-            'quantity',
-            IntegerType::class,
-            [
-                "label" => "Quantité d'ingrédient"
-            ]
-        );
-
-        $builder->add(
-            'unit',
+            'photo',
             TextType::class,
             [
-                "label" => "Unité (Litre, cl, g, grammes etc.)"
+                "label" => "Ajouter une photo"
             ]
         );
     }
@@ -41,7 +32,7 @@ class IngredientType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Ingredient::class,
+            'data_class' => RecipeStep::class,
             'attr' => [
                 'novalidate' => 'novalidate'
             ],

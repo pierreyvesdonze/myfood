@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\Repository\RecipeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -41,9 +40,20 @@ class Recipe
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $description;
+
+    /**
+     * @ORM\OneToMany(targetEntity=RecipeStep::class, mappedBy="recipe", cascade={"persist"})
+     */
+    private $recipeSteps;
+
     public function __construct()
     {
         $this->ingredients = new ArrayCollection();
+        $this->recipeSteps = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -113,6 +123,49 @@ class Recipe
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RecipeStep[]
+     */
+    public function getRecipeSteps(): Collection
+    {
+        return $this->recipeSteps;
+    }
+
+    public function addRecipeStep(RecipeStep $recipeStep): self
+    {
+        if (!$this->recipeSteps->contains($recipeStep)) {
+            $this->recipeSteps[] = $recipeStep;
+            $recipeStep->setRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecipeStep(RecipeStep $recipeStep): self
+    {
+        if ($this->recipeSteps->contains($recipeStep)) {
+            $this->recipeSteps->removeElement($recipeStep);
+            // set the owning side to null (unless already changed)
+            if ($recipeStep->getRecipe() === $this) {
+                $recipeStep->setRecipe(null);
+            }
+        }
 
         return $this;
     }
