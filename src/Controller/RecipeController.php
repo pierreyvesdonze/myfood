@@ -173,11 +173,11 @@ class RecipeController extends AbstractController
 
     /**
      * @Route("/{id}/delete", name="recipe_delete", methods={"GET","POST"})
-     * @IsGranted("ROLE_USER")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function recipeDelete(Recipe $recipe)
     {
-        $this->denyAccessUnlessGranted('edit', $recipe);
+   /*      $this->denyAccessUnlessGranted('edit', $recipe); */
 
         $manager = $this->getDoctrine()->getManager();
         $manager->remove($recipe);
@@ -185,6 +185,6 @@ class RecipeController extends AbstractController
 
         $this->addFlash("success", "La recette a bien été supprimée");
 
-        return $this->redirectToRoute('hompeage');
+        return $this->redirectToRoute('recipe_list');
     }
 }

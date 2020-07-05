@@ -44,8 +44,9 @@
 {{ form_row(form.timeCook) }}
 {{ form_row(form.timePrepa) }}
 
-<div class="col">
+<div class="control">
   {{ form_widget(form.save) }}
+  <a href="{{ path('recipe_delete', {'id': recipe.id}) }}" class="button">Supprimer</a>
   {{ form_end(form) }}
 </div>
 {% endblock %}

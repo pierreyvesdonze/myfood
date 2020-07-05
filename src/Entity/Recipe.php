@@ -46,7 +46,7 @@ class Recipe
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity=RecipeStep::class, mappedBy="recipe", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity=RecipeStep::class, mappedBy="recipe", cascade={"persist", "remove"})
      */
     private $recipeSteps;
 

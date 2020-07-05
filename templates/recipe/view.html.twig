@@ -5,7 +5,7 @@
 {# Title #}
 {% block title %}
 <h1>
-    {{ recipe.name }} - 
+    {{ recipe.name }}
 </h1>
 {% endblock %}
 
@@ -39,7 +39,9 @@
                         {% if hoursCook > 0 %}
                             {{ hoursCook }} h
                         {% endif %}
-                        {{ minutesCook }} min
+                        {% if minutesCook > 0 %}
+                            {{ minutesCook }} min
+                        {% endif %}
                     {% else %}
                     -
                     {% endif %}
@@ -49,7 +51,9 @@
                         {% if hoursPrepa > 0 %}
                             {{ hoursPrepa }} h
                         {% endif %}
-                        {{ minutesPrepa }} min
+                        {% if minutesPrepa > 0 %}
+                            {{ minutesPrepa }} min
+                        {% endif %}
                     {% else %}
                         -
                     {% endif %}
