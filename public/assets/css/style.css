@@ -2,6 +2,10 @@ body {
   background-color: black;
 }
 
+* {
+  color: red !important;
+}
+
 /*SIDEBAR*/
 /* The sidepanel menu */
 .sidepanel {

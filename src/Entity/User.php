@@ -2,17 +2,14 @@
 
 namespace App\Entity;
 
+use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
-
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity("email", message="Cet email est déjà utilisé")
+ * @ORM\Entity(repositoryClass=UserRepository::class)
  */
 class User implements UserInterface
 {
@@ -24,29 +21,27 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=64)
-     */
-    private $username;
-
-    /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Assert\Length(max=180)
-     * @Assert\NotBlank
      */
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
+
+    /**
+     * @var string The hashed password
+     * @ORM\Column(type="string")
      */
     private $password;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Role")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
-    private $role;
+    private $username;
 
-    /**
+        /**
      * @ORM\OneToMany(targetEntity="App\Entity\ShoppingList", mappedBy="user")
      */
     private $shoppingLists;
@@ -58,31 +53,13 @@ class User implements UserInterface
 
     public function __construct()
     {
-        $this->events = new ArrayCollection();
         $this->shoppingLists = new ArrayCollection();
         $this->recipes = new ArrayCollection();
-    }
-
-    public function __toString()
-    {
-        return $this->username;
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getUsername(): ?string
-    {
-        return $this->username;
-    }
-
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
-
-        return $this;
     }
 
     public function getEmail(): ?string
@@ -97,9 +74,32 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getPassword(): ?string
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
     {
-        return $this->password;
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getPassword(): string
+    {
+        return (string) $this->password;
     }
 
     public function setPassword(string $password): self
@@ -110,65 +110,40 @@ class User implements UserInterface
     }
 
     /**
-     * Get the value of roles
+     * @see UserInterface
      */
-    public function getRolesCollection()
+    public function getSalt()
     {
-        return $this->roles;
+        // not needed when using the "bcrypt" algorithm in security.yaml
     }
 
-    public function getRoles()
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
     {
-        return array($this->getRole()->getRoleString());
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
-    public function getRole(): ?Role
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUsername(): string
     {
-        return $this->role;
+        return (string) $this->email;
     }
-
-    public function setRole(?Role $role): self
+    
+    public function setUsername(string $username): self
     {
-        $this->role = $role;
+        $this->username = $username;
 
         return $this;
     }
 
-    // bcrypt n'utilise pas de sel
-    public function getSalt()
-    {
-    }
-
-    // Aucune donnée sensible dans notre objet User donc on laisse vide
-    public function eraseCredentials()
-    {
-    }
-
-    /** @see \Serializable::serialize() */
-    public function serialize()
-    {
-        return serialize(array(
-            $this->id,
-            $this->username,
-            $this->password,
-            // see section on salt below
-            // $this->salt,
-        ));
-    }
-
-    /** @see \Serializable::unserialize() */
-    public function unserialize($serialized)
-    {
-        list(
-            $this->id,
-            $this->username,
-            $this->password,
-            // see section on salt below
-            // $this->salt
-        ) = unserialize($serialized, array('allowed_classes' => false));
-    }
-
-    /**
+      /**
      * @return Collection|ShoppingList[]
      */
     public function getShoppingLists(): Collection

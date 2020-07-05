@@ -18,7 +18,6 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class UserController extends AbstractController
 {
-
     public function index()
     {
         $projectDir = $this->getParameter('kernel.project_dir');
@@ -36,35 +35,12 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $brochureFile = $form->get('brochure')->getData();
-
-            if ($brochureFile) {
-                $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
-                $safeFilename = $originalFilename;
-                $newFilename = $safeFilename . '-' . uniqid() . '.' . $brochureFile->guessExtension();
-
-                // Move the file to the directory where brochures are stored
-                try {
-                    $brochureFile->move(
-                        $this->getParameter('brochures_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-
-                    echo ("L'image n'a pas été chargée");
-                }
-
-                $user->setBrochureFilename($newFilename);
-            }
-
-            $plainPassword = $form->get('plain_password')->getData();
+            $plainPassword = $form->get('password')->getData();
             $encodedPassword = $encoder->encodePassword($user, $plainPassword);
 
             $user->setPassword($encodedPassword);
 
-            $role = $roleRepository->findOneByRoleString('ROLE_USER');
-            $user->setRole($role);
+            $user->setRoles(['ROLE_USER']);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
@@ -72,7 +48,7 @@ class UserController extends AbstractController
 
             $this->addFlash('success', 'Vous êtes enregistré. Vous pouvez maintenant vous connecter.');
 
-            return $this->redirectToRoute('app_login');
+            return $this->redirectToRoute('login');
         }
 
         return $this->render('user/new.html.twig', [
@@ -153,4 +129,5 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('event_list');
     }
+  
 }

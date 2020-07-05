@@ -1,0 +1,18 @@
+<nav class="menu">
+  <button class="openbtn">&#9776;</button>
+  <div id="mySidepanel" class="sidepanel">
+    <a href="#" class="closebtn">&times;</a>
+    <a href="{{ path('homepage') }}">About</a>
+    <a href="#">Recettes</a>
+    <a href="#">Liste de courses</a>
+    <a href="#">Contact</a>
+    {% if app.user %}
+      <a href="{{ path('logout') }}">
+        Se déconnecter
+      </a>
+    {% else %}
+      <a href="{{ path('new') }}">S'inscrire</a>
+      <a href="{{ path('login') }}">Se connecter</a>
+    {% endif %}
+  </div>
+</nav>

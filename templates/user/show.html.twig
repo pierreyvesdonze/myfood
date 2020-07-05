@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil perso
+{% endblock %}
+
+{% block body %}
+	<div class="myprofile">
+		<div class="avatar-profile">
+			<img src="{{ asset('uploads/images/' ~ user.brochureFilename) }}" alt="avatar">
+		</div>
+
+		<table class="table">
+			<tbody>
+				<tr>
+					<th>Pseudo</th>
+					<td>{{ user.username }}</td>
+				</tr>
+				<tr>
+					<th>Email</th>
+					<td>{{ user.email }}</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<hr class="hr">
+
+		<div class="control">
+			<a href="{{ path('user_edit_profile') }}" class="button">
+				<img src="{{ asset('assets/images/settings.png') }}" alt="update">
+			</a>
+
+			{{ include('user/_delete_form.html.twig') }}
+		</div>
+
+	</div>
+{% endblock %}
