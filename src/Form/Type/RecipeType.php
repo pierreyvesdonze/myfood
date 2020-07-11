@@ -3,14 +3,18 @@
 namespace App\Form\Type;
 
 use App\Entity\Recipe;
+use App\Form\TagType;
+use App\Form\RecipeTypeType;
+use App\Form\RecipePhotoType;
+use App\Entity\RecipeCategory;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class RecipeType extends AbstractType
 {
@@ -68,6 +72,47 @@ class RecipeType extends AbstractType
                 "label" => "Description de la recette",
             ]
         );
+
+        $builder->add('recipeIngredients', CollectionType::class, [
+            'entry_type'    => RecipeCategory::class,
+            'entry_options' => ['label' => false],
+            'allow_add'     => true,
+            'by_reference'  => false,
+            'allow_delete'  => true,
+        ]);
+
+        $builder->add('photos', CollectionType::class, [
+            'entry_type'    => RecipePhotoType::class,
+            'entry_options' => ['label' => false],
+            'allow_add'     => true,
+            'by_reference'  => false,
+            'allow_delete'  => true,
+        ]);
+
+        $builder->add('tags', CollectionType::class, [
+            'entry_type'    => RecipeCategoryType::class,
+            'entry_options' => ['label' => false],
+            'allow_add'     => true,
+            'by_reference'  => false,
+            'allow_delete'  => true,
+        ]);
+
+        $builder->add('tags', CollectionType::class, [
+            'entry_type'    => RecipeTypeType::class,
+            'entry_options' => ['label' => false],
+            'allow_add'     => true,
+            'by_reference'  => false,
+            'allow_delete'  => true,
+        ]);
+
+        $builder->add('tags', CollectionType::class, [
+            'entry_type'    => TagType::class,
+            'entry_options' => ['label' => false],
+            'allow_add'     => true,
+            'by_reference'  => false,
+            'allow_delete'  => true,
+        ]);
+
        
         $builder->add(
             'save',

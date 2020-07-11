@@ -24,11 +24,6 @@ class Recipe
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $photo;
-
-    /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="recipes")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -65,10 +60,33 @@ class Recipe
      */
     private $recipeIngredients;
 
+    /**
+     * @ORM\OneToMany(targetEntity=RecipePhoto::class, mappedBy="recipe")
+     */
+    private $recipePhotos;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=RecipeCategory::class, inversedBy="recipe")
+     */
+    private $recipeCategory;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=RecipeType::class, inversedBy="recipe")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $recipeType;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Tag::class, mappedBy="recipe")
+     */
+    private $tags;
+
     public function __construct()
     {
         $this->recipeSteps = new ArrayCollection();
         $this->recipeIngredients = new ArrayCollection();
+        $this->recipePhotos = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -87,20 +105,7 @@ class Recipe
 
         return $this;
     }
-
-    public function getPhoto(): ?string
-    {
-        return $this->photo;
-    }
-
-    public function setPhoto(?string $photo): self
-    {
-        $this->photo = $photo;
-
-        return $this;
-    }
-
-
+    
     public function getUser(): ?User
     {
         return $this->user;
@@ -218,6 +223,89 @@ class Recipe
             if ($recipeIngredient->getRecipe() === $this) {
                 $recipeIngredient->setRecipe(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RecipePhoto[]
+     */
+    public function getRecipePhotos(): Collection
+    {
+        return $this->recipePhotos;
+    }
+
+    public function addRecipePhoto(RecipePhoto $recipePhoto): self
+    {
+        if (!$this->recipePhotos->contains($recipePhoto)) {
+            $this->recipePhotos[] = $recipePhoto;
+            $recipePhoto->setRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecipePhoto(RecipePhoto $recipePhoto): self
+    {
+        if ($this->recipePhotos->contains($recipePhoto)) {
+            $this->recipePhotos->removeElement($recipePhoto);
+            // set the owning side to null (unless already changed)
+            if ($recipePhoto->getRecipe() === $this) {
+                $recipePhoto->setRecipe(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getRecipeCategory(): ?RecipeCategory
+    {
+        return $this->recipeCategory;
+    }
+
+    public function setRecipeCategory(?RecipeCategory $recipeCategory): self
+    {
+        $this->recipeCategory = $recipeCategory;
+
+        return $this;
+    }
+
+    public function getRecipeType(): ?RecipeType
+    {
+        return $this->recipeType;
+    }
+
+    public function setRecipeType(?RecipeType $recipeType): self
+    {
+        $this->recipeType = $recipeType;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tag[]
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+
+    public function addTag(Tag $tag): self
+    {
+        if (!$this->tags->contains($tag)) {
+            $this->tags[] = $tag;
+            $tag->addRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTag(Tag $tag): self
+    {
+        if ($this->tags->contains($tag)) {
+            $this->tags->removeElement($tag);
+            $tag->removeRecipe($this);
         }
 
         return $this;

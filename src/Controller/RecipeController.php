@@ -85,10 +85,10 @@ class RecipeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $dataFormIngredients = $form->get('recipeIngredients')->getData();
-
          
             // If Ingredient no existing in db we create new
             foreach ($dataFormIngredients as $newIngredient) {
+
                 $isIngredientExist = $ingredientRepository->findOneBy([
                     'name' => $newIngredient->getName()
                 ]);         
