@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Ingredient;
 use App\Entity\Recipe;
+use App\Entity\RecipeIngredient;
 use App\Entity\RecipeStep;
 use App\Form\Type\RecipeType;
+use App\Repository\IngredientRepository;
 use App\Repository\RecipeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -63,7 +65,7 @@ class RecipeController extends AbstractController
     /**
      * @Route("/add", name="recipe_add", methods={"GET","POST"})
      */
-    public function recipeAdd(Request $request): Response
+    public function recipeAdd(Request $request, IngredientRepository $ingredientRepository): Response
     {
         $recipe = new Recipe();
         $user = $this->getUser();
@@ -73,23 +75,38 @@ class RecipeController extends AbstractController
         $newStep->setRecipe($recipe);
         $recipe->getRecipeSteps()->add($newStep);
 
-        $ingredient = new Ingredient();
-        $ingredient->setRecipe($recipe);
-        $recipe->getIngredients()->add($ingredient);
+        $recipeIngredients = new RecipeIngredient();
+        $recipeIngredients->setRecipe($recipe);
+        $recipe->getRecipeIngredients()->add($recipeIngredients);
 
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $entityManager = $this->getDoctrine()->getManager();
+            $dataFormIngredients = $form->get('recipeIngredients')->getData();
+
+         
+            // If Ingredient no existing in db we create new
+            foreach ($dataFormIngredients as $newIngredient) {
+                $isIngredientExist = $ingredientRepository->findOneBy([
+                    'name' => $newIngredient->getName()
+                ]);         
+    
+                if (!$isIngredientExist) {
+                    $createNewIngredient = new Ingredient();
+                    $createNewIngredient->setName($newIngredient->getName());
+                    $entityManager->persist($createNewIngredient);
+                }
+            }
+
             $entityManager->persist($recipe);
             $entityManager->persist($newStep);
-            $entityManager->persist($ingredient);
+            $entityManager->persist($recipeIngredients);
 
             $entityManager->flush();
 
-            $this->addFlash("success", "Ta nouvelle recette " . $recipe->getName() . "a bien été ajoutée !");
+            $this->addFlash("success", "La nouvelle recette " . $recipe->getName() . "a bien été ajoutée !");
 
             return $this->redirectToRoute('recipe_view', [
                 'id' => $recipe->getId()
@@ -177,7 +194,7 @@ class RecipeController extends AbstractController
      */
     public function recipeDelete(Recipe $recipe)
     {
-   /*      $this->denyAccessUnlessGranted('edit', $recipe); */
+        /*      $this->denyAccessUnlessGranted('edit', $recipe); */
 
         $manager = $this->getDoctrine()->getManager();
         $manager->remove($recipe);

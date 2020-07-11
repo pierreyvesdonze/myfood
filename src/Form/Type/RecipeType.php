@@ -6,7 +6,6 @@ use App\Entity\Recipe;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\RangeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -32,8 +31,8 @@ class RecipeType extends AbstractType
             'allow_delete'  => true,
         ]);
 
-        $builder->add('ingredients', CollectionType::class, [
-            'entry_type'    => IngredientType::class,
+        $builder->add('recipeIngredients', CollectionType::class, [
+            'entry_type'    => RecipeIngredientType::class,
             'entry_options' => ['label' => false],
             'allow_add'     => true,
             'by_reference'  => false,

@@ -13,7 +13,6 @@
 {{ form_row(form.name) }}
 {{ form_row(form.description) }}
 
-
 {# Steps #}
 <ul class="steps"
   data-prototype="{{ form_widget(form.recipeSteps.vars.prototype)|e('html_attr') }}">
@@ -25,9 +24,9 @@
 
 {# Ingredients #}
 <ul class="ingredients"
-  data-prototype="{{ form_widget(form.ingredients.vars.prototype)|e('html_attr') }}">
+  data-prototype="{{ form_widget(form.recipeIngredients.vars.prototype)|e('html_attr') }}">
   {# iterate over each existing step and render its only field: name #} 
-  {% for ingredient in form.ingredients %}
+  {% for ingredient in form.recipeIngredients %}
     <li>{{ form_row(ingredient.name) }}</li>
     <li>{{ form_row(ingredient.amount) }}</li>
     <li>{{ form_row(ingredient.unit) }}</li>

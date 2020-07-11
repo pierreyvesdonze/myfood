@@ -29,12 +29,6 @@ class Recipe
     private $photo;
 
     /**
-     * @ORM\OneToMany(targetEntity=Ingredient::class, mappedBy="recipe", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $ingredients;
-
-    /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="recipes")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -65,10 +59,16 @@ class Recipe
      */
     private $person;
 
+     /**
+     * @ORM\OneToMany(targetEntity=RecipeIngredient::class, mappedBy="recipe", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $recipeIngredients;
+
     public function __construct()
     {
-        $this->ingredients = new ArrayCollection();
         $this->recipeSteps = new ArrayCollection();
+        $this->recipeIngredients = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -100,35 +100,6 @@ class Recipe
         return $this;
     }
 
-    /**
-     * @return Collection|Ingredient[]
-     */
-    public function getIngredients(): Collection
-    {
-        return $this->ingredients;
-    }
-
-    public function addIngredient(Ingredient $ingredient): self
-    {
-        if (!$this->ingredients->contains($ingredient)) {
-            $this->ingredients[] = $ingredient;
-            $ingredient->setRecipe($this);
-        }
-
-        return $this;
-    }
-
-    public function removeIngredient(Ingredient $ingredient): self
-    {
-        if ($this->ingredients->contains($ingredient)) {
-            $this->ingredients->removeElement($ingredient);
-            if ($ingredient->getRecipe() === $this) {
-                $ingredient->setRecipe(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function getUser(): ?User
     {
@@ -217,6 +188,37 @@ class Recipe
     public function setPerson(int $person): self
     {
         $this->person = $person;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RecipeIngredient[]
+     */
+    public function getRecipeIngredients(): Collection
+    {
+        return $this->recipeIngredients;
+    }
+
+    public function addRecipeIngredient(RecipeIngredient $recipeIngredient): self
+    {
+        if (!$this->recipeIngredients->contains($recipeIngredient)) {
+            $this->recipeIngredients[] = $recipeIngredient;
+            $recipeIngredient->setRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecipeIngredient(RecipeIngredient $recipeIngredient): self
+    {
+        if ($this->recipeIngredients->contains($recipeIngredient)) {
+            $this->recipeIngredients->removeElement($recipeIngredient);
+            // set the owning side to null (unless already changed)
+            if ($recipeIngredient->getRecipe() === $this) {
+                $recipeIngredient->setRecipe(null);
+            }
+        }
 
         return $this;
     }

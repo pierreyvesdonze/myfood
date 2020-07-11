@@ -4,9 +4,7 @@
 
 {# Title #}
 {% block title %}
-<h1>
     {{ recipe.name }}
-</h1>
 {% endblock %}
 
 <a href="{{ path('recipe_update',{'id': recipe.id}) }}" class="button">
@@ -63,6 +61,20 @@
     </table>
 </div>
 
+{# Ingredients #}
+<div class="recipe-ingredients">
+    <h2>
+        Ingrédients
+    </h2>
+    <ul>
+        {% for ingredient in recipe.Recipeingredients %}
+            <li>
+                {{ ingredient.name }}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
 {# Description #}
 <div class="recipe-view-description">
     {{ recipe.description }}
@@ -70,6 +82,7 @@
 
 {# Steps #}
 <div class="recipe-view-steps">
+    <h2>Etapes</h2>
     <ol>
         {% for step in recipe.recipesteps %}
         <li>

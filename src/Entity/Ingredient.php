@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\IngredientRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -24,25 +22,9 @@ class Ingredient
      */
     private $name;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Recipe::class, inversedBy="ingredients")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $recipe;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $amount;
-
-    /**
-     * @ORM\Column(type="string", length=20, nullable=true)
-     */
-    private $unit;
-
-    public function __construct()
+    public function __toString()
     {
-        $this->recipe = new ArrayCollection();
+        return $this->name;
     }
 
     public function getId(): ?int
@@ -58,43 +40,6 @@ class Ingredient
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-
-    public function getRecipe(): ?Recipe
-    {
-        return $this->recipe;
-    }
-
-    public function setRecipe(?Recipe $recipe): self
-    {
-        $this->recipe = $recipe;
-
-        return $this;
-    }
-
-    public function getAmount(): ?int
-    {
-        return $this->amount;
-    }
-
-    public function setAmount(?int $amount): self
-    {
-        $this->amount = $amount;
-
-        return $this;
-    }
-
-    public function getUnit(): ?string
-    {
-        return $this->unit;
-    }
-
-    public function setUnit(?string $unit): self
-    {
-        $this->unit = $unit;
 
         return $this;
     }

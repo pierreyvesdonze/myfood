@@ -40,7 +40,9 @@ class UserController extends AbstractController
 
             $user->setPassword($encodedPassword);
 
-            $user->setRoles(['ROLE_USER']);
+            $roleUser = $roleRepository->findOneByRoleString('ROLE_USER');
+
+            $user->setRole($roleUser);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
