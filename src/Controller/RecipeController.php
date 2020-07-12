@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 /**
  * @Route("/recipe")
@@ -33,9 +34,7 @@ class RecipeController extends AbstractController
      */
     public function recipeList(RecipeRepository $recipeRepository)
     {
-
         $recipies = $recipeRepository->findAll();
-
         return $this->render('recipe/list.html.twig', [
             'recipies' => $recipies
         ]);
@@ -100,6 +99,32 @@ class RecipeController extends AbstractController
                 }
             }
 
+            // Tags
+            $tags = $form->get('tags')->getData();
+            foreach($tags as $tag) {
+                $recipe->addTag($tag);
+            }
+
+            // Images
+            $image = $form->get('recipePhoto')->getData();
+            if ($image) {
+                $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $originalFilename;
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $image->guessExtension();
+
+                try {
+                    $image->move(
+                        $this->getParameter('images_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+
+                    echo("L'image n'a pas été chargée");
+                }
+                $recipe->setRecipePhoto($newFilename);
+            }
+
             $entityManager->persist($recipe);
             $entityManager->persist($newStep);
             $entityManager->persist($recipeIngredients);
@@ -121,19 +146,17 @@ class RecipeController extends AbstractController
 
     /**
      * @Route("/{id}/update", name="recipe_update", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_USER")
      */
     public function recipeUpdate(Request $request, Recipe $recipe)
     {
-        //dd($recipe);
-        //$this->denyAccessUnlessGranted('edit', $recipe);
+        $this->denyAccessUnlessGranted('edit', $recipe);
 
         $manager = $this->getDoctrine()->getManager();
 
         if (null === $recipe) {
-            throw $this->createNotFoundException('No task found for id ' . $recipe->getId);
+            throw $this->createNotFoundException('Recette non existente... ' . $recipe->getId);
         }
-
 
         $originalIngredients = new ArrayCollection();
         $originalSteps = new ArrayCollection();
@@ -143,8 +166,8 @@ class RecipeController extends AbstractController
             $originalSteps->add($step);
         }
 
-        if (!null === $recipe->getIngredients()) {
-            foreach ($recipe->getIngredients() as $ingredient) {
+        if (!null === $recipe->getRecipeIngredients()) {
+            foreach ($recipe->getRecipeIngredients() as $ingredient) {
                 $originalIngredients->add($ingredient);
             }
         }
@@ -162,7 +185,7 @@ class RecipeController extends AbstractController
             }
 
             foreach ($originalIngredients as $ingredient) {
-                if (false === $recipe->getIngredients()->contains($ingredient)) {
+                if (false === $recipe->getRecipeIngredients()->contains($ingredient)) {
 
                     $ingredient->setRecipe(null);
                     $manager->persist($ingredient);
@@ -180,7 +203,7 @@ class RecipeController extends AbstractController
         }
 
         return $this->render(
-            "recipe/_edit.html.twig",
+            "recipe/edit.html.twig",
             [
                 "recipe" => $recipe,
                 "form"   => $form->createView()

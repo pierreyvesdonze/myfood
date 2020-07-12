@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RecipeRepository")
@@ -20,6 +21,7 @@ class Recipe
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Assert\NotBlank()
      */
     private $name;
 
@@ -61,9 +63,9 @@ class Recipe
     private $recipeIngredients;
 
     /**
-     * @ORM\OneToMany(targetEntity=RecipePhoto::class, mappedBy="recipe")
+     * @ORM\Column(type="string", nullable=true)
      */
-    private $recipePhotos;
+    private $recipePhoto;
 
     /**
      * @ORM\ManyToOne(targetEntity=RecipeCategory::class, inversedBy="recipe")
@@ -71,13 +73,13 @@ class Recipe
     private $recipeCategory;
 
     /**
-     * @ORM\ManyToOne(targetEntity=RecipeType::class, inversedBy="recipe")
+     * @ORM\ManyToOne(targetEntity=RecipeMenu::class, inversedBy="recipe")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $recipeType;
+    private $recipeMenu;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Tag::class, mappedBy="recipe")
+     * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="recipe", cascade={"persist"})
      */
     private $tags;
 
@@ -85,7 +87,6 @@ class Recipe
     {
         $this->recipeSteps = new ArrayCollection();
         $this->recipeIngredients = new ArrayCollection();
-        $this->recipePhotos = new ArrayCollection();
         $this->tags = new ArrayCollection();
     }
 
@@ -228,33 +229,14 @@ class Recipe
         return $this;
     }
 
-    /**
-     * @return Collection|RecipePhoto[]
-     */
-    public function getRecipePhotos(): Collection
+    public function getRecipePhoto()
     {
-        return $this->recipePhotos;
+        return $this->recipePhoto;        
     }
 
-    public function addRecipePhoto(RecipePhoto $recipePhoto): self
+    public function setRecipePhoto($recipePhoto)
     {
-        if (!$this->recipePhotos->contains($recipePhoto)) {
-            $this->recipePhotos[] = $recipePhoto;
-            $recipePhoto->setRecipe($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRecipePhoto(RecipePhoto $recipePhoto): self
-    {
-        if ($this->recipePhotos->contains($recipePhoto)) {
-            $this->recipePhotos->removeElement($recipePhoto);
-            // set the owning side to null (unless already changed)
-            if ($recipePhoto->getRecipe() === $this) {
-                $recipePhoto->setRecipe(null);
-            }
-        }
+        $this->recipePhoto = $recipePhoto;
 
         return $this;
     }
@@ -271,14 +253,14 @@ class Recipe
         return $this;
     }
 
-    public function getRecipeType(): ?RecipeType
+    public function getRecipeMenu(): ?RecipeMenu
     {
-        return $this->recipeType;
+        return $this->recipeMenu;
     }
 
-    public function setRecipeType(?RecipeType $recipeType): self
+    public function setRecipeMenu(?RecipeMenu $recipeMenu): self
     {
-        $this->recipeType = $recipeType;
+        $this->recipeMenu = $recipeMenu;
 
         return $this;
     }

@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\RecipeTypeRepository;
+use App\Repository\RecipeMenuRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=RecipeTypeRepository::class)
+ * @ORM\Entity(repositoryClass=RecipeMenuRepository::class)
  */
-class RecipeType
+class RecipeMenu
 {
     /**
      * @ORM\Id()
@@ -20,7 +20,7 @@ class RecipeType
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity=Recipe::class, mappedBy="recipeType")
+     * @ORM\OneToMany(targetEntity=Recipe::class, mappedBy="recipeMenu")
      */
     private $recipe;
 
@@ -28,6 +28,11 @@ class RecipeType
      * @ORM\Column(type="string", length=255)
      */
     private $name;
+
+    public function __toString()
+    {
+        return $this->name;
+    }
 
     public function __construct()
     {
@@ -51,7 +56,7 @@ class RecipeType
     {
         if (!$this->recipe->contains($recipe)) {
             $this->recipe[] = $recipe;
-            $recipe->setRecipeType($this);
+            $recipe->setRecipeMenu($this);
         }
 
         return $this;
@@ -62,8 +67,8 @@ class RecipeType
         if ($this->recipe->contains($recipe)) {
             $this->recipe->removeElement($recipe);
             // set the owning side to null (unless already changed)
-            if ($recipe->getRecipeType() === $this) {
-                $recipe->setRecipeType(null);
+            if ($recipe->getRecipeMenu() === $this) {
+                $recipe->setRecipeMenu(null);
             }
         }
 

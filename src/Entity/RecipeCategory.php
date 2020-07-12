@@ -2,13 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\RecipeCategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=RecipeCategoryRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\RecipeCategoryRepository")
  */
 class RecipeCategory
 {
@@ -28,6 +27,11 @@ class RecipeCategory
      * @ORM\Column(type="string", length=255)
      */
     private $name;
+
+    public function __toString()
+    {
+        return $this->name;
+    }
 
     public function __construct()
     {

@@ -25,7 +25,7 @@ class Tag
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Recipe::class, inversedBy="tags")
+     * @ORM\ManyToMany(targetEntity=Recipe::class, mappedBy="tags")
      */
     private $recipe;
 
@@ -33,6 +33,12 @@ class Tag
     {
         $this->recipe = new ArrayCollection();
     }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
+
 
     public function getId(): ?int
     {

@@ -34,6 +34,16 @@
   {% endfor %}
 </ul>
 
+{# Type/Menu #}
+<div class="recipe-menu">
+    {{ form_row(form.recipeMenu) }}
+</div>
+
+{# Category #}
+<div class="recipe-category">
+    {{ form_row(form.recipeCategory) }}
+</div>
+
 {# How Many Guests #}
 <div class="recipe-guest-range">
     {{ form_row(form.person) }}
@@ -42,6 +52,17 @@
 {# Times #}
 {{ form_widget(form.timeCook) }}
 {{ form_widget(form.timePrepa) }}
+
+{# Images #}
+<div class="recipe-create-images">
+    {{ form_row(form.recipePhoto) }}
+</div>
+
+{# Tags #}
+<div class="recipe-tags">
+    {{ form_row(form.tags) }}
+</div>
+
 
 <div class="col">
   {{ form_widget(form.save) }}

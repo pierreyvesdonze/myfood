@@ -3,10 +3,12 @@
 namespace App\Form\Type;
 
 use App\Entity\Recipe;
-use App\Form\TagType;
-use App\Form\RecipeTypeType;
-use App\Form\RecipePhotoType;
 use App\Entity\RecipeCategory;
+use App\Entity\RecipeMenu;
+use App\Entity\Tag;
+use App\Form\RecipePhotoType;
+use Doctrine\ORM\Mapping\Entity;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -15,6 +17,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints\File;
 
 class RecipeType extends AbstractType
 {
@@ -73,46 +77,34 @@ class RecipeType extends AbstractType
             ]
         );
 
-        $builder->add('recipeIngredients', CollectionType::class, [
-            'entry_type'    => RecipeCategory::class,
-            'entry_options' => ['label' => false],
-            'allow_add'     => true,
-            'by_reference'  => false,
-            'allow_delete'  => true,
+        $builder->add('recipePhoto', FileType::class, [
+            'label' => 'Ajouter une image',
+            'mapped' => false,
+            'required' => false,
+            'constraints' => [
+                new File([
+                    'mimeTypes' => [
+                        'image/jpeg'
+                    ]
+                ])
+            ]
         ]);
 
-        $builder->add('photos', CollectionType::class, [
-            'entry_type'    => RecipePhotoType::class,
-            'entry_options' => ['label' => false],
-            'allow_add'     => true,
-            'by_reference'  => false,
-            'allow_delete'  => true,
+        $builder->add('recipeCategory', EntityType::class, [
+            'class' => RecipeCategory::class,
+            'choice_label' => 'name'
         ]);
 
-        $builder->add('tags', CollectionType::class, [
-            'entry_type'    => RecipeCategoryType::class,
-            'entry_options' => ['label' => false],
-            'allow_add'     => true,
-            'by_reference'  => false,
-            'allow_delete'  => true,
+        $builder->add('recipeMenu', EntityType::class, [
+            'class' => RecipeMenu::class,
+            'choice_label' => 'name'
         ]);
 
-        $builder->add('tags', CollectionType::class, [
-            'entry_type'    => RecipeTypeType::class,
-            'entry_options' => ['label' => false],
-            'allow_add'     => true,
-            'by_reference'  => false,
-            'allow_delete'  => true,
+        $builder->add('tags', EntityType::class, [
+            'class' => Tag::class,
+            'expanded' => 'true',
+            'multiple' => true,
         ]);
-
-        $builder->add('tags', CollectionType::class, [
-            'entry_type'    => TagType::class,
-            'entry_options' => ['label' => false],
-            'allow_add'     => true,
-            'by_reference'  => false,
-            'allow_delete'  => true,
-        ]);
-
        
         $builder->add(
             'save',

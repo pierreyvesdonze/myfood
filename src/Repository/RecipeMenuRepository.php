@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\RecipeType;
+use App\Entity\RecipeMenu;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method RecipeType|null find($id, $lockMode = null, $lockVersion = null)
- * @method RecipeType|null findOneBy(array $criteria, array $orderBy = null)
- * @method RecipeType[]    findAll()
- * @method RecipeType[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method RecipeMenu|null find($id, $lockMode = null, $lockVersion = null)
+ * @method RecipeMenu|null findOneBy(array $criteria, array $orderBy = null)
+ * @method RecipeMenu[]    findAll()
+ * @method RecipeMenu[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class RecipeTypeRepository extends ServiceEntityRepository
+class RecipeMenuRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, RecipeType::class);
+        parent::__construct($registry, RecipeMenu::class);
     }
 
     // /**
-    //  * @return RecipeType[] Returns an array of RecipeType objects
+    //  * @return RecipeMenu[] Returns an array of RecipeMenu objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class RecipeTypeRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?RecipeType
+    public function findOneBySomeField($value): ?RecipeMenu
     {
         return $this->createQueryBuilder('r')
             ->andWhere('r.exampleField = :val')

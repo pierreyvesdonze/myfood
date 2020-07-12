@@ -13,7 +13,6 @@
 {{ form_row(form.name) }}
 {{ form_row(form.description) }}
 
-
 {# Steps #}
 <ul class="steps"
   data-prototype="{{ form_widget(form.recipeSteps.vars.prototype)|e('html_attr') }}">
@@ -25,9 +24,9 @@
 
 {# Ingredients #}
 <ul class="ingredients"
-  data-prototype="{{ form_widget(form.ingredients.vars.prototype)|e('html_attr') }}">
+  data-prototype="{{ form_widget(form.recipeIngredients.vars.prototype)|e('html_attr') }}">
   {# iterate over each existing step and render its only field: name #} 
-  {% for ingredient in form.ingredients %}
+  {% for ingredient in form.recipeIngredients %}
     <li>{{ form_row(ingredient.name) }}</li>
     <li>{{ form_row(ingredient.amount) }}</li>
     <li>{{ form_row(ingredient.unit) }}</li>
@@ -35,18 +34,33 @@
   {% endfor %}
 </ul>
 
+{# Type/Menu #}
+<div class="recipe-menu">
+    {{ form_row(form.recipeMenu) }}
+</div>
+
+{# Category #}
+<div class="recipe-category">
+    {{ form_row(form.recipeCategory) }}
+</div>
+
 {# How Many Guests #}
 <div class="recipe-guest-range">
     {{ form_row(form.person) }}
 </div>
 
 {# Times #}
-{{ form_row(form.timeCook) }}
-{{ form_row(form.timePrepa) }}
+{{ form_widget(form.timeCook) }}
+{{ form_widget(form.timePrepa) }}
 
-<div class="control">
+{# Tags #}
+<div class="recipe-tags">
+    {{ form_row(form.tags) }}
+</div>
+
+
+<div class="col">
   {{ form_widget(form.save) }}
-  <a href="{{ path('recipe_delete', {'id': recipe.id}) }}" class="button">Supprimer</a>
   {{ form_end(form) }}
 </div>
 {% endblock %}

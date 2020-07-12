@@ -3,9 +3,7 @@
 {% block body %}
 
 {# Title #}
-{% block title %}
-    {{ recipe.name }}
-{% endblock %}
+<h2>{{ recipe.name }}</h2>
 
 <a href="{{ path('recipe_update',{'id': recipe.id}) }}" class="button">
     <span class="backto">Editer</span>
@@ -13,17 +11,17 @@
 
 
 {# Picture #}
-{% if recipe.photo %}
 <div class="photo-recipe-view">
-    {{ recipe.photo }}
+    <img src="{{ asset('uploads/' ~ recipe.recipePhoto) }}" alt="">
 </div>
-{% endif %}
 
 {# Summary #}
 <div class="recipe-summary">
     <table>
         <thead>
             <tr>
+                <th>Type</th>
+                <th>Catégorie</th>
                 <th>Portions</th>
                 <th>Temps de cuisson</th>
                 <th>Temps de préparation</th>
@@ -31,6 +29,12 @@
         </thead>
         <tbody>
             <tr>    
+                <td>
+                    {{ recipe.recipeMenu }}
+                </td>
+                <td>
+                    {{ recipe.recipeCategory }}
+                </td>
                 <td>{{ recipe.person }} personne(s)</td>
                 <td>
                     {% if recipe.timeCook %}
@@ -59,6 +63,13 @@
             </tr>
         </tbody>
     </table>
+</div>
+
+{# Tags #}
+<div class="tags">
+    {% for tag in recipe.tags %}
+        #{{ tag.name }} - 
+    {% endfor %}
 </div>
 
 {# Ingredients #}
