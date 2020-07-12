@@ -5,9 +5,14 @@
 {# Title #}
 <h2>{{ recipe.name }}</h2>
 
-<a href="{{ path('recipe_update',{'id': recipe.id}) }}" class="button">
-    <span class="backto">Editer</span>
-</a>
+{% if is_granted('edit', recipe) %}
+    <a href="{{ path('recipe_update',{'id': recipe.id}) }}" class="button">
+        <span class="edit">Editer</span>
+    </a>
+    <a href="{{ path('recipe_delete',{'id': recipe.id}) }}" class="button">
+        <span class="delete">Supprimer</span>
+    </a>
+{% endif %}
 
 
 {# Picture #}
@@ -68,7 +73,7 @@
 {# Tags #}
 <div class="tags">
     {% for tag in recipe.tags %}
-        #{{ tag.name }} - 
+        #{{ tag.name }} 
     {% endfor %}
 </div>
 

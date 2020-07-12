@@ -8,9 +8,16 @@
     <a href="{{ path('recipe_view', {'id': recipe.id}) }}">
         {{ recipe.name }}
     </a>
-    <a href="{{ path('recipe_update',{'id': recipe.id}) }}" class="button">
-        <span class="backto">Editer</span>
-    </a>
+
+    {% if is_granted('edit', recipe) %}
+        <a href="{{ path('recipe_update',{'id': recipe.id}) }}" class="button">
+            <span class="backto">Editer</span>
+        </a>
+
+        <a href="{{ path('recipe_delete',{'id': recipe.id}) }}" class="button">
+            <span class="delete">Supprimer</span>
+        </a>
+    {% endif %}
 </div>
 {% endfor %}
 

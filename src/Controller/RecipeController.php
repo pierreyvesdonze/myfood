@@ -213,11 +213,11 @@ class RecipeController extends AbstractController
 
     /**
      * @Route("/{id}/delete", name="recipe_delete", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_USER")
      */
     public function recipeDelete(Recipe $recipe)
     {
-        /*      $this->denyAccessUnlessGranted('edit', $recipe); */
+        $this->denyAccessUnlessGranted('edit', $recipe); 
 
         $manager = $this->getDoctrine()->getManager();
         $manager->remove($recipe);

@@ -107,7 +107,6 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         }
 
         return new RedirectResponse($this->urlGenerator->generate('homepage'));
-
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
