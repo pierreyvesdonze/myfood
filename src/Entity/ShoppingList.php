@@ -39,16 +39,21 @@ class ShoppingList
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="shoppingList", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="shoppingList", cascade={"persist", "remove"}, fetch="EAGER")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $articles;
+    public $articles;
 
     public function __construct()
     {
         $this->createdAt = new \DateTime;
         $this->updatedAt = new \DateTime;
         $this->articles = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->description;
     }
 
     public function getId(): ?int

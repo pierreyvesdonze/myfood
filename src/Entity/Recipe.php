@@ -57,7 +57,7 @@ class Recipe
     private $person;
 
      /**
-     * @ORM\OneToMany(targetEntity=RecipeIngredient::class, mappedBy="recipe", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=RecipeIngredient::class, mappedBy="recipe", cascade={"persist", "remove"}, fetch="EAGER")
      * @ORM\JoinColumn(nullable=true)
      */
     private $recipeIngredients;

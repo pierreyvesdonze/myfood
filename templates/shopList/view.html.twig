@@ -1,0 +1,22 @@
+{% extends "base.html.twig" %}
+{% block body %}
+
+<div class="description">
+    Liste de courses pour :
+    {{ shoppingList.description }}
+</div>
+
+<div class="shopping-list">
+    <ul>
+        {% for article in shoppingList.articles %}
+        <li>
+            {% if article.unit %}
+            {{ article.name|capitalize }} : {{ article.amount }} {{ article.unit }}
+            {% else %}
+            {{ article.name|capitalize }} : {{ article.amount }}
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

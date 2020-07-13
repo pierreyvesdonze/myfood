@@ -18,6 +18,15 @@
             <span class="delete">Supprimer</span>
         </a>
     {% endif %}
+    
+    <a href="{{ path('shopping_list_create',{'id': recipe.id}) }}" class="button">
+        <span class="go">Générer une liste de courses</span>
+    </a>
+    <a href="{{ path('shopping_list_add',{'id': recipe.id}) }}" class="button">
+        <span class="create">Ajouter à une liste de courses</span>
+    </a>
+    
+
 </div>
 {% endfor %}
 

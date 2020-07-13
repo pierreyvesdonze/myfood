@@ -22,11 +22,25 @@ class Article
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\ShoppingList", inversedBy="articles")
+     * @ORM\ManyToOne(targetEntity="App\Entity\ShoppingList", inversedBy="articles", cascade="persist")
      * @ORM\JoinColumn(nullable=false)
      */
     private $shoppingList;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $amount;
+
+    /**
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    private $unit;
+
+    public function __toString()
+    {
+        return $this->name;
+    }
 
     public function getId(): ?int
     {
@@ -53,6 +67,30 @@ class Article
     public function setShoppingList(?ShoppingList $shoppingList): self
     {
         $this->shoppingList = $shoppingList;
+
+        return $this;
+    }
+
+    public function getAmount(): ?int
+    {
+        return $this->amount;
+    }
+
+    public function setAmount(?int $amount): self
+    {
+        $this->amount = $amount;
+
+        return $this;
+    }
+
+    public function getUnit(): ?string
+    {
+        return $this->unit;
+    }
+
+    public function setUnit(?string $unit): self
+    {
+        $this->unit = $unit;
 
         return $this;
     }

@@ -27,12 +27,12 @@ class RecipeIngredient
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $amount;
+    public $amount;
 
     /**
      * @ORM\Column(type="string", length=24, nullable=true)
      */
-    private $unit;
+    public $unit;
 
     /**
      * @ORM\Column(type="string", length=255)

@@ -4,6 +4,9 @@
 
 {# Title #}
 <h2>{{ recipe.name }}</h2>
+<span>
+
+</span>
 
 {% if is_granted('edit', recipe) %}
     <a href="{{ path('recipe_update',{'id': recipe.id}) }}" class="button">
@@ -14,6 +17,13 @@
     </a>
 {% endif %}
 
+<a href="{{ path('shopping_list_create',{'id': recipe.id}) }}" class="button">
+    <span class="create">Générer une liste de courses</span>
+</a>
+
+<a href="{{ path('shopping_list_add',{'id': recipe.id}) }}" class="button">
+    <span class="create">Ajouter à une liste de courses</span>
+</a>
 
 {# Picture #}
 <div class="photo-recipe-view">
