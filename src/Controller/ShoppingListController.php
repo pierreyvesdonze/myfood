@@ -135,20 +135,19 @@ class ShoppingListController extends AbstractController
             foreach ($shoppingList->getArticles() as $cleanIngredient) {
                 $shoppingList->removeArticle($cleanIngredient);
             }
+            $em->refresh($shoppingList);
             $shoppingList->setUser($user);
-            dump($shoppingList);
-            foreach ($finalShoppingList as $final) {
-
-                //$em->clear();
+            
+            foreach ($finalShoppingList as $final) {              
                 $newArticle = new Article();
                 $newArticle->setName($final['name']);
                 $newArticle->setAmount($final['amount']);
                 $newArticle->setUnit($final['unit']);
                 $newArticle->setShoppingList($shoppingList);
-                $shoppingList->setUser($user);
                 $em->persist($newArticle);
-                $em->persist($shoppingList);
             }
+
+            $em->persist($shoppingList);
             $em->flush();
         }
         return $this->render('shopList/add.html.twig', [
