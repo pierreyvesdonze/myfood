@@ -30,12 +30,9 @@ class ShoppingListController extends AbstractController
      */
     public function shoppingListList(ShoppingListRepository $shoppingListRepository)
     {
-
-
-
         $shopList = $shoppingListRepository->findAll();
-        return $this->render('shoptList/shopping_list_all.html.twig', [
-            'shoppingList' => $shopList
+        return $this->render('shopList/shopping_list_all.html.twig', [
+            'shoppingLists' => $shopList
         ]);
     }
 
@@ -132,26 +129,39 @@ class ShoppingListController extends AbstractController
             }
 
             // Clean the original list
-            foreach ($shoppingList->getArticles() as $cleanIngredient) {
+          /*   foreach ($shoppingList->getArticles() as $cleanIngredient) {
                 $shoppingList->removeArticle($cleanIngredient);
-            }
-            $em->refresh($shoppingList);
-            $shoppingList->setUser($user);
-            
-            foreach ($finalShoppingList as $final) {              
+            }  */
+
+            // Save old informations
+            $oldShopListId = $shoppingList->getId();
+            $oldShopListName = $shoppingList->getDescription();
+
+            // Remove old shopping list
+            $em->remove($shoppingList);
+            $em->flush();
+
+            // Set new shopping list with old values + new articles
+            $newShoppingList = new ShoppingList();
+            $newShoppingList->setId($oldShopListId);
+            $newShoppingList->setDescription($oldShopListName);
+            $newShoppingList->setUser($user);
+            foreach ($finalShoppingList as $final) {
                 $newArticle = new Article();
                 $newArticle->setName($final['name']);
                 $newArticle->setAmount($final['amount']);
                 $newArticle->setUnit($final['unit']);
-                $newArticle->setShoppingList($shoppingList);
+                $newArticle->setShoppingList($newShoppingList);
                 $em->persist($newArticle);
             }
-
-            $em->persist($shoppingList);
+            $em->persist($newShoppingList);
             $em->flush();
+             return $this->redirectToRoute('shopping_list_view', [
+                'id' => $newShoppingList->getId(),
+            ]); 
         }
         return $this->render('shopList/add.html.twig', [
-            'form'   => $form->createView(),
+            'form'   => $form->createView()
         ]);
     }
 }
