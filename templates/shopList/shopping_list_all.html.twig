@@ -1,7 +1,18 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
+<ul>
     {% for shoplist in shoppingLists %}
-    {{ shoplist.description }}
+    <li>
+        {{ shoplist.description }}
+        <a href="{{ path('shopping_list_view', {'id': shoplist.id}) }}">
+            Voir
+        </a>
+        <a href="{{ path('shopping_list_delete', {'id': shoplist.id}) }}">
+            Supprimer
+        </a>
+
+    </li>
     {% endfor %}
+</ul>
 {% endblock %}

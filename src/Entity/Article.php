@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
@@ -28,12 +30,13 @@ class Article
     private $shoppingList;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="decimal", precision=9, scale=2, nullable=true)
+     * @Assert\Type(type="Numeric")
      */
     private $amount;
 
     /**
-     * @ORM\Column(type="string", length=20, nullable=true)
+     * @ORM\ManyToOne(targetEntity=Unit::class, inversedBy="article")
      */
     private $unit;
 
@@ -83,12 +86,12 @@ class Article
         return $this;
     }
 
-    public function getUnit(): ?string
+    public function getUnit(): ?Unit
     {
         return $this->unit;
     }
 
-    public function setUnit(?string $unit): self
+    public function setUnit(?Unit $unit): self
     {
         $this->unit = $unit;
 

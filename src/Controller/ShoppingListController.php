@@ -4,13 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Recipe;
 use App\Entity\Article;
-use App\Entity\RecipeIngredient;
 use App\Entity\ShoppingList;
 use App\Form\Type\ShoppingListType;
 use App\Repository\ShoppingListRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
@@ -163,5 +163,19 @@ class ShoppingListController extends AbstractController
         return $this->render('shopList/add.html.twig', [
             'form'   => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/{id}/delete", name="shopping_list_delete", methods={"GET","POST"})
+     */
+    public function shoppingListDelete(ShoppingList $shoppingList)
+    {
+        $manager = $this->getDoctrine()->getManager();
+        $manager->remove($shoppingList);
+        $manager->flush();
+
+        $this->addFlash("success", "La liste de courses a bien été supprimée");
+
+        return $this->redirectToRoute('shopping_list_list');
     }
 }

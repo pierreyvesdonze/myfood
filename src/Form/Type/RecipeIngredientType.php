@@ -5,6 +5,7 @@ namespace App\Form\Type;
 use App\Entity\RecipeIngredient;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -23,9 +24,14 @@ class RecipeIngredientType extends AbstractType
 
         $builder->add(
             'amount',
-            IntegerType::class,
+            NumberType::class,
             [
-                "label" => "Quantité d'ingrédient(s)"
+                "label" => "Quantité d'ingrédient(s)",
+                'scale' => 1,
+                'attr' => [
+                    'step' => '.5',
+                    'html5' => true
+                ]
             ]
         );
 

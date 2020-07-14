@@ -45,7 +45,6 @@ class PostVoter extends Voter
             return false;
         }
 
-       
         /** @var Recipe */
         $recipe = $subject;
 

@@ -25,7 +25,7 @@ class RecipeIngredient
     private $recipe;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
      */
     public $amount;
 
@@ -90,6 +90,23 @@ class RecipeIngredient
     {
         $this->name = strtolower($name);
 
+        return $this;
+    }
+
+    public function convertAmountsAndUnits()
+    {
+        $amount = $this->getAmount();
+        $unit   = $this->getUnit();
+
+        if ($amount > 999 && 'g' === $unit) {
+            $amount /= 1000;
+            $unit = 'kg';
+        } elseif ($amount > 1000 && 'ml' === $unit) {
+            $amount /= 1000;
+            $unit = 'L';
+        }
+        $this->setAmount($amount);
+        $this->setUnit($unit);
         return $this;
     }
 }

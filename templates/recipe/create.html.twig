@@ -28,7 +28,7 @@
   {# iterate over each existing step and render its only field: name #} 
   {% for ingredient in form.recipeIngredients %}
     <li>{{ form_row(ingredient.name) }}</li>
-    <li>{{ form_row(ingredient.amount) }}</li>
+    <li>{{ form_row(ingredient.amount, {'type':'number', 'lang': app.request.locale}) }}</li>
     <li>{{ form_row(ingredient.unit) }}</li>
     <li class="li-ingredient">*</li>
   {% endfor %}

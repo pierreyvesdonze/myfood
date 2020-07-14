@@ -95,7 +95,7 @@
     <ul>
         {% for ingredient in recipe.Recipeingredients %}
             <li>
-                {{ ingredient.name }}
+                {{ ingredient.name }} : {{ ingredient.amount }} {{ ingredient.unit }}
             </li>
         {% endfor %}
     </ul>
