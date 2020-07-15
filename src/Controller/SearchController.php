@@ -10,6 +10,7 @@ use App\Entity\RecipeIngredient;
 use App\Repository\RecipeRepository;
 use App\Repository\IngredientRepository;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,20 +31,25 @@ class SearchController extends AbstractController
 
             $data = json_decode($request->getContent());
             $recipies = $recipeRepository->findRecipeByName($data);
+            $recipiesArray = [];
+            foreach ($recipies as $recipe) {
+                $recipiesArray[] = array($recipe->getName());
+            }
 
-            return $this->json([
-                'recipies' => $recipies
-            ]);
+            return new JsonResponse($recipiesArray);
+//            return $this->json([
+//                'recipies' => $recipies
+//            ]);
         }
 
-        if ($request->isXMLHttpRequest()) {
-            $data = json_decode($request->getContent());
-            $recipies = $recipeRepository->findRecipeByName($data);
-            return $this->json([
-                'recipies' => $recipies
-            ]);
-        }
-        //return new Response('This is not ajax!', 400);
-        return $this->redirectToRoute('homepage');
+//        if ($request->isXMLHttpRequest()) {
+//            $data = json_decode($request->getContent());
+//            $recipies = $recipeRepository->findRecipeByName($data);
+//            return $this->json([
+//                'recipies' => $recipies
+//            ]);
+//        }
+        return new Response('This is not ajax!', 400);
+//        return $this->redirectToRoute('homepage');
     }
 }

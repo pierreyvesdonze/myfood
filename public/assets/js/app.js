@@ -39,7 +39,6 @@ var app = {
   /**
    *SEARCH
   */
-
   search: function(e) {
     e.preventDefault();
     let userInput = $('.search-input').val();
@@ -49,14 +48,18 @@ var app = {
         url: Routing.generate('searchApi'),
         method: "POST",
         dataType : "json",
-        data: userInput        
+        data: JSON.stringify(userInput),
       }).done(function(response) {
-        console.log('ok' + response)
+          if(null !== response) {
+            console.log('ok : ' + JSON.stringify(response))
+          } else {
+              console.log('Problème');
+          }
       }).fail(function (jqXHR, textStatus, error) {
         console.log(jqXHR);
         console.log(textStatus);
         console.log(error);
-    }); 
+    });
   }
 }
 
