@@ -25,12 +25,11 @@ class User implements UserInterface
      */
     private $email;
 
-     /**
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Role")
      * @ORM\JoinColumn(nullable=false)
      */
     private $role;
-
 
     /**
      * @var string The hashed password
@@ -76,9 +75,8 @@ class User implements UserInterface
         return $this;
     }
 
-
     /**
-     * Get the value of roles
+     * Get the value of roles.
      */
     public function getRolesCollection()
     {
@@ -87,7 +85,7 @@ class User implements UserInterface
 
     public function getRoles()
     {
-        return array($this->getRole()->getRoleString());
+        return [$this->getRole()->getRoleString()];
     }
 
     public function getRole(): ?Role

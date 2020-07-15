@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+
 class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -19,9 +20,9 @@ class UserType extends AbstractType
             TextType::class,
             [
                 'label' => false,
-                'attr'  => [
-                    'placeholder' => 'Username'
-                ]
+                'attr' => [
+                    'placeholder' => 'Username',
+                ],
             ]
         );
 
@@ -30,9 +31,9 @@ class UserType extends AbstractType
             EmailType::class,
             [
                 'label' => false,
-                'attr'  => [
-                    'placeholder' => 'Email'
-                ]
+                'attr' => [
+                    'placeholder' => 'Email',
+                ],
             ]
         );
 
@@ -41,7 +42,7 @@ class UserType extends AbstractType
             'invalid_message' => 'Les mots de passe doivent correspondre',
             'options' => ['attr' => ['class' => 'password-field']],
             'required' => true,
-            'first_options'  => ['label' => 'Mot de passe'],
+            'first_options' => ['label' => 'Mot de passe'],
             'second_options' => ['label' => 'Confirmation du mot de passe'],
         ]);
     }

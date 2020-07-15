@@ -2,16 +2,15 @@
 
 namespace App\Controller;
 
-use App\Entity\Recipe;
 use App\Entity\Article;
+use App\Entity\Recipe;
 use App\Entity\ShoppingList;
 use App\Form\Type\ShoppingListType;
 use App\Repository\ShoppingListRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/shopping_list")
@@ -31,8 +30,9 @@ class ShoppingListController extends AbstractController
     public function shoppingListList(ShoppingListRepository $shoppingListRepository)
     {
         $shopList = $shoppingListRepository->findAll();
+
         return $this->render('shopList/shopping_list_all.html.twig', [
-            'shoppingLists' => $shopList
+            'shoppingLists' => $shopList,
         ]);
     }
 
@@ -42,7 +42,7 @@ class ShoppingListController extends AbstractController
     public function shoppingListView(ShoppingList $shoppingList): Response
     {
         return $this->render('shopList/view.html.twig', [
-            'shoppingList' => $shoppingList
+            'shoppingList' => $shoppingList,
         ]);
     }
 
@@ -53,14 +53,14 @@ class ShoppingListController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
 
-        /**@var ShoppingList $shoppingList */
-        $shoppingList = new ShoppingList;
-        $ingredients  = $recipe->getRecipeIngredients();
-        $description  = $recipe->getName();
+        /** @var ShoppingList $shoppingList */
+        $shoppingList = new ShoppingList();
+        $ingredients = $recipe->getRecipeIngredients();
+        $description = $recipe->getName();
         $shoppingList->setDescription($description);
 
         foreach ($ingredients as $ingredient) {
-            $article = new Article;
+            $article = new Article();
             $article->setName($ingredient->getName());
             $article->setAmount($ingredient->amount);
             $article->setUnit($ingredient->unit);
@@ -70,7 +70,7 @@ class ShoppingListController extends AbstractController
 
         $em->flush();
 
-        $this->addFlash("success", "La liste de course a bien été créé !");
+        $this->addFlash('success', 'La liste de course a bien été créé !');
 
         return $this->redirectToRoute('shopping_list_view', [
             'id' => $shoppingList->getId(),
@@ -91,30 +91,30 @@ class ShoppingListController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $oldShopList = $form->get('shoppingList')->getData();
             $shoppingList = $shoppingListRepository->findOneBy([
-                'id' => $oldShopList->getId()
+                'id' => $oldShopList->getId(),
             ]);
 
             // Make an array with old list's ingredients
             $oldListArray = [];
             $oldList = $oldShopList->getArticles();
-            for ($i = 0; $i < count($oldList); $i++) {
-                $oldListArray[$i]['name']   = $oldList[$i]->getName();
+            for ($i = 0; $i < count($oldList); ++$i) {
+                $oldListArray[$i]['name'] = $oldList[$i]->getName();
                 $oldListArray[$i]['amount'] = intval($oldList[$i]->getAmount());
-                $oldListArray[$i]['unit']   = $oldList[$i]->getUnit();
+                $oldListArray[$i]['unit'] = $oldList[$i]->getUnit();
             }
 
             // Make an array with new list
             $newListArray = [];
             $truc = $recipe->getRecipeIngredients();
-            for ($j = 0; $j < count($truc); $j++) {
-                $newListArray[$j]['name']   = $truc[$j]->getName();
+            for ($j = 0; $j < count($truc); ++$j) {
+                $newListArray[$j]['name'] = $truc[$j]->getName();
                 $newListArray[$j]['amount'] = $truc[$j]->getAmount();
-                $newListArray[$j]['unit']   = $truc[$j]->getUnit();
+                $newListArray[$j]['unit'] = $truc[$j]->getUnit();
             }
 
             // Merge lists and build final
             $mergedList = array_merge($oldListArray, $newListArray);
-            $finalShoppingList = array();
+            $finalShoppingList = [];
             foreach ($mergedList as $unique) {
                 $name = $unique['name'];
 
@@ -129,9 +129,9 @@ class ShoppingListController extends AbstractController
             }
 
             // Clean the original list
-          /*   foreach ($shoppingList->getArticles() as $cleanIngredient) {
-                $shoppingList->removeArticle($cleanIngredient);
-            }  */
+            /*   foreach ($shoppingList->getArticles() as $cleanIngredient) {
+                  $shoppingList->removeArticle($cleanIngredient);
+              }  */
 
             // Save old informations
             $oldShopListId = $shoppingList->getId();
@@ -156,12 +156,14 @@ class ShoppingListController extends AbstractController
             }
             $em->persist($newShoppingList);
             $em->flush();
-             return $this->redirectToRoute('shopping_list_view', [
+
+            return $this->redirectToRoute('shopping_list_view', [
                 'id' => $newShoppingList->getId(),
-            ]); 
+            ]);
         }
+
         return $this->render('shopList/add.html.twig', [
-            'form'   => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
@@ -174,7 +176,7 @@ class ShoppingListController extends AbstractController
         $manager->remove($shoppingList);
         $manager->flush();
 
-        $this->addFlash("success", "La liste de courses a bien été supprimée");
+        $this->addFlash('success', 'La liste de courses a bien été supprimée');
 
         return $this->redirectToRoute('shopping_list_list');
     }

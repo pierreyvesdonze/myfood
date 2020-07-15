@@ -1,8 +1,9 @@
 <?php
+
 namespace App\Security;
 
-use App\Entity\User;
 use App\Entity\Recipe;
+use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
@@ -19,7 +20,6 @@ class PostVoter extends Voter
     {
         $this->security = $security;
     }
-
 
     protected function supports($attribute, $subject)
     {

@@ -13,13 +13,13 @@ class UserAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('roles', ChoiceType::class, [
-            'choices'  => [
-                'Utilisateur standard'  => 'ROLE_USER',
-                'Manager de la BDD'     => 'ROLE_DB_ADMIN',
-                'Super administrateur'  => 'ROLE_SUPER_ADMIN',
+            'choices' => [
+                'Utilisateur standard' => 'ROLE_USER',
+                'Manager de la BDD' => 'ROLE_DB_ADMIN',
+                'Super administrateur' => 'ROLE_SUPER_ADMIN',
             ],
             'multiple' => true,
-            'expanded' => true
+            'expanded' => true,
         ]);
     }
 

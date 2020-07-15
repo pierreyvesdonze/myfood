@@ -5,7 +5,6 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 /**
  * @ORM\Entity(repositoryClass=RecipeIngredientRepository::class)
  */
@@ -96,7 +95,7 @@ class RecipeIngredient
     public function convertAmountsAndUnits()
     {
         $amount = $this->getAmount();
-        $unit   = $this->getUnit();
+        $unit = $this->getUnit();
 
         if ($amount > 999 && 'g' === $unit) {
             $amount /= 1000;
@@ -107,6 +106,7 @@ class RecipeIngredient
         }
         $this->setAmount($amount);
         $this->setUnit($unit);
+
         return $this;
     }
 }

@@ -11,12 +11,11 @@ class ArticleType extends AbstractType
 {
     public function buildForm(\Symfony\Component\Form\FormBuilderInterface $builder, array $options)
     {
-
         $builder->add(
             'name',
             TextType::class,
             [
-                "label" => "Nom de l'article"
+                'label' => "Nom de l'article",
             ]
         );
     }
@@ -26,7 +25,7 @@ class ArticleType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Article::class,
             'attr' => [
-                'novalidate' => 'novalidate'
+                'novalidate' => 'novalidate',
             ],
         ]);
     }

@@ -2,21 +2,21 @@
 
 namespace App\Controller;
 
-use App\Entity\Recipe;
-use App\Entity\RecipeStep;
 use App\Entity\Ingredient;
-use App\Form\Type\RecipeType;
+use App\Entity\Recipe;
 use App\Entity\RecipeIngredient;
-use App\Repository\RecipeRepository;
+use App\Entity\RecipeStep;
+use App\Form\Type\RecipeType;
 use App\Repository\IngredientRepository;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\RecipeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/recipe")
@@ -36,8 +36,9 @@ class RecipeController extends AbstractController
     public function recipeList(RecipeRepository $recipeRepository)
     {
         $recipies = $recipeRepository->findAll();
+
         return $this->render('recipe/list.html.twig', [
-            'recipies' => $recipies
+            'recipies' => $recipies,
         ]);
     }
 
@@ -46,19 +47,19 @@ class RecipeController extends AbstractController
      */
     public function recipeView(Recipe $recipe): Response
     {
-        $timePrepa      = $recipe->getTimePrepa();
-        $hoursPrepa     = $timePrepa->format('H');
-        $minutesPrepa   = $timePrepa->format('i');
-        $timeCook       = $recipe->getTimeCook();
-        $hoursCook      = $timeCook->format('H');
-        $minutesCook    = $timeCook->format('i');
+        $timePrepa = $recipe->getTimePrepa();
+        $hoursPrepa = $timePrepa->format('H');
+        $minutesPrepa = $timePrepa->format('i');
+        $timeCook = $recipe->getTimeCook();
+        $hoursCook = $timeCook->format('H');
+        $minutesCook = $timeCook->format('i');
 
         return $this->render('recipe/view.html.twig', [
-            'recipe'        => $recipe,
-            'hoursPrepa'    => $hoursPrepa,
-            'minutesPrepa'  => $minutesPrepa,
-            'hoursCook'     => $hoursCook,
-            'minutesCook'   => $minutesCook,
+            'recipe' => $recipe,
+            'hoursPrepa' => $hoursPrepa,
+            'minutesPrepa' => $minutesPrepa,
+            'hoursCook' => $hoursCook,
+            'minutesCook' => $minutesCook,
         ]);
     }
 
@@ -88,9 +89,8 @@ class RecipeController extends AbstractController
 
             // If Ingredient no existing in db we create new
             foreach ($dataFormIngredients as $newIngredient) {
-
                 $isIngredientExist = $ingredientRepository->findOneBy([
-                    'name' => $newIngredient->getName()
+                    'name' => $newIngredient->getName(),
                 ]);
 
                 if (!$isIngredientExist) {
@@ -112,7 +112,7 @@ class RecipeController extends AbstractController
                 $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
                 $safeFilename = $originalFilename;
-                $newFilename = $safeFilename . '-' . uniqid() . '.' . $image->guessExtension();
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$image->guessExtension();
 
                 try {
                     $image->move(
@@ -120,8 +120,7 @@ class RecipeController extends AbstractController
                         $newFilename
                     );
                 } catch (FileException $e) {
-
-                    echo ("L'image n'a pas été chargée");
+                    echo "L'image n'a pas été chargée";
                 }
                 $recipe->setRecipePhoto($newFilename);
             }
@@ -132,16 +131,16 @@ class RecipeController extends AbstractController
 
             $entityManager->flush();
 
-            $this->addFlash("success", "La nouvelle recette " . $recipe->getName() . "a bien été ajoutée !");
+            $this->addFlash('success', 'La nouvelle recette '.$recipe->getName().'a bien été ajoutée !');
 
             return $this->redirectToRoute('recipe_view', [
-                'id' => $recipe->getId()
+                'id' => $recipe->getId(),
             ]);
         }
 
         return $this->render('recipe/create.html.twig', [
             'recipe' => $recipe,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
@@ -156,7 +155,7 @@ class RecipeController extends AbstractController
         $manager = $this->getDoctrine()->getManager();
 
         if (null === $recipe) {
-            throw $this->createNotFoundException('Recette non existente... ' . $recipe->getId);
+            throw $this->createNotFoundException('Recette non existente... '.$recipe->getId);
         }
 
         $originalIngredients = new ArrayCollection();
@@ -178,7 +177,7 @@ class RecipeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $amount = $form->getData();
-            foreach($amount->getRecipeIngredients() as $ingredient) {
+            foreach ($amount->getRecipeIngredients() as $ingredient) {
                 $ingredient->convertAmountsAndUnits();
             }
             foreach ($originalSteps as $step) {
@@ -190,47 +189,45 @@ class RecipeController extends AbstractController
 
             foreach ($originalIngredients as $ingredient) {
                 if (false === $recipe->getRecipeIngredients()->contains($ingredient)) {
-            
                     $ingredient->setRecipe(null);
                     $manager->persist($ingredient);
                 }
             }
 
-             // Images
-             $image = $form->get('recipePhoto')->getData();
-             if ($image) {
-                 $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
-                 // this is needed to safely include the file name as part of the URL
-                 $safeFilename = $originalFilename;
-                 $newFilename = $safeFilename . '-' . uniqid() . '.' . $image->guessExtension();
- 
-                 try {
-                     $image->move(
+            // Images
+            $image = $form->get('recipePhoto')->getData();
+            if ($image) {
+                $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $originalFilename;
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$image->guessExtension();
+
+                try {
+                    $image->move(
                          $this->getParameter('images_directory'),
                          $newFilename
                      );
-                 } catch (FileException $e) {
- 
-                     echo ("L'image n'a pas été chargée");
-                 }
-                 $recipe->setRecipePhoto($newFilename);
-             }
+                } catch (FileException $e) {
+                    echo "L'image n'a pas été chargée";
+                }
+                $recipe->setRecipePhoto($newFilename);
+            }
 
             $manager->persist($step);
             $manager->flush();
 
-            $this->addFlash("success", "La recette a bien été mise à jour !");
+            $this->addFlash('success', 'La recette a bien été mise à jour !');
 
-        /*     return $this->redirectToRoute('recipe_view', [
-                'id' => $recipe->getId()
-            ]); */
+            /*     return $this->redirectToRoute('recipe_view', [
+                    'id' => $recipe->getId()
+                ]); */
         }
 
         return $this->render(
-            "recipe/edit.html.twig",
+            'recipe/edit.html.twig',
             [
-                "recipe" => $recipe,
-                "form"   => $form->createView()
+                'recipe' => $recipe,
+                'form' => $form->createView(),
             ]
         );
     }
@@ -249,12 +246,12 @@ class RecipeController extends AbstractController
             $fileSystem = new Filesystem();
             $dir = $this->getParameter('images_directory');
             $photoName = $recipe->getRecipePhoto();
-            $fileSystem->remove($dir . '/' . $photoName);
+            $fileSystem->remove($dir.'/'.$photoName);
         }
         $manager->remove($recipe);
         $manager->flush();
 
-        $this->addFlash("success", "La recette a bien été supprimée");
+        $this->addFlash('success', 'La recette a bien été supprimée');
 
         return $this->redirectToRoute('recipe_list');
     }

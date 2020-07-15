@@ -46,8 +46,8 @@ class ShoppingList
 
     public function __construct()
     {
-        $this->createdAt = new \DateTime;
-        $this->updatedAt = new \DateTime;
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
         $this->articles = new ArrayCollection();
     }
 
@@ -64,6 +64,7 @@ class ShoppingList
     public function setId($id)
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -104,18 +105,18 @@ class ShoppingList
     }
 
     /**
-     * Get the value of description
-     */ 
+     * Get the value of description.
+     */
     public function getDescription()
     {
         return $this->description;
     }
 
     /**
-     * Set the value of description
+     * Set the value of description.
      *
-     * @return  self
-     */ 
+     * @return self
+     */
     public function setDescription($description)
     {
         $this->description = $description;
@@ -123,7 +124,6 @@ class ShoppingList
         return $this;
     }
 
-    
     public function getUser(): ?User
     {
         return $this->user;

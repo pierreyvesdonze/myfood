@@ -5,12 +5,12 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\RoleRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
@@ -34,7 +34,6 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $plainPassword = $form->get('password')->getData();
             $encodedPassword = $encoder->encodePassword($user, $plainPassword);
 
@@ -58,7 +57,6 @@ class UserController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
 
     /**
      * @Route("/myprofile", name="user_profile", methods={"GET"})
@@ -84,14 +82,13 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $brochureFile = $form->get('brochure')->getData();
 
             if ($brochureFile) {
                 $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
                 $safeFilename = $originalFilename;
-                $newFilename = $safeFilename . '-' . uniqid() . '.' . $brochureFile->guessExtension();
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$brochureFile->guessExtension();
 
                 // Move the file to the directory where brochures are stored
                 try {
@@ -100,8 +97,7 @@ class UserController extends AbstractController
                         $newFilename
                     );
                 } catch (FileException $e) {
-
-                    echo ("L'image n'a pas été chargée");
+                    echo "L'image n'a pas été chargée";
                 }
 
                 $user->setBrochureFilename($newFilename);
@@ -118,7 +114,7 @@ class UserController extends AbstractController
         ]);
     }
 
-        /**
+    /**
      * @Route("/delete/{id}", name="user_delete", methods={"DELETE"})
      */
     public function delete(Request $request, User $user): Response
@@ -131,5 +127,4 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('event_list');
     }
-  
 }

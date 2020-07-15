@@ -22,11 +22,11 @@ class RecipeRepository extends ServiceEntityRepository
     /**
      * @return Recipe[] Returns an array of Recipe objects
      */
-
     public function findRecipeByName($value)
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.name = :val')
+            ->andWhere('REGEXP(r.name, :regexp) = :val')
+            ->setParameter('regexp', '[a-zA-Z]{4}')
             ->setParameter('val', $value)
             ->orderBy('r.id', 'ASC')
             ->setMaxResults(10)
@@ -34,6 +34,16 @@ class RecipeRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+//    public function findRecipeByName($value)
+//    {
+//        return $this->createQueryBuilder('r')
+//            ->andWhere('r.name = :val')
+//            ->setParameter('val', $value)
+//            ->orderBy('r.id', 'ASC')
+//            ->setMaxResults(10)
+//            ->getQuery()
+//            ->getResult();
+//    }
 
     /*
     public function findOneBySomeField($value): ?Recipe

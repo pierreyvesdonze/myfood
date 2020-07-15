@@ -22,8 +22,9 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
+
 /**
- * https://symfony.com/doc/current/security/guard_authentication.html#the-guard-authenticator-methods
+ * https://symfony.com/doc/current/security/guard_authentication.html#the-guard-authenticator-methods.
  */
 class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
 {
@@ -41,7 +42,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
     }
-    
+
     protected function getLoginUrl()
     {
         return $this->urlGenerator->generate('login');
@@ -56,8 +57,8 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     public function getCredentials(Request $request)
     {
         $credentials = [
-            'email'      => $request->request->get('email'),
-            'password'   => $request->request->get('password'),
+            'email' => $request->request->get('email'),
+            'password' => $request->request->get('password'),
             'csrf_token' => $request->request->get('_csrf_token'),
         ];
         $request->getSession()->set(
@@ -111,11 +112,10 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        $data = array(
-            'message' => strtr($exception -> getMessageKey(),$exception -> getMessageData())
-        );
-        return new JsonResponse($data,Response::HTTP_FORBIDDEN);
+        $data = [
+            'message' => strtr($exception->getMessageKey(), $exception->getMessageData()),
+        ];
+
+        return new JsonResponse($data, Response::HTTP_FORBIDDEN);
     }
-
-
 }

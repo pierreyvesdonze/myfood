@@ -19,16 +19,16 @@ class ShoppingListRepository extends ServiceEntityRepository
         parent::__construct($registry, ShoppingList::class);
     }
 
-     /**
-    * @return Amount[] Returns an array of Amount objects
-   */
-  public function findIngredientsExcept($value)
-  {
-      return $this->createQueryBuilder('a')
+    /**
+     * @return Amount[] Returns an array of Amount objects
+     */
+    public function findIngredientsExcept($value)
+    {
+        return $this->createQueryBuilder('a')
           ->andWhere('a.api_id = :val')
           ->setParameter('val', $value)
           ->getQuery()
           ->getResult()
       ;
-  }
+    }
 }

@@ -56,7 +56,7 @@ class Recipe
      */
     private $person;
 
-     /**
+    /**
      * @ORM\OneToMany(targetEntity=RecipeIngredient::class, mappedBy="recipe", cascade={"persist", "remove"}, fetch="EAGER")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -106,7 +106,7 @@ class Recipe
 
         return $this;
     }
-    
+
     public function getUser(): ?User
     {
         return $this->user;
@@ -231,7 +231,7 @@ class Recipe
 
     public function getRecipePhoto()
     {
-        return $this->recipePhoto;        
+        return $this->recipePhoto;
     }
 
     public function setRecipePhoto($recipePhoto)

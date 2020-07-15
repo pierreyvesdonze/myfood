@@ -11,7 +11,6 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
-
     public function index()
     {
         $projectDir = $this->getParameter('kernel.project_dir');
@@ -55,7 +54,7 @@ class SecurityController extends AbstractController
             $password = $data->password;
 
             $entityManager = $this->getDoctrine()->getManager();
-            $user =$this->getUser();
+            $user = $this->getUser();
 
             $user->setPassword($passwordEncoder->encodePassword($user, $password));
             $entityManager->flush();
@@ -64,7 +63,6 @@ class SecurityController extends AbstractController
                 'result' => 'mot de passe modifié',
             ]);
         } else {
-
             return $this->json([
                 'text' => 'modification impossible',
                 'result' => false,

@@ -11,12 +11,11 @@ class RecipeStepType extends AbstractType
 {
     public function buildForm(\Symfony\Component\Form\FormBuilderInterface $builder, array $options)
     {
-
         $builder->add(
             'text',
             TextareaType::class,
             [
-                "label" => "Description de l'étape"
+                'label' => "Description de l'étape",
             ]
         );
     }
@@ -26,7 +25,7 @@ class RecipeStepType extends AbstractType
         $resolver->setDefaults([
             'data_class' => RecipeStep::class,
             'attr' => [
-                'novalidate' => 'novalidate'
+                'novalidate' => 'novalidate',
             ],
         ]);
     }

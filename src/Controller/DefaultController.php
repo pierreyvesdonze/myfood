@@ -5,8 +5,8 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-class DefaultController extends AbstractController {
-
+class DefaultController extends AbstractController
+{
     public function index()
     {
         $projectDir = $this->getParameter('kernel.project_dir');
@@ -16,8 +16,8 @@ class DefaultController extends AbstractController {
     /**
      * @Route("/", name="homepage", methods={"GET","POST"})
      */
-    public function homepage() {
- 
+    public function homepage()
+    {
         return $this->render('main/homepage.html.twig');
     }
 }
