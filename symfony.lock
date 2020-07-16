@@ -1,7 +1,4 @@
 {
-    "beberlei/doctrineextensions": {
-        "version": "v1.2.7"
-    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {

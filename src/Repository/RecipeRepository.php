@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Recipe;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -25,35 +26,11 @@ class RecipeRepository extends ServiceEntityRepository
     public function findRecipeByName($value)
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('REGEXP(r.name, :regexp) = :val')
-            ->setParameter('regexp', '[a-zA-Z]{4}')
-            ->setParameter('val', $value)
+            ->andWhere('r.name LIKE :val')
+            ->setParameter('val', '%' . $value . '%')
             ->orderBy('r.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult();
     }
-
-//    public function findRecipeByName($value)
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.name = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('r.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult();
-//    }
-
-    /*
-    public function findOneBySomeField($value): ?Recipe
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
