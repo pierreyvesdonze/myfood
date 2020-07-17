@@ -33,4 +33,19 @@ class RecipeRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * @return Recipe[] Returns an array of Ingredient objects
+     */
+    public function findByIngredients($keyword)
+    {
+        return $this->createQueryBuilder('i')
+            ->andWhere('i.name LIKE :val')
+            ->setParameter('val', $keyword)
+            ->orderBy('i.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

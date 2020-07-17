@@ -17,8 +17,7 @@ var app = {
 		$('.search').submit(app.search);
 
 		//SEARCH BY INGREDIENTS
-		$('.search-by-ingredients').submit(app.searchByIngredients());
-
+		$('.search-by-ingredients').submit(app.searchByIngredients);
 	},
 
 	/**
@@ -68,8 +67,9 @@ var app = {
 	/**
 	 *SEARCH BY INGREDIENTS
 	 */
-	searchByIngredients: function () {
-		// evt.preventDefault();
+	searchByIngredients: function (e) {
+		e.stopPropagation();
+		e.preventDefault();
 		let userInput = $('.search-by-ingredients-input').val();
 		console.log('input : ' + userInput);
 

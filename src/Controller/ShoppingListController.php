@@ -194,9 +194,9 @@ class ShoppingListController extends AbstractController
     }
 
 
-    /***
+    /**
+     * @Route("/by-ingredient-ajax", name="shopping_list_by_ingredients_ajax", options={"expose"=true})
      *
-     * @Route("/by-ingredient-ajax", name="shopping_list_by_ingredients_ajax", methods={"GET", "POST"})
      * @param Request $request
      * @param RecipeRepository $recipeRepository
      * @return JsonResponse|Response
@@ -206,7 +206,7 @@ class ShoppingListController extends AbstractController
     {
         if ($request->isMethod('POST')) {
             $data = json_decode($request->getContent());
-            $recipies = $recipeRepository->findRecipeByName($data);
+            $recipies = $recipeRepository->findByIngredients($data);
             $recipiesArray = [];
             foreach ($recipies as $recipe) {
                 $recipiesArray[] = [$recipe->getName()];
