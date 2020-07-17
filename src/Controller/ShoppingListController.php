@@ -5,9 +5,13 @@ namespace App\Controller;
 use App\Entity\Article;
 use App\Entity\Recipe;
 use App\Entity\ShoppingList;
+use App\Form\Type\ShoppingListByIngredientsType;
 use App\Form\Type\ShoppingListType;
+use App\Repository\IngredientRepository;
+use App\Repository\RecipeRepository;
 use App\Repository\ShoppingListRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -179,5 +183,38 @@ class ShoppingListController extends AbstractController
         $this->addFlash('success', 'La liste de courses a bien été supprimée');
 
         return $this->redirectToRoute('shopping_list_list');
+    }
+
+    /**
+     * @Route("/by-ingredient", name="shopping_list_by_ingredients")
+     */
+    public function createShopplistByIngredients()
+    {
+        return $this->render('shopList/create.by.ingredients.html.twig');
+    }
+
+
+    /***
+     *
+     * @Route("/by-ingredient-ajax", name="shopping_list_by_ingredients_ajax", methods={"GET", "POST"})
+     * @param Request $request
+     * @param RecipeRepository $recipeRepository
+     * @return JsonResponse|Response
+     *
+     */
+    public function createShopplistByIngredientsAjax(Request $request, RecipeRepository $recipeRepository)
+    {
+        if ($request->isMethod('POST')) {
+            $data = json_decode($request->getContent());
+            $recipies = $recipeRepository->findRecipeByName($data);
+            $recipiesArray = [];
+            foreach ($recipies as $recipe) {
+                $recipiesArray[] = [$recipe->getName()];
+            }
+
+            return new JsonResponse($recipiesArray);
+        }
+
+        return new Response('This is not ajax!', 400);
     }
 }
