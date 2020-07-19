@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\RecipeIngredient;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Exception;
 
 /**
  * @method RecipeIngredient|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,32 +20,17 @@ class RecipeIngredientRepository extends ServiceEntityRepository
         parent::__construct($registry, RecipeIngredient::class);
     }
 
-    // /**
-    //  * @return RecipeIngredient[] Returns an array of RecipeIngredient objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return RecipeIngredient[] Returns an array of Ingredient objects
+     */
+    public function findRecipeByIngredients($keywords)
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('r.name LIKE :val')
+            ->setParameter('val', '%' . $keywords . '%')
             ->orderBy('r.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?RecipeIngredient
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

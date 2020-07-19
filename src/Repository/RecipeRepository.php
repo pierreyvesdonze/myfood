@@ -37,15 +37,16 @@ class RecipeRepository extends ServiceEntityRepository
     /**
      * @return Recipe[] Returns an array of Ingredient objects
      */
-    public function findByIngredients($keyword)
+    public function findRecipeByIngredients($keywords)
     {
-        return $this->createQueryBuilder('i')
-            ->andWhere('i.name LIKE :val')
-            ->setParameter('val', $keyword)
-            ->orderBy('i.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-            ;
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT * FROM `recipe` INNER JOIN recipe_ingredient i on recipe.id = i.recipe_id WHERE  i.name LIKE '%$keywords%'
+            ORDER BY r.name ASC'
+        )->setParameter('keywords', $keywords);
+
+        // returns an array of Product objects
+        return $query->getResult();
     }
 }

@@ -192,29 +192,4 @@ class ShoppingListController extends AbstractController
     {
         return $this->render('shopList/create.by.ingredients.html.twig');
     }
-
-
-    /**
-     * @Route("/by-ingredient-ajax", name="shopping_list_by_ingredients_ajax", options={"expose"=true})
-     *
-     * @param Request $request
-     * @param RecipeRepository $recipeRepository
-     * @return JsonResponse|Response
-     *
-     */
-    public function createShopplistByIngredientsAjax(Request $request, RecipeRepository $recipeRepository)
-    {
-        if ($request->isMethod('POST')) {
-            $data = json_decode($request->getContent());
-            $recipies = $recipeRepository->findByIngredients($data);
-            $recipiesArray = [];
-            foreach ($recipies as $recipe) {
-                $recipiesArray[] = [$recipe->getName()];
-            }
-
-            return new JsonResponse($recipiesArray);
-        }
-
-        return new Response('This is not ajax!', 400);
-    }
 }

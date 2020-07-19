@@ -26,7 +26,7 @@ class User implements UserInterface
     private $email;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Role")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Role", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $role;

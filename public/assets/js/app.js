@@ -16,8 +16,10 @@ var app = {
 		//SEARCHBAR
 		$('.search').submit(app.search);
 
-		//SEARCH BY INGREDIENTS
-		$('.search-by-ingredients').submit(app.searchByIngredients);
+		//CREATE LIST INGREDIENTS
+		$('.create-by-ingredients').submit(app.addNewElementToList);
+		$('.find-ingredients').click(app.searchByIngredients);
+
 	},
 
 	/**
@@ -52,52 +54,79 @@ var app = {
 				dataType: "json",
 				data: JSON.stringify(userInput),
 			}).done(function (response) {
-			if (null !== response) {
-				console.log('ok : ' + JSON.stringify(response))
-			} else {
-				console.log('Problème');
-			}
-		}).fail(function (jqXHR, textStatus, error) {
-			console.log(jqXHR);
-			console.log(textStatus);
-			console.log(error);
-		});
+				if (null !== response) {
+					console.log('ok : ' + JSON.stringify(response))
+				} else {
+					console.log('Problème');
+				}
+			}).fail(function (jqXHR, textStatus, error) {
+				console.log(jqXHR);
+				console.log(textStatus);
+				console.log(error);
+			});
+	},
+
+	/**
+	 * ADD NEW ELEMENT TO LIST
+	 */
+	addNewElementToList: function (e) {
+		e.preventDefault();
+
+		let userInput = $('.create-by-ingredients-input').val(),
+			resultSubmit = $('.result-input-ingredients'),
+			button = $('<button>X</button>'),
+			span = $('<span></span>')
+
+		span.addClass('span-ingredient');
+		resultSubmit.append(span);
+		span.append(userInput);
+		button.addClass('delete-ingredient');
+		resultSubmit.append(button);
+		resultSubmit.append('<br/>');
+		this.reset();
 	},
 
 	/**
 	 *SEARCH BY INGREDIENTS
 	 */
-	searchByIngredients: function (e) {
-		e.stopPropagation();
-		e.preventDefault();
-		let userInput = $('.search-by-ingredients-input').val();
-		console.log('input : ' + userInput);
+	searchByIngredients: function () {
+		console.log('Recherche de recettes')
 
-		let resultInput = $('.result-input-ingredients');
-
+		var array = [];
+		var ingredients = $('.span-ingredient');
+		ingredients.each(function () {
+			array.push(this.innerHTML);
+		});
+		console.log(array);
+		console.log(Array.isArray(array));
 		$.ajax(
 			{
 				url: Routing.generate('shopping_list_by_ingredients_ajax'),
-				method: "POST",
+				type: "POST",
+				contentType: "application/json",
 				dataType: "json",
-				data: JSON.stringify(userInput),
+				data: JSON.stringify(array)
 			}).done(function (response) {
-			if (null !== response) {
-				console.log('ok : ' + JSON.stringify(response))
-			} else {
-				console.log('Problème');
-			}
-		}).fail(function (jqXHR, textStatus, error) {
-			console.log(jqXHR);
-			console.log(textStatus);
-			console.log(error);
-		});
+				if (null !== response) {
+					console.log('ok : ' + JSON.stringify(response));
+					console.log(typeof(response));
+				} else {
+					console.log('Problème');
+				}
+			}).fail(function (jqXHR, textStatus, error) {
+				console.log(jqXHR);
+				console.log(textStatus);
+				console.log(error);
+			});
 	}
 };
 
 // App Loading
 document.addEventListener('DOMContentLoaded', app.init);
 
-
-
-
+// Remove Ingredients
+$(document).on('click', '.delete-ingredient', function () {
+	$(this).prev().remove();
+	$(this).next().remove();
+	this.remove();
+});
