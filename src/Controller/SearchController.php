@@ -50,7 +50,7 @@ class SearchController extends AbstractController
             $dataIngredients = json_decode($request->getContent());
             $dataIngredients = $request->getContent();
 
-            // Bidouille super merdique mais je n'ai trouvé que ça pour l'instant
+            // Sorry for this :/
             $arrayIngredients = explode(', ', $dataIngredients);
             $text = str_replace("'", '', $arrayIngredients);
             $text2 = str_replace("[", '', $text);
@@ -64,32 +64,39 @@ class SearchController extends AbstractController
                 /**
                  * @return RecipeIngredient()
                  */
-                $recipeIngredient = $recipeIngredientRepository->findBy([
+                $recipeIngredients = $recipeIngredientRepository->findBy([
                     'name' => $data
                 ]);
 
-                foreach ($recipeIngredient as $recipeIng) {
+
+                foreach ($recipeIngredients as $recipeIng) {
                     $name = $recipeIng->getName();
-                    $recipeIngStr = strval($name);
-                    $recipeRepository->findRecipeByName($recipeIngStr);
+                    $recipeNames = $recipeRepository->findRecipeByName($name);
 
-                    /**
-                     * @return Recipe()
-                     */
-                    $recipies = $recipeRepository->findBy([
-                        'id' => $recipeIng->getRecipe()
-                    ]);
+                    foreach ($recipeNames as $recipeName) {
 
-                    $recipiesArray = $recipies;
-                }
-
-                foreach ($recipiesArray as $name) {
-                    $finalArray[0] = $name->getName();
-                    $finalArray[1] = $name->getId();
+                        /**
+                         * @return Recipe()
+                         */
+                        $recipies = $recipeRepository->findBy([
+                            'id' => $recipeIng->getRecipe()
+                        ]);
+ 
+                        foreach($recipies as $recipe) {
+                            $recipeName = $recipe->getName();
+                            $recipeId = $recipe->getId();
+                            dump($recipeName);
+                        }
+                    }
                 }
             }
 
-            dump($finalArray);
+            for($i=0; $i < count($recipies); $i++) {
+                $recipiesArray[$i] = $recipeName;
+                $recipiesArray[$i] = $recipeId;
+            }
+            
+            dump($recipiesArray);
 
 
             $response = new Response();
