@@ -56,7 +56,6 @@ class SearchController extends AbstractController
             $text2 = str_replace("[", '', $text);
             $text3 = str_replace("]", '', $text2);
             $recipiesArray = [];
-            $finalArray = [];
 
             // Get matching RecipeIngredient
             foreach ($text3 as $data) {
@@ -67,7 +66,6 @@ class SearchController extends AbstractController
                 $recipeIngredients = $recipeIngredientRepository->findBy([
                     'name' => $data
                 ]);
-
 
                 foreach ($recipeIngredients as $recipeIng) {
                     $name = $recipeIng->getName();
@@ -81,27 +79,21 @@ class SearchController extends AbstractController
                         $recipies = $recipeRepository->findBy([
                             'id' => $recipeIng->getRecipe()
                         ]);
- 
-                        foreach($recipies as $recipe) {
+
+                        // Built array with names & ids of recipies
+                        foreach ($recipies as $key => $recipe) {
                             $recipeName = $recipe->getName();
                             $recipeId = $recipe->getId();
-                            dump($recipeName);
+                            $recipiesArray[]= ['name' => $recipeName];
+                            $recipiesArray[] = ['id' => $recipeId];
                         }
                     }
                 }
             }
 
-            for($i=0; $i < count($recipies); $i++) {
-                $recipiesArray[$i] = $recipeName;
-                $recipiesArray[$i] = $recipeId;
-            }
-            
-            dump($recipiesArray);
-
-
             $response = new Response();
             $response->setContent(json_encode([
-                'recipies' => $finalArray,
+                'recipies' => $recipiesArray,
             ]));
 
             $response->headers->set('Content-Type', 'application/json');
@@ -109,7 +101,7 @@ class SearchController extends AbstractController
             return $response;
         }
         return new Response(
-            'Content',
+            'Something wrong...',
             Response::HTTP_OK,
             ['content-type' => 'text/html']
         );
