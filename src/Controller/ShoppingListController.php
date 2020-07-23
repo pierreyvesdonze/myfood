@@ -185,11 +185,5 @@ class ShoppingListController extends AbstractController
         return $this->redirectToRoute('shopping_list_list');
     }
 
-    /**
-     * @Route("/by-ingredient", name="shopping_list_by_ingredients")
-     */
-    public function createShopplistByIngredients()
-    {
-        return $this->render('shopList/create.by.ingredients.html.twig');
-    }
+ 
 }

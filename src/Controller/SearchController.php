@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\Type\SearchRecipeType;
+use App\Functions\Functions;
 use App\Repository\RecipeIngredientRepository;
 use App\Repository\RecipeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -10,10 +11,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
 
 /**
  * @Route("/search")
@@ -100,16 +97,44 @@ class SearchController extends AbstractController
     /**
      * @Route("/by-ingredient", name="search_list_by_ingredients", methods={"GET", "POST"})
      */
-    public function searchByIngredients(Request $request)
-    {
-
+    public function searchByIngredients(
+        Request $request,
+        RecipeIngredientRepository $recipeIngredientRepository,
+        RecipeRepository $recipeRepository
+    ) {
 
         $form = $this->createForm(SearchRecipeType::class, null);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $entityManager = $this->getDoctrine()->getManager();
-            $dataFormIngredients = $form->get('recipeIngredients')->getData();
+            $dataFormIngredients = $form->get('ingredient')->getData();
+
+            foreach ($dataFormIngredients as $key => $dataFormIngredient) {
+                /**
+                 * @var RecipeIngredient()
+                 */
+                $recipeIngredients[] = $recipeIngredientRepository->findBy([
+                    'name' => $dataFormIngredient->getName()
+                ]);
+            }
+
+            $recipiesArray = [];
+            foreach ($recipeIngredients as $key => $value) {
+                foreach ($value as $recipe) {
+                    $recipiesArray[] = $recipe->getRecipe();
+                }
+
+            }
+/* 
+            if (!null == $recipiesArray) {
+                return $this->render('recipe/list.html.twig', [
+                    'recipies' => $recipiesArray,
+                ]);
+            } else {
+                $this->addFlash("error", "Désolé, nous n'avons pas trouvé de recette correspondante");
+            } */
         }
         return $this->render('shopList/create.by.ingredients.html.twig', [
             'form' => $form->createView()

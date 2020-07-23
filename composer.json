@@ -6,10 +6,12 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*",
+        "doctrine/annotations": "^1.0",
         "friendsofsymfony/jsrouting-bundle": "^2.6",
         "fzaninotto/faker": "^1.9",
         "intervention/image": "^2.5",
         "oneup/uploader-bundle": "^3.0",
+        "phpdocumentor/reflection-docblock": "^5.1",
         "sensio/framework-extra-bundle": "^5.5",
         "symfony/apache-pack": "^1.0",
         "symfony/asset": "5.0.*",
@@ -27,6 +29,8 @@
         "symfony/notifier": "5.0.*",
         "symfony/orm-pack": "^1.0",
         "symfony/profiler-pack": "^1.0",
+        "symfony/property-access": "5.0.*",
+        "symfony/property-info": "5.0.*",
         "symfony/security-bundle": "5.0.*",
         "symfony/serializer": "5.0.*",
         "symfony/string": "5.0.*",
@@ -85,7 +89,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "5.0.*",
+            "require": "5.1.*",
             "symfony-cache-warmup": true
         }
     }

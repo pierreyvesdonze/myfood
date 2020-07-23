@@ -13,7 +13,7 @@ class SearchRecipeType extends AbstractType
     public function buildForm(\Symfony\Component\Form\FormBuilderInterface $builder, array $options)
     {
         $builder->add('ingredient', CollectionType::class, [
-            'entry_type'    => ArticleType::class,
+            'entry_type'    => SearchIngredientType::class,
             'entry_options' => ['label' => false],
             'allow_add'     => true,
             'by_reference'  => false,

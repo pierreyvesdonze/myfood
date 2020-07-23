@@ -1,3 +1,5 @@
+
+
 var app = {
 
 	init: function () {
@@ -99,17 +101,18 @@ var app = {
 		});
 		console.log(array);
 		console.log(Array.isArray(array));
+
 		$.ajax(
 			{
 				url: Routing.generate('shopping_list_by_ingredients_ajax'),
 				type: "POST",
 				contentType: "application/json",
 				dataType: "json",
-				data: JSON.stringify(array)
+				data: JSON.stringify(array),
 			}).done(function (response) {
 				if (null !== response) {
 					console.log('ok : ' + JSON.stringify(response));
-					console.log(typeof(response));
+					console.log(typeof (response));
 				} else {
 					console.log('Problème');
 				}
