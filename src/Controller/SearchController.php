@@ -2,14 +2,18 @@
 
 namespace App\Controller;
 
+use App\Form\Type\SearchRecipeType;
 use App\Repository\RecipeIngredientRepository;
 use App\Repository\RecipeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 /**
  * @Route("/search")
@@ -59,7 +63,6 @@ class SearchController extends AbstractController
 
             // Get matching RecipeIngredient
             foreach ($text3 as $data) {
-
                 /**
                  * @return RecipeIngredient()
                  */
@@ -69,41 +72,47 @@ class SearchController extends AbstractController
 
                 foreach ($recipeIngredients as $recipeIng) {
                     $name = $recipeIng->getName();
-                    $recipeNames = $recipeRepository->findRecipeByName($name);
 
-                    foreach ($recipeNames as $recipeName) {
-
-                        /**
-                         * @return Recipe()
-                         */
-                        $recipies = $recipeRepository->findBy([
-                            'id' => $recipeIng->getRecipe()
-                        ]);
-
-                        // Built array with names & ids of recipies
-                        foreach ($recipies as $key => $recipe) {
-                            $recipeName = $recipe->getName();
-                            $recipeId = $recipe->getId();
-                            $recipiesArray[]= ['name' => $recipeName];
-                            $recipiesArray[] = ['id' => $recipeId];
-                        }
-                    }
+                    $recipies = $recipeRepository->findRecipeByName($name);
                 }
             }
+            dump($recipiesArray);
 
-            $response = new Response();
-            $response->setContent(json_encode([
-                'recipies' => $recipiesArray,
-            ]));
-
-            $response->headers->set('Content-Type', 'application/json');
-
-            return $response;
+            // Built array with names & ids of recipies
+            foreach ($recipies as $key => $recipe) {
+                $recipiesArray[] = [
+                    'id' => $recipe->getId(),
+                    'name' => $recipe->getName()
+                ];
+            }
         }
+        return $this->json([
+            'recipies' => $recipiesArray
+        ]);
+
         return new Response(
             'Something wrong...',
             Response::HTTP_OK,
             ['content-type' => 'text/html']
         );
+    }
+
+    /**
+     * @Route("/by-ingredient", name="search_list_by_ingredients", methods={"GET", "POST"})
+     */
+    public function searchByIngredients(Request $request)
+    {
+
+
+        $form = $this->createForm(SearchRecipeType::class, null);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $dataFormIngredients = $form->get('recipeIngredients')->getData();
+        }
+        return $this->render('shopList/create.by.ingredients.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 }

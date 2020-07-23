@@ -26,7 +26,7 @@ class Recipe
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="recipes")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="recipes", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
