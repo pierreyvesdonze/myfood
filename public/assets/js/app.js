@@ -1,5 +1,3 @@
-
-
 var app = {
 
 	init: function () {
@@ -19,8 +17,6 @@ var app = {
 		$('.search').submit(app.search);
 
 		//CREATE LIST INGREDIENTS
-		$('.create-by-ingredients').submit(app.addNewElementToList);
-		/* 		$('.search-by-ingredient-input').keydown(app.searchByIngredients); */
 		$('.search-recipe-form').on('keypress', app.searchByIngredients);
 
 	},

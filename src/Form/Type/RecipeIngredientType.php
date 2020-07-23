@@ -3,6 +3,8 @@
 namespace App\Form\Type;
 
 use App\Entity\RecipeIngredient;
+use App\Entity\Unit;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -35,9 +37,10 @@ class RecipeIngredientType extends AbstractType
 
         $builder->add(
             'unit',
-            TextType::class,
+            EntityType::class,
             [
-                'label' => 'Unité (Litre, cl, g, grammes etc.)',
+                'class' => Unit::class,
+                'choice_label' => 'name',
             ]
         );
     }

@@ -29,15 +29,15 @@ class RecipeIngredient
     public $amount;
 
     /**
-     * @ORM\Column(type="string", length=24, nullable=true)
-     */
-    public $unit;
-
-    /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      */
     private $name;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Unit::class, cascade={"persist", "remove"})
+     */
+    private $unit;
 
     public function getId(): ?int
     {
@@ -68,17 +68,6 @@ class RecipeIngredient
         return $this;
     }
 
-    public function getUnit(): ?string
-    {
-        return $this->unit;
-    }
-
-    public function setUnit(?string $unit): self
-    {
-        $this->unit = $unit;
-
-        return $this;
-    }
 
     public function getName(): ?string
     {
@@ -106,6 +95,18 @@ class RecipeIngredient
         }
         $this->setAmount($amount);
         $this->setUnit($unit);
+
+        return $this;
+    }
+
+    public function getUnit(): ?Unit
+    {
+        return $this->unit;
+    }
+
+    public function setUnit(?Unit $unit): self
+    {
+        $this->unit = $unit;
 
         return $this;
     }

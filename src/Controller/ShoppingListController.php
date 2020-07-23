@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Article;
 use App\Entity\Recipe;
 use App\Entity\ShoppingList;
+use App\Entity\Unit;
 use App\Form\Type\ShoppingListByIngredientsType;
 use App\Form\Type\ShoppingListType;
 use App\Repository\IngredientRepository;
@@ -104,7 +105,7 @@ class ShoppingListController extends AbstractController
             for ($i = 0; $i < count($oldList); ++$i) {
                 $oldListArray[$i]['name'] = $oldList[$i]->getName();
                 $oldListArray[$i]['amount'] = intval($oldList[$i]->getAmount());
-                $oldListArray[$i]['unit'] = $oldList[$i]->getUnit();
+   /*              $oldListArray[$i]['unit'] = $oldList[$i]->getUnit(); */
             }
 
             // Make an array with new list
@@ -113,7 +114,7 @@ class ShoppingListController extends AbstractController
             for ($j = 0; $j < count($truc); ++$j) {
                 $newListArray[$j]['name'] = $truc[$j]->getName();
                 $newListArray[$j]['amount'] = $truc[$j]->getAmount();
-                $newListArray[$j]['unit'] = $truc[$j]->getUnit();
+               /*  $newListArray[$j]['unit'] = $truc[$j]->getUnit(); */
             }
 
             // Merge lists and build final
@@ -132,11 +133,6 @@ class ShoppingListController extends AbstractController
                 }
             }
 
-            // Clean the original list
-            /*   foreach ($shoppingList->getArticles() as $cleanIngredient) {
-                  $shoppingList->removeArticle($cleanIngredient);
-              }  */
-
             // Save old informations
             $oldShopListId = $shoppingList->getId();
             $oldShopListName = $shoppingList->getDescription();
@@ -147,6 +143,8 @@ class ShoppingListController extends AbstractController
 
             // Set new shopping list with old values + new articles
             $newShoppingList = new ShoppingList();
+            $unit = new Unit();
+
             $newShoppingList->setId($oldShopListId);
             $newShoppingList->setDescription($oldShopListName);
             $newShoppingList->setUser($user);
@@ -154,7 +152,7 @@ class ShoppingListController extends AbstractController
                 $newArticle = new Article();
                 $newArticle->setName($final['name']);
                 $newArticle->setAmount($final['amount']);
-                $newArticle->setUnit($final['unit']);
+/*                 $newArticle->setUnit($final['unit']); */
                 $newArticle->setShoppingList($newShoppingList);
                 $em->persist($newArticle);
             }

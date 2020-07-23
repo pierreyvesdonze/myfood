@@ -73,14 +73,15 @@ class RecipeController extends AbstractController
         $user = $this->getUser();
         $recipe->setUser($user);
 
+        
         $newStep = new RecipeStep();
         $newStep->setRecipe($recipe);
         $recipe->getRecipeSteps()->add($newStep);
-
+        
         $recipeIngredients = new RecipeIngredient();
         $recipeIngredients->setRecipe($recipe);
         $recipe->getRecipeIngredients()->add($recipeIngredients);
-
+        
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
 

@@ -125,15 +125,14 @@ class SearchController extends AbstractController
                 }
 
             }
-
-/*             
+            
             if (!null == $recipiesArray) {
                 return $this->render('recipe/list.html.twig', [
                     'recipies' => $recipiesArray,
                 ]);
             } else {
                 $this->addFlash("error", "Désolé, nous n'avons pas trouvé de recette correspondante");
-            }  */
+            } 
         }
         return $this->render('shopList/create.by.ingredients.html.twig', [
             'form' => $form->createView()
