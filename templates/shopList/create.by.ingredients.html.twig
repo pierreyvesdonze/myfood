@@ -12,28 +12,23 @@ Yo
             <button type="button" class="find-ingredients">Rechercher</button>
         </form>
     </div> -->
+<div class="search-recipe-form">
 
-{{ form_start(form) }}
+    {{ form_start(form) }}
 
-{# Ingredients #}
-<ul class="ingredients" data-prototype="{{ form_widget(form.ingredient.vars.prototype)|e('html_attr') }}">
-    {# iterate over each existing step and render its only field: name #}
-    {% for ingredient in form.ingredient %}
-    <li>{{ form_row(ingredient) }}</li>
+    {# Ingredients #}
+    <ul class="ingredients" data-prototype="{{ form_widget(form.ingredient.vars.prototype)|e('html_attr') }}">
+        {# iterate over each existing step and render its only field: name #}
+        {% for ingredient in form.ingredient %}
+        <li>{{ form_row(ingredient) }}</li>
 
-    <li class="li-ingredient">*</li>
-    {% endfor %}
-</ul>
+        <li class="li-ingredient">*</li>
+        {% endfor %}
+    </ul>
 
-
-<div class="result-input-ingredients">
-
-</div>
-
-
-
-<div class="col">
-    {{ form_widget(form.save) }}
-    {{ form_end(form) }}
+    <div class="col">
+        {{ form_widget(form.save) }}
+        {{ form_end(form) }}
+    </div>
 </div>
 {% endblock  %}

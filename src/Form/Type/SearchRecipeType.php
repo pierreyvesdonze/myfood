@@ -25,7 +25,7 @@ class SearchRecipeType extends AbstractType
             [
                 'label' => 'Enregistrer',
                 'attr' => [
-                    'class' => 'button',
+                    'class' => 'button submit-search',
                 ],
             ]
         );

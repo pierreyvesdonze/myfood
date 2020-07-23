@@ -20,7 +20,8 @@ var app = {
 
 		//CREATE LIST INGREDIENTS
 		$('.create-by-ingredients').submit(app.addNewElementToList);
-		$('.find-ingredients').click(app.searchByIngredients);
+		/* 		$('.search-by-ingredient-input').keydown(app.searchByIngredients); */
+		$('.search-recipe-form').on('keypress', app.searchByIngredients);
 
 	},
 
@@ -69,9 +70,41 @@ var app = {
 	},
 
 	/**
+	 *SEARCH BY INGREDIENTS
+	 */
+	searchByIngredients: function (e) {
+
+		console.log('Recherche de recettes')
+
+		// Disable submit form on Enter keypress
+		var keyCode = e.keyCode || e.which;
+		if (keyCode === 13) {
+			e.preventDefault()
+
+			// Add new input
+			var addInput = $('.add-ingredient-link');
+			addInput.trigger("click");
+
+			// Get next input
+			var i = $('.search-by-ingredient-input:last').attr('name');
+			var getInteger = i.match(/(\d+)/); 
+			i = parseInt(getInteger);
+
+			// Focus to next input
+			setTimeout(function(){ 
+				var pouet = $('#search_recipe_ingredient_'+i+'_name');
+				pouet.focus();
+				 }, 30);
+	
+			return false;
+		}
+	}
+};
+
+	/**
 	 * ADD NEW ELEMENT TO LIST
 	 */
-	addNewElementToList: function (e) {
+/* 	addNewElementToList: function (e) {
 		e.preventDefault();
 
 		let userInput = $('.create-by-ingredients-input').val(),
@@ -86,50 +119,14 @@ var app = {
 		resultSubmit.append(button);
 		resultSubmit.append('<br/>');
 		this.reset();
-	},
-
-	/**
-	 *SEARCH BY INGREDIENTS
-	 */
-	searchByIngredients: function () {
-		console.log('Recherche de recettes')
-
-		var array = [];
-		var ingredients = $('.span-ingredient');
-		ingredients.each(function () {
-			array.push(this.innerHTML);
-		});
-		console.log(array);
-		console.log(Array.isArray(array));
-
-		$.ajax(
-			{
-				url: Routing.generate('shopping_list_by_ingredients_ajax'),
-				type: "POST",
-				contentType: "application/json",
-				dataType: "json",
-				data: JSON.stringify(array),
-			}).done(function (response) {
-				if (null !== response) {
-					console.log('ok : ' + JSON.stringify(response));
-					console.log(typeof (response));
-				} else {
-					console.log('Problème');
-				}
-			}).fail(function (jqXHR, textStatus, error) {
-				console.log(jqXHR);
-				console.log(textStatus);
-				console.log(error);
-			});
-	}
-};
+	}, */
 
 // App Loading
 document.addEventListener('DOMContentLoaded', app.init);
 
 // Remove Ingredients
-$(document).on('click', '.delete-ingredient', function () {
+/* $(document).on('click', '.delete-ingredient', function () {
 	$(this).prev().remove();
 	$(this).next().remove();
 	this.remove();
-});
+}); */

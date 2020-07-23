@@ -108,9 +108,7 @@ class SearchController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $entityManager = $this->getDoctrine()->getManager();
             $dataFormIngredients = $form->get('ingredient')->getData();
-
             foreach ($dataFormIngredients as $key => $dataFormIngredient) {
                 /**
                  * @var RecipeIngredient()
@@ -127,14 +125,15 @@ class SearchController extends AbstractController
                 }
 
             }
-/* 
+
+/*             
             if (!null == $recipiesArray) {
                 return $this->render('recipe/list.html.twig', [
                     'recipies' => $recipiesArray,
                 ]);
             } else {
                 $this->addFlash("error", "Désolé, nous n'avons pas trouvé de recette correspondante");
-            } */
+            }  */
         }
         return $this->render('shopList/create.by.ingredients.html.twig', [
             'form' => $form->createView()
