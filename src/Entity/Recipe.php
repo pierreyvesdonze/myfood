@@ -85,11 +85,17 @@ class Recipe
      */
     private $tags;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=MealPlan::class, mappedBy="recipes")
+     */
+    private $mealPlans;
+
     public function __construct()
     {
         $this->recipeSteps = new ArrayCollection();
         $this->recipeIngredients = new ArrayCollection();
         $this->tags = new ArrayCollection();
+        $this->mealPlans = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -290,6 +296,34 @@ class Recipe
         if ($this->tags->contains($tag)) {
             $this->tags->removeElement($tag);
             $tag->removeRecipe($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|MealPlan[]
+     */
+    public function getMealPlans(): Collection
+    {
+        return $this->mealPlans;
+    }
+
+    public function addMealPlan(MealPlan $mealPlan): self
+    {
+        if (!$this->mealPlans->contains($mealPlan)) {
+            $this->mealPlans[] = $mealPlan;
+            $mealPlan->addRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMealPlan(MealPlan $mealPlan): self
+    {
+        if ($this->mealPlans->contains($mealPlan)) {
+            $this->mealPlans->removeElement($mealPlan);
+            $mealPlan->removeRecipe($this);
         }
 
         return $this;

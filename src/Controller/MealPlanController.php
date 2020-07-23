@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\MealPlan;
+use App\Form\Type\MealPlanType;
 use App\Repository\RecipeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,6 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /*
  * @Roule("/meal")
  */
+
 class MealPlanController extends AbstractController
 {
     public function index()
@@ -21,6 +24,24 @@ class MealPlanController extends AbstractController
         ]);
     }
 
+    /**
+     *@Route("/add", name="meal_plan_add", methods={"GET", "POST"})
+     */
+    public function addMealPLan(Request $request)
+    {
 
-   
+        $mealPlan = new MealPlan();
+        $user = $this->getUser();
+        $mealPlan->setUser($user);
+
+        $form = $this->createForm(MealPlanType::class, $mealPlan);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+        }
+
+        return $this->render('meal_plan/add.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
 }
