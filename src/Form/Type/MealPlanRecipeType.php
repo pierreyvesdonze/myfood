@@ -25,7 +25,9 @@ class MealPlanRecipeType extends AbstractType
             'date',
             DateType::class,
             [
-                'label' => 'Date'
+                'label' => 'Date',
+                'widget' => 'choice',
+                'html5' => false,
             ]
         );
     }

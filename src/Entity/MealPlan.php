@@ -28,7 +28,7 @@ class MealPlan
     /**
      * @ORM\ManyToMany(targetEntity=Recipe::class, inversedBy="mealPlans")
      */
-    private $recipes;
+    private $recipies;
 
     /**
      * @ORM\Column(type="date")
@@ -42,7 +42,12 @@ class MealPlan
 
     public function __construct()
     {
-        $this->recipes = new ArrayCollection();
+        $this->recipies = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 
     public function getId(): ?int
@@ -65,15 +70,15 @@ class MealPlan
     /**
      * @return Collection|Recipe[]
      */
-    public function getRecipes(): Collection
+    public function getRecipies(): Collection
     {
-        return $this->recipes;
+        return $this->recipies;
     }
 
     public function addRecipe(Recipe $recipe): self
     {
-        if (!$this->recipes->contains($recipe)) {
-            $this->recipes[] = $recipe;
+        if (!$this->recipies->contains($recipe)) {
+            $this->recipies[] = $recipe;
         }
 
         return $this;
@@ -81,8 +86,8 @@ class MealPlan
 
     public function removeRecipe(Recipe $recipe): self
     {
-        if ($this->recipes->contains($recipe)) {
-            $this->recipes->removeElement($recipe);
+        if ($this->recipies->contains($recipe)) {
+            $this->recipies->removeElement($recipe);
         }
 
         return $this;

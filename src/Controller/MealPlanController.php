@@ -17,9 +17,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MealPlanController extends AbstractController
 {
-    public function index()
+    /**
+     * @Route("/show/{id}", name="meal_plan_show")
+     */
+    public function show()
     {
-        return $this->render('meal_plan/index.html.twig', [
+        return $this->render('meal_plan/show.html.twig', [
             'controller_name' => 'MealPlanController',
         ]);
     }
@@ -39,13 +42,14 @@ class MealPlanController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $formDataRecipies = $form->get('recipies')->getData();
+            $entityManager->persist($mealPlan);
+            $entityManager->flush();
 
-            foreach($formDataRecipies as $recipeRequest) {
-                $recipe = $recipeRepository->findOneBy([
-                    'name' => $recipeRequest->getName()
-                ]);
-            }
+            $this->addFlash('success', 'Le planning de la semaine '.$mealPlan->getName().'a bien été ajouté !');
+
+            return $this->redirectToRoute('meal_plan_show', [
+                'id' => $mealPlan->getId(),
+            ]);
 
         }
 

@@ -20,7 +20,7 @@ class ShoppingListController extends AbstractController
 {
     public function index()
     {
-        return $this->render('shopping_list/index.html.twig', [
+        return $this->render('shopping_list/show.html.twig', [
             'controller_name' => 'ShoppingListController',
         ]);
     }
@@ -178,6 +178,4 @@ class ShoppingListController extends AbstractController
 
         return $this->redirectToRoute('shopping_list_list');
     }
-
- 
 }
