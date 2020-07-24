@@ -2,13 +2,11 @@
 
 namespace App\Form\Type;
 
-use App\Entity\Recipe;
 use App\Entity\MealPlan;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class MealPlanType extends AbstractType
 {
@@ -24,18 +22,13 @@ class MealPlanType extends AbstractType
 
         $builder->add(
             'recipes',
-            EntityType::class,
+            CollectionType::class,
             [
-                'class' => Recipe::class,
-                'choice_label' => 'name',
-            ]
-        );
-
-        $builder->add(
-            'date',
-            DateType::class,
-            [
-                'label' => 'Date'
+                'entry_type' => MealPlanRecipeType::class,
+                'entry_options' => ['label' => false],
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
             ]
         );
     }

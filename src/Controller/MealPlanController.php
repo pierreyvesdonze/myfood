@@ -27,7 +27,7 @@ class MealPlanController extends AbstractController
     /**
      *@Route("/add", name="meal_plan_add", methods={"GET", "POST"})
      */
-    public function addMealPLan(Request $request)
+    public function addMealPLan(Request $request, RecipeRepository $recipeRepository)
     {
 
         $mealPlan = new MealPlan();
@@ -38,6 +38,15 @@ class MealPlanController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $formDataRecipies = $form->get('recipies')->getData();
+
+            foreach($formDataRecipies as $recipeRequest) {
+                $recipe = $recipeRepository->findOneBy([
+                    'name' => $recipeRequest->getName()
+                ]);
+            }
+
         }
 
         return $this->render('meal_plan/add.html.twig', [

@@ -76,33 +76,65 @@ function addStepFormDeleteLink($stepFormLi) {
 
 
 function addIngredientForm($ingredientCollectionHolder, $newIngredientLinkLi) {
-  // Get the data-prototype explained earlier
-  var prototype = $ingredientCollectionHolder.data('prototype');
+    // Get the data-prototype explained earlier
+    var prototype = $ingredientCollectionHolder.data('prototype');
 
-  // get the new index
-  var index = $ingredientCollectionHolder.data('index');
+    // get the new index
+    var index = $ingredientCollectionHolder.data('index');
 
-  var newForm = prototype;
+    var newForm = prototype;
 
-  newForm = newForm.replace(/__name__/g, index);
+    newForm = newForm.replace(/__name__/g, index);
 
-  // increase the index with one for the next item
-  $ingredientCollectionHolder.data('index', index + 1);
+    // increase the index with one for the next item
+    $ingredientCollectionHolder.data('index', index + 1);
 
-  // Display the form in the page in an li, before the "Add a article" link li
-  var $newFormLi = $('<li></li>').append(newForm);
-  $newIngredientLinkLi.before($newFormLi);
+    // Display the form in the page in an li, before the "Add a article" link li
+    var $newFormLi = $('<li></li>').append(newForm);
+    $newIngredientLinkLi.before($newFormLi);
 
-  // add a delete link to the new form
-  addIngredientFormDeleteLink($newFormLi);
+    // add a delete link to the new form
+    addIngredientFormDeleteLink($newFormLi);
 }
 
 function addIngredientFormDeleteLink($ingredientFormLi) {
-  var $removeFormButton = $('<button type="button" class="remove-ingredient-link">Supprimer</button>');
-  $ingredientFormLi.append($removeFormButton);
+    var $removeFormButton = $('<button type="button" class="remove-ingredient-link">Supprimer</button>');
+    $ingredientFormLi.append($removeFormButton);
 
-  $removeFormButton.on('click', function (e) {
-      // remove the li for the article form
-      $ingredientFormLi.remove();
-  });
+    $removeFormButton.on('click', function (e) {
+        // remove the li for the article form
+        $ingredientFormLi.remove();
+    });
+}
+
+/*
+****************************************
+MEAL PLAN ADD RECIPIES
+****************************************
+*/
+
+var $addMealButton = $('<button type="button" class="add_meal_link">Add a meal</button>');
+var $newLinkLi = $('<li></li>').append($addMealButton);
+
+jQuery(document).ready(function () {
+
+    $collectionHolder = $('ul.meals');
+    $collectionHolder.append($newLinkLi);
+    $collectionHolder.data('index', $collectionHolder.find('input').length);
+    $addMealButton.on('click', function (e) {
+        addMealForm($collectionHolder, $newLinkLi);
+    });
+});
+
+function addMealForm($collectionHolder, $newLinkLi) {
+    var prototype = $collectionHolder.data('prototype');
+    var index = $collectionHolder.data('index');
+
+    var newForm = prototype;
+    newForm = newForm.replace(/__name__/g, index);
+
+    $collectionHolder.data('index', index + 1);
+
+    var $newFormLi = $('<li></li>').append(newForm);
+    $newLinkLi.before($newFormLi);
 }

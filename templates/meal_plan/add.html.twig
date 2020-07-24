@@ -1,5 +1,21 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    
-{% endblock %}
+<div class="create-mealplan-recipe-form">
+
+    {{ form_start(form) }}
+
+    {# Recipies #}
+    <ul class="ul-mealplan" data-prototype="{{ form_widget(form.name.vars.prototype)|e('html_attr') }}">
+        {% for recipe in form.recipes %}
+            <li>{{ form_row(recipe.name) }}</li>
+            <li>{{ form_row(recipe.date) }}</li>
+        {% endfor %}
+    </ul>
+
+    <div class="col">
+        {{ form_widget(form.save) }}
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock  %}
