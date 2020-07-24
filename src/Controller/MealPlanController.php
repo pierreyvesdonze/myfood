@@ -20,10 +20,10 @@ class MealPlanController extends AbstractController
     /**
      * @Route("/show/{id}", name="meal_plan_show")
      */
-    public function show()
+    public function show(MealPlan $mealPlan)
     {
         return $this->render('meal_plan/show.html.twig', [
-            'controller_name' => 'MealPlanController',
+            'mealplan' => $mealPlan,
         ]);
     }
 
@@ -45,7 +45,13 @@ class MealPlanController extends AbstractController
             $entityManager->persist($mealPlan);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Le planning de la semaine '.$mealPlan->getName().'a bien été ajouté !');
+            // Recipies
+            $recipies = $form->get('recipies')->getData();
+            foreach ($recipies as $recipe) {
+                $mealPlan->addRecipe($recipe['name']);
+            }
+
+            $this->addFlash('success', 'Le planning de la semaine '.$mealPlan->getName() .'a bien été ajouté !');
 
             return $this->redirectToRoute('meal_plan_show', [
                 'id' => $mealPlan->getId(),

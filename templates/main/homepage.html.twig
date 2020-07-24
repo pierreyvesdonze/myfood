@@ -2,7 +2,11 @@
 
 {% block body %}
 {% block title %}
-Yo
+    {% if app.user %}
+        Salut {{ user.username }}
+    {% else %}
+        Salut
+    {% endif %}
 {% endblock %}
 
     <div id="sresult" class="search-result">

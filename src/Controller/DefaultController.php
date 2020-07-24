@@ -18,6 +18,9 @@ class DefaultController extends AbstractController
      */
     public function homepage()
     {
-        return $this->render('main/homepage.html.twig');
+        $user = $this->getUser();
+        return $this->render('main/homepage.html.twig', [
+            'user' => $user
+        ]);
     }
 }

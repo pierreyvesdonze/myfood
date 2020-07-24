@@ -137,4 +137,24 @@ function addMealForm($collectionHolder, $newLinkLi) {
 
     var $newFormLi = $('<li></li>').append(newForm);
     $newLinkLi.before($newFormLi);
+
+    addMealFormDeleteLink($newFormLi);
+}
+
+function addMealFormDeleteLink($stepFormLi) {
+    var $removeFormButton = $('<button type="button" class="remove-meal-link">Supprimer</button>');
+    $stepFormLi.append($removeFormButton);
+
+    $removeFormButton.on('click', function (e) {
+        // remove the li for the article form
+        $stepFormLi.remove();
+    });
+}
+
+function afficherCalendrier(idInputDate)
+{
+    $('#' + idInputDate).datepicker({
+        dateFormat: 'dd/mm/yy',
+        firstDay: 1
+    });
 }

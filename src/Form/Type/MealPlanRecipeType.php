@@ -25,14 +25,20 @@ class MealPlanRecipeType extends AbstractType
             'date',
             DateType::class,
             [
-                'label' => 'Date',
                 'widget' => 'choice',
-                'html5' => false,
+                'input'  => 'datetime_immutable',
+                'by_reference' => true,
             ]
         );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
+        $resolver->setDefaults([
+        'data_class' => Recipe::class,
+        'attr' => [
+            'novalidate' => 'novalidate',
+        ],
+    ]);
     }
 }

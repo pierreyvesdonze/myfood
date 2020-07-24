@@ -26,7 +26,7 @@ class MealPlan
     private $user;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Recipe::class, inversedBy="mealPlans")
+     * @ORM\ManyToMany(targetEntity=Recipe::class, inversedBy="mealPlans", fetch="EAGER")
      */
     private $recipies;
 
@@ -43,6 +43,7 @@ class MealPlan
     public function __construct()
     {
         $this->recipies = new ArrayCollection();
+        $this->date = new \DateTime();
     }
 
     public function __toString()

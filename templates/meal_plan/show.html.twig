@@ -4,4 +4,10 @@
 
 {% block body %}
     {{ mealplan.name }}
+    {% for recipe in mealplan.recipies %}
+
+        {{ recipe.name }}
+        {{ recipe.date }}
+    {% endfor %}
+
 {% endblock %}
