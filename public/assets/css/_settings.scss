@@ -1,0 +1,33 @@
+/* COLORS */
+
+:root {
+  --primary-color: #000000;
+  --secondary-color: #949494;
+  --tertiary-color: white;
+  --link-button-color: rgb(145, 142, 142);
+  --link-color: #b3e1ff;
+}
+
+/* FONTS */
+
+* {
+	font-family: 'Cinzel', serif;
+}
+
+body {
+  background: url("../images/redox_01.png");
+}
+
+#mySidepanel {
+  background-image: url("../images/dark_leather.png");
+}
+
+a {
+  color: var(--tertiary-color);
+  margin: 0;
+}
+
+/* LISTS */
+ul li {
+  list-style-type: none;
+}

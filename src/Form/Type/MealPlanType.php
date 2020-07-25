@@ -22,10 +22,10 @@ class MealPlanType extends AbstractType
         );
 
         $builder->add(
-            'recipies',
+            'meals',
             CollectionType::class,
             [
-                'entry_type' => MealPlanRecipeType::class,
+                'entry_type' => MealType::class,
                 'entry_options' => ['label' => false],
                 'by_reference' => false,
                 'allow_delete' => true,
@@ -45,7 +45,6 @@ class MealPlanType extends AbstractType
             ]
         );
     }
-
 
     public function configureOptions(OptionsResolver $resolver)
     {

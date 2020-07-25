@@ -86,16 +86,16 @@ class Recipe
     private $tags;
 
     /**
-     * @ORM\ManyToMany(targetEntity=MealPlan::class, mappedBy="recipes")
+     * @ORM\OneToMany(targetEntity=Meal::class, mappedBy="recipies")
      */
-    private $mealPlans;
+    private $meals;
 
     public function __construct()
     {
         $this->recipeSteps = new ArrayCollection();
         $this->recipeIngredients = new ArrayCollection();
         $this->tags = new ArrayCollection();
-        $this->mealPlans = new ArrayCollection();
+        $this->meals = new ArrayCollection();
     }
 
     public function __toString()
@@ -307,28 +307,31 @@ class Recipe
     }
 
     /**
-     * @return Collection|MealPlan[]
+     * @return Collection|Meal[]
      */
-    public function getMealPlans(): Collection
+    public function getMeals(): Collection
     {
-        return $this->mealPlans;
+        return $this->meals;
     }
 
-    public function addMealPlan(MealPlan $mealPlan): self
+    public function addMeal(Meal $meal): self
     {
-        if (!$this->mealPlans->contains($mealPlan)) {
-            $this->mealPlans[] = $mealPlan;
-            $mealPlan->addRecipe($this);
+        if (!$this->meals->contains($meal)) {
+            $this->meals[] = $meal;
+            $meal->setRecipies($this);
         }
 
         return $this;
     }
 
-    public function removeMealPlan(MealPlan $mealPlan): self
+    public function removeMeal(Meal $meal): self
     {
-        if ($this->mealPlans->contains($mealPlan)) {
-            $this->mealPlans->removeElement($mealPlan);
-            $mealPlan->removeRecipe($this);
+        if ($this->meals->contains($meal)) {
+            $this->meals->removeElement($meal);
+            // set the owning side to null (unless already changed)
+            if ($meal->getRecipies() === $this) {
+                $meal->setRecipies(null);
+            }
         }
 
         return $this;

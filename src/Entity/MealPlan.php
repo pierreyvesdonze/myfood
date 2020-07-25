@@ -26,24 +26,19 @@ class MealPlan
     private $user;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Recipe::class, inversedBy="mealPlans", fetch="EAGER")
-     */
-    private $recipies;
-
-    /**
-     * @ORM\Column(type="date")
-     */
-    private $date;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $name;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Meal::class, mappedBy="mealPlans")
+     */
+    private $meals;
+
     public function __construct()
     {
         $this->recipies = new ArrayCollection();
-        $this->date = new \DateTime();
+        $this->meals = new ArrayCollection();
     }
 
     public function __toString()
@@ -68,44 +63,6 @@ class MealPlan
         return $this;
     }
 
-    /**
-     * @return Collection|Recipe[]
-     */
-    public function getRecipies(): Collection
-    {
-        return $this->recipies;
-    }
-
-    public function addRecipe(Recipe $recipe): self
-    {
-        if (!$this->recipies->contains($recipe)) {
-            $this->recipies[] = $recipe;
-        }
-
-        return $this;
-    }
-
-    public function removeRecipe(Recipe $recipe): self
-    {
-        if ($this->recipies->contains($recipe)) {
-            $this->recipies->removeElement($recipe);
-        }
-
-        return $this;
-    }
-
-    public function getDate(): ?\DateTimeInterface
-    {
-        return $this->date;
-    }
-
-    public function setDate(\DateTimeInterface $date): self
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
     public function getName(): ?string
     {
         return $this->name;
@@ -114,6 +71,37 @@ class MealPlan
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Meal[]
+     */
+    public function getMeals(): Collection
+    {
+        return $this->meals;
+    }
+
+    public function addMeal(Meal $meal): self
+    {
+        if (!$this->meals->contains($meal)) {
+            $this->meals[] = $meal;
+            $meal->setMealPlans($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMeal(Meal $meal): self
+    {
+        if ($this->meals->contains($meal)) {
+            $this->meals->removeElement($meal);
+            // set the owning side to null (unless already changed)
+            if ($meal->getMealPlans() === $this) {
+                $meal->setMealPlans(null);
+            }
+        }
 
         return $this;
     }

@@ -2,16 +2,16 @@
 
 {% block body %}
 
-    <div class="create-mealplan-recipe-form">
+<div class="create-mealplan-recipe-form">
 
     {{ form_start(form) }}
     {{ form_row(form.name) }}
 
     {# Recipies #}
-    <ul class="meals" data-prototype="{{ form_widget(form.recipies.vars.prototype)|e('html_attr') }}">
-        {% for recipe in form.recipies %}
-            <li>{{ form_row(recipe.name) }}</li>
-            <li>{{ form_widget(form.date, {'html5':false } ) }}</li>
+    <ul class="meals" data-prototype="{{ form_widget(form.meals.vars.prototype)|e('html_attr') }}">
+        {% for meal in form.meals %}
+        <li>{{ form_row(meal.name) }}</li>
+        <li>{{ form_widget(meal.date, {'html5':false } ) }}</li>
         {% endfor %}
     </ul>
 
@@ -21,4 +21,3 @@
     </div>
 </div>
 {% endblock  %}
-

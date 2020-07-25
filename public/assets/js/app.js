@@ -32,7 +32,7 @@ var app = {
 	 * NAVBAR
 	 */
 	openNav: function () {
-		document.getElementById("mySidepanel").style.width = "250px";
+		document.getElementById("mySidepanel").style.width = "100%";
 	},
 
 	closeNav: function () {

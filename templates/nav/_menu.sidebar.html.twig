@@ -2,33 +2,53 @@
     <button class="openbtn">&#9776;</button>
     <div id="mySidepanel" class="sidepanel">
         <a href="#" class="closebtn">&times;</a>
-        <ul>
-            <li><a href="{{ path('homepage') }}">About</a></li>
-            <li>
+
+        {# LEFT #}
+        <div class="sidepanel-container sidepanel-left">
+
+            <div class="homepage-link">
+                <a href="{{ path('homepage') }}">Accueil</a>
+            </div>
+
+            <div class="recipies-link">
                 <a href="{{ path('recipe_list') }}">Recettes</a>
-                <a href="{{ path('recipe_add') }}">
+         {#        <a href="{{ path('recipe_add') }}">
                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                </a>
-            </li>
-            <li><a href="{{ path('shopping_list_list') }}">Liste de courses</a></li>
-            <li>
+                </a> #}
+            </div>
+
+            <div class="shopping-list-link">
+                <a href="{{ path('shopping_list_list') }}">Liste de courses</a>
+            </div>
+        </div>
+
+        {# RIGHT #}
+        <div class="sidepanel-container sidepanel-right">
+
+
+            <div class="meal-plan-link">
                 <a href="{{ path('meal_plan_add') }}">Planning</a>
-            </li>
-            <li><a href="#">Contact</a></li>
-            <li><a href="{{ path('search_list_by_ingredients') }}">Mon frigo</a></li>
+            </div>
+
+            <div class="fridge-link">
+                <a href="{{ path('search_list_by_ingredients') }}">Mon frigo</a>
+            </div>
 
             {% if app.user %}
-                <li>
-                    <a href="{{ path('logout') }}">
-                        Se déconnecter
-                    </a>
-                </li>
+
+            <div class="log-link">
+                <a href="{{ path('logout') }}">Déconnexion</a>
+            </div>
+
             {% else %}
-                <li><a href="{{ path('new') }}">S'inscrire</a></li>
-                <li><a href="{{ path('login') }}">Se connecter</a></li>
+            <div class="log-link">
+                <a href="{{ path('login') }}">Se connecter</a>
+            </div>
+
+            <div class="register-link">
+                <a href="{{ path('new') }}">S'inscrire</a>
+            </div>
             {% endif %}
-        </ul>
+        </div>
     </div>
 </nav>
-
-

@@ -6,7 +6,6 @@ use App\Entity\Recipe;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class MealPlanRecipeType extends AbstractType
 {
@@ -18,16 +17,6 @@ class MealPlanRecipeType extends AbstractType
             [
                 'class' => Recipe::class,
                 'choice_label' => 'name',
-            ]
-        );
-
-        $builder->add(
-            'date',
-            DateType::class,
-            [
-                'widget' => 'choice',
-                'input'  => 'datetime_immutable',
-                'by_reference' => true,
             ]
         );
     }

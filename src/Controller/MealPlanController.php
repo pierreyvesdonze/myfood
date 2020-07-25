@@ -46,10 +46,10 @@ class MealPlanController extends AbstractController
             $entityManager->flush();
 
             // Recipies
-            $recipies = $form->get('recipies')->getData();
+/*             $recipies = $form->get('recipies')->getData();
             foreach ($recipies as $recipe) {
                 $mealPlan->addRecipe($recipe['name']);
-            }
+            } */
 
             $this->addFlash('success', 'Le planning de la semaine '.$mealPlan->getName() .'a bien été ajouté !');
 
