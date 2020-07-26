@@ -1,5 +1,4 @@
 /* COLORS */
-
 :root {
   --primary-color: #000000;
   --secondary-color: #949494;
@@ -8,8 +7,16 @@
   --link-color: #b3e1ff;
 }
 
-/* FONTS */
+/* GENERAL */
+.active {
+	display: block;
+}
 
+.hide {
+	display: none;
+}
+
+/* FONTS */
 * {
 	font-family: 'Cinzel', serif;
 }
@@ -30,4 +37,10 @@ a {
 /* LISTS */
 ul li {
   list-style-type: none;
+}
+
+
+/* INPUTS */
+input:focus {
+	outline: none;
 }

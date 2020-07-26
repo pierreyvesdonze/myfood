@@ -1,7 +1,25 @@
 @import "./settings";
 
-/*SIDEBAR*/
+/* HEADER/MENU */
+.menu {
+	display: flex;
+    justify-content: space-between;
+}
 
+/* SEARCH BAR */
+.search-input {
+	border-radius: 30px;
+	position: relative;
+}
+
+.search i {
+	position: absolute;
+    z-index: 2;
+    top: 12px;
+    margin-left: 10px;
+}
+
+/*SIDEBAR*/
 /* The sidepanel menu */
 .sidepanel {
   height: 100%;
@@ -81,7 +99,7 @@
   font-size: 20px;
   cursor: pointer;
   background-color: transparent;
-  color: white;
+  color: var(--primary-color);
   padding: 10px 15px;
   border: none;
 }

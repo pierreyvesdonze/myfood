@@ -7,6 +7,15 @@
   --link-color: #b3e1ff;
 }
 
+/* GENERAL */
+.active {
+  display: block;
+}
+
+.hide {
+  display: none;
+}
+
 /* FONTS */
 * {
   font-family: 'Cinzel', serif;
@@ -28,6 +37,34 @@ a {
 /* LISTS */
 ul li {
   list-style-type: none;
+}
+
+/* INPUTS */
+input:focus {
+  outline: none;
+}
+
+/* HEADER/MENU */
+.menu {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+/* SEARCH BAR */
+.search-input {
+  border-radius: 30px;
+  position: relative;
+}
+
+.search i {
+  position: absolute;
+  z-index: 2;
+  top: 12px;
+  margin-left: 10px;
 }
 
 /*SIDEBAR*/
@@ -121,7 +158,7 @@ ul li {
   font-size: 20px;
   cursor: pointer;
   background-color: transparent;
-  color: white;
+  color: var(--primary-color);
   padding: 10px 15px;
   border: none;
 }

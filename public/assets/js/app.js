@@ -16,9 +16,12 @@ var app = {
 
 		//SEARCHBAR
 		$('.search').submit(app.search);
+		$('.search-input').focus(app.removeSearchIcon);
+		$(document).click(app.activeSearchIcon);
 
 		//CREATE LIST INGREDIENTS
 		$('.search-recipe-form').on('keypress', app.searchByIngredients);
+
 
 	},
 
@@ -66,6 +69,23 @@ var app = {
 			});
 	},
 
+	removeSearchIcon: function () {
+		console.log('coucou');
+		$('.search i').addClass('hide');
+		$('.search i').removeClass('active');
+	},
+
+	activeSearchIcon: function (e) {
+		e.preventDefault();
+		console.log('click');
+		console.log(e.target.className);
+		if (e.target.className !== 'search-input') {
+			$('.search i').removeClass('hide');
+			$('.search i').addClass('active');
+			console.log('Hello');
+		}
+	},
+
 	/**
 	 *SEARCH BY INGREDIENTS
 	 */
@@ -84,46 +104,20 @@ var app = {
 
 			// Get next input
 			var i = $('.search-by-ingredient-input:last').attr('name');
-			var getInteger = i.match(/(\d+)/); 
+			var getInteger = i.match(/(\d+)/);
 			i = parseInt(getInteger);
 
 			// Focus to next input
-			setTimeout(function(){ 
-				var pouet = $('#search_recipe_ingredient_'+i+'_name');
+			setTimeout(function () {
+				var pouet = $('#search_recipe_ingredient_' + i + '_name');
 				pouet.focus();
-				 }, 30);
-	
+			}, 30);
+
 			return false;
 		}
 	}
 };
 
-	/**
-	 * ADD NEW ELEMENT TO LIST
-	 */
-/* 	addNewElementToList: function (e) {
-		e.preventDefault();
-
-		let userInput = $('.create-by-ingredients-input').val(),
-			resultSubmit = $('.result-input-ingredients'),
-			button = $('<button>X</button>'),
-			span = $('<span></span>')
-
-		span.addClass('span-ingredient');
-		resultSubmit.append(span);
-		span.append(userInput);
-		button.addClass('delete-ingredient');
-		resultSubmit.append(button);
-		resultSubmit.append('<br/>');
-		this.reset();
-	}, */
-
 // App Loading
 document.addEventListener('DOMContentLoaded', app.init);
 
-// Remove Ingredients
-/* $(document).on('click', '.delete-ingredient', function () {
-	$(this).prev().remove();
-	$(this).next().remove();
-	this.remove();
-}); */
