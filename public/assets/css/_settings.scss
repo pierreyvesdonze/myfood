@@ -8,21 +8,28 @@
 }
 
 body {
-	background: url("../images/redox_01.png");
-	overflow: hidden;
-  }
-  
-  #mySidepanel {
-	background-image: url("../images/dark_leather.png");
-  }
+  background: url("../images/redox_01.png");
+  overflow: hidden;
+}
+
+#mySidepanel,
+.filters-container {
+  background-image: url("../images/dark_leather.png");
+}
+
+.filters-container{
+	opacity: .92;
+}
 
 /* GENERAL */
 .active {
   display: block;
+  transition: 0.5s;
 }
 
 .hide {
   display: none;
+  transition: 0.5s;
 }
 
 a {
@@ -32,24 +39,30 @@ a {
 }
 
 .hr {
-	height: 2px;
-	border: 0;
-	margin: 20px auto;
-	background: rgb(29, 29, 29);
-	background: radial-gradient(circle, rgb(8, 8, 8) 0%, rgba(219, 219, 219, 0.144) 50%, rgba(209, 209, 209, 0) 100%);
-  }
+  height: 2px;
+  border: 0;
+  margin: 20px auto;
+  background: rgb(29, 29, 29);
+  background: radial-gradient(
+    circle,
+    rgb(8, 8, 8) 0%,
+    rgba(219, 219, 219, 0.144) 50%,
+    rgba(209, 209, 209, 0) 100%
+  );
+}
 
 /* FONTS & ICONS*/
 * {
   font-family: "Cinzel", serif;
 }
 
-.fa, .fas {
-	color: var(--secondary-color);
-	margin-right: 5px;
-	&:hover {
-		color: var(--primary-color);
-	}
+.fa,
+.fas {
+  color: var(--secondary-color);
+  margin-right: 5px;
+  &:hover {
+    color: var(--primary-color);
+  }
 }
 
 /* LISTS */

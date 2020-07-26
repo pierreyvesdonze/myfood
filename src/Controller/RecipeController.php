@@ -8,6 +8,7 @@ use App\Entity\RecipeIngredient;
 use App\Entity\RecipeStep;
 use App\Form\Type\RecipeType;
 use App\Repository\IngredientRepository;
+use App\Repository\RecipeCategoryRepository;
 use App\Repository\RecipeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -39,25 +40,8 @@ class RecipeController extends AbstractController
         /*    $recipies = $recipeRepository->findAll(); */
         $recipies = $user->getRecipies();
 
-        foreach ($recipies as $recipe) {
-            if(!null == $recipe && !null == $recipe->getTimePrepa()) {                
-                $timePrepa    = $recipe->getTimePrepa();
-                $hoursPrepa   = $timePrepa->format('H');
-                $minutesPrepa = $timePrepa->format('i');
-                $timeCook     = $recipe->getTimeCook();
-                $hoursCook    = $timeCook->format('H');
-                $minutesCook  = $timeCook->format('i');
-            } else {
-                $hoursPrepa = 0;
-            }
-        }
-
         return $this->render('recipe/list.html.twig', [
             'recipies'     => $recipies,
-            'hoursPrepa'   => $hoursPrepa,
-            'minutesPrepa' => $minutesPrepa,
-            'hoursCook'    => $hoursCook,
-            'minutesCook'  => $minutesCook,
         ]);
     }
 
@@ -274,5 +258,20 @@ class RecipeController extends AbstractController
         $this->addFlash('success', 'La recette a bien été supprimée');
 
         return $this->redirectToRoute('recipe_list');
+    }
+
+    /**
+     * @Route("/filters", name="recipe_filters", methods={"GET","POST"})
+     */
+    public function recipeFilters(RecipeCategoryRepository $recipeCategoryRepository)
+    {
+        $categories = $recipeCategoryRepository->findAll();
+
+        return $this->render(
+            'modals/_filters.html.twig',
+            [
+                'categories' => $categories,
+            ]
+        );
     }
 }

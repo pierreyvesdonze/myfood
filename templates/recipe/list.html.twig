@@ -2,100 +2,82 @@
 
 {% block body %}
 
+<!--***************************FILTERS****************************-->
+{% include "modals/_filters.html.twig" %}
+
 <section class="recipies-container">
 
     {% for recipe in recipies %}
-    <div class="recipe">
-        <a href="{{ path('recipe_view', {'id': recipe.id}) }}">
 
-            <div class="container-img">
-                {% if recipe.recipePhoto %}
-                <img src="{{ asset('uploads/' ~ recipe.recipePhoto) }}" alt="recipe-img" class="recipe-img">
-                {% else %}
-                <img src="{{ asset('assets/images/embossed-diamond.png') }}" alt="recipe-img" class="recipe-img">
-                {% endif %}
-            </div>
-        </a>
+        <div class="recipe">
+            <a href="{{ path('recipe_view', {'id': recipe.id}) }}">
 
-        <div class="container-footer">
-
-            <div class="container-title">
-                <a href="{{ path('recipe_view', {'id': recipe.id}) }}">
-                <h3>{{ recipe.name }}</h3>
-                </a>
-            </div>
-
-            <hr class="hr">
-
-            <div class="container-summary">
-
-                <span>
-                    <i class="fa fa-user"></i>
-                    {{ recipe.person }}
-
-                    {% if recipe.person > 1 %}
-                    personnes
+                <div class="container-img">
+                    {% if recipe.recipePhoto %}
+                    <img src="{{ asset('uploads/' ~ recipe.recipePhoto) }}" alt="recipe-img" class="recipe-img">
                     {% else %}
-                    personne
+                    <img src="{{ asset('assets/images/embossed-diamond.png') }}" alt="recipe-img" class="recipe-img">
                     {% endif %}
-                </span>
+                </div>
+            </a>
 
-                <br>
+            <div class="container-footer">
 
-                <i class="fas fa-clock"></i>
-                Préparation :
-                {% if recipe.timePrepa %}
-                {% if hoursPrepa > 0 %}
-                {{ hoursPrepa }} h
-                {% endif %}
-                {% if minutesPrepa > 0 %}
-                {{ minutesPrepa }} min
-                {% endif %}
-                {% else %}
-                -
-                {% endif %}
+                <div class="container-title">
+                    <a href="{{ path('recipe_view', {'id': recipe.id}) }}">
+                        <h3>{{ recipe.name }}</h3>
+                    </a>
+                </div>
 
-                <br>
+                <hr class="hr">
 
-                <i class="fas fa-clock"></i>
-                Cuisson :
-                {% if recipe.timeCook %}
-                {% if hoursCook > 0 %}
-                {{ hoursCook }} h
-                {% endif %}
-                {% if minutesCook > 0 %}
-                {{ minutesCook }} min
-                {% endif %}
-                {% else %}
-                -
-                {% endif %}
-            </div>
+                <div class="container-summary">
 
-            <hr class="hr">
+                    <span>
+                        <i class="fa fa-user"></i>
+                        {{ recipe.person }}
 
-            <div class="control">
+                        {% if recipe.person > 1 %}
+                        personnes
+                        {% else %}
+                        personne
+                        {% endif %}
+                    </span>
 
-                {% if is_granted('edit', recipe) %}
-                <a href="{{ path('recipe_update',{'id': recipe.id}) }}" class="button">
-                    <i class="fa fa-edit fa-2x"></i>
-                </a>
-                {% endif %}
+                    <br>
 
-                <a href="{{ path('shopping_list_create',{'id': recipe.id}) }}" class="button">
-                    <i class="fa fa-cart-plus fa-2x"></i>
-                </a>
-                <a href="{{ path('shopping_list_add',{'id': recipe.id}) }}" class="button">
-                    <i class="fa fa-cart-arrow-down fa-2x"></i>
-                </a>
-                {% if is_granted('edit', recipe) %}
-                <a href="{{ path('recipe_delete',{'id': recipe.id}) }}" class="button">
-                    <i class="fa fa-trash fa-2x"></i>
-                </a>
-                {% endif %}
+                    <i class="fas fa-clock"></i>
+                    Préparation : {{ recipe.timePrepa|date("H\\hi") }} min
+                    <br>
+
+                    <i class="fas fa-clock"></i>
+                    Cuisson : {{ recipe.timeCook|date("H\\hi\\") }} min
+                </div>
+
+                <hr class="hr">
+
+                <div class="control">
+
+                    {% if is_granted('edit', recipe) %}
+                    <a href="{{ path('recipe_update',{'id': recipe.id}) }}" class="button">
+                        <i class="fa fa-edit fa-2x"></i>
+                    </a>
+                    {% endif %}
+
+                    <a href="{{ path('shopping_list_create',{'id': recipe.id}) }}" class="button">
+                        <i class="fa fa-cart-plus fa-2x"></i>
+                    </a>
+                    <a href="{{ path('shopping_list_add',{'id': recipe.id}) }}" class="button">
+                        <i class="fa fa-cart-arrow-down fa-2x"></i>
+                    </a>
+                    {% if is_granted('edit', recipe) %}
+                    <a href="{{ path('recipe_delete',{'id': recipe.id}) }}" class="button">
+                        <i class="fa fa-trash fa-2x"></i>
+                    </a>
+                    {% endif %}
+                </div>
             </div>
         </div>
-    </div>
-
     {% endfor %}
 
 </section>

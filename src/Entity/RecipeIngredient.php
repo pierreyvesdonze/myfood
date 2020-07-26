@@ -35,9 +35,10 @@ class RecipeIngredient
     private $name;
 
     /**
-     * @ORM\OneToOne(targetEntity=Unit::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Unit::class, inversedBy="recipeIngredients"))
      */
     private $unit;
+
 
     public function getId(): ?int
     {

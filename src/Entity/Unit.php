@@ -20,23 +20,29 @@ class Unit
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=20, nullable=true)
+     * @ORM\Column(type="string", length=20)
      */
     private $name;
+
+    /**
+     * @ORM\OneToMany(targetEntity=RecipeIngredient::class, mappedBy="unit")
+     */
+    private $recipeIngredients;
 
     /**
      * @ORM\OneToMany(targetEntity=Article::class, mappedBy="unit")
      */
     private $article;
 
-    public function __construct()
-    {
-        $this->article = new ArrayCollection();
-    }
-
     public function __toString()
     {
         return $this->name;
+    }
+
+    public function __construct()
+    {
+        $this->recipeIngredients = new ArrayCollection();
+        $this->article = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -49,9 +55,40 @@ class Unit
         return $this->name;
     }
 
-    public function setName(?string $name): self
+    public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RecipeIngredient[]
+     */
+    public function getRecipeIngredients(): Collection
+    {
+        return $this->recipeIngredients;
+    }
+
+    public function addRecipeIngredient(RecipeIngredient $recipeIngredient): self
+    {
+        if (!$this->recipeIngredients->contains($recipeIngredient)) {
+            $this->recipeIngredients[] = $recipeIngredient;
+            $recipeIngredient->setUnit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecipeIngredient(RecipeIngredient $recipeIngredient): self
+    {
+        if ($this->recipeIngredients->contains($recipeIngredient)) {
+            $this->recipeIngredients->removeElement($recipeIngredient);
+            // set the owning side to null (unless already changed)
+            if ($recipeIngredient->getUnit() === $this) {
+                $recipeIngredient->setUnit(null);
+            }
+        }
 
         return $this;
     }

@@ -22,6 +22,10 @@ var app = {
 		//CREATE LIST INGREDIENTS
 		$('.search-recipe-form').on('keypress', app.searchByIngredients);
 
+		//FILTERS MODAL
+		$('.filters').click(app.openFiltersModal);
+		$('.close-modal-btn').click(app.closeFiltersModal);
+
 
 	},
 
@@ -41,6 +45,17 @@ var app = {
 	closeNav: function () {
 		console.log('close');
 		document.getElementById("mySidepanel").style.width = "0";
+	},
+
+	openFiltersModal: function() {
+		console.log('open modal filters')
+		var modal = $('.filters-container');
+		modal.css("height", "100%")
+	},
+
+	closeFiltersModal: function() {
+		var closeModal = $('.filters-container');
+		closeModal.css("height", "0%")
 	},
 
 	/**

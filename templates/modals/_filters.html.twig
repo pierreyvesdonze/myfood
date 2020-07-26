@@ -1,0 +1,12 @@
+{# {% for category in categories %} 
+    {{ category.name }}
+{% endfor %}
+ #}
+
+<div class="filters-container">
+    <a href="#" class="close-modal-btn">&times;</a>
+    {% for recipe in recipies %}
+    {{ recipe.recipeCategory}}
+    {{ recipe.recipeMenu}}
+    {% endfor %}
+</div>
