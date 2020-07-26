@@ -87,7 +87,8 @@ input:focus {
           align-items: center;
   position: -webkit-sticky;
   position: sticky;
-  margin-bottom: 20px;
+  -webkit-box-shadow: 0px 9px 6px -8px;
+          box-shadow: 0px 9px 6px -8px;
 }
 
 /* SEARCH BAR */
@@ -99,7 +100,7 @@ input:focus {
 .search i {
   position: absolute;
   z-index: 1;
-  top: 15px;
+  top: 23px;
   margin-left: 10px;
 }
 
@@ -198,6 +199,13 @@ input:focus {
   color: var(--primary-color);
   padding: 10px 15px;
   border: none;
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+
+.openbtn:hover {
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
 }
 
 /* MAIN */
@@ -238,6 +246,7 @@ input:focus {
           justify-content: space-evenly;
   height: 800px;
   overflow: scroll;
+  padding-top: 20px;
 }
 
 .recipe {

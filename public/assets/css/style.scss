@@ -6,7 +6,7 @@
   justify-content: space-between;
   align-items: center;
   position: sticky;
-  margin-bottom: 20px;
+  box-shadow: 0px 9px 6px -8px;
 }
 
 /* SEARCH BAR */
@@ -18,7 +18,7 @@
 .search i {
   position: absolute;
   z-index: 1;
-  top: 15px;
+  top: 23px;
   margin-left: 10px;
 }
 
@@ -99,6 +99,10 @@
   color: var(--primary-color);
   padding: 10px 15px;
   border: none;
+  transition: all 0.2s ease;
+  &:hover {
+	  transform: rotate(90deg);
+  }
 }
 
 /* MAIN */
@@ -137,6 +141,7 @@
   justify-content: space-evenly;
   height: 800px;
   overflow: scroll;
+  padding-top: 20px;
 }
 
 .recipe {
