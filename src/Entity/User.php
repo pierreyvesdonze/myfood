@@ -48,9 +48,9 @@ class User implements UserInterface
     private $shoppingLists;
 
     /**
-     * @ORM\OneToMany(targetEntity=Recipe::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Recipe::class, mappedBy="user", fetch="EAGER")
      */
-    private $recipes;
+    private $recipies;
 
     /**
      * @ORM\OneToMany(targetEntity=MealPlan::class, mappedBy="user")
@@ -65,7 +65,7 @@ class User implements UserInterface
     public function __construct()
     {
         $this->shoppingLists = new ArrayCollection();
-        $this->recipes = new ArrayCollection();
+        $this->recipies = new ArrayCollection();
         $this->mealPlans = new ArrayCollection();
     }
 
@@ -180,15 +180,15 @@ class User implements UserInterface
     /**
      * @return Collection|Recipe[]
      */
-    public function getRecipes(): Collection
+    public function getRecipies(): Collection
     {
-        return $this->recipes;
+        return $this->recipies;
     }
 
     public function addRecipe(Recipe $recipe): self
     {
-        if (!$this->recipes->contains($recipe)) {
-            $this->recipes[] = $recipe;
+        if (!$this->recipies->contains($recipe)) {
+            $this->recipies[] = $recipe;
             $recipe->setUser($this);
         }
 
@@ -197,8 +197,8 @@ class User implements UserInterface
 
     public function removeRecipe(Recipe $recipe): self
     {
-        if ($this->recipes->contains($recipe)) {
-            $this->recipes->removeElement($recipe);
+        if ($this->recipies->contains($recipe)) {
+            $this->recipies->removeElement($recipe);
             // set the owning side to null (unless already changed)
             if ($recipe->getUser() === $this) {
                 $recipe->setUser(null);

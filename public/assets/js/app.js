@@ -70,19 +70,16 @@ var app = {
 	},
 
 	removeSearchIcon: function () {
-		console.log('coucou');
+
 		$('.search i').addClass('hide');
 		$('.search i').removeClass('active');
 	},
 
 	activeSearchIcon: function (e) {
-		e.preventDefault();
-		console.log('click');
-		console.log(e.target.className);
+
 		if (e.target.className !== 'search-input') {
 			$('.search i').removeClass('hide');
 			$('.search i').addClass('active');
-			console.log('Hello');
 		}
 	},
 

@@ -35,10 +35,29 @@ class RecipeController extends AbstractController
      */
     public function recipeList(RecipeRepository $recipeRepository)
     {
-        $recipies = $recipeRepository->findAll();
+        $user = $this->getUser();
+        /*    $recipies = $recipeRepository->findAll(); */
+        $recipies = $user->getRecipies();
+
+        foreach ($recipies as $recipe) {
+            if(!null == $recipe && !null == $recipe->getTimePrepa()) {                
+                $timePrepa    = $recipe->getTimePrepa();
+                $hoursPrepa   = $timePrepa->format('H');
+                $minutesPrepa = $timePrepa->format('i');
+                $timeCook     = $recipe->getTimeCook();
+                $hoursCook    = $timeCook->format('H');
+                $minutesCook  = $timeCook->format('i');
+            } else {
+                $hoursPrepa = 0;
+            }
+        }
 
         return $this->render('recipe/list.html.twig', [
-            'recipies' => $recipies,
+            'recipies'     => $recipies,
+            'hoursPrepa'   => $hoursPrepa,
+            'minutesPrepa' => $minutesPrepa,
+            'hoursCook'    => $hoursCook,
+            'minutesCook'  => $minutesCook,
         ]);
     }
 
@@ -76,11 +95,11 @@ class RecipeController extends AbstractController
         $newStep = new RecipeStep();
         $newStep->setRecipe($recipe);
         $recipe->getRecipeSteps()->add($newStep);
-        
+
         $recipeIngredients = new RecipeIngredient();
         $recipeIngredients->setRecipe($recipe);
         $recipe->getRecipeIngredients()->add($recipeIngredients);
-        
+
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
 
@@ -113,7 +132,7 @@ class RecipeController extends AbstractController
                 $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
                 $safeFilename = $originalFilename;
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$image->guessExtension();
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $image->guessExtension();
 
                 try {
                     $image->move(
@@ -132,7 +151,7 @@ class RecipeController extends AbstractController
 
             $entityManager->flush();
 
-            $this->addFlash('success', 'La nouvelle recette '.$recipe->getName().'a bien été ajoutée !');
+            $this->addFlash('success', 'La nouvelle recette ' . $recipe->getName() . 'a bien été ajoutée !');
 
             return $this->redirectToRoute('recipe_view', [
                 'id' => $recipe->getId(),
@@ -156,7 +175,7 @@ class RecipeController extends AbstractController
         $manager = $this->getDoctrine()->getManager();
 
         if (null === $recipe) {
-            throw $this->createNotFoundException('Recette non existente... '.$recipe->getId);
+            throw $this->createNotFoundException('Recette non existente... ' . $recipe->getId);
         }
 
         $originalIngredients = new ArrayCollection();
@@ -201,13 +220,13 @@ class RecipeController extends AbstractController
                 $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
                 $safeFilename = $originalFilename;
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$image->guessExtension();
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $image->guessExtension();
 
                 try {
                     $image->move(
-                         $this->getParameter('images_directory'),
-                         $newFilename
-                     );
+                        $this->getParameter('images_directory'),
+                        $newFilename
+                    );
                 } catch (FileException $e) {
                     echo "L'image n'a pas été chargée";
                 }
@@ -247,7 +266,7 @@ class RecipeController extends AbstractController
             $fileSystem = new Filesystem();
             $dir = $this->getParameter('images_directory');
             $photoName = $recipe->getRecipePhoto();
-            $fileSystem->remove($dir.'/'.$photoName);
+            $fileSystem->remove($dir . '/' . $photoName);
         }
         $manager->remove($recipe);
         $manager->flush();

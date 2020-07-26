@@ -7,31 +7,49 @@
   --link-color: #b3e1ff;
 }
 
+body {
+	background: url("../images/redox_01.png");
+	overflow: hidden;
+  }
+  
+  #mySidepanel {
+	background-image: url("../images/dark_leather.png");
+  }
+
 /* GENERAL */
 .active {
-	display: block;
+  display: block;
 }
 
 .hide {
-	display: none;
-}
-
-/* FONTS */
-* {
-	font-family: 'Cinzel', serif;
-}
-
-body {
-  background: url("../images/redox_01.png");
-}
-
-#mySidepanel {
-  background-image: url("../images/dark_leather.png");
+  display: none;
 }
 
 a {
-  color: var(--tertiary-color);
+  color: var(--primary-color);
   margin: 0;
+  text-decoration: none;
+}
+
+.hr {
+	height: 2px;
+	border: 0;
+	margin: 20px auto;
+	background: rgb(29, 29, 29);
+	background: radial-gradient(circle, rgb(8, 8, 8) 0%, rgba(219, 219, 219, 0.144) 50%, rgba(209, 209, 209, 0) 100%);
+  }
+
+/* FONTS & ICONS*/
+* {
+  font-family: "Cinzel", serif;
+}
+
+.fa, .fas {
+	color: var(--secondary-color);
+	margin-right: 5px;
+	&:hover {
+		color: var(--primary-color);
+	}
 }
 
 /* LISTS */
@@ -39,8 +57,7 @@ ul li {
   list-style-type: none;
 }
 
-
 /* INPUTS */
 input:focus {
-	outline: none;
+  outline: none;
 }

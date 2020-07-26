@@ -1,16 +1,6 @@
 <nav class="menu">
     <button class="openbtn">&#9776;</button>
 
-    <div class="hello-user">
-        {% block title %}
-        {% if app.user %}
-        Salut {{ user.pseudo }}
-        {% else %}
-        Salut
-        {% endif %}
-        {% endblock %}
-    </div>
-
     <div class="search">
         {% block search %}
         <form action="" class="search" placeholder="&#xF002;">
@@ -33,7 +23,7 @@
             </div>
 
             <div class="recipies-link">
-                <a href="{{ path('recipe_list') }}">Recettes</a>
+                <a href="{{ path('recipe_list') }}">Mes recettes</a>
                 {#        <a href="{{ path('recipe_add') }}">
                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
                 </a> #}
