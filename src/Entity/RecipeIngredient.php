@@ -37,7 +37,7 @@ class RecipeIngredient
     /**
      * @ORM\ManyToOne(targetEntity=Unit::class, inversedBy="recipeIngredients"))
      */
-    private $unit;
+    public $unit;
 
 
     public function getId(): ?int

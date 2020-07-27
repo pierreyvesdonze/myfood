@@ -5,8 +5,27 @@
 
 <div class="filters-container">
     <a href="#" class="close-modal-btn">&times;</a>
-    {% for recipe in recipies %}
-    {{ recipe.recipeCategory}}
-    {{ recipe.recipeMenu}}
-    {% endfor %}
+
+    {# Categories #}
+    <div class="filters-categories">
+        {% for category in categories %}
+            {{ category }}
+        {% endfor %}
+    </div>
+
+    {# Menus #}
+    <div class="filters-menus">
+        {% for menu in menus %}
+            {{ menu }}
+        {% endfor %}
+    </div>
+
+    {# Tags #}
+    <div class="filters-tags">
+        {% for tag in tags %}
+            {{ tag }}
+        {% endfor %}
+    </div>
+
+
 </div>

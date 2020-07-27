@@ -9,7 +9,9 @@ use App\Entity\RecipeStep;
 use App\Form\Type\RecipeType;
 use App\Repository\IngredientRepository;
 use App\Repository\RecipeCategoryRepository;
+use App\Repository\RecipeMenuRepository;
 use App\Repository\RecipeRepository;
+use App\Repository\TagRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,14 +36,24 @@ class RecipeController extends AbstractController
     /**
      * @Route("/list", name="recipe_list")
      */
-    public function recipeList(RecipeRepository $recipeRepository)
+    public function recipeList(
+        RecipeCategoryRepository $categoriesRepo,
+        RecipeMenuRepository $menusRepo,
+        TagRepository $tagRepository
+    )
     {
         $user = $this->getUser();
         /*    $recipies = $recipeRepository->findAll(); */
         $recipies = $user->getRecipies();
+        $categories = $categoriesRepo->findAll();
+        $menus = $menusRepo->findAll();
+        $tags = $tagRepository->findAll();
 
         return $this->render('recipe/list.html.twig', [
-            'recipies'     => $recipies,
+            'recipies' => $recipies,
+            'categories' => $categories,
+            'menus' => $menus,
+            'tags' => $tags,
         ]);
     }
 
