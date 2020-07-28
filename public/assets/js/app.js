@@ -25,8 +25,7 @@ var app = {
 		//FILTERS MODAL
 		$('.filters').click(app.openFiltersModal);
 		$('.close-modal-btn').click(app.closeFiltersModal);
-
-
+		$('#form-filters').submit(app.filtersRecipies);
 	},
 
 	/**
@@ -47,15 +46,42 @@ var app = {
 		document.getElementById("mySidepanel").style.width = "0";
 	},
 
-	openFiltersModal: function() {
-		console.log('open modal filters')
+	/**
+	 * FILTERS
+	 */
+	openFiltersModal: function () {
+		console.log('open modal filters');
 		var modal = $('.filters-container');
 		modal.css("height", "100%")
 	},
 
-	closeFiltersModal: function() {
+	closeFiltersModal: function () {
 		var closeModal = $('.filters-container');
 		closeModal.css("height", "0%")
+	},
+
+	filtersRecipies: function (e) {
+		e.preventDefault();
+
+		var recipiesData = $('.recipe .filter-data-recipe');
+		var filters = $('.filters-menus input[type=checkbox]');
+
+		var filtersArray = [];
+		for (filter of filters) {
+			if (filter.checked) {
+				filtersArray.push(filter.value);
+			}
+		}
+
+		for (recipeData of recipiesData) {
+
+			var menu = recipeData.getAttribute('data-menu');
+			if (!filtersArray.includes(menu)) {
+				recipeDiv = recipeData.parentNode.parentNode.parentNode.parentNode;
+				recipeDiv.remove();
+				console.log(menu + ' removed');
+			}
+		}
 	},
 
 	/**
@@ -72,16 +98,16 @@ var app = {
 				dataType: "json",
 				data: JSON.stringify(userInput),
 			}).done(function (response) {
-				if (null !== response) {
-					console.log('ok : ' + JSON.stringify(response))
-				} else {
-					console.log('Problème');
-				}
-			}).fail(function (jqXHR, textStatus, error) {
-				console.log(jqXHR);
-				console.log(textStatus);
-				console.log(error);
-			});
+			if (null !== response) {
+				console.log('ok : ' + JSON.stringify(response))
+			} else {
+				console.log('Problème');
+			}
+		}).fail(function (jqXHR, textStatus, error) {
+			console.log(jqXHR);
+			console.log(textStatus);
+			console.log(error);
+		});
 	},
 
 	removeSearchIcon: function () {
@@ -103,12 +129,12 @@ var app = {
 	 */
 	searchByIngredients: function (e) {
 
-		console.log('Recherche de recettes')
+		console.log('Recherche de recettes');
 
 		// Disable submit form on Enter keypress
 		var keyCode = e.keyCode || e.which;
 		if (keyCode === 13) {
-			e.preventDefault()
+			e.preventDefault();
 
 			// Add new input
 			var addInput = $('.add-ingredient-link');

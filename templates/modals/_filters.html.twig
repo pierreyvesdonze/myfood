@@ -6,26 +6,36 @@
 <div class="filters-container">
     <a href="#" class="close-modal-btn">&times;</a>
 
-    {# Categories #}
-    <div class="filters-categories">
-        {% for category in categories %}
-            {{ category }}
-        {% endfor %}
-    </div>
+    <form action="#" id="form-filters" method="GET">
+        {# Categories #}
+        <div class="filters-categories">
+            {% for category in categories %}
+                <input type="checkbox" name="Catégorie" value="{{ category }}">
+                {{ category }}
+            {% endfor %}
+        </div>
 
-    {# Menus #}
-    <div class="filters-menus">
-        {% for menu in menus %}
-            {{ menu }}
-        {% endfor %}
-    </div>
+        {# Menus #}
+        <div class="filters-menus">
+            {% for menu in menus %}
+                <input type="checkbox" name="Menu" value="{{ menu }}">
+                {{ menu }}
+            {% endfor %}
+        </div>
 
-    {# Tags #}
-    <div class="filters-tags">
-        {% for tag in tags %}
-            {{ tag }}
-        {% endfor %}
-    </div>
+        {# Tags #}
+        <div class="filters-tags">
+            {% for tag in tags %}
+                <input type="checkbox" name="Tags" value="{{ tag }}">
+                {{ tag }}
+            {% endfor %}
+        </div>
+
+        <button type="submit" id="submit-form-filters">Filtrer</button>
+
+    </form>
+
+
 
 
 </div>

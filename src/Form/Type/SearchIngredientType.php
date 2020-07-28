@@ -17,7 +17,7 @@ class SearchIngredientType extends AbstractType
                 'attr' => [
                     'class' => "search-by-ingredient-input"
                 ]
-            ],
+            ]
         );
     }
 

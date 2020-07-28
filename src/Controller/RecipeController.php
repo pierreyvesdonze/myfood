@@ -43,11 +43,13 @@ class RecipeController extends AbstractController
     )
     {
         $user = $this->getUser();
-        /*    $recipies = $recipeRepository->findAll(); */
+
         $recipies = $user->getRecipies();
         $categories = $categoriesRepo->findAll();
         $menus = $menusRepo->findAll();
         $tags = $tagRepository->findAll();
+
+
 
         return $this->render('recipe/list.html.twig', [
             'recipies' => $recipies,

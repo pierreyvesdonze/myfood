@@ -8,7 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SearchRecipeType extends AbstractType
+class FilterRecipeType extends AbstractType
 {
     public function buildForm(\Symfony\Component\Form\FormBuilderInterface $builder, array $options)
     {
@@ -23,7 +23,7 @@ class SearchRecipeType extends AbstractType
             'save',
             SubmitType::class,
             [
-                'label' => 'Enregistrer',
+                'label' => 'Filtrer',
                 'attr' => [
                     'class' => 'button submit-search',
                 ],

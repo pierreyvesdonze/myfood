@@ -26,6 +26,8 @@
                 <div class="container-title">
                     <a href="{{ path('recipe_view', {'id': recipe.id}) }}">
                         <h3>{{ recipe.name }}</h3>
+                        <input type="hidden" class='filter-data-recipe'
+                               data-menu="{{ recipe.recipeMenu }}">
                     </a>
                 </div>
 
