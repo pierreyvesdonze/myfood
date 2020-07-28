@@ -77,18 +77,20 @@ var app = {
 
 		for (recipeData of recipiesData) {
 
-			let menu = recipeData.getAttribute('data-menu');
-			if (!filtersArray.includes(menu)) {
-				recipeDiv = recipeData.parentNode.parentNode.parentNode.parentNode;
-				recipeDiv.classList.remove('recipe');
-				recipeDiv.classList.add('hide');
-				console.log(menu + ' removed');
+			if (filtersArray.length > 0) {
+				let menu = recipeData.getAttribute('data-menu');
+				if (!filtersArray.includes(menu)) {
+					recipeDiv = recipeData.parentNode.parentNode.parentNode.parentNode;
+					recipeDiv.classList.remove('recipe');
+					recipeDiv.classList.add('hide');
+					console.log(menu + ' removed');
+				}
 			}
 
-			if (!filters.checked) {
-				recipeDiv.classList.remove('hide');
-				recipeDiv.classList.add('recipe');
-			}
+			// if (!filters.checked) {
+			// 	recipeDiv.classList.remove('hide');
+			// 	recipeDiv.classList.add('recipe');
+			// }
 		}
 
 		app.closeFiltersModal();
