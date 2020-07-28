@@ -7,19 +7,19 @@
     <a href="#" class="close-modal-btn">&times;</a>
 
     <form action="#" id="form-filters" method="GET">
-        {# Categories #}
-        <div class="filters-categories">
-            {% for category in categories %}
-                <input type="checkbox" name="Catégorie" value="{{ category }}">
-                {{ category }}
-            {% endfor %}
-        </div>
-
         {# Menus #}
         <div class="filters-menus">
             {% for menu in menus %}
                 <input type="checkbox" name="Menu" value="{{ menu }}">
                 {{ menu }}
+            {% endfor %}
+        </div>
+
+        {# Categories #}
+        <div class="filters-categories">
+            {% for category in categories %}
+                <input type="checkbox" name="Catégorie" value="{{ category }}">
+                {{ category }}
             {% endfor %}
         </div>
 
