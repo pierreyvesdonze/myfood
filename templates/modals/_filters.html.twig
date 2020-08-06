@@ -8,25 +8,25 @@
 
     <form action="#" id="form-filters" method="GET">
         {# Menus #}
-        <div class="filters-menus">
+        <div class="filters">
             {% for menu in menus %}
-                <input type="checkbox" name="Menu" value="{{ menu }}">
+                <input type="checkbox" name="menu" value="{{ menu }}" data-menu="{{ menu }}">
                 {{ menu }}
             {% endfor %}
         </div>
 
         {# Categories #}
-        <div class="filters-categories">
+        <div class="filters">
             {% for category in categories %}
-                <input type="checkbox" name="Catégorie" value="{{ category }}">
+                <input type="checkbox" name="category" value="{{ category }}">
                 {{ category }}
             {% endfor %}
         </div>
 
         {# Tags #}
-        <div class="filters-tags">
+        <div class="filters">
             {% for tag in tags %}
-                <input type="checkbox" name="Tags" value="{{ tag }}">
+                <input type="checkbox" name="tags" value="{{ tag }}">
                 {{ tag }}
             {% endfor %}
         </div>

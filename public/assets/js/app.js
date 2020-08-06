@@ -63,10 +63,16 @@ var app = {
 		e.preventDefault();
 
 		const recipiesData = $('.recipe .filter-data-recipe');
-		const filters = $('.filters-menus input[type=checkbox]');
+		const filters = $('.filters input[type=checkbox]');
 		const filtersTags = $('.filters-tags input[type=checkbox]');
+		const hideRecipes = $('.box');
 
-		console.log(filtersTags);
+		// if(hideRecipes.hasClass('hide')) {
+		// 	hideRecipes.removeClass('hide');
+		// 	hideRecipes.addClass('recipe');
+		// }
+
+		console.log(filters.get());
 
 		const filtersArray = [];
 		for (filter of filters) {
@@ -75,23 +81,24 @@ var app = {
 			}
 		}
 
-		for (recipeData of recipiesData) {
+		console.log(filtersArray);
+		// for (recipeData of recipiesData) {
+		//
+		// 	if (filtersArray.length > 0) {
+		// 		let menu 	 = recipeData.getAttribute('data-menu');
+		// 		let category = recipeData.getAttribute('data-category');
+		// 		if (!filtersArray.includes(menu) || !filtersArray.includes(category)) {
+		// 			recipeDiv = recipeData.parentNode.parentNode.parentNode.parentNode;
+		// 			recipeDiv.classList.remove('recipe');
+		// 			recipeDiv.classList.add('hide');
+		// 			console.log(menu + ' removed');
+		// 		}
+		//
+		//
+		// 	}
+		// }
 
-			if (filtersArray.length > 0) {
-				let menu = recipeData.getAttribute('data-menu');
-				if (!filtersArray.includes(menu)) {
-					recipeDiv = recipeData.parentNode.parentNode.parentNode.parentNode;
-					recipeDiv.classList.remove('recipe');
-					recipeDiv.classList.add('hide');
-					console.log(menu + ' removed');
-				}
-			}
 
-			// if (!filters.checked) {
-			// 	recipeDiv.classList.remove('hide');
-			// 	recipeDiv.classList.add('recipe');
-			// }
-		}
 
 		app.closeFiltersModal();
 	},
@@ -170,3 +177,18 @@ var app = {
 
 // App Loading
 document.addEventListener('DOMContentLoaded', app.init);
+
+var checks = $('.filters :checkbox')
+var boxes = $('.box')
+checks.on('change', function() {
+	console.log(boxes)
+	var matches = {}
+	checks.filter(':checked').each(function() {
+		var name = $(this).attr('name')
+		matches[name] = (matches[name] || [])
+		matches[name].push('[data-' + name + '="' + $(this).data(name) + '"]')
+		console.log(matches);
+	})
+	var selShapes = matches.filter ? matches.filter.join() : '*'
+	boxes.hide().filter(selShapes).show()
+});
