@@ -72,8 +72,6 @@ var app = {
 		// 	hideRecipes.addClass('recipe');
 		// }
 
-		console.log(filters.get());
-
 		const filtersArray = [];
 		for (filter of filters) {
 			if (filter.checked) {
@@ -181,14 +179,16 @@ document.addEventListener('DOMContentLoaded', app.init);
 var checks = $('.filters :checkbox')
 var boxes = $('.box')
 checks.on('change', function() {
-	console.log(boxes)
+	console.log(boxes.attr('data-menu'))
 	var matches = {}
 	checks.filter(':checked').each(function() {
-		var name = $(this).attr('name')
+		var name = $(this).attr('name');
 		matches[name] = (matches[name] || [])
 		matches[name].push('[data-' + name + '="' + $(this).data(name) + '"]')
 		console.log(matches);
 	})
-	var selShapes = matches.filter ? matches.filter.join() : '*'
-	boxes.hide().filter(selShapes).show()
+	var menus = matches.menu ? matches.menu.join() : '*'
+	boxes.hide().filter(menus).show()
+
+	console.log(menus);
 });

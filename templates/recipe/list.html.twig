@@ -8,8 +8,7 @@
 <section class="recipies-container">
 
     {% for recipe in recipies %}
-
-        <div class="recipe box">
+        <div class="recipe box" data-menu="{{ recipe.recipeMenu }}">
             <a href="{{ path('recipe_view', {'id': recipe.id}) }}">
 
                 <div class="container-img">
@@ -22,13 +21,13 @@
             </a>
 
             <div class="container-footer">
-
                 <div class="container-title">
                     <a href="{{ path('recipe_view', {'id': recipe.id}) }}">
                         <h3>{{ recipe.name }}</h3>
                         <input type="hidden" class='filter-data-recipe'
                                data-menu="{{ recipe.recipeMenu }}">
                     </a>
+
                 </div>
 
                 <hr class="hr">
