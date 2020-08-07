@@ -24,7 +24,9 @@ var app = {
 		//FILTERS MODAL
 		$('.filters').click(app.openFiltersModal);
 		$('.close-modal-btn').click(app.closeFiltersModal);
-		$('#form-filters').submit(app.filtersRecipies);
+		$('#submit-form-filters').click(app.closeFiltersModal);
+		$('.filters :checkbox').on('change', app.filtersRecipies);
+		$('.select-all').click(app.uncheckAll);
 	},
 
 	/**
@@ -62,6 +64,24 @@ var app = {
 	filtersRecipies: function (e) {
 		e.preventDefault();
 
+		const checks  = $('.filters :checkbox'),
+			  boxes   = $('.recipe'),
+			  matches = {};
+
+		checks.filter(':checked').each(function () {
+			let name = $(this).attr('name');
+			matches[name] = (matches[name] || []);
+			matches[name].push('[data-' + name + '="' + $(this).data(name) + '"]');
+			console.log(matches);
+		});
+
+		const menus 	 = matches.menu ? matches.menu.join() : '*';
+		const categories = matches.category ? matches.category.join() : '*';
+		boxes.hide().filter(menus).filter(categories).show();
+
+		console.log(menus);
+		console.log(categories);
+
 		const recipiesData = $('.recipe .filter-data-recipe');
 		const filters = $('.filters input[type=checkbox]');
 		const filtersTags = $('.filters-tags input[type=checkbox]');
@@ -79,7 +99,6 @@ var app = {
 			}
 		}
 
-		console.log(filtersArray);
 		// for (recipeData of recipiesData) {
 		//
 		// 	if (filtersArray.length > 0) {
@@ -97,8 +116,14 @@ var app = {
 		// }
 
 
+		// app.closeFiltersModal();
+	},
 
-		app.closeFiltersModal();
+	uncheckAll: function() {
+		var checked = !$(this).data('checked');
+		$('input:checkbox').prop('checked', checked);
+		$(this).val(checked ? 'Tout désélectionner' : 'Tout sélectionner' )
+		$(this).data('checked', checked);
 	},
 
 	/**
@@ -175,20 +200,3 @@ var app = {
 
 // App Loading
 document.addEventListener('DOMContentLoaded', app.init);
-
-var checks = $('.filters :checkbox')
-var boxes = $('.box')
-checks.on('change', function() {
-	console.log(boxes.attr('data-menu'))
-	var matches = {}
-	checks.filter(':checked').each(function() {
-		var name = $(this).attr('name');
-		matches[name] = (matches[name] || [])
-		matches[name].push('[data-' + name + '="' + $(this).data(name) + '"]')
-		console.log(matches);
-	})
-	var menus = matches.menu ? matches.menu.join() : '*'
-	boxes.hide().filter(menus).show()
-
-	console.log(menus);
-});

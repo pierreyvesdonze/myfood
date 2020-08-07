@@ -1,41 +1,35 @@
-{# {% for category in categories %} 
-    {{ category.name }}
-{% endfor %}
- #}
-
 <div class="filters-container">
     <a href="#" class="close-modal-btn">&times;</a>
 
-    <form action="#" id="form-filters" method="GET">
-        {# Menus #}
-        <div class="filters">
-            {% for menu in menus %}
-                <input type="checkbox" name="menu" value="{{ menu }}" data-menu="{{ menu }}">
-                {{ menu }}
-            {% endfor %}
-        </div>
+    {# Menus #}
+    <div class="filters">
+        {% for menu in menus %}
+            <input type="checkbox" id="input-recipe-menu" name="menu" value="{{ menu }}" data-menu="{{ menu }}">
+            <label for="input-recipe-menu" class="filters-label">
+                <span>{{ menu }}</span>
+            </label>
+        {% endfor %}
+    </div>
 
-        {# Categories #}
-        <div class="filters">
-            {% for category in categories %}
-                <input type="checkbox" name="category" value="{{ category }}">
-                {{ category }}
-            {% endfor %}
-        </div>
+    {# Categories #}
+    <div class="filters">
+        {% for category in categories %}
+            <input type="checkbox" id="input-recipe-category" name="category" value="{{ category }}" data-category="{{ category }}">
+            <label for="input-recipe-menu" id="input-recipe-categpry" class="filters-label">
+                <span>{{ category }}</span>
+            </label>
+        {% endfor %}
+    </div>
 
-        {# Tags #}
-        <div class="filters">
-            {% for tag in tags %}
-                <input type="checkbox" name="tags" value="{{ tag }}">
-                {{ tag }}
-            {% endfor %}
-        </div>
+    {# Tags #}
+    <div class="filters">
+        {% for tag in tags %}
+            <input type="checkbox" name="tags" value="{{ tag }}" data-tag="{{ tag }}">
+            {{ tag }}
+        {% endfor %}
+    </div>
 
-        <button type="submit" id="submit-form-filters">Filtrer</button>
-
-    </form>
-
-
-
+    <button type="button" id="submit-form-filters">Filtrer</button>
+    <input type="button" class="select-all" value="Tout sélectionner" />
 
 </div>
