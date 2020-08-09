@@ -3,19 +3,24 @@
         <i class="fa fa-bars fa-2x"></i>
     </button>
 
-    <div class="filters">
+    <div class="filters-sliders">
         <i class="fa fa-sliders-h fa-2x"></i>
     </div>
 
-    <div class="search">
-        {% block search %}
-        <form action="" class="search" placeholder="&#xF002;">
+<!--     <div class="search">
+
+        <form action="" class="search" placeholder="&#xF002;" method="POST">
             <i class="fa fa-search"></i>
             <input type="text" class="search-input">
         </form>
-        {% endblock %}
-    </div>
 
+    </div> -->
+
+    <div class="search">
+     
+       {{ render(controller('App\\Controller\\SearchController::searchBarAction')) }}
+   
+    </div>
 
 
     <div id="mySidepanel" class="sidepanel">
@@ -28,21 +33,24 @@
                 <a href="{{ path('homepage') }}">Accueil</a>
             </div>
 
+            {% if app.user %}
             <div class="recipies-link">
                 <a href="{{ path('recipe_list') }}">Mes recettes</a>
                 {#        <a href="{{ path('recipe_add') }}">
-                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                </a> #}
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    </a> #}
             </div>
 
             <div class="shopping-list-link">
                 <a href="{{ path('shopping_list_list') }}">Liste de courses</a>
             </div>
+            {% endif %}
         </div>
 
         {# RIGHT #}
         <div class="sidepanel-container sidepanel-right">
 
+            {% if app.user %}
 
             <div class="meal-plan-link">
                 <a href="{{ path('meal_plan_add') }}">Planning</a>
@@ -52,7 +60,6 @@
                 <a href="{{ path('search_list_by_ingredients') }}">Mon frigo</a>
             </div>
 
-            {% if app.user %}
 
             <div class="log-link">
                 <a href="{{ path('logout') }}">Déconnexion</a>

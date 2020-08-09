@@ -2,12 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Recipe;
 use App\Form\Type\SearchRecipeType;
-use App\Functions\Functions;
+use App\Form\Type\SearchType;
 use App\Repository\RecipeIngredientRepository;
 use App\Repository\RecipeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,7 +25,7 @@ class SearchController extends AbstractController
      */
     public function findRecipe(RecipeRepository $recipeRepository, Request $request)
     {
-        if ($request->isMethod('POST')) {
+        if ($request->isXmlHttpRequest()) {
             $data = json_decode($request->getContent());
             $recipies = $recipeRepository->findRecipeByName($data);
             $recipiesArray = [];
@@ -33,7 +36,74 @@ class SearchController extends AbstractController
             return new JsonResponse($recipiesArray);
         }
 
-        return new Response('This is not ajax!', 400);
+        return $this->render('search/result.search.html.twig', []);
+    }
+
+    public function searchBarAction(Request $request, RecipeRepository $recipeRepository): Response
+    {
+        $search = [];
+        $form = $this->createForm(SearchType::class,  $search, [
+            'action' => $this->generateUrl('search_transform'),
+        ]);
+
+        $form->handleRequest($request);
+        $errors =  $form->getErrors(true, false);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $recipies = $recipeRepository->findRecipeByName($data);
+            $recipiesArray = [];
+            foreach ($recipies as $recipe) {
+                $recipiesArray[] = $recipe->getName();
+            }
+
+            return $this->redirectToRoute('recipe_list', [
+                'recipiesArray' => $recipiesArray
+            ]);
+        } 
+        return $this->render('search/searchbar.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+
+    /**
+     * @Route("/transformsearch", name="search_transform")
+     */
+    public function transformAction(
+        Request $request
+    ): Response {
+        $form = $this->createForm(SearchType::class, null, [
+            'action' => $this->generateUrl('search_transform'),
+        ]);
+
+        $recipeRepository = $this->getDoctrine()->getRepository(Recipe::class);
+
+        return $this->saveSearch($request, $form, $recipeRepository);
+    }
+
+    /**
+     * @param $form
+     */
+    protected function saveSearch(
+        Request $request,
+        FormInterface $form,
+        RecipeRepository $recipeRepository
+    ) {
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            $data = $form->getData()['text'];
+            $recipies = $recipeRepository->findRecipeByName($data);
+            $recipiesArray = [];
+            foreach ($recipies as $recipe) {
+                $recipiesArray[] = $recipe->getName();
+            }
+            return $this->render('search/result.search.html.twig', [
+                'request' => $request,
+                'recipies' => $recipiesArray
+            ]);
+        }
+
+        return new RedirectResponse($this->generateUrl('homepage'));
     }
 
     /**
@@ -73,7 +143,6 @@ class SearchController extends AbstractController
                     $recipies = $recipeRepository->findRecipeByName($name);
                 }
             }
-            dump($recipiesArray);
 
             // Built array with names & ids of recipies
             foreach ($recipies as $key => $recipe) {
@@ -123,16 +192,15 @@ class SearchController extends AbstractController
                 foreach ($value as $recipe) {
                     $recipiesArray[] = $recipe->getRecipe();
                 }
-
             }
-            
+
             if (!null == $recipiesArray) {
                 return $this->render('recipe/list.html.twig', [
                     'recipies' => $recipiesArray,
                 ]);
             } else {
                 $this->addFlash("error", "Désolé, nous n'avons pas trouvé de recette correspondante");
-            } 
+            }
         }
         return $this->render('shopList/create.by.ingredients.html.twig', [
             'form' => $form->createView()

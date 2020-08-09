@@ -14,7 +14,7 @@ var app = {
 		$('.closebtn').click(app.closeNav);
 
 		//SEARCHBAR
-		$('.search').submit(app.search);
+		//$('.search').submit(app.search);
 		$('.search-input').focus(app.removeSearchIcon);
 		$(document).click(app.activeSearchIcon);
 
@@ -22,7 +22,7 @@ var app = {
 		$('.search-recipe-form').on('keypress', app.searchByIngredients);
 
 		//FILTERS MODAL
-		$('.filters').click(app.openFiltersModal);
+		$('.filters-sliders').click(app.openFiltersModal);
 		$('.close-modal-btn').click(app.closeFiltersModal);
 		$('#submit-form-filters').click(app.closeFiltersModal);
 		$('.filters :checkbox').on('change', app.filtersRecipies);
@@ -78,45 +78,6 @@ var app = {
 		const menus 	 = matches.menu ? matches.menu.join() : '*';
 		const categories = matches.category ? matches.category.join() : '*';
 		boxes.hide().filter(menus).filter(categories).show();
-
-		console.log(menus);
-		console.log(categories);
-
-		const recipiesData = $('.recipe .filter-data-recipe');
-		const filters = $('.filters input[type=checkbox]');
-		const filtersTags = $('.filters-tags input[type=checkbox]');
-		const hideRecipes = $('.box');
-
-		// if(hideRecipes.hasClass('hide')) {
-		// 	hideRecipes.removeClass('hide');
-		// 	hideRecipes.addClass('recipe');
-		// }
-
-		const filtersArray = [];
-		for (filter of filters) {
-			if (filter.checked) {
-				filtersArray.push(filter.value);
-			}
-		}
-
-		// for (recipeData of recipiesData) {
-		//
-		// 	if (filtersArray.length > 0) {
-		// 		let menu 	 = recipeData.getAttribute('data-menu');
-		// 		let category = recipeData.getAttribute('data-category');
-		// 		if (!filtersArray.includes(menu) || !filtersArray.includes(category)) {
-		// 			recipeDiv = recipeData.parentNode.parentNode.parentNode.parentNode;
-		// 			recipeDiv.classList.remove('recipe');
-		// 			recipeDiv.classList.add('hide');
-		// 			console.log(menu + ' removed');
-		// 		}
-		//
-		//
-		// 	}
-		// }
-
-
-		// app.closeFiltersModal();
 	},
 
 	uncheckAll: function() {
@@ -141,7 +102,11 @@ var app = {
 				data: JSON.stringify(userInput),
 			}).done(function (response) {
 			if (null !== response) {
-				console.log('ok : ' + JSON.stringify(response))
+				console.log('ok : ' + JSON.stringify(response));
+			/* 	let redirectUrl = Routing.generate('recipe_list_api', response, true);
+
+				response = JSON.stringify(response);
+				window.location.replace(redirectUrl + response); */
 			} else {
 				console.log('Problème');
 			}

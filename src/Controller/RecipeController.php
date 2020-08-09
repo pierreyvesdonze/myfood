@@ -59,7 +59,6 @@ class RecipeController extends AbstractController
         ]);
     }
 
-
     /**
      * @Route("/view/{id}", name="recipe_view", methods={"GET"})
      */

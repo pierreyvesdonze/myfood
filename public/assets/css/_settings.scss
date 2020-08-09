@@ -10,15 +10,12 @@
 body {
   background: url("../images/redox_01.png");
   overflow: hidden;
+  margin: 0 !important;
 }
 
 #mySidepanel,
 .filters-container {
   background-image: url("../images/dark_leather.png");
-}
-
-.filters-container{
-	opacity: .92;
 }
 
 /* GENERAL */
@@ -51,6 +48,16 @@ a {
   );
 }
 
+
+.hr-white{
+  border: 0;
+  height: 1px;
+  width: 400px;
+  background: #333;
+  background-image: linear-gradient(to right, #ccc, rgb(255, 255, 255), #ccc);
+}
+
+
 /* FONTS & ICONS*/
 * {
   font-family: "Cinzel", serif;
@@ -73,4 +80,13 @@ ul li {
 /* INPUTS */
 input:focus {
   outline: none;
+}
+
+/* CONTAINERS */
+.container {
+  padding: 7em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }

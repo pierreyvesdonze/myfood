@@ -2,34 +2,44 @@
     <a href="#" class="close-modal-btn">&times;</a>
 
     {# Menus #}
-    <div class="filters">
-        {% for menu in menus %}
+    <div class="container">
+        <div class="filters">
+            <h2>Menu</h2>
+            {% for menu in menus %}
             <input type="checkbox" id="input-recipe-menu" name="menu" value="{{ menu }}" data-menu="{{ menu }}">
             <label for="input-recipe-menu" class="filters-label">
                 <span>{{ menu }}</span>
             </label>
-        {% endfor %}
-    </div>
+            {% endfor %}
+        </div>
 
-    {# Categories #}
-    <div class="filters">
-        {% for category in categories %}
-            <input type="checkbox" id="input-recipe-category" name="category" value="{{ category }}" data-category="{{ category }}">
+        <hr class="hr-white">
+
+        {# Categories #}
+        <div class="filters">
+            <h2>Préférences</h2>
+            {% for category in categories %}
+            <input type="checkbox" id="input-recipe-category" name="category" value="{{ category }}"
+                data-category="{{ category }}">
             <label for="input-recipe-menu" id="input-recipe-categpry" class="filters-label">
                 <span>{{ category }}</span>
             </label>
-        {% endfor %}
-    </div>
+            {% endfor %}
+        </div>
 
-    {# Tags #}
-    <div class="filters">
-        {% for tag in tags %}
+        <hr class="hr-white">
+
+        {# Tags #}
+        <div class="filters">
+            <h2>Tags</h2>
+            {% for tag in tags %}
             <input type="checkbox" name="tags" value="{{ tag }}" data-tag="{{ tag }}">
             {{ tag }}
-        {% endfor %}
+            {% endfor %}
+        </div>
+
+        <button type="button" id="submit-form-filters">Ok</button>
+        <input type="button" class="select-all" value="Tout sélectionner" />
+
     </div>
-
-    <button type="button" id="submit-form-filters">Filtrer</button>
-    <input type="button" class="select-all" value="Tout sélectionner" />
-
 </div>
