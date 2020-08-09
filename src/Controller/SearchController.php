@@ -3,10 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Recipe;
+use App\Entity\RecipeCategory;
+use App\Entity\RecipeMenu;
+use App\Entity\Tag;
 use App\Form\Type\SearchRecipeType;
 use App\Form\Type\SearchType;
+use App\Repository\RecipeCategoryRepository;
 use App\Repository\RecipeIngredientRepository;
+use App\Repository\RecipeMenuRepository;
 use App\Repository\RecipeRepository;
+use App\Repository\TagRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -30,7 +36,7 @@ class SearchController extends AbstractController
             $recipies = $recipeRepository->findRecipeByName($data);
             $recipiesArray = [];
             foreach ($recipies as $recipe) {
-                $recipiesArray[] = $recipe->getName();
+                $recipiesArray[] = $recipe;
             }
 
             return new JsonResponse($recipiesArray);
@@ -52,15 +58,11 @@ class SearchController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $recipies = $recipeRepository->findRecipeByName($data);
-            $recipiesArray = [];
-            foreach ($recipies as $recipe) {
-                $recipiesArray[] = $recipe->getName();
-            }
 
             return $this->redirectToRoute('recipe_list', [
-                'recipiesArray' => $recipiesArray
+                'recipies' => $recipies
             ]);
-        } 
+        }
         return $this->render('search/searchbar.html.twig', [
             'form' => $form->createView()
         ]);
@@ -78,8 +80,11 @@ class SearchController extends AbstractController
         ]);
 
         $recipeRepository = $this->getDoctrine()->getRepository(Recipe::class);
+        $recipeCategoryRepository = $this->getDoctrine()->getRepository(RecipeCategory::class);
+        $recipeMenuRepository = $this->getDoctrine()->getRepository(RecipeMenu::class);
+        $tagRepository = $this->getDoctrine()->getRepository(Tag::class);
 
-        return $this->saveSearch($request, $form, $recipeRepository);
+        return $this->saveSearch($request, $form, $recipeRepository, $recipeCategoryRepository, $recipeMenuRepository, $tagRepository);
     }
 
     /**
@@ -88,18 +93,28 @@ class SearchController extends AbstractController
     protected function saveSearch(
         Request $request,
         FormInterface $form,
-        RecipeRepository $recipeRepository
+        RecipeRepository $recipeRepository,
+        RecipeCategoryRepository $categoriesRepo,
+        RecipeMenuRepository $menusRepo,
+        TagRepository $tagRepository
     ) {
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $data = $form->getData()['text'];
             $recipies = $recipeRepository->findRecipeByName($data);
-            $recipiesArray = [];
-            foreach ($recipies as $recipe) {
-                $recipiesArray[] = $recipe->getName();
+            $categories = $categoriesRepo->findAll();
+            $menus = $menusRepo->findAll();
+            $tags = $tagRepository->findAll();
+
+            if(!$recipies) {
+                $this->addFlash("error", "Aucune recette n'a été trouvée :/ ");
             }
-            return $this->render('search/result.search.html.twig', [
+
+            return $this->render('recipe/list.html.twig', [
                 'request' => $request,
-                'recipies' => $recipiesArray
+                'recipies' => $recipies,
+                'categories' => $categories,
+                'menus' => $menus,
+                'tags' => $tags
             ]);
         }
 
@@ -168,8 +183,7 @@ class SearchController extends AbstractController
      */
     public function searchByIngredients(
         Request $request,
-        RecipeIngredientRepository $recipeIngredientRepository,
-        RecipeRepository $recipeRepository
+        RecipeIngredientRepository $recipeIngredientRepository
     ) {
 
         $form = $this->createForm(SearchRecipeType::class, null);

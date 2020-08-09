@@ -20,7 +20,7 @@ class SearchType extends AbstractType
             [
                 'label' => false,
                 'attr' => [
-                    'placeholder' => "&#xF002;"
+                    'class'       => 'search-input'
                 ]
             ],
         );
@@ -31,7 +31,7 @@ class SearchType extends AbstractType
             [
                 'label' => 'Filtrer',
                 'attr' => [
-                    'class' => 'button submit-search',
+                    'class' => 'main-button-search'
                 ],
             ]
         );

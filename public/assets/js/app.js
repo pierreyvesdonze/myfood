@@ -27,6 +27,16 @@ var app = {
 		$('#submit-form-filters').click(app.closeFiltersModal);
 		$('.filters :checkbox').on('change', app.filtersRecipies);
 		$('.select-all').click(app.uncheckAll);
+
+		//ALERT MODAL
+		app.close = $('.close').on('click', app.closeAlertModal);
+     	app.modal = $('.alert-success');
+     	app.modalError = $('.alert-error');
+        setTimeout(function () {
+            app.modal.remove();
+            app.modalError.remove();
+            app.close.remove();
+        }, 3000);
 	},
 
 	/**
@@ -46,6 +56,13 @@ var app = {
 		console.log('close');
 		document.getElementById("mySidepanel").style.width = "0";
 	},
+
+	closeAlertModal: function () {
+		console.log('close');
+        app.modal.remove();
+        app.modalError.remove();
+        app.close.remove();
+    },
 
 	/**
 	 * FILTERS

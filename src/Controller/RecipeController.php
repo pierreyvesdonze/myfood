@@ -49,8 +49,6 @@ class RecipeController extends AbstractController
         $menus = $menusRepo->findAll();
         $tags = $tagRepository->findAll();
 
-
-
         return $this->render('recipe/list.html.twig', [
             'recipies' => $recipies,
             'categories' => $categories,

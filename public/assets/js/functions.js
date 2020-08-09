@@ -150,3 +150,35 @@ function addMealFormDeleteLink($stepFormLi) {
         $stepFormLi.remove();
     });
 }
+
+////////////////////////////////////////
+// Prevent double click/submit function
+///////////////////////////////////////
+$('form').submit(function (e) {
+    // if the form is disabled don't allow submit
+    if ($(this).hasClass('disabled')) {
+        e.preventDefault();
+        return;
+    }
+    $(this).addClass('disabled');
+});
+
+/*
+****************************
+LOADER ANIMATION
+****************************
+*/
+
+document.onreadystatechange = function() { 
+    if (document.readyState !== "complete") { 
+        document.querySelector( 
+          "body").style.visibility = "hidden"; 
+        document.querySelector( 
+          "#loader").style.visibility = "visible"; 
+    } else { 
+        document.querySelector( 
+          "#loader").style.display = "none"; 
+        document.querySelector( 
+          "body").style.visibility = "visible"; 
+    } 
+}; 

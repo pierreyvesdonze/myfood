@@ -96,6 +96,67 @@ input:focus {
   text-align: center;
 }
 
+/*
+***********************************
+FLASH MESSAGES
+***********************************
+*/
+.flash-container {
+  z-index: 2;
+  position: fixed;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+}
+
+.alert {
+  -webkit-box-shadow: 8px 8px 7px -2px rgba(0, 0, 0, 0.75);
+  box-shadow: 8px 8px 7px -2px rgba(0, 0, 0, 0.75);
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  border: none;
+  outline: none;
+  text-align: center;
+  opacity: 0.8;
+  font-size: 1.3em;
+  padding: 2%;
+  border-radius: 9px;
+}
+
+.alert::after {
+  opacity: 0;
+  -webkit-transition: ease;
+  transition: ease;
+}
+
+.close {
+  color: red !important;
+  text-shadow: 0 1px 0 #000 !important;
+  opacity: 1;
+  background: none;
+  border: none;
+  font-size: 2em;
+}
+
+.close:focus {
+  outline: none;
+}
+
+.close:hover {
+  color: green !important;
+}
+
 /* HEADER/MENU */
 .menu {
   display: -webkit-box;
@@ -125,6 +186,10 @@ input:focus {
   z-index: 1;
   top: 23px;
   margin-left: 10px;
+}
+
+.main-button-search {
+  display: none;
 }
 
 /* FILTERS */
