@@ -1,4 +1,8 @@
-/* COLORS */
+/*
+***********************************
+COLORS
+***********************************
+*/
 :root {
   --primary-color: #000000;
   --secondary-color: #949494;
@@ -18,7 +22,11 @@ body {
   background-image: url("../images/dark_leather.png");
 }
 
-/* GENERAL */
+/*
+***********************************
+GENERAL
+***********************************
+*/
 .active {
   display: block;
   transition: 0.5s;
@@ -58,7 +66,11 @@ a {
 }
 
 
-/* FONTS & ICONS*/
+/*
+***********************************
+FONTS & ICONS
+***********************************
+*/
 * {
   font-family: "Cinzel", serif;
 }
@@ -72,17 +84,29 @@ a {
   }
 }
 
-/* LISTS */
+/*
+***********************************
+LISTS
+***********************************
+*/
 ul li {
   list-style-type: none;
 }
 
-/* INPUTS */
+/*
+***********************************
+INPUTS
+***********************************
+*/
 input:focus {
   outline: none;
 }
 
-/* CONTAINERS */
+/*
+***********************************
+CONTAINERS
+***********************************
+*/
 .container {
   padding: 7em;
   display: flex;
@@ -142,4 +166,18 @@ FLASH MESSAGES
 
 .close:hover {
   color: green !important;
+}
+
+
+/*
+***********************************
+BUTTONS BOOTSTRAP
+***********************************
+*/
+.btn-block {
+
+}
+
+.btn-link:focus {
+  text-decoration: none !important;
 }

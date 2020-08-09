@@ -31,9 +31,9 @@ class ShoppingListController extends AbstractController
     public function shoppingListList(ShoppingListRepository $shoppingListRepository)
     {
         $shopList = $shoppingListRepository->findAll();
-
+    
         return $this->render('shopList/shopping_list_all.html.twig', [
-            'shoppingLists' => $shopList,
+            'shoppingList' => $shopList,
         ]);
     }
 
@@ -64,7 +64,7 @@ class ShoppingListController extends AbstractController
             $article = new Article();
             $article->setName($ingredient->getName());
             $article->setAmount($ingredient->amount);
-            $article->setUnit($ingredient->unit);
+            $article->setUnit($ingredient->getUnit());
             $article->setShoppingList($shoppingList);
             $em->persist($article);
         }
@@ -101,7 +101,7 @@ class ShoppingListController extends AbstractController
             for ($i = 0; $i < count($oldList); ++$i) {
                 $oldListArray[$i]['name'] = $oldList[$i]->getName();
                 $oldListArray[$i]['amount'] = intval($oldList[$i]->getAmount());
-   /*              $oldListArray[$i]['unit'] = $oldList[$i]->getUnit(); */
+                $oldListArray[$i]['unit'] = $oldList[$i]->getUnit(); 
             }
 
             // Make an array with new list
@@ -110,7 +110,7 @@ class ShoppingListController extends AbstractController
             for ($j = 0; $j < count($truc); ++$j) {
                 $newListArray[$j]['name'] = $truc[$j]->getName();
                 $newListArray[$j]['amount'] = $truc[$j]->getAmount();
-               /*  $newListArray[$j]['unit'] = $truc[$j]->getUnit(); */
+                $newListArray[$j]['unit'] = $truc[$j]->getUnit();
             }
 
             // Merge lists and build final
@@ -139,7 +139,6 @@ class ShoppingListController extends AbstractController
 
             // Set new shopping list with old values + new articles
             $newShoppingList = new ShoppingList();
-            $unit = new Unit();
 
             $newShoppingList->setId($oldShopListId);
             $newShoppingList->setDescription($oldShopListName);
@@ -148,7 +147,7 @@ class ShoppingListController extends AbstractController
                 $newArticle = new Article();
                 $newArticle->setName($final['name']);
                 $newArticle->setAmount($final['amount']);
-/*                 $newArticle->setUnit($final['unit']); */
+                $newArticle->setUnit($final['unit']);
                 $newArticle->setShoppingList($newShoppingList);
                 $em->persist($newArticle);
             }
@@ -168,7 +167,7 @@ class ShoppingListController extends AbstractController
     /**
      * @Route("/{id}/delete", name="shopping_list_delete", methods={"GET","POST"})
      */
-    public function shoppingListDelete(ShoppingList $shoppingList)
+    public function shoppingListDelete(ShoppingList $shoppingList): Response
     {
         $manager = $this->getDoctrine()->getManager();
         $manager->remove($shoppingList);

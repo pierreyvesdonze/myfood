@@ -28,15 +28,18 @@ var app = {
 		$('.filters :checkbox').on('change', app.filtersRecipies);
 		$('.select-all').click(app.uncheckAll);
 
+		//SHOPPING LISTS
+		$('.collapse-shoplist').click(app.openShopList)
+
 		//ALERT MODAL
 		app.close = $('.close').on('click', app.closeAlertModal);
-     	app.modal = $('.alert-success');
-     	app.modalError = $('.alert-error');
-        setTimeout(function () {
-            app.modal.remove();
-            app.modalError.remove();
-            app.close.remove();
-        }, 3000);
+		app.modal = $('.alert-success');
+		app.modalError = $('.alert-error');
+		setTimeout(function () {
+			app.modal.remove();
+			app.modalError.remove();
+			app.close.remove();
+		}, 3000);
 	},
 
 	/**
@@ -59,10 +62,10 @@ var app = {
 
 	closeAlertModal: function () {
 		console.log('close');
-        app.modal.remove();
-        app.modalError.remove();
-        app.close.remove();
-    },
+		app.modal.remove();
+		app.modalError.remove();
+		app.close.remove();
+	},
 
 	/**
 	 * FILTERS
@@ -81,9 +84,9 @@ var app = {
 	filtersRecipies: function (e) {
 		e.preventDefault();
 
-		const checks  = $('.filters :checkbox'),
-			  boxes   = $('.recipe'),
-			  matches = {};
+		const checks = $('.filters :checkbox'),
+			boxes = $('.recipe'),
+			matches = {};
 
 		checks.filter(':checked').each(function () {
 			let name = $(this).attr('name');
@@ -92,16 +95,32 @@ var app = {
 			console.log(matches);
 		});
 
-		const menus 	 = matches.menu ? matches.menu.join() : '*';
+		const menus = matches.menu ? matches.menu.join() : '*';
 		const categories = matches.category ? matches.category.join() : '*';
 		boxes.hide().filter(menus).filter(categories).show();
 	},
 
-	uncheckAll: function() {
+	uncheckAll: function () {
 		var checked = !$(this).data('checked');
 		$('input:checkbox').prop('checked', checked);
-		$(this).val(checked ? 'Tout désélectionner' : 'Tout sélectionner' )
+		$(this).val(checked ? 'Tout désélectionner' : 'Tout sélectionner')
 		$(this).data('checked', checked);
+	},
+
+	/**
+	 *SHOPLIST 
+	 */
+	openShopList: function (e) {
+		console.log('open shoplist');
+		let shopList = e.target.previousSibling.previousSibling;
+		let articlesContainer = shopList.children;
+		let articles = articlesContainer[0];
+
+		console.log(shopList);
+		console.log(articles);
+		shopList.classList.toggle = "shopping-lists-active";
+		articles.classList.toggle = "articles-container-active";
+
 	},
 
 	/**
@@ -118,20 +137,20 @@ var app = {
 				dataType: "json",
 				data: JSON.stringify(userInput),
 			}).done(function (response) {
-			if (null !== response) {
-				console.log('ok : ' + JSON.stringify(response));
-			/* 	let redirectUrl = Routing.generate('recipe_list_api', response, true);
-
-				response = JSON.stringify(response);
-				window.location.replace(redirectUrl + response); */
-			} else {
-				console.log('Problème');
-			}
-		}).fail(function (jqXHR, textStatus, error) {
-			console.log(jqXHR);
-			console.log(textStatus);
-			console.log(error);
-		});
+				if (null !== response) {
+					console.log('ok : ' + JSON.stringify(response));
+					/* 	let redirectUrl = Routing.generate('recipe_list_api', response, true);
+		
+						response = JSON.stringify(response);
+						window.location.replace(redirectUrl + response); */
+				} else {
+					console.log('Problème');
+				}
+			}).fail(function (jqXHR, textStatus, error) {
+				console.log(jqXHR);
+				console.log(textStatus);
+				console.log(error);
+			});
 	},
 
 	removeSearchIcon: function () {

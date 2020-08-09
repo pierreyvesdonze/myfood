@@ -1,6 +1,9 @@
 @import "./settings";
-
-/* HEADER/MENU */
+/*
+***********************************
+MENU
+***********************************
+*/
 .menu {
   display: flex;
   justify-content: space-between;
@@ -10,7 +13,11 @@
   box-shadow: 0px 9px 6px -8px;
 }
 
-/* SEARCH BAR */
+/*
+***********************************
+SEARCH BAR
+***********************************
+*/
 .search-input {
   border-radius: 30px;
   position: relative;
@@ -27,7 +34,11 @@
   display: none;
 }
 
-/* FILTERS */
+/*
+***********************************
+FILTERS
+***********************************
+*/
 .filters-container {
   height: 0;
   width: 100%;
@@ -49,8 +60,17 @@
   margin-bottom: 2em;
 }
 
-/*SIDEBAR*/
-/* The sidepanel menu */
+.filters-sliders {
+  position: absolute;
+  top: 15px;
+  right: 50%;
+}
+
+/*
+***********************************
+SIDEBAR
+***********************************
+*/
 .sidepanel {
   height: 100%;
   width: 0;
@@ -121,14 +141,24 @@
   }
 }
 
-/* MAIN */
-.main-title-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 .main-title {
   font-size: 12em;
+  text-align: center;
+}
+
+.main-title-shop-list {
+  font-size: 5em;
+  margin: 0;
+  font-weight: lighter;
+  text-shadow: 1px -1px 0 #767676, -1px 2px 1px #737272, -2px 3px 1px #767474,
+    -3px 4px 1px #787777, -4px 5px 1px #7b7a7a, -5px 6px 1px #7f7d7d,
+    -6px 7px 1px #828181, -7px 8px 1px #868585, -8px 9px 1px #8b8a89,
+    -9px 10px 1px #a1a09f, -10px 11px 1px #b1afaef6, -11px 12px 1px #c5c5c5ee,
+    -12px 13px 1px #e0e0e0e8;
+}
+
+.main-title,
+.main-title-vertical {
   margin: 0;
   font-weight: lighter;
   text-shadow: 1px -1px 0 #767676, -1px 2px 1px #737272, -2px 4px 1px #767474,
@@ -143,18 +173,37 @@
     -27px 54px 1px #e2e0df, -28px 56px 1px #ececece0;
 }
 
-/* MAIN */
+.main-title-vertical {
+  font-size: 4.1em;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+}
+
+/*
+***********************************
+MAIN
+***********************************
+*/
 
 .main {
   overflow: scroll;
   height: 680px;
 }
 
-/* RECIPIES */
+.recipies-main-container {
+  display: flex;
+}
+
+/*
+***********************************
+RECIPIES
+***********************************
+*/
 .recipies-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  width: 92%;
   height: 800px;
   overflow: scroll;
   padding-top: 20px;
@@ -226,7 +275,68 @@
   margin-bottom: 10px;
 }
 
-/* CONTROL */
+/*
+***********************************
+SHOPPING LIST
+***********************************
+*/
+
+
+.shopping-list-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 560px;
+  overflow: scroll;
+}
+
+.hidden-radio {
+  display: none;
+}
+
+.a-content {
+  text-align: left;
+  border-radius: 20px;
+  box-shadow: 0 2px 3px rgba(0, 8, 14, 0.7) inset, 0 10px 18px rgba(207, 165, 25, 0.397) inset;
+  opacity: 0;
+  height: 0;
+  transition: ease-out 0.2s;
+}
+
+.a-container {
+  text-align: center;
+  flex-direction: column;
+  width: 80%;
+  margin: auto;
+  padding: 0;
+  display: flex;
+}
+
+
+.a-container ul li {
+  font-size: 2em;
+  text-shadow: -1px 1px 3px rgb(10, 10, 10);
+}
+
+
+.a-container label {
+  display: block;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.a-container input:checked ~ .a-content {
+  opacity: 1;
+  height: 200px;
+  transition: ease-in 0.2s;
+}
+
+/*
+***********************************
+CONTROL
+***********************************
+*/
 .control {
   display: flex;
   justify-content: space-around;

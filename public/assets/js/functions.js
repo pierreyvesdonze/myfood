@@ -116,7 +116,7 @@ MEAL PLAN ADD RECIPIES
 var $addMealButton = $('<button type="button" class="add_meal_link">Add a meal</button>');
 var $newLinkLi = $('<li></li>').append($addMealButton);
 
-jQuery(document).ready(function () {
+$(document).ready(function () {
 
     $collectionHolder = $('ul.meals');
     $collectionHolder.append($newLinkLi);
