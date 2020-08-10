@@ -28,8 +28,11 @@ var app = {
 		$('.filters :checkbox').on('change', app.filtersRecipies);
 		$('.select-all').click(app.uncheckAll);
 
-		//SHOPPING LISTS
-		$('.collapse-shoplist').click(app.openShopList)
+		//SHOPPING LISTS & MODAL
+		$('.add-article').click(app.openArticlesModal);
+		$('.close-articles-modal').click(app.closeArticlesModal);
+	
+
 
 		//ALERT MODAL
 		app.close = $('.close').on('click', app.closeAlertModal);
@@ -56,12 +59,12 @@ var app = {
 	},
 
 	closeNav: function () {
-		console.log('close');
+		console.log('close navbar');
 		document.getElementById("mySidepanel").style.width = "0";
 	},
 
 	closeAlertModal: function () {
-		console.log('close');
+		console.log('close alert modal');
 		app.modal.remove();
 		app.modalError.remove();
 		app.close.remove();
@@ -107,19 +110,34 @@ var app = {
 		$(this).data('checked', checked);
 	},
 
-	/**
-	 *SHOPLIST 
-	 */
-	openShopList: function (e) {
-		console.log('open shoplist');
-		let shopList = e.target.previousSibling.previousSibling;
-		let articlesContainer = shopList.children;
-		let articles = articlesContainer[0];
 
-		console.log(shopList);
-		console.log(articles);
-		shopList.classList.toggle = "shopping-lists-active";
-		articles.classList.toggle = "articles-container-active";
+	/**
+	 * ADD ARTICLES MODAL
+	 */
+	openArticlesModal: function (e) {
+		let modal = $('.add-articles-section');
+		let modalContent = $('.add-articles-section *');
+		setTimeout(function () {
+			modalContent.css("visibility", "visible")
+		}, 80);
+		modal.css("height", "278px");
+
+		//Open current shoplist
+		let prevMdodal = this.parentNode.querySelector('.fa-eye');
+		prevMdodal.click();
+	},
+
+	closeArticlesModal: function () {
+		console.log('test')
+		let closeModal = $('.add-articles-section');
+		let modalContent = $('.add-articles-section *');
+		setTimeout(function () {
+			modalContent.css("visibility", "hidden")
+		}, 80);
+		closeModal.css("height", "0px");
+	},
+
+	addArticleToShopList: function () {
 
 	},
 

@@ -171,11 +171,12 @@ FLASH MESSAGES
 
 /*
 ***********************************
-BUTTONS BOOTSTRAP
+BUTTONS 
 ***********************************
 */
-.btn-block {
-
+.circle-btn {
+  border-radius: 50% !important;
+  padding: 10px;
 }
 
 .btn-link:focus {

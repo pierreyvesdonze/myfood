@@ -1,7 +1,7 @@
 
 /*
 ****************************************
-RECIPIES ADD & REMOVE STEPS & INGREDIENS
+RECIPIES ADD & REMOVE STEPS & INGREDIENTS
 ****************************************
 */
 var $stepCollectionHolder;

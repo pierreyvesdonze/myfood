@@ -183,9 +183,14 @@ FLASH MESSAGES
 
 /*
 ***********************************
-BUTTONS BOOTSTRAP
+BUTTONS 
 ***********************************
 */
+.circle-btn {
+  border-radius: 50% !important;
+  padding: 10px;
+}
+
 .btn-link:focus {
   text-decoration: none !important;
 }
@@ -336,7 +341,8 @@ SIDEBAR
 }
 
 .sidepanel .closebtn,
-.close-modal-btn {
+.close-modal-btn,
+.add-articles-section .closebtn {
   color: var(--tertiary-color);
   position: absolute;
   top: 0;
@@ -566,6 +572,54 @@ SHOPPING LIST
   height: 200px;
   -webkit-transition: ease-in 0.2s;
   transition: ease-in 0.2s;
+}
+
+/*
+*****
+MODAL
+****
+*/
+.add-articles-section {
+  height: 0;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  background: #000000c7;
+  position: fixed;
+  z-index: 4;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-shadow: 0px 9px 6px -8px;
+          box-shadow: 0px 9px 6px -8px;
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+}
+
+.add-articles-section * {
+  visibility: hidden;
+}
+
+.add-articles-section h2 {
+  color: var(--tertiary-color);
+}
+
+.add-articles-section input {
+  width: 20em;
+}
+
+.add-articles-section .right a {
+  margin: 0 2em;
 }
 
 /*

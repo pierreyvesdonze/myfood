@@ -1,6 +1,12 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
+
+
+{# ADD ARTICLES #}
+{% include "shopList/addIngredientsModal.html.twig" %}
+
+{# MAIN TITLE #}
 <div class="main-title-container">
     <h1 class="main-title">Shopping</h1>
 </div>
@@ -21,25 +27,28 @@
                 <label for="a{{ key }}">
                     <i class="fa fa-eye fa-2x"></i>
                 </label>
-                <div class="delete-shoplist">
-                    <a href="{{ path('shopping_list_delete', {"id":shoplist.id}) }}">
-                        <i class="fa fa-trash fa-2x"></i>
-                    </a>
-                </div>
+                <a href="#" class="add-article">
+                    <i class="fa fa-cart-plus fa-2x"></i>
+                </a>
+                <a href="{{ path('shopping_list_delete', {"id":shoplist.id}) }}">
+                    <i class="fa fa-trash fa-2x"></i>
+                </a>
             </div>
-                <div class="a-content">
+            <div class="a-content">
                 <ul>
                     {% for article in shoplist.articles %}
                     <li>
+
                         {% if article.unit %}
                         {{ article.name|capitalize }} : {{ article.amount }} {{ article.unit }}
                         {% else %}
                         {{ article.name|capitalize }} : {{ article.amount }}
                         {% endif %}
+
                     </li>
                     {% endfor %}
                 </ul>
-    
+
             </div>
         </li>
     </ul>
