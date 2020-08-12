@@ -120,8 +120,7 @@ SIDEBAR
 
 .sidepanel .closebtn,
 .close-modal-btn,
-.add-articles-section .closebtn
-{
+.add-articles-section .closebtn {
   color: var(--tertiary-color);
   position: absolute;
   top: 0;
@@ -327,7 +326,8 @@ SHOPPING LIST
 
 .a-container input:checked ~ .a-content {
   opacity: 1;
-  height: 200px;
+  height: 300px;
+  overflow-y: scroll;
   transition: ease-in 0.2s;
 }
 
@@ -340,7 +340,8 @@ MODAL
   height: 0;
   transition: 0.5s;
   background: #000000c7;
-   position: fixed;
+  position: fixed;
+  color: var(--tertiary-color);
   z-index: 4;
   width: 100%;
   display: flex;
@@ -353,6 +354,11 @@ MODAL
 
 .add-articles-section * {
   visibility: hidden;
+}
+
+.add-articles-section .left {
+  display: flex;
+  flex-direction: column;
 }
 
 .add-articles-section h2 {

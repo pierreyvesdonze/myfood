@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Ingredient;
 use App\Entity\Recipe;
 use App\Entity\ShoppingList;
 use App\Entity\Unit;
 use App\Form\Type\ShoppingListType;
+use App\Repository\IngredientRepository;
 use App\Repository\ShoppingListRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +33,7 @@ class ShoppingListController extends AbstractController
     public function shoppingListList(ShoppingListRepository $shoppingListRepository)
     {
         $shopList = $shoppingListRepository->findAll();
-    
+
         return $this->render('shopList/shopping_list_all.html.twig', [
             'shoppingList' => $shopList,
         ]);
@@ -101,7 +103,7 @@ class ShoppingListController extends AbstractController
             for ($i = 0; $i < count($oldList); ++$i) {
                 $oldListArray[$i]['name'] = $oldList[$i]->getName();
                 $oldListArray[$i]['amount'] = intval($oldList[$i]->getAmount());
-                $oldListArray[$i]['unit'] = $oldList[$i]->getUnit(); 
+                $oldListArray[$i]['unit'] = $oldList[$i]->getUnit();
             }
 
             // Make an array with new list
@@ -164,90 +166,35 @@ class ShoppingListController extends AbstractController
         ]);
     }
 
-      /**
+    /**
      * @Route("/add/articles/{id}", name="shopping_list_add_articles", methods={"GET", "POST"})
      */
-    public function shoppingListAddArticle(Request $request, Recipe $recipe, ShoppingListRepository $shoppingListRepository)
+    public function shoppingListAddArticle(Request $request, IngredientRepository $ingredientRepository)
     {
-        $em = $this->getDoctrine()->getManager();
-        $user = $this->getUser();
+        if ($request->isMethod('POST')) {
+            $requestIngredient = json_decode($request->getContent());
 
-        $form = $this->createForm(ShoppingListType::class, null);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $oldShopList = $form->get('shoppingList')->getData();
-            $shoppingList = $shoppingListRepository->findOneBy([
-                'id' => $oldShopList->getId(),
+            /**
+             * @return Ingredient()
+             */
+            $dataIngredient = $ingredientRepository->findBy([
+                'name' => $requestIngredient
             ]);
 
-            // Make an array with old list's ingredients
-            $oldListArray = [];
-            $oldList = $oldShopList->getArticles();
-            for ($i = 0; $i < count($oldList); ++$i) {
-                $oldListArray[$i]['name'] = $oldList[$i]->getName();
-                $oldListArray[$i]['amount'] = intval($oldList[$i]->getAmount());
-                $oldListArray[$i]['unit'] = $oldList[$i]->getUnit(); 
+            if (null == $dataIngredient) {
+                $newIngredient = new Ingredient();
+                $newIngredient->setName('');
             }
-
-            // Make an array with new list
-            $newListArray = [];
-            $truc = $recipe->getRecipeIngredients();
-            for ($j = 0; $j < count($truc); ++$j) {
-                $newListArray[$j]['name'] = $truc[$j]->getName();
-                $newListArray[$j]['amount'] = $truc[$j]->getAmount();
-                $newListArray[$j]['unit'] = $truc[$j]->getUnit();
-            }
-
-            // Merge lists and build final
-            $mergedList = array_merge($oldListArray, $newListArray);
-            $finalShoppingList = [];
-            foreach ($mergedList as $unique) {
-                $name = $unique['name'];
-
-                // Merge duplicates and increase amounts
-                if (isset($finalShoppingList[$name])) {
-                    if ($finalShoppingList[$name]['name'] === $unique['name']) {
-                        $finalShoppingList[$name]['amount'] += $unique['amount'];
-                    }
-                } else {
-                    $finalShoppingList[$name] = $unique;
-                }
-            }
-
-            // Save old informations
-            $oldShopListId = $shoppingList->getId();
-            $oldShopListName = $shoppingList->getDescription();
-
-            // Remove old shopping list
-            $em->remove($shoppingList);
-            $em->flush();
-
-            // Set new shopping list with old values + new articles
-            $newShoppingList = new ShoppingList();
-
-            $newShoppingList->setId($oldShopListId);
-            $newShoppingList->setDescription($oldShopListName);
-            $newShoppingList->setUser($user);
-            foreach ($finalShoppingList as $final) {
-                $newArticle = new Article();
-                $newArticle->setName($final['name']);
-                $newArticle->setAmount($final['amount']);
-                $newArticle->setUnit($final['unit']);
-                $newArticle->setShoppingList($newShoppingList);
-                $em->persist($newArticle);
-            }
-            $em->persist($newShoppingList);
-            $em->flush();
-
-            return $this->redirectToRoute('shopping_list_view', [
-                'id' => $newShoppingList->getId(),
+            return $this->json([
+                'ok'
             ]);
         }
 
-        return $this->render('shopList/add.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        return new Response(
+            'Something went wrong...',
+            Response::HTTP_OK,
+            ['content-type' => 'text/html']
+        );
     }
 
     /**

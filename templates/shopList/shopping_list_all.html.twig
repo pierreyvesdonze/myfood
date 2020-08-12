@@ -28,6 +28,7 @@
                     <i class="fa fa-eye fa-2x"></i>
                 </label>
                 <a href="#" class="add-article">
+                    <input type="hidden" value="{{ shoplist.id }}" class="hidden-shoplist-id">
                     <i class="fa fa-cart-plus fa-2x"></i>
                 </a>
                 <a href="{{ path('shopping_list_delete', {"id":shoplist.id}) }}">
@@ -35,6 +36,7 @@
                 </a>
             </div>
             <div class="a-content">
+                <input type="hidden" data-value="{{ shoplist.id }}" class="hidden-shoplist-id">
                 <ul>
                     {% for article in shoplist.articles %}
                     <li>

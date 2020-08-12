@@ -172,7 +172,7 @@ class SearchController extends AbstractController
         ]);
 
         return new Response(
-            'Something wrong...',
+            'Something went wrong...',
             Response::HTTP_OK,
             ['content-type' => 'text/html']
         );

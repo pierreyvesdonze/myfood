@@ -569,7 +569,8 @@ SHOPPING LIST
 
 .a-container input:checked ~ .a-content {
   opacity: 1;
-  height: 200px;
+  height: 300px;
+  overflow-y: scroll;
   -webkit-transition: ease-in 0.2s;
   transition: ease-in 0.2s;
 }
@@ -585,6 +586,7 @@ MODAL
   transition: 0.5s;
   background: #000000c7;
   position: fixed;
+  color: var(--tertiary-color);
   z-index: 4;
   width: 100%;
   display: -webkit-box;
@@ -608,6 +610,16 @@ MODAL
 
 .add-articles-section * {
   visibility: hidden;
+}
+
+.add-articles-section .left {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .add-articles-section h2 {

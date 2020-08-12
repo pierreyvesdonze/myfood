@@ -31,8 +31,6 @@ var app = {
 		//SHOPPING LISTS & MODAL
 		$('.add-article').click(app.openArticlesModal);
 		$('.close-articles-modal').click(app.closeArticlesModal);
-	
-
 
 		//ALERT MODAL
 		app.close = $('.close').on('click', app.closeAlertModal);
@@ -125,10 +123,15 @@ var app = {
 		//Open current shoplist
 		let prevMdodal = this.parentNode.querySelector('.fa-eye');
 		prevMdodal.click();
+
+		// Send current shoplist Id to form
+		let currentId = $(e.currentTarget.childNodes[1]).val();
+		$('.add-article-to-shoplist-btn').click(function () {
+			app.addArticlesToShopListFront(currentId);
+		});
 	},
 
 	closeArticlesModal: function () {
-		console.log('test')
 		let closeModal = $('.add-articles-section');
 		let modalContent = $('.add-articles-section *');
 		setTimeout(function () {
@@ -137,8 +140,80 @@ var app = {
 		closeModal.css("height", "0px");
 	},
 
-	addArticleToShopList: function () {
+	deleteArticle: function (e) {
+		e.target.parentNode.parentNode.remove();
+	},
 
+	addArticlesToShopListFront: function (shopId) {
+
+		//Add articles to shoplist in Frontend
+		let currentShoplist = $('.a-content').find("[data-value='" + shopId + "']");
+		console.log(currentShoplist.data("value"))
+		console.log(shopId);
+
+		const article = $('.add-article-input').val(),
+			articleAmount = $('.add-amount-input').val(),
+			articleUnit = $('.add-unit-select').val(),
+			shopList = $(currentShoplist).next(),
+			newLi = $('<li class="newLi">' + article + ': ' + articleAmount + ' ' + articleUnit + '<a href ="#" class = "delete-article"> <i class="fa fa-minus fa-2x"></i></a></li>');
+
+		if (article == '') {
+			alert("Merci de renseigner un nom à l'article");
+			/* 			if (typeof (articleAmount === 'integer')) {
+							alert("Merci de renseigner un nombre valide pour la quantité");
+						} */
+		} else {
+			shopList.append(newLi);
+		}
+
+		// Clear inputs
+		$(':input').val('');
+		$('option').attr('selected', false);
+
+		// Delete article listener
+		$('.delete-article').click(app.deleteArticle);
+
+		// Send article to back		
+		$('.submit-add-article').click(function () {
+
+			let $articlesArray = [];
+			let newArticles = $('.newLi');
+	
+			$(newArticles).each( function( index, element ){
+				$articlesArray[index] =  $( this ).text();
+			});
+
+			//Send to Backend
+			app.addArticlesToShopListBack($articlesArray)
+		});
+	},
+	
+	addArticlesToShopListBack: function (articles) {
+		console.log(articles);
+
+		const shopListId = $('.hidden-shoplist-id').val();
+		console.log(shopListId);
+		$.ajax(
+			{
+				url: Routing.generate('searchApi'),
+				method: "POST",
+				dataType: "json",
+				data: JSON.stringify($articlesArray),
+			}).done(function (response) {
+				if (null !== response) {
+					console.log('ok : ' + JSON.stringify(response));
+					/* 	let redirectUrl = Routing.generate('recipe_list_api', response, true);
+		
+						response = JSON.stringify(response);
+						window.location.replace(redirectUrl + response); */
+				} else {
+					console.log('Problème');
+				}
+			}).fail(function (jqXHR, textStatus, error) {
+				console.log(jqXHR);
+				console.log(textStatus);
+				console.log(error);
+			});
 	},
 
 	/**

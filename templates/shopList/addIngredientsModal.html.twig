@@ -6,16 +6,32 @@
         <h2>Ajouter des articles</h2>
     </div>
     <div class="left">
-        <input type="text">
+        <label for=".add-article-input">Nom de l'article</label>
+        <input type="text" class="add-article-input">
+        <label for=".add-amount-input">Quantité</label>
+        <input type="text" class="add-amount-input">
+        <label for=".add-unit-select">Unité de mesure</label>
+        <select name="add-unit-select" class="add-unit-select">
+            <option value="">--Choisissez une unité--</option>
+            <option value="Unité">Unité</option>
+            <option value="g">g</option>
+            <option value="Kg">Kg</option>
+            <option value="ml">ml</option>
+            <option value="cl">cl</option>
+            <option value="L">L</option>
+            <option value="Pincée">Pincée</option>
+            <option value="Cuillère à café">Cuillère à café</option>
+            <option value="Cuillère à soupe">Cuillère à soupe</option>
+        </select>
     </div>
     <div class="right">
-        <a href="#" class="circle-btn">
+        <a href="#" class="circle-btn add-article-to-shoplist-btn">
             <i class="fa fa-plus fa-2x"></i>
         </a>
-        <a href="#"  class="circle-btn">
+        <a href="#" class="circle-btn">
             <i class="fa fa-minus fa-2x"></i>
         </a>
-        <a href="#" class="circle-btn">
+        <a href="#" class="circle-btn submit-add-article">
             <i class="fa fa-check fa-2x"></i>
         </a>
     </div>
