@@ -114,6 +114,7 @@ var app = {
 	 * ADD ARTICLES MODAL
 	 */
 	openArticlesModal: function (e) {
+		console.log($(this).closest('.a-content'));
 		let modal = $('.add-articles-section');
 		let modalContent = $('.add-articles-section *');
 		setTimeout(function () {
@@ -228,16 +229,15 @@ var app = {
 
 	increaseAmount: function (e) {
 		let currentId = e.currentTarget.children[0].dataset["value"];
-		let articleText = e.currentTarget.closest(".articles-container").children[0].textContent;
+		let articleText = e.currentTarget.closest(".articles-container").children[0];
+		let articleTextContent = articleText.textContent;
 
-		let currentAmount = articleText.match(/\d+/)[0];
-		let parsedIncreasedAmount = parseInt(currentAmount, 10) + 1;
-		
-		console.log(parsedIncreasedAmount);
+		console.log(articleText.querySelector('.amount-value').textContent);
 
-		let increasedAmount = currentAmount.replace(currentAmount, parsedIncreasedAmount);
-		currentAmount.textContent = increasedAmount;
-		console.log(increasedAmount);
+		let currentAmount = articleText.querySelector('.amount-value'),
+			parsedIncreasedAmount = parseInt(currentAmount.textContent, 10) + 1;
+
+		currentAmount.textContent = parsedIncreasedAmount;
 
 	},
 

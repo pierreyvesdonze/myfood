@@ -294,6 +294,7 @@ SHOPPING LIST
 }
 
 .a-content {
+  position: absolute;
   text-align: left;
   border-radius: 20px;
   box-shadow: 0 2px 3px rgba(0, 8, 14, 0.7) inset,
@@ -326,9 +327,11 @@ SHOPPING LIST
 
 .a-container input:checked ~ .a-content {
   opacity: 1;
+  position: static;
   height: 300px;
   overflow-y: scroll;
   transition: ease-in 0.2s;
+  display: block;
 }
 
 .articles-container {

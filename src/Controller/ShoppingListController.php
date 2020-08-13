@@ -175,16 +175,15 @@ class ShoppingListController extends AbstractController
         IngredientRepository $ingredientRepository,
         ShoppingListRepository $shoppingListRepository,
         UnitRepository $unitRepository
-        )
-    {
+    ) {
         if ($request->isMethod('POST')) {
             $requestIngredients =  json_decode($request->getContent());
             $em = $this->getDoctrine()->getManager();
 
             foreach ($requestIngredients as $key => $article) {
-                   $shopListId = $article->id;
+                $shopListId = $article->id;
             }
-            
+
             $shopList = $shoppingListRepository->findOneBy([
                 'id' => $shopListId
             ]);
@@ -201,6 +200,7 @@ class ShoppingListController extends AbstractController
                 if (null == $dataIngredient) {
                     $newIngredient = new Ingredient();
                     $newIngredient->setName($article->name);
+                    $em->persist($newIngredient);
                 }
 
                 $newArticle = new Article();
@@ -210,21 +210,18 @@ class ShoppingListController extends AbstractController
                 $newArticleUnit = $unitRepository->findBy([
                     'name' => $article->unit
                 ]);
-                
-                foreach($newArticleUnit as $newUnit) {
+
+                foreach ($newArticleUnit as $newUnit) {
                     $newArticle->setUnit($newUnit);
                 }
-                foreach($newIngredient as $ing) {
-                    $em->persist($ing[$key]);
+                foreach ($newArticle as $art) {
+                    $em->persist($art[$key]);
                 }
-                foreach($newArticle as $art) {
-                    $em->persist($art[$key]);  
-                }
-                
+
                 $shopList->addArticle($newArticle);
             }
-          
-            $em->persist($shopList);            
+
+            $em->persist($shopList);
             $em->flush();
 
             return $this->json([

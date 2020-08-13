@@ -41,14 +41,13 @@
                     {% for article in shoplist.articles %}
                     <li>
                         <div class="articles-container">
-
                             <div class="article-content">
-                                {% if article.unit %}
-                                {{ article.name|capitalize }} : {{ article.amount }} {{ article.unit }}
+                                {% apply spaceless %}{% if article.unit and "unité" != article.unit %}
+                                {{ article.name|capitalize }} : <span class="amount-value">{{ article.amount }}</span>
+                                {{ article.unit }}
                                 {% else %}
-                                {{ article.name|capitalize }} : {{ article.amount }}
-                                {% endif %}
-                            </div>
+                                {{ article.name|capitalize }} : <span class="amount-value">{{ article.amount }}</span>
+                                {% endif %}{% endapply %}</div>
                             <div class="control-articles">
                                 <a href="#" class="increase-amount">
                                     <input type="hidden" data-value="{{ article.id }}" class="hidden-article-id">
@@ -63,7 +62,6 @@
                     </li>
                     {% endfor %}
                 </ul>
-
             </div>
         </li>
     </ul>
