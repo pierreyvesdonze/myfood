@@ -10,6 +10,7 @@ use App\Entity\Unit;
 use App\Form\Type\ShoppingListType;
 use App\Repository\IngredientRepository;
 use App\Repository\ShoppingListRepository;
+use App\Repository\UnitRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -167,24 +168,60 @@ class ShoppingListController extends AbstractController
     }
 
     /**
-     * @Route("/add/articles/{id}", name="shopping_list_add_articles", methods={"GET", "POST"})
+     * @Route("/add/articles/{id}", name="shopping_list_add_articles", methods={"GET", "POST"}, options={"expose"=true})
      */
-    public function shoppingListAddArticle(Request $request, IngredientRepository $ingredientRepository)
+    public function shoppingListAddArticle(
+        Request $request,
+        IngredientRepository $ingredientRepository,
+        ShoppingListRepository $shoppingListRepository,
+        UnitRepository $unitRepository
+        )
     {
         if ($request->isMethod('POST')) {
-            $requestIngredient = json_decode($request->getContent());
+            $requestIngredients =  json_decode($request->getContent());
+            $em = $this->getDoctrine()->getManager();
 
-            /**
-             * @return Ingredient()
-             */
-            $dataIngredient = $ingredientRepository->findBy([
-                'name' => $requestIngredient
-            ]);
+            foreach ($requestIngredients as $key => $article) {
 
-            if (null == $dataIngredient) {
-                $newIngredient = new Ingredient();
-                $newIngredient->setName('');
+                /**
+                 * @return Ingredient()
+                 */
+                $dataIngredient = $ingredientRepository->findBy([
+                    'name' => $article->name
+                ]);
+
+                if (null == $dataIngredient) {
+                    $newIngredient = new Ingredient();
+                    $newIngredient->setName($article->name);
+                }
+
+                $shopList = $shoppingListRepository->findBy([
+                    'id' => $article->id
+                ]);
+
+                $newArticle = new Article();
+                $newArticle->setName($article->name);
+                $newArticle->setAmount($article->amount);
+
+                $newArticleUnit = $unitRepository->findBy([
+                    'name' => $article->unit
+                ]);
+                
+                foreach($newArticleUnit as $newUnit) {
+                    $newArticle->setUnit($newUnit);
+                }
+                $shopList[0]->addArticle($newArticle);
+                foreach($newIngredient as $ing) {
+                    $em->persist($ing[$key]);
+                }
+                foreach($newArticle as $art) {
+                    $em->persist($art[$key]);  
+                }
             }
+          
+            $em->persist($shopList[0]);            
+            $em->flush();
+
             return $this->json([
                 'ok'
             ]);

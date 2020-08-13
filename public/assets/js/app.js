@@ -159,9 +159,10 @@ var app = {
 
 		if (article == '') {
 			alert("Merci de renseigner un nom à l'article");
-			/* 			if (typeof (articleAmount === 'integer')) {
-							alert("Merci de renseigner un nombre valide pour la quantité");
-						} */
+		} else if (!$.isNumeric(articleAmount)) {
+			alert("Merci de renseigner un nombre valide pour la quantité");
+		} else if ('' == articleUnit) {
+			alert("Merci de renseigner une unité de mesure");
 		} else {
 			shopList.append(newLi);
 		}
@@ -178,34 +179,42 @@ var app = {
 
 			let $articlesArray = [];
 			let newArticles = $('.newLi');
-	
-			$(newArticles).each( function( index, element ){
-				$articlesArray[index] =  $( this ).text();
+
+			$.each(newArticles, function (index, element) {
+
+				let name = $(this).text().split(':')[0];
+				let amount = $(this).text().split(' ')[1];
+				let unit = $(this).text().split(' ')[2];
+
+				$articlesArray[index] = {
+					"name": name,
+					"amount": amount,
+					"unit": unit,
+					"id": shopId
+				}
+				console.log(element)
 			});
 
 			//Send to Backend
-			app.addArticlesToShopListBack($articlesArray)
+			app.addArticlesToShopListBack($articlesArray, shopId)
 		});
 	},
-	
-	addArticlesToShopListBack: function (articles) {
-		console.log(articles);
 
-		const shopListId = $('.hidden-shoplist-id').val();
-		console.log(shopListId);
+	addArticlesToShopListBack: function (articlesArray, shopId) {
+		console.log(JSON.stringify(articlesArray));
+		shopId = parseInt(shopId,10);
+
+		console.log(typeof(shopId));
+
 		$.ajax(
 			{
-				url: Routing.generate('searchApi'),
+				url: Routing.generate('shopping_list_add_articles', { id: shopId }),
 				method: "POST",
 				dataType: "json",
-				data: JSON.stringify($articlesArray),
+				data: JSON.stringify(articlesArray),
 			}).done(function (response) {
 				if (null !== response) {
 					console.log('ok : ' + JSON.stringify(response));
-					/* 	let redirectUrl = Routing.generate('recipe_list_api', response, true);
-		
-						response = JSON.stringify(response);
-						window.location.replace(redirectUrl + response); */
 				} else {
 					console.log('Problème');
 				}
