@@ -28,9 +28,10 @@ var app = {
 		$('.filters :checkbox').on('change', app.filtersRecipies);
 		$('.select-all').click(app.uncheckAll);
 
-		//SHOPPING LISTS & MODAL
+		//SHOPPING LISTS & ARTICLES & MODAL
 		$('.add-article').click(app.openArticlesModal);
 		$('.close-articles-modal').click(app.closeArticlesModal);
+		$('.increase-amount').click(app.increaseAmount);
 
 		//ALERT MODAL
 		app.close = $('.close').on('click', app.closeAlertModal);
@@ -202,9 +203,9 @@ var app = {
 
 	addArticlesToShopListBack: function (articlesArray, shopId) {
 		console.log(JSON.stringify(articlesArray));
-		shopId = parseInt(shopId,10);
+		shopId = parseInt(shopId, 10);
 
-		console.log(typeof(shopId));
+		console.log(typeof (shopId));
 
 		$.ajax(
 			{
@@ -223,6 +224,21 @@ var app = {
 				console.log(textStatus);
 				console.log(error);
 			});
+	},
+
+	increaseAmount: function (e) {
+		let currentId = e.currentTarget.children[0].dataset["value"];
+		let articleText = e.currentTarget.closest(".articles-container").children[0].textContent;
+
+		let currentAmount = articleText.match(/\d+/)[0];
+		let parsedIncreasedAmount = parseInt(currentAmount, 10) + 1;
+		
+		console.log(parsedIncreasedAmount);
+
+		let increasedAmount = currentAmount.replace(currentAmount, parsedIncreasedAmount);
+		currentAmount.textContent = increasedAmount;
+		console.log(increasedAmount);
+
 	},
 
 	/**

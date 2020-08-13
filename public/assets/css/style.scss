@@ -331,6 +331,11 @@ SHOPPING LIST
   transition: ease-in 0.2s;
 }
 
+.articles-container {
+  display: flex;
+  justify-content: space-between;
+}
+
 /*
 *****
 MODAL

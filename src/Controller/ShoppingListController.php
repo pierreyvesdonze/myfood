@@ -182,6 +182,14 @@ class ShoppingListController extends AbstractController
             $em = $this->getDoctrine()->getManager();
 
             foreach ($requestIngredients as $key => $article) {
+                   $shopListId = $article->id;
+            }
+            
+            $shopList = $shoppingListRepository->findOneBy([
+                'id' => $shopListId
+            ]);
+
+            foreach ($requestIngredients as $key => $article) {
 
                 /**
                  * @return Ingredient()
@@ -195,10 +203,6 @@ class ShoppingListController extends AbstractController
                     $newIngredient->setName($article->name);
                 }
 
-                $shopList = $shoppingListRepository->findBy([
-                    'id' => $article->id
-                ]);
-
                 $newArticle = new Article();
                 $newArticle->setName($article->name);
                 $newArticle->setAmount($article->amount);
@@ -210,16 +214,17 @@ class ShoppingListController extends AbstractController
                 foreach($newArticleUnit as $newUnit) {
                     $newArticle->setUnit($newUnit);
                 }
-                $shopList[0]->addArticle($newArticle);
                 foreach($newIngredient as $ing) {
                     $em->persist($ing[$key]);
                 }
                 foreach($newArticle as $art) {
                     $em->persist($art[$key]);  
                 }
+                
+                $shopList->addArticle($newArticle);
             }
           
-            $em->persist($shopList[0]);            
+            $em->persist($shopList);            
             $em->flush();
 
             return $this->json([

@@ -40,12 +40,25 @@
                 <ul>
                     {% for article in shoplist.articles %}
                     <li>
+                        <div class="articles-container">
 
-                        {% if article.unit %}
-                        {{ article.name|capitalize }} : {{ article.amount }} {{ article.unit }}
-                        {% else %}
-                        {{ article.name|capitalize }} : {{ article.amount }}
-                        {% endif %}
+                            <div class="article-content">
+                                {% if article.unit %}
+                                {{ article.name|capitalize }} : {{ article.amount }} {{ article.unit }}
+                                {% else %}
+                                {{ article.name|capitalize }} : {{ article.amount }}
+                                {% endif %}
+                            </div>
+                            <div class="control-articles">
+                                <a href="#" class="increase-amount">
+                                    <input type="hidden" data-value="{{ article.id }}" class="hidden-article-id">
+                                    <i class="fa fa-plus"></i>
+                                </a>
+                                <a href="#" class="decrease-amount">
+                                    <i class="fa fa-minus"></i>
+                                </a>
+                            </div>
+                        </div>
 
                     </li>
                     {% endfor %}
@@ -54,13 +67,6 @@
             </div>
         </li>
     </ul>
-
-
-
-
-
-
-
     {% endfor %}
 </section>
 {% endblock %}
