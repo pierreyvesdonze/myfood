@@ -8,6 +8,7 @@ use App\Entity\Recipe;
 use App\Entity\ShoppingList;
 use App\Entity\Unit;
 use App\Form\Type\ShoppingListType;
+use App\Repository\ArticleRepository;
 use App\Repository\IngredientRepository;
 use App\Repository\ShoppingListRepository;
 use App\Repository\UnitRepository;
@@ -248,5 +249,34 @@ class ShoppingListController extends AbstractController
         $this->addFlash('success', 'La liste de courses a bien été supprimée');
 
         return $this->redirectToRoute('shopping_list_list');
+    }
+
+
+    /**
+     * @Route("/article/{id}/delete", name="article_delete", methods={"GET","POST"}, options={"expose"=true})
+     */
+    public function articleDelete(Request $request, ArticleRepository $articleRepository): Response
+    {
+        if ($request->isMethod('POST')) {
+            $articleRequest =  $request->getContent();
+            $em = $this->getDoctrine()->getManager();
+            $articleRequest = preg_replace('/[^0-9]/', '', $articleRequest);
+            $article = $articleRepository->findOneBy([
+                'id' => $articleRequest
+            ]);
+
+            $em->remove($article);
+            $em->flush();
+
+            return $this->json([
+                'ok'
+            ]);
+        }
+
+        return new Response(
+            'Something went wrong...',
+            Response::HTTP_OK,
+            ['content-type' => 'text/html']
+        );
     }
 }

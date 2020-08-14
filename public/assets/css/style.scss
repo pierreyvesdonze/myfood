@@ -294,7 +294,7 @@ SHOPPING LIST
 }
 
 .a-content {
-  position: absolute;
+  visibility: hidden;
   text-align: left;
   border-radius: 20px;
   box-shadow: 0 2px 3px rgba(0, 8, 14, 0.7) inset,
@@ -302,6 +302,11 @@ SHOPPING LIST
   opacity: 0;
   height: 0;
   transition: ease-out 0.2s;
+}
+
+.a-content ul {
+  width: 100%;
+  padding: 2em;
 }
 
 .a-container {
@@ -327,11 +332,13 @@ SHOPPING LIST
 
 .a-container input:checked ~ .a-content {
   opacity: 1;
-  position: static;
-  height: 300px;
+  visibility: visible;
+ /*  height: 300px;
   overflow-y: scroll;
+  display: block; */
+  display: flex;
+  height: auto;
   transition: ease-in 0.2s;
-  display: block;
 }
 
 .articles-container {

@@ -32,6 +32,7 @@ var app = {
 		$('.add-article').click(app.openArticlesModal);
 		$('.close-articles-modal').click(app.closeArticlesModal);
 		$('.increase-amount').click(app.increaseAmount);
+		$('.decrease-amount').click(app.decreaseAmount);
 
 		//ALERT MODAL
 		app.close = $('.close').on('click', app.closeAlertModal);
@@ -114,7 +115,6 @@ var app = {
 	 * ADD ARTICLES MODAL
 	 */
 	openArticlesModal: function (e) {
-		console.log($(this).closest('.a-content'));
 		let modal = $('.add-articles-section');
 		let modalContent = $('.add-articles-section *');
 		setTimeout(function () {
@@ -142,7 +142,7 @@ var app = {
 		closeModal.css("height", "0px");
 	},
 
-	deleteArticle: function (e) {
+	removeArticle: function (e) {
 		e.target.parentNode.parentNode.remove();
 	},
 
@@ -157,7 +157,7 @@ var app = {
 			articleAmount = $('.add-amount-input').val(),
 			articleUnit = $('.add-unit-select').val(),
 			shopList = $(currentShoplist).next(),
-			newLi = $('<li class="newLi">' + article + ': ' + articleAmount + ' ' + articleUnit + '<a href ="#" class = "delete-article"> <i class="fa fa-minus fa-2x"></i></a></li>');
+			newLi = $('<li class="newLi">' + article + ': ' + articleAmount + ' ' + articleUnit + '<a href ="#" class = "remove-article"> <i class="fa fa-minus fa-2x"></i></a></li>');
 
 		if (article == '') {
 			alert("Merci de renseigner un nom à l'article");
@@ -174,7 +174,7 @@ var app = {
 		$('option').attr('selected', false);
 
 		// Delete article listener
-		$('.delete-article').click(app.deleteArticle);
+		$('.remove-article').click(app.removeArticle);
 
 		// Send article to back		
 		$('.submit-add-article').click(function () {
@@ -230,14 +230,51 @@ var app = {
 	increaseAmount: function (e) {
 		let currentId = e.currentTarget.children[0].dataset["value"];
 		let articleText = e.currentTarget.closest(".articles-container").children[0];
-		let articleTextContent = articleText.textContent;
-
-		console.log(articleText.querySelector('.amount-value').textContent);
 
 		let currentAmount = articleText.querySelector('.amount-value'),
 			parsedIncreasedAmount = parseInt(currentAmount.textContent, 10) + 1;
 
 		currentAmount.textContent = parsedIncreasedAmount;
+	},
+
+	decreaseAmount: function (e) {
+		let currentId = $(e.currentTarget).parent().find("[data-value]").data('value');
+		let articleText = e.currentTarget.closest(".articles-container").children[0];
+		const currentAmount = articleText.querySelector('.amount-value'),
+			parsedDecreasedAmount = parseInt(currentAmount.textContent, 10) - 1;
+
+		if (parsedDecreasedAmount >= 1) {
+			currentAmount.textContent = parsedDecreasedAmount;
+		} else {
+			var answer = window.confirm("Supprimer l'article de la liste ?")
+			if (answer) {
+				$(e.currentTarget).closest(".articles-container").remove();
+				app.deleteArticleApi(currentId);
+			}
+		}
+	},
+
+	deleteArticleApi: function(id) {
+		let jsonId = {};
+		jsonId['id'] = id;
+		console.log(jsonId);
+		$.ajax(
+			{
+				url: Routing.generate('article_delete', { id: id }),
+				method: "POST",
+				dataType: "json",
+				data: jsonId,
+			}).done(function (response) {
+				if (null !== response) {
+					console.log('ok : ' + JSON.stringify(response));
+				} else {
+					console.log('Problème');
+				}
+			}).fail(function (jqXHR, textStatus, error) {
+				console.log(jqXHR);
+				console.log(textStatus);
+				console.log(error);
+			});
 
 	},
 
@@ -258,7 +295,7 @@ var app = {
 				if (null !== response) {
 					console.log('ok : ' + JSON.stringify(response));
 					/* 	let redirectUrl = Routing.generate('recipe_list_api', response, true);
-		
+			
 						response = JSON.stringify(response);
 						window.location.replace(redirectUrl + response); */
 				} else {

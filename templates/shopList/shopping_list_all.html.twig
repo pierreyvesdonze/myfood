@@ -31,7 +31,7 @@
                     <input type="hidden" value="{{ shoplist.id }}" class="hidden-shoplist-id">
                     <i class="fa fa-cart-plus fa-2x"></i>
                 </a>
-                <a href="{{ path('shopping_list_delete', {"id":shoplist.id}) }}">
+                <a href="{{ path('shopping_list_delete', {"id":shoplist.id}) }}" onclick="return confirm('Supprimer la liste ?')">
                     <i class="fa fa-trash fa-2x"></i>
                 </a>
             </div>
