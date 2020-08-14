@@ -42,6 +42,10 @@
                     <li>
                         <div class="articles-container">
                             <div class="article-content">
+                                <a href="#" class="delete-article">
+                                    <i class="fa fa-trash"></i>
+                                    <input type="hidden" data-value="{{ article.id }}" class="hidden-article-id">
+                                </a>
                                 {% apply spaceless %}{% if article.unit and "unité" != article.unit %}
                                 {{ article.name|capitalize }} : <span class="amount-value">{{ article.amount }}</span>
                                 {{ article.unit }}

@@ -177,7 +177,7 @@ document.onreadystatechange = function() {
           "#loader").style.visibility = "visible"; 
     } else { 
         document.querySelector( 
-          "#loader").style.display = "none"; 
+          "#loader").style.visibility = "hidden"; 
         document.querySelector( 
           "body").style.visibility = "visible"; 
     } 

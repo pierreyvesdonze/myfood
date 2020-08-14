@@ -204,9 +204,10 @@ class ShoppingListController extends AbstractController
                     $em->persist($newIngredient);
                 }
 
+                $newAmount = (int)$article->amount;
                 $newArticle = new Article();
                 $newArticle->setName($article->name);
-                $newArticle->setAmount($article->amount);
+                $newArticle->setAmount($newAmount);
 
                 $newArticleUnit = $unitRepository->findBy([
                     'name' => $article->unit
@@ -218,7 +219,6 @@ class ShoppingListController extends AbstractController
                 foreach ($newArticle as $art) {
                     $em->persist($art[$key]);
                 }
-
                 $shopList->addArticle($newArticle);
             }
 
@@ -251,7 +251,6 @@ class ShoppingListController extends AbstractController
         return $this->redirectToRoute('shopping_list_list');
     }
 
-
     /**
      * @Route("/article/{id}/delete", name="article_delete", methods={"GET","POST"}, options={"expose"=true})
      */
@@ -266,6 +265,40 @@ class ShoppingListController extends AbstractController
             ]);
 
             $em->remove($article);
+            $em->flush();
+
+            return $this->json([
+                'ok'
+            ]);
+        }
+
+        return new Response(
+            'Something went wrong...',
+            Response::HTTP_OK,
+            ['content-type' => 'text/html']
+        );
+    }
+
+    /**
+     * @Route("/article/{id}/increase/amount", name="article_increase_amount", methods={"GET","POST"}, options={"expose"=true})
+     */
+    public function increaseAmountApi(Request $request, ArticleRepository $articleRepository)
+    {
+
+        if ($request->isMethod('POST')) {
+            $em = $this->getDoctrine()->getManager();
+            $articleRequest =  $request->getContent();
+            $strparts = explode("amount", $articleRequest);
+            $articleArray = preg_replace('/[^0-9]/', '', $strparts); 
+            $articleId = $articleArray[0];
+            $articleAmount = $articleArray[1];
+
+            $article = $articleRepository->findOneBy([
+                'id' => $articleId
+            ]);
+
+            $article->setAmount($articleAmount);
+            $em->persist($article);
             $em->flush();
 
             return $this->json([

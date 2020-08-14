@@ -33,6 +33,7 @@ var app = {
 		$('.close-articles-modal').click(app.closeArticlesModal);
 		$('.increase-amount').click(app.increaseAmount);
 		$('.decrease-amount').click(app.decreaseAmount);
+		$('.delete-article').click(app.deleteArticleApi);
 
 		//ALERT MODAL
 		app.close = $('.close').on('click', app.closeAlertModal);
@@ -126,7 +127,7 @@ var app = {
 		let prevMdodal = this.parentNode.querySelector('.fa-eye');
 		prevMdodal.click();
 
-		// Send current shoplist Id to form
+		// Send current shoplist Id to another methods
 		let currentId = $(e.currentTarget.childNodes[1]).val();
 		$('.add-article-to-shoplist-btn').click(function () {
 			app.addArticlesToShopListFront(currentId);
@@ -157,7 +158,7 @@ var app = {
 			articleAmount = $('.add-amount-input').val(),
 			articleUnit = $('.add-unit-select').val(),
 			shopList = $(currentShoplist).next(),
-			newLi = $('<li class="newLi">' + article + ': ' + articleAmount + ' ' + articleUnit + '<a href ="#" class = "remove-article"> <i class="fa fa-minus fa-2x"></i></a></li>');
+			newLi = $('<li class="newLi">' + article + ': ' + articleAmount + ' ' + articleUnit + '<a href ="#" class = "remove-article"> <i class="fa fa-trash"></i></a></li>');
 
 		if (article == '') {
 			alert("Merci de renseigner un nom à l'article");
@@ -203,11 +204,7 @@ var app = {
 	},
 
 	addArticlesToShopListBack: function (articlesArray, shopId) {
-		console.log(JSON.stringify(articlesArray));
 		shopId = parseInt(shopId, 10);
-
-		console.log(typeof (shopId));
-
 		$.ajax(
 			{
 				url: Routing.generate('shopping_list_add_articles', { id: shopId }),
@@ -217,6 +214,11 @@ var app = {
 			}).done(function (response) {
 				if (null !== response) {
 					console.log('ok : ' + JSON.stringify(response));
+					document.querySelector(
+						"#loader").style.visibility = "visible";
+					setTimeout(function () {
+						location.reload();
+					}, 2000);
 				} else {
 					console.log('Problème');
 				}
@@ -235,6 +237,35 @@ var app = {
 			parsedIncreasedAmount = parseInt(currentAmount.textContent, 10) + 1;
 
 		currentAmount.textContent = parsedIncreasedAmount;
+
+		//Send updated amount to backend
+		app.updateAmountBackend(currentId, currentAmount.textContent);
+	},
+
+	updateAmountBackend: function (currentId, currentAmount) {
+		const data = {
+			"id" : currentId,
+			"amount" : currentAmount
+		}
+		
+		console.log(data);
+		$.ajax(
+			{
+				url: Routing.generate('article_increase_amount', { id: currentId }),
+				method: "POST",
+				dataType: "json",
+				data: data,
+			}).done(function (response) {
+				if (null !== response) {
+					console.log('ok : ' + JSON.stringify(response));
+				} else {
+					console.log('Problème');
+				}
+			}).fail(function (jqXHR, textStatus, error) {
+				console.log(jqXHR);
+				console.log(textStatus);
+				console.log(error);
+			});
 	},
 
 	decreaseAmount: function (e) {
@@ -254,10 +285,18 @@ var app = {
 		}
 	},
 
-	deleteArticleApi: function(id) {
+	deleteArticleApi: function (id) {
 		let jsonId = {};
-		jsonId['id'] = id;
-		console.log(jsonId);
+		if ("number" !== typeof id) {
+			var answer = window.confirm("Supprimer l'article de la liste ?")
+			if (answer) {
+				$(id.currentTarget).closest('.articles-container').remove();
+				jsonId['id'] = id.currentTarget.children[1].dataset['value'];
+			}
+		} else {
+			jsonId['id'] = id;
+		}
+
 		$.ajax(
 			{
 				url: Routing.generate('article_delete', { id: id }),
@@ -275,7 +314,6 @@ var app = {
 				console.log(textStatus);
 				console.log(error);
 			});
-
 	},
 
 	/**
