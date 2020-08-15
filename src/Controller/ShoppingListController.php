@@ -6,7 +6,6 @@ use App\Entity\Article;
 use App\Entity\Ingredient;
 use App\Entity\Recipe;
 use App\Entity\ShoppingList;
-use App\Form\Type\ShoppingListType;
 use App\Repository\ArticleRepository;
 use App\Repository\IngredientRepository;
 use App\Repository\ShoppingListRepository;
@@ -34,7 +33,6 @@ class ShoppingListController extends AbstractController
     public function shoppingListList(ShoppingListRepository $shoppingListRepository)
     {
         $shopList = $shoppingListRepository->findAll();
-
         return $this->render('shopList/shopping_list_all.html.twig', [
             'shoppingList' => $shopList,
         ]);
@@ -62,9 +60,7 @@ class ShoppingListController extends AbstractController
     public function shoppingListCreate(Request $request, Recipe $recipe): Response
     {
         $em = $this->getDoctrine()->getManager();
-
         if ($request->isMethod('POST')) {
-
             /** @var ShoppingList */
             $shoppingList = new ShoppingList();
             $ingredients = $recipe->getRecipeIngredients();
@@ -79,7 +75,6 @@ class ShoppingListController extends AbstractController
                 $article->setShoppingList($shoppingList);
                 $em->persist($article);
             }
-
             $em->flush();
 
             $this->addFlash('success', 'La liste de course a bien été créé !');
@@ -96,38 +91,39 @@ class ShoppingListController extends AbstractController
     }
 
     /**
-     * @Route("/add/{id}", name="shopping_list_add", methods={"GET", "POST"})
+     * @Route("/add/{id}", name="shopping_list_add", methods={"GET", "POST"}, options={"expose"=true})
      */
     public function shoppingListAdd(Request $request, Recipe $recipe, ShoppingListRepository $shoppingListRepository)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
 
-        $form = $this->createForm(ShoppingListType::class, null);
-        $form->handleRequest($request);
+        if ($request->isMethod('POST')) {
+            $shopRequest = $request->getContent();
+            $strparts    = explode("shopListToAdd", $shopRequest);
+            $shopArray   = preg_replace('/[^0-9]/', '', $strparts);
+            $shopToAdd   = $shopArray[1];
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $oldShopList = $form->get('shoppingList')->getData();
             $shoppingList = $shoppingListRepository->findOneBy([
-                'id' => $oldShopList->getId(),
+                'id' => $shopToAdd
             ]);
 
             // Make an array with old list's ingredients
             $oldListArray = [];
-            $oldList = $oldShopList->getArticles();
+            $oldList = $shoppingList->getArticles();
             for ($i = 0; $i < count($oldList); ++$i) {
-                $oldListArray[$i]['name'] = $oldList[$i]->getName();
+                $oldListArray[$i]['name']   = $oldList[$i]->getName();
                 $oldListArray[$i]['amount'] = intval($oldList[$i]->getAmount());
-                $oldListArray[$i]['unit'] = $oldList[$i]->getUnit();
+                $oldListArray[$i]['unit']   = $oldList[$i]->getUnit();
             }
 
             // Make an array with new list
             $newListArray = [];
             $truc = $recipe->getRecipeIngredients();
             for ($j = 0; $j < count($truc); ++$j) {
-                $newListArray[$j]['name'] = $truc[$j]->getName();
+                $newListArray[$j]['name']   = $truc[$j]->getName();
                 $newListArray[$j]['amount'] = $truc[$j]->getAmount();
-                $newListArray[$j]['unit'] = $truc[$j]->getUnit();
+                $newListArray[$j]['unit']   = $truc[$j]->getUnit();
             }
 
             // Merge lists and build final
@@ -156,10 +152,10 @@ class ShoppingListController extends AbstractController
 
             // Set new shopping list with old values + new articles
             $newShoppingList = new ShoppingList();
-
             $newShoppingList->setId($oldShopListId);
             $newShoppingList->setDescription($oldShopListName);
             $newShoppingList->setUser($user);
+
             foreach ($finalShoppingList as $final) {
                 $newArticle = new Article();
                 $newArticle->setName($final['name']);
@@ -171,14 +167,18 @@ class ShoppingListController extends AbstractController
             $em->persist($newShoppingList);
             $em->flush();
 
-            return $this->redirectToRoute('shopping_list_view', [
-                'id' => $newShoppingList->getId(),
+            $this->addFlash('success', "La liste de courses a bien été ajoutée !");
+
+            return $this->json([
+                'ok'
             ]);
         }
 
-        return $this->render('shopList/add.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        return new Response(
+            'Something went wrong...',
+            Response::HTTP_OK,
+            ['content-type' => 'text/html']
+        );
     }
 
     /**
@@ -297,14 +297,13 @@ class ShoppingListController extends AbstractController
      */
     public function increaseAmountApi(Request $request, ArticleRepository $articleRepository)
     {
-
         if ($request->isMethod('POST')) {
-            $em = $this->getDoctrine()->getManager();
+            $em             = $this->getDoctrine()->getManager();
             $articleRequest =  $request->getContent();
-            $strparts = explode("amount", $articleRequest);
-            $articleArray = preg_replace('/[^0-9]/', '', $strparts);
-            $articleId = $articleArray[0];
-            $articleAmount = $articleArray[1];
+            $strparts       = explode("amount", $articleRequest);
+            $articleArray   = preg_replace('/[^0-9]/', '', $strparts);
+            $articleId      = $articleArray[0];
+            $articleAmount  = $articleArray[1];
 
             $article = $articleRepository->findOneBy([
                 'id' => $articleId
