@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Recipe;
 use App\Entity\RecipeCategory;
 use App\Entity\RecipeMenu;
+use App\Entity\ShoppingList;
 use App\Entity\Tag;
 use App\Form\Type\SearchRecipeType;
 use App\Form\Type\SearchType;
@@ -12,6 +13,7 @@ use App\Repository\RecipeCategoryRepository;
 use App\Repository\RecipeIngredientRepository;
 use App\Repository\RecipeMenuRepository;
 use App\Repository\RecipeRepository;
+use App\Repository\ShoppingListRepository;
 use App\Repository\TagRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -32,16 +34,15 @@ class SearchController extends AbstractController
     public function findRecipe(RecipeRepository $recipeRepository, Request $request)
     {
         if ($request->isXmlHttpRequest()) {
-            $data = json_decode($request->getContent());
-            $recipies = $recipeRepository->findRecipeByName($data);
-            $recipiesArray = [];
+            $data                = json_decode($request->getContent());
+            $recipies            = $recipeRepository->findRecipeByName($data);
+            $recipiesArray       = [];
+
             foreach ($recipies as $recipe) {
                 $recipiesArray[] = $recipe;
             }
-
             return new JsonResponse($recipiesArray);
         }
-
         return $this->render('search/result.search.html.twig', []);
     }
 
@@ -56,7 +57,7 @@ class SearchController extends AbstractController
         $errors =  $form->getErrors(true, false);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
+            $data     = $form->getData();
             $recipies = $recipeRepository->findRecipeByName($data);
 
             return $this->redirectToRoute('recipe_list', [
@@ -68,7 +69,6 @@ class SearchController extends AbstractController
         ]);
     }
 
-
     /**
      * @Route("/transformsearch", name="search_transform")
      */
@@ -79,12 +79,21 @@ class SearchController extends AbstractController
             'action' => $this->generateUrl('search_transform'),
         ]);
 
-        $recipeRepository = $this->getDoctrine()->getRepository(Recipe::class);
+        $recipeRepository         = $this->getDoctrine()->getRepository(Recipe::class);
         $recipeCategoryRepository = $this->getDoctrine()->getRepository(RecipeCategory::class);
-        $recipeMenuRepository = $this->getDoctrine()->getRepository(RecipeMenu::class);
-        $tagRepository = $this->getDoctrine()->getRepository(Tag::class);
+        $recipeMenuRepository     = $this->getDoctrine()->getRepository(RecipeMenu::class);
+        $tagRepository            = $this->getDoctrine()->getRepository(Tag::class);
+        $shopListRepository       = $this->getDoctrine()->getRepository(ShoppingList::class);
 
-        return $this->saveSearch($request, $form, $recipeRepository, $recipeCategoryRepository, $recipeMenuRepository, $tagRepository);
+        return $this->saveSearch(
+            $request,
+            $form,
+            $recipeRepository,
+            $recipeCategoryRepository,
+            $recipeMenuRepository,
+            $tagRepository,
+            $shopListRepository
+        );
     }
 
     /**
@@ -96,28 +105,30 @@ class SearchController extends AbstractController
         RecipeRepository $recipeRepository,
         RecipeCategoryRepository $categoriesRepo,
         RecipeMenuRepository $menusRepo,
-        TagRepository $tagRepository
+        TagRepository $tagRepository,
+        ShoppingListRepository $shopRepo
     ) {
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            $data = $form->getData()['text'];
-            $recipies = $recipeRepository->findRecipeByName($data);
+            $data       = $form->getData()['text'];
+            $recipies   = $recipeRepository->findRecipeByName($data);
             $categories = $categoriesRepo->findAll();
-            $menus = $menusRepo->findAll();
-            $tags = $tagRepository->findAll();
+            $menus      = $menusRepo->findAll();
+            $tags       = $tagRepository->findAll();
+            $shopLists  = $shopRepo->findAll();
 
-            if(!$recipies) {
+            if (!$recipies) {
                 $this->addFlash("error", "Aucune recette n'a été trouvée :/ ");
             }
 
             return $this->render('recipe/list.html.twig', [
-                'request' => $request,
-                'recipies' => $recipies,
+                'request'    => $request,
+                'recipies'   => $recipies,
                 'categories' => $categories,
-                'menus' => $menus,
-                'tags' => $tags
+                'menus'      => $menus,
+                'tags'       => $tags,
+                'shopLists'  => $shopLists
             ]);
         }
-
         return new RedirectResponse($this->generateUrl('homepage'));
     }
 
@@ -138,13 +149,14 @@ class SearchController extends AbstractController
 
             // Sorry for this :/
             $arrayIngredients = explode(', ', $dataIngredients);
-            $text = str_replace("'", '', $arrayIngredients);
-            $text2 = str_replace("[", '', $text);
-            $text3 = str_replace("]", '', $text2);
-            $recipiesArray = [];
+            $text             = str_replace("'", '', $arrayIngredients);
+            $text2            = str_replace("[", '', $text);
+            $text3            = str_replace("]", '', $text2);
+            $recipiesArray    = [];
 
             // Get matching RecipeIngredient
             foreach ($text3 as $data) {
+
                 /**
                  * @return RecipeIngredient()
                  */
@@ -153,16 +165,15 @@ class SearchController extends AbstractController
                 ]);
 
                 foreach ($recipeIngredients as $recipeIng) {
-                    $name = $recipeIng->getName();
-
+                    $name     = $recipeIng->getName();
                     $recipies = $recipeRepository->findRecipeByName($name);
                 }
             }
 
-            // Built array with names & ids of recipies
+            // Build array with names & ids of recipies
             foreach ($recipies as $key => $recipe) {
                 $recipiesArray[] = [
-                    'id' => $recipe->getId(),
+                    'id'   => $recipe->getId(),
                     'name' => $recipe->getName()
                 ];
             }
@@ -170,7 +181,6 @@ class SearchController extends AbstractController
         return $this->json([
             'recipies' => $recipiesArray
         ]);
-
         return new Response(
             'Something went wrong...',
             Response::HTTP_OK,
@@ -185,14 +195,14 @@ class SearchController extends AbstractController
         Request $request,
         RecipeIngredientRepository $recipeIngredientRepository
     ) {
-
         $form = $this->createForm(SearchRecipeType::class, null);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $dataFormIngredients = $form->get('ingredient')->getData();
+
             foreach ($dataFormIngredients as $key => $dataFormIngredient) {
+
                 /**
                  * @var RecipeIngredient()
                  */
@@ -202,6 +212,7 @@ class SearchController extends AbstractController
             }
 
             $recipiesArray = [];
+
             foreach ($recipeIngredients as $key => $value) {
                 foreach ($value as $recipe) {
                     $recipiesArray[] = $recipe->getRecipe();
