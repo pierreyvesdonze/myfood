@@ -34,6 +34,7 @@ var app = {
 		$('.increase-amount').click(app.increaseAmount);
 		$('.decrease-amount').click(app.decreaseAmount);
 		$('.delete-article').click(app.deleteArticleApi);
+		$('.open-shoplist').click(app.openShopList);
 
 		//ALERT MODAL
 		app.close = $('.close').on('click', app.closeAlertModal);
@@ -57,6 +58,8 @@ var app = {
 	 */
 	openNav: function () {
 		document.getElementById("mySidepanel").style.width = "100%";
+
+		app.closeArticlesModal();
 	},
 
 	closeNav: function () {
@@ -75,7 +78,6 @@ var app = {
 	 * FILTERS
 	 */
 	openFiltersModal: function () {
-		console.log('open modal filters');
 		let modal = $('.filters-container');
 		modal.css("height", "100%")
 	},
@@ -244,10 +246,10 @@ var app = {
 
 	updateAmountBackend: function (currentId, currentAmount) {
 		const data = {
-			"id" : currentId,
-			"amount" : currentAmount
+			"id": currentId,
+			"amount": currentAmount
 		}
-		
+
 		console.log(data);
 		$.ajax(
 			{
@@ -314,6 +316,21 @@ var app = {
 				console.log(textStatus);
 				console.log(error);
 			});
+	},
+
+	openShopList: function () {
+		$(this).toggleClass('fa-eye-slash');
+		let aContent = this.parentNode.parentNode.nextElementSibling;
+		let aContainer = aContent.closest('.a-container');
+
+		$('.main-main-title').toggleClass('hide-height');
+		$(aContainer).prevUntil('.shopping-list-section', '.a-container').toggleClass('hide-height');
+		$(aContent).toggleClass('a-content-visible');
+
+		let shop = $('.shopping-list-section');
+		/* $(this).hasClass('fa-eye-slash') ? shop.css('height', '800px') : shop.css('height', '714px'); */
+
+/* 		$('.a-container').not('.a-container-visible').toggleClass('hidden'); */
 	},
 
 	/**

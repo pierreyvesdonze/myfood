@@ -37,6 +37,16 @@ GENERAL
   transition: 0.5s;
 }
 
+.hidden {
+  visibility: hidden;
+}
+
+.hide-height {
+  transform:scaleY(0);
+  height: 0;
+  transition: 0.3s;
+}
+
 a {
   color: var(--primary-color);
   margin: 0;

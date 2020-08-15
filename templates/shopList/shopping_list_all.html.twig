@@ -7,7 +7,7 @@
 {% include "shopList/addIngredientsModal.html.twig" %}
 
 {# MAIN TITLE #}
-<div class="main-title-container">
+<div class="main-main-title">
     <h1 class="main-title">Shopping</h1>
 </div>
 
@@ -25,7 +25,7 @@
             <input type="radio" name="ac" id="a{{ key }}" class="hidden-radio" />
             <div class="control">
                 <label for="a{{ key }}">
-                    <i class="fa fa-eye fa-2x"></i>
+                    <i class="fa fa-eye fa-2x open-shoplist"></i>
                 </label>
                 <a href="#" class="add-article">
                     <input type="hidden" value="{{ shoplist.id }}" class="hidden-shoplist-id">

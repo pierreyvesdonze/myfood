@@ -39,6 +39,18 @@ GENERAL
   transition: 0.5s;
 }
 
+.hidden {
+  visibility: hidden;
+}
+
+.hide-height {
+  -webkit-transform: scaleY(0);
+          transform: scaleY(0);
+  height: 0;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
 a {
   color: var(--primary-color);
   margin: 0;
@@ -284,14 +296,14 @@ SIDEBAR
   height: 100%;
   width: 0;
   position: fixed;
-  z-index: 2;
+  z-index: 6;
   top: 0;
   left: 0;
   background-color: #111;
   overflow-x: hidden;
   padding-top: 60px;
-  -webkit-transition: 0.5s;
-  transition: 0.5s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -365,6 +377,11 @@ SIDEBAR
 .openbtn:hover {
   -webkit-transform: rotate(90deg);
           transform: rotate(90deg);
+}
+
+.main-title-container {
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
 }
 
 .main-title {
@@ -511,21 +528,6 @@ RECIPIES
 SHOPPING LIST
 ***********************************
 */
-.shopping-list-section {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  height: 560px;
-  overflow: scroll;
-}
-
 .hidden-radio {
   display: none;
 }
@@ -540,6 +542,18 @@ SHOPPING LIST
   height: 0;
   -webkit-transition: ease-out 0.2s;
   transition: ease-out 0.2s;
+}
+
+.a-content-visible {
+  opacity: 1;
+  visibility: visible;
+  overflow-y: scroll;
+  height: 600px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-transition: ease-in 0.2s;
+  transition: ease-in 0.2s;
 }
 
 .a-content ul {
@@ -573,20 +587,6 @@ SHOPPING LIST
   font-weight: bold;
 }
 
-.a-container input:checked ~ .a-content {
-  opacity: 1;
-  visibility: visible;
-  /*  height: 300px;
-  overflow-y: scroll;
-  display: block; */
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  height: auto;
-  -webkit-transition: ease-in 0.2s;
-  transition: ease-in 0.2s;
-}
-
 .articles-container {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -603,8 +603,8 @@ MODAL
 */
 .add-articles-section {
   height: 0;
-  -webkit-transition: 0.5s;
-  transition: 0.5s;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
   background: #000000c7;
   position: fixed;
   color: var(--tertiary-color);
@@ -664,9 +664,14 @@ CONTROL
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   margin: 20px 0;
+}
+
+.control label i, .control a i {
+  padding: 0 1em;
 }
 
 /*
