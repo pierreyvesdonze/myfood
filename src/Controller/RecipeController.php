@@ -11,6 +11,7 @@ use App\Repository\IngredientRepository;
 use App\Repository\RecipeCategoryRepository;
 use App\Repository\RecipeMenuRepository;
 use App\Repository\RecipeRepository;
+use App\Repository\ShoppingListRepository;
 use App\Repository\TagRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -39,21 +40,24 @@ class RecipeController extends AbstractController
     public function recipeList(
         RecipeCategoryRepository $categoriesRepo,
         RecipeMenuRepository $menusRepo,
-        TagRepository $tagRepository
-    )
-    {
+        TagRepository $tagRepository,
+        ShoppingListRepository $shopRepo
+    ) {
         $user = $this->getUser();
 
-        $recipies = $user->getRecipies();
+        $recipies   = $user->getRecipies();
         $categories = $categoriesRepo->findAll();
-        $menus = $menusRepo->findAll();
-        $tags = $tagRepository->findAll();
+        $menus      = $menusRepo->findAll();
+        $tags       = $tagRepository->findAll();
+        $shopLists  = $shopRepo->findAll();
+
 
         return $this->render('recipe/list.html.twig', [
-            'recipies' => $recipies,
+            'recipies'   => $recipies,
             'categories' => $categories,
-            'menus' => $menus,
-            'tags' => $tags,
+            'menus'      => $menus,
+            'tags'       => $tags,
+            'shopLists'  => $shopLists
         ]);
     }
 

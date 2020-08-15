@@ -6,7 +6,6 @@ use App\Entity\Article;
 use App\Entity\Ingredient;
 use App\Entity\Recipe;
 use App\Entity\ShoppingList;
-use App\Entity\Unit;
 use App\Form\Type\ShoppingListType;
 use App\Repository\ArticleRepository;
 use App\Repository\IngredientRepository;
@@ -42,6 +41,12 @@ class ShoppingListController extends AbstractController
     }
 
     /**
+     * **************************
+     * OPTIONAL
+     * **************************
+     */
+
+    /**
      * @Route("/view/{id}", name="shopping_list_view", methods={"GET"})
      */
     public function shoppingListView(ShoppingList $shoppingList): Response
@@ -52,34 +57,42 @@ class ShoppingListController extends AbstractController
     }
 
     /**
-     * @Route("/create/{id}", name="shopping_list_create", methods={"GET", "POST"})
+     * @Route("/create/{id}", name="shopping_list_create", methods={"GET", "POST"}, options={"expose"=true})
      */
-    public function shoppingListCreate(Request $reques, Recipe $recipe)
+    public function shoppingListCreate(Request $request, Recipe $recipe): Response
     {
         $em = $this->getDoctrine()->getManager();
 
-        /** @var ShoppingList $shoppingList */
-        $shoppingList = new ShoppingList();
-        $ingredients = $recipe->getRecipeIngredients();
-        $description = $recipe->getName();
-        $shoppingList->setDescription($description);
+        if ($request->isMethod('POST')) {
 
-        foreach ($ingredients as $ingredient) {
-            $article = new Article();
-            $article->setName($ingredient->getName());
-            $article->setAmount($ingredient->amount);
-            $article->setUnit($ingredient->getUnit());
-            $article->setShoppingList($shoppingList);
-            $em->persist($article);
+            /** @var ShoppingList */
+            $shoppingList = new ShoppingList();
+            $ingredients = $recipe->getRecipeIngredients();
+            $description = $recipe->getName();
+            $shoppingList->setDescription($description);
+
+            foreach ($ingredients as $ingredient) {
+                $article = new Article();
+                $article->setName($ingredient->getName());
+                $article->setAmount($ingredient->amount);
+                $article->setUnit($ingredient->getUnit());
+                $article->setShoppingList($shoppingList);
+                $em->persist($article);
+            }
+
+            $em->flush();
+
+            $this->addFlash('success', 'La liste de course a bien été créé !');
+            return $this->json([
+                'ok'
+            ]);
         }
 
-        $em->flush();
-
-        $this->addFlash('success', 'La liste de course a bien été créé !');
-
-        return $this->redirectToRoute('shopping_list_view', [
-            'id' => $shoppingList->getId(),
-        ]);
+        return new Response(
+            'Something went wrong...',
+            Response::HTTP_OK,
+            ['content-type' => 'text/html']
+        );
     }
 
     /**
@@ -289,7 +302,7 @@ class ShoppingListController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $articleRequest =  $request->getContent();
             $strparts = explode("amount", $articleRequest);
-            $articleArray = preg_replace('/[^0-9]/', '', $strparts); 
+            $articleArray = preg_replace('/[^0-9]/', '', $strparts);
             $articleId = $articleArray[0];
             $articleAmount = $articleArray[1];
 

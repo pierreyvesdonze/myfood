@@ -1,0 +1,24 @@
+<section class="add-articles-section">
+
+    <a href="#" class="closebtn close-addshop-modal">&times;</a>
+
+    <div class="title">
+        <h2>Ajouter à une liste de course</h2>
+    </div>
+    <div class="left">
+        <label for=".add-shop-select">Listes de courses</label>
+        <select name="add-shop-select" class="add-shop-select">
+            <option value="">--Choisissez une liste de courses--</option>
+            {% for shoplist in shopLists %}
+            <option value="{{ shoplist.description }}" data-value="{{ shoplist.id }}">
+                {{ shoplist.description }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="right">
+        <a href="#" class="circle-btn submit-add-toshoplist">
+            <i class="fa fa-check fa-2x"></i>
+        </a>
+    </div>
+</section>

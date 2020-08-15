@@ -21,6 +21,10 @@ var app = {
 		//CREATE LIST INGREDIENTS
 		$('.search-recipe-form').on('keypress', app.searchByIngredients);
 
+		//RECIPIES
+		$('.add-to-shoplist').click(app.openAddToShoplistModal);
+		$('.close-addshop-modal').click(app.closeAddToShoplistModal);
+
 		//FILTERS MODAL
 		$('.filters-sliders').click(app.openFiltersModal);
 		$('.close-modal-btn').click(app.closeFiltersModal);
@@ -29,6 +33,7 @@ var app = {
 		$('.select-all').click(app.uncheckAll);
 
 		//SHOPPING LISTS & ARTICLES & MODAL
+		$('.shoplist-create').click(app.shoplistCreate)
 		$('.add-article').click(app.openArticlesModal);
 		$('.close-articles-modal').click(app.closeArticlesModal);
 		$('.increase-amount').click(app.increaseAmount);
@@ -58,17 +63,14 @@ var app = {
 	 */
 	openNav: function () {
 		document.getElementById("mySidepanel").style.width = "100%";
-
 		app.closeArticlesModal();
 	},
 
 	closeNav: function () {
-		console.log('close navbar');
 		document.getElementById("mySidepanel").style.width = "0";
 	},
 
 	closeAlertModal: function () {
-		console.log('close alert modal');
 		app.modal.remove();
 		app.modalError.remove();
 		app.close.remove();
@@ -98,7 +100,6 @@ var app = {
 			let name = $(this).attr('name');
 			matches[name] = (matches[name] || []);
 			matches[name].push('[data-' + name + '="' + $(this).data(name) + '"]');
-			console.log(matches);
 		});
 
 		const menus = matches.menu ? matches.menu.join() : '*';
@@ -113,10 +114,96 @@ var app = {
 		$(this).data('checked', checked);
 	},
 
+	/**
+	 * RECIPE
+	 */
+	openAddToShoplistModal: function (e) {
+		let modal = $('.add-articles-section');
+		let modalContent = $('.add-articles-section *');
+		setTimeout(function () {
+			modalContent.css("visibility", "visible")
+		}, 80);
+		modal.css("height", "278px");
+
+		let currentId = e.currentTarget.children[0].dataset['value'];
+		// Send to appropriate method
+		$('.submit-add-toshoplist').click(function () {
+			app.sendToBackShopListToAdd(currentId)
+		});
+	},
+
+	closeAddToShoplistModal: function () {
+		let closeModal = $('.add-articles-section');
+		let modalContent = $('.add-articles-section *');
+		setTimeout(function () {
+			modalContent.css("visibility", "hidden")
+		}, 80);
+		closeModal.css("height", "0px");
+	},
+
+	sendToBackShopListToAdd: function (currentId) {
+		let shopListToAddId = $('.add-shop-select').find(':selected').attr("data-value");
+
+		const jsonShopList = {
+			'currentId' : currentId,
+			'shopListToAddId' : shopListToAddId
+		};
+
+		console.log(jsonShopList);
+		$.ajax(
+			{
+				url: Routing.generate('shopping_list_add', { id: currentId }),
+				method: "POST",
+				dataType: "json",
+				data: jsonShopList
+			}).done(function (response) {
+				if (null !== response) {
+					console.log('ok : ' + JSON.stringify(response));
+					document.querySelector(
+						"#loader").style.visibility = "visible";
+					setTimeout(function () {
+						location.reload();
+					}, 2000);
+				} else {
+					console.log('Problème');
+				}
+			}).fail(function (jqXHR, textStatus, error) {
+				console.log(jqXHR);
+				console.log(textStatus);
+				console.log(error);
+			});
+
+	},
 
 	/**
-	 * ADD ARTICLES MODAL
+	 * SHOPLIST
 	 */
+	shoplistCreate: function () {
+		let recipeId = this.children[0].dataset['value'];
+		$.ajax(
+			{
+				url: Routing.generate('shopping_list_create', { id: recipeId }),
+				method: "POST",
+				dataType: "json",
+
+			}).done(function (response) {
+				if (null !== response) {
+					console.log('ok : ' + JSON.stringify(response));
+					document.querySelector(
+						"#loader").style.visibility = "visible";
+					setTimeout(function () {
+						location.reload();
+					}, 2000);
+				} else {
+					console.log('Problème');
+				}
+			}).fail(function (jqXHR, textStatus, error) {
+				console.log(jqXHR);
+				console.log(textStatus);
+				console.log(error);
+			});
+	},
+
 	openArticlesModal: function (e) {
 		let modal = $('.add-articles-section');
 		let modalContent = $('.add-articles-section *');
@@ -249,8 +336,6 @@ var app = {
 			"id": currentId,
 			"amount": currentAmount
 		}
-
-		console.log(data);
 		$.ajax(
 			{
 				url: Routing.generate('article_increase_amount', { id: currentId }),
@@ -328,9 +413,9 @@ var app = {
 		$(aContent).toggleClass('a-content-visible');
 
 		let shop = $('.shopping-list-section');
-		/* $(this).hasClass('fa-eye-slash') ? shop.css('height', '800px') : shop.css('height', '714px'); */
+		$(this).hasClass('fa-eye-slash') ? shop.css({ 'overflow-y': 'hidden', 'height': 'auto' }) : shop.css({ 'overflow-y': 'scroll', 'height': '574px' });
 
-/* 		$('.a-container').not('.a-container-visible').toggleClass('hidden'); */
+		/* 		$('.a-container').not('.a-container-visible').toggleClass('hidden'); */
 	},
 
 	/**
@@ -364,13 +449,11 @@ var app = {
 	},
 
 	removeSearchIcon: function () {
-
 		$('.search i').addClass('hide');
 		$('.search i').removeClass('active');
 	},
 
 	activeSearchIcon: function (e) {
-
 		if (e.target.className !== 'search-input') {
 			$('.search i').removeClass('hide');
 			$('.search i').addClass('active');

@@ -94,6 +94,10 @@ FONTS & ICONS
   color: var(--primary-color);
 }
 
+.fa-check:hover {
+  color: #26c526;
+}
+
 /*
 ***********************************
 LISTS
@@ -363,6 +367,12 @@ SIDEBAR
   margin-left: 50px;
 }
 
+.sidepanel .closebtn:hover,
+.close-modal-btn:hover,
+.add-articles-section .closebtn:hover {
+  color: #a51515;
+}
+
 .openbtn {
   font-size: 20px;
   cursor: pointer;
@@ -528,6 +538,11 @@ RECIPIES
 SHOPPING LIST
 ***********************************
 */
+.shopping-list-section {
+  height: 574px;
+  overflow-y: scroll;
+}
+
 .hidden-radio {
   display: none;
 }
@@ -670,7 +685,17 @@ CONTROL
   margin: 20px 0;
 }
 
-.control label i, .control a i {
+.control-recipe {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  margin: 20px 0;
+}
+
+.a-items .control label i,
+.a-items .control a i {
   padding: 0 1em;
 }
 

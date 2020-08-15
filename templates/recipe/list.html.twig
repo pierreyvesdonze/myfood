@@ -1,6 +1,5 @@
 {% extends "base.html.twig" %}
 
-
 {% block body %}
 <section class="recipies-main-container">
 
@@ -9,6 +8,9 @@
         <i class="fa fa-sliders-h fa-2x"></i>
     </div>
     {% include "modals/_filters.html.twig" %}
+
+      <!--***************************ADD TO SHOPPING LIST****************************-->
+    {% include "recipe/addtoshoplist.html.twig" %}
 
 
     <!--***************************RECIPIES****************************-->
@@ -32,13 +34,11 @@
                     <a href="{{ path('recipe_view', {'id': recipe.id}) }}">
                         <h3>{{ recipe.name }}</h3>
                     </a>
-
                 </div>
 
                 <hr class="hr">
 
                 <div class="container-summary">
-
                     <span>
                         <i class="fa fa-user"></i>
                         {{ recipe.person }}
@@ -62,7 +62,7 @@
 
                 <hr class="hr">
 
-                <div class="control">
+                <div class="control-recipe">
 
                     {% if is_granted('edit', recipe) %}
                     <a href="{{ path('recipe_update',{'id': recipe.id}) }}" class="button">
@@ -70,10 +70,12 @@
                     </a>
                     {% endif %}
 
-                    <a href="{{ path('shopping_list_create',{'id': recipe.id}) }}" class="button">
+                    <a href="#" class="button shoplist-create">
+                        <input type="hidden" data-value="{{ recipe.id }}">
                         <i class="fa fa-cart-plus fa-2x"></i>
                     </a>
-                    <a href="{{ path('shopping_list_add',{'id': recipe.id}) }}" class="button">
+                    <a href="#" class="button add-to-shoplist">
+                        <input type="hidden" data-value="{{ recipe.id }}">
                         <i class="fa fa-cart-arrow-down fa-2x"></i>
                     </a>
                     {% if is_granted('edit', recipe) %}
