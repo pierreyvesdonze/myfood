@@ -163,8 +163,9 @@ $(document).ready(function () {
 
       // Guests
       $('#recipe_person').bind('click keyup', function(){
-        $('.recipe-guests-selected').text('').html($(this).val()); 
+        $('.recipe-guests-selected').text('').html($(this).val() + " personne(s)"); 
      })
+
 });
 
 /*

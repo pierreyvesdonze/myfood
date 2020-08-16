@@ -249,28 +249,75 @@ DYNAMIC FORM
 
 .recipe-menu,
 .recipe-category,
-.recipe-guests
-{
+.recipe-guests {
   width: 27rem;
 }
 
 #recipe_recipeMenu,
 #recipe_recipeCategory,
-#recipe_person
-{
+#recipe_person,
+#recipe_timePrepa,
+#recipe_timeCook {
   width: 100%;
   font-size: 1em;
   margin-top: 2em;
 }
 
+#recipe_timePrepa,
+#recipe_timeCook {
+  display: flex;
+  margin-bottom: 4em;
+}
+
+#recipe_timePrepa_hour,
+#recipe_timePrepa_minute,
+#recipe_timeCook_hour,
+#recipe_timeCook_minute {
+  width: 25%;
+  height: 33px;
+}
+
 .recipe-menu-selected,
 .recipe-category-selected,
-.recipe-guests-selected
-{
+.recipe-guests-selected,
+.recipe-time-selected {
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 2em;
+}
+
+.time-form-container {
+  display: flex;
+  width: 100%;
+}
+
+.time-form-container .left,
+.time-form-container .right
+{
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.time-cook-container label,
+.time-prepa-container label {
+  font-size: 2em;
+}
+
+.recipe-tags {
+  display: flex;
+  margin: 2em;
+  width: 78%;
+  flex-wrap: wrap;
+}
+
+#recipe_tags input {
+  width: auto;
+}
+
+.recipe-tags label {
+  margin-right: 1em;
 }
 
 /*

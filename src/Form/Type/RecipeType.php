@@ -104,13 +104,14 @@ class RecipeType extends AbstractType
             'class' => Tag::class,
             'expanded' => 'true',
             'multiple' => true,
+            'label' => false
         ]);
 
         $builder->add(
             'save',
             SubmitType::class,
             [
-                'label' => 'Enregistrer',
+                'label' => 'Valider',
                 'attr' => [
                     'class' => 'button',
                 ],

@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-<div class="container-fluid">
+<div class="main-add-recipe-container">
 	<div class="row justify-content-center">
 		<div class="col-11 col-sm-10 col-md-10 col-lg-6 col-xl-5 text-center p-0 mt-3 mb-2">
 			<div class="card px-0 pt-4 pb-0 mt-3 mb-3">
@@ -216,8 +216,8 @@
 									<div class="recipe-guest-range">
 										{{ form_row(form.person) }}
 									</div>
-									<div class="recipe-guests-selected"></div>
 								</div>
+								<div class="recipe-guests-selected"></div>
 							</div>
 						</div>
 					</div>
@@ -228,17 +228,29 @@
 				{# Times #}
 				<fieldset>
 					<div class="form-card">
-						<div class="row">
+						<div class="row-step">
 							<div class="col-7">
-								<h2 class="fs-title">Temps</h2>
+								<h2 class="fs-title">Temps de cuisson/préparation</h2>
 							</div>
 							<div class="col-5">
-								<h2 class="steps-title">Étape 7 - 10</h2>
+								<h2 class="steps-title">Étape 8 - 10</h2>
 							</div>
 						</div>
 						<div class="row-step">
-							{{ form_widget(form.timeCook) }}
-							{{ form_widget(form.timePrepa) }}
+							<div class="time-form-container">
+								<div class="left">
+									<div class="time-cook-container">
+										<label for="">Temps de préparation</label>
+										{{ form_widget(form.timePrepa) }}
+									</div>
+								</div>
+								<div class="right">
+									<div class="time-prepa-container">
+										<label for="">Temps de cuisson</label>
+										{{ form_widget(form.timeCook) }}
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 					<input type="button" name="next" class="next action-button" value="Suivant" /> <input type="button"
@@ -289,45 +301,23 @@
 
 				<fieldset>
 					<div class="form-card">
-						<div class="row">
+						<div class="row-step">
 							<div class="col-7">
-								<h2 class="fs-title">Terminé !</h2>
+								<h2 class="fs-title">Valider le formulaire ?</h2>
 							</div>
 							<div class="col-5">
 								<h2 class="steps-title">Étape 10 - 10</h2>
 							</div>
-							<div class="row-step">
-								{{ form_widget(form.save) }}
-							</div>
-						</div> <br><br>
-
-
-						<h2 class="purple-text text-center"><strong>SUCCESS !</strong></h2> <br>
-						<div class="row justify-content-center">
-							<div class="col-3"> <img src="https://i.imgur.com/GwStPmg.png" class="fit-image"> </div>
-						</div> <br><br>
-						<div class="row justify-content-center">
-							<div class="col-7 text-center">
-								<h5 class="purple-text text-center">You Have Successfully Signed Up</h5>
-							</div>
 						</div>
-					</div>
-				</fieldset>
-				{{ form_end(form) }}
+						<div class="row-step">
+							{{ form_widget(form.save) }}
+						</div>
+					</div> <br><br>
 			</div>
+			</fieldset>
+			{{ form_end(form) }}
 		</div>
 	</div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
+</div>
 {% endblock %}
