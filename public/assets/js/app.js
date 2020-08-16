@@ -64,10 +64,19 @@ var app = {
 	openNav: function () {
 		document.getElementById("mySidepanel").style.width = "100%";
 		app.closeArticlesModal();
+		
+		// Hide filters buttons
+		$('.filters-sliders').fadeOut('fast');
+		$('.create-recipe').fadeOut('fast');
+
+		// Close another modals if open
+		app.closeFiltersModal();
 	},
 
 	closeNav: function () {
 		document.getElementById("mySidepanel").style.width = "0";
+		$('.filters-sliders').fadeIn('fast');
+		$('.create-recipe').fadeIn('fast');
 	},
 
 	closeAlertModal: function () {

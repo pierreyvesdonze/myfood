@@ -2,6 +2,7 @@
     <button class="openbtn">
         <i class="fa fa-bars fa-2x"></i>
     </button>
+    
 
     <!--***************************SEARCH****************************-->
     <div class="search">
@@ -22,13 +23,10 @@
             {% if app.user %}
             <div class="recipies-link">
                 <a href="{{ path('recipe_list') }}">Mes recettes</a>
-                {#        <a href="{{ path('recipe_add') }}">
-                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                    </a> #}
             </div>
 
             <div class="shopping-list-link">
-                <a href="{{ path('shopping_list_list') }}">Liste de courses</a>
+                <a href="{{ path('shopping_list_list') }}">Listes de courses</a>
             </div>
             {% endif %}
         </div>

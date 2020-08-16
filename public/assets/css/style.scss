@@ -1,4 +1,5 @@
 @import "./settings";
+@import "./dynamic_form";
 /*
 ***********************************
 MENU
@@ -36,9 +37,19 @@ SEARCH BAR
 
 /*
 ***********************************
-FILTERS
+FILTERS / NAV
 ***********************************
 */
+
+/*
+MIDDLE
+*/
+.create-recipe {
+  position: absolute;
+  top: 6px;
+  left: 45%;
+}
+
 .filters-container {
   height: 0;
   width: 100%;
@@ -60,11 +71,11 @@ FILTERS
   margin-bottom: 2em;
 }
 
-.filters-sliders {
+ .filters-sliders {
   position: absolute;
-  top: 15px;
-  right: 50%;
-}
+  top: 6px;
+  right: 45%;
+} 
 
 /*
 ***********************************
@@ -150,8 +161,19 @@ SIDEBAR
 }
 
 .main-title {
-  font-size: 12em;
+  font-size: 12vmax;
   text-align: center;
+}
+
+.main-title-recipe {
+  font-size: 7vmax;
+  text-align: center;
+  font-weight: lighter;
+  text-shadow: 1px -1px 0 #767676, -1px 2px 1px #737272, -2px 3px 1px #767474,
+    -3px 4px 1px #787777, -4px 5px 1px #7b7a7a, -5px 6px 1px #7f7d7d,
+    -6px 7px 1px #828181, -7px 8px 1px #868585, -8px 9px 1px #8b8a89,
+    -9px 10px 1px #a1a09f, -10px 11px 1px #b1afaef6, -11px 12px 1px #c5c5c5ee,
+    -12px 13px 1px #e0e0e0e8;
 }
 
 .main-title-shop-list {
@@ -166,7 +188,7 @@ SIDEBAR
 }
 
 .main-title,
-.main-title-vertical {
+.main-title-vertical{
   margin: 0;
   font-weight: lighter;
   text-shadow: 1px -1px 0 #767676, -1px 2px 1px #737272, -2px 4px 1px #767474,

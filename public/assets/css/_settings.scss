@@ -9,6 +9,7 @@ COLORS
   --tertiary-color: white;
   --link-button-color: rgb(145, 142, 142);
   --link-color: #b3e1ff;
+  --progress-color: #74ad06;
 }
 
 body {
@@ -39,6 +40,10 @@ GENERAL
 
 .hidden {
   visibility: hidden;
+}
+
+.visible {
+  visibility: visible;
 }
 
 .hide-height {

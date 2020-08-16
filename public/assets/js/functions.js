@@ -7,9 +7,8 @@ RECIPIES ADD & REMOVE STEPS & INGREDIENTS
 var $stepCollectionHolder;
 var $ingredientCollectionHolder;
 
-
-var $addStepButton = $('<button type="button" class="add-step-link">Ajouter</button>');
-var $addIngredientButton = $('<button type="button" class="add-ingredient-link">Ajouter</button>');
+var $addStepButton = $('<button type="button" class="add-step-link">Ajouter une étape</button>');
+var $addIngredientButton = $('<button type="button" class="add-ingredient-link">Ajouter un ingrédient</button>');
 var $newStepLinkLi = $('<li></li>').append($addStepButton);
 var $newIngredientLinkLi = $('<li></li>').append($addIngredientButton);
 
@@ -57,20 +56,53 @@ function addStepForm($stepCollectionHolder, $newStepLinkLi) {
     $stepCollectionHolder.data('index', index + 1);
 
     // Display the form in the page in an li, before the "Add a article" link li
-    var $newFormLi = $('<li></li>').append(newForm);
+    var $newFormLi = $('<li class="li-step"></li>').append(newForm);
     $newStepLinkLi.before($newFormLi);
+
+    // Increase Counter
+    let counter = ($('.step-counter'));
+    stepCounterIncrease(counter);
 
     // add a delete link to the new form
     addStepFormDeleteLink($newFormLi);
 }
 
+function stepCounterIncrease(counter) {
+    //Increase
+    let parseCount = parseInt(counter.text());
+    parseCount++;
+    counter.text(parseCount);
+
+    // If plural
+    let text = $('.step-counter-text');
+    if (parseCount > 1) {
+        text.text("étapes")
+    }
+}
+
+function stepCounterDecrease(counter) {
+    let parseCount = parseInt(counter.text());
+    parseCount--;
+    counter.text(parseCount);
+
+    // If plural
+    let text = $('.step-counter-text');
+    if (parseCount < 2) {
+        text.text("étape")
+    }
+}
+
 function addStepFormDeleteLink($stepFormLi) {
-    var $removeFormButton = $('<button type="button" class="remove-step-link">Supprimer</button>');
+    var $removeFormButton = $('<button type="button" class="remove-step-link"></button>');
     $stepFormLi.append($removeFormButton);
 
     $removeFormButton.on('click', function (e) {
         // remove the li for the article form
         $stepFormLi.remove();
+
+        // Decrease counter
+        let counter = ($('.step-counter'));
+        stepCounterDecrease(counter);
     });
 }
 
@@ -90,22 +122,50 @@ function addIngredientForm($ingredientCollectionHolder, $newIngredientLinkLi) {
     $ingredientCollectionHolder.data('index', index + 1);
 
     // Display the form in the page in an li, before the "Add a article" link li
-    var $newFormLi = $('<li></li>').append(newForm);
+    var $newFormLi = $('<li class="li-ingredient"></li>').append(newForm);
     $newIngredientLinkLi.before($newFormLi);
 
     // add a delete link to the new form
     addIngredientFormDeleteLink($newFormLi);
+
+    console.log($ingredientCollectionHolder);
 }
 
 function addIngredientFormDeleteLink($ingredientFormLi) {
-    var $removeFormButton = $('<button type="button" class="remove-ingredient-link">Supprimer</button>');
+    var $removeFormButton = $('<button type="button" class="remove-ingredient-link"></button>');
     $ingredientFormLi.append($removeFormButton);
+
+    $removeFormButton.insertBefore($ingredientFormLi);
 
     $removeFormButton.on('click', function (e) {
         // remove the li for the article form
         $ingredientFormLi.remove();
+        $removeFormButton.remove();
     });
 }
+
+/**
+ * MENU SELECT OPTION
+ */
+
+$(document).ready(function () {
+    // Menu
+    $('#recipe_recipeMenu').change(function() {
+        let selectedValue = $(this).find('option:selected').text();
+        $('.recipe-menu-selected').text('').append(selectedValue);
+    })
+    
+    // Category
+    $('#recipe_recipeCategory').change(function() {
+        let selectedValue = $(this).find('option:selected').text();
+        $('.recipe-category-selected').text('').append(selectedValue);
+    }) 
+
+      // Guests
+      $('#recipe_person').bind('click keyup', function(){
+        $('.recipe-guests-selected').text('').html($(this).val()); 
+     })
+});
 
 /*
 ****************************************
@@ -169,16 +229,100 @@ LOADER ANIMATION
 ****************************
 */
 
-document.onreadystatechange = function() { 
-    if (document.readyState !== "complete") { 
-        document.querySelector( 
-          "body").style.visibility = "hidden"; 
-        document.querySelector( 
-          "#loader").style.visibility = "visible"; 
-    } else { 
-        document.querySelector( 
-          "#loader").style.visibility = "hidden"; 
-        document.querySelector( 
-          "body").style.visibility = "visible"; 
-    } 
-}; 
+document.onreadystatechange = function () {
+    if (document.readyState !== "complete") {
+        document.querySelector(
+            "body").style.visibility = "hidden";
+        document.querySelector(
+            "#loader").style.visibility = "visible";
+    } else {
+        document.querySelector(
+            "#loader").style.visibility = "hidden";
+        document.querySelector(
+            "body").style.visibility = "visible";
+    }
+};
+
+/*
+***********************************
+DYNAMIC FORM
+***********************************
+*/
+$(document).ready(function () {
+
+    var current_fs, next_fs, previous_fs; //fieldsets
+    var opacity;
+    var current = 1;
+    var steps = $("fieldset").length;
+
+    setProgressBar(current);
+
+    $(".next").click(function () {
+
+        current_fs = $(this).parent();
+        next_fs = $(this).parent().next();
+
+        console.log($(this).parent())
+
+        //Add Class Active
+        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+        //show the next fieldset
+        next_fs.show();
+        //hide the current fieldset with style
+        current_fs.animate({ opacity: 0 }, {
+            step: function (now) {
+                // for making fielset appear animation
+                opacity = 1 - now;
+
+                current_fs.css({
+                    'display': 'none',
+                    'position': 'relative'
+                });
+                next_fs.css({ 'opacity': opacity });
+            },
+            duration: 500
+        });
+        setProgressBar(++current);
+    });
+
+    $(".previous").click(function () {
+
+        current_fs = $(this).parent();
+        previous_fs = $(this).parent().prev();
+
+        //Remove class active
+        $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+
+        //show the previous fieldset
+        previous_fs.show();
+
+        //hide the current fieldset with style
+        current_fs.animate({ opacity: 0 }, {
+            step: function (now) {
+                // for making fielset appear animation
+                opacity = 1 - now;
+
+                current_fs.css({
+                    'display': 'none',
+                    'position': 'relative'
+                });
+                previous_fs.css({ 'opacity': opacity });
+            },
+            duration: 500
+        });
+        setProgressBar(--current);
+    });
+
+    function setProgressBar(curStep) {
+        var percent = parseFloat(100 / steps) * curStep;
+        percent = percent.toFixed();
+        $(".progress-bar")
+            .css("width", percent + "%")
+    }
+
+    $(".submit").click(function () {
+        return false;
+    })
+
+});

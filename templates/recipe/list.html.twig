@@ -5,11 +5,18 @@
 
     <!--***************************FILTERS****************************-->
     <div class="filters-sliders">
-        <i class="fa fa-sliders-h fa-2x"></i>
+        <i class="fa fa-sliders fa-3x"></i>
     </div>
     {% include "modals/_filters.html.twig" %}
 
-      <!--***************************ADD TO SHOPPING LIST****************************-->
+    <!--***************************CREATE NEW****************************-->
+    <div class="create-recipe">
+        <a href="{{ path('recipe_add') }}">
+            <i class="fa fa-plus-circle fa-3x" aria-hidden="true"></i>
+        </a>
+    </div>
+
+    <!--***************************ADD TO SHOPPING LIST****************************-->
     {% include "recipe/addtoshoplist.html.twig" %}
 
 

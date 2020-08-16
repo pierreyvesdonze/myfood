@@ -91,11 +91,13 @@ class RecipeType extends AbstractType
         $builder->add('recipeCategory', EntityType::class, [
             'class' => RecipeCategory::class,
             'choice_label' => 'name',
+            'label' => false
         ]);
 
         $builder->add('recipeMenu', EntityType::class, [
             'class' => RecipeMenu::class,
             'choice_label' => 'name',
+            'label' => false
         ]);
 
         $builder->add('tags', EntityType::class, [
