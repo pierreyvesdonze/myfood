@@ -33,7 +33,7 @@ var app = {
 		$('.select-all').click(app.uncheckAll);
 
 		//SHOPPING LISTS & ARTICLES & MODAL
-		$('.shoplist-create').click(app.shoplistCreate)
+		$('.shoplist-create').click(app.shoplistCreate);
 		$('.add-article').click(app.openArticlesModal);
 		$('.close-articles-modal').click(app.closeArticlesModal);
 		$('.increase-amount').click(app.increaseAmount);
@@ -64,7 +64,7 @@ var app = {
 	openNav: function () {
 		document.getElementById("mySidepanel").style.width = "100%";
 		app.closeArticlesModal();
-		
+
 		// Hide filters buttons
 		$('.filters-sliders').fadeOut('fast');
 		$('.create-recipe').fadeOut('fast');
@@ -119,7 +119,7 @@ var app = {
 	uncheckAll: function () {
 		var checked = !$(this).data('checked');
 		$('input:checkbox').prop('checked', checked);
-		$(this).val(checked ? 'Tout désélectionner' : 'Tout sélectionner')
+		$(this).val(checked ? 'Tout désélectionner' : 'Tout sélectionner');
 		$(this).data('checked', checked);
 	},
 
@@ -154,33 +154,33 @@ var app = {
 		let shopListToAddId = $('.add-shop-select').find(':selected').attr("data-value");
 
 		const jsonShopList = {
-			'currentId' : currentId,
-			'shopListToAddId' : shopListToAddId
+			'currentId': currentId,
+			'shopListToAddId': shopListToAddId
 		};
 
 		console.log(jsonShopList);
 		$.ajax(
 			{
-				url: Routing.generate('shopping_list_add', { id: currentId }),
+				url: Routing.generate('shopping_list_add', {id: currentId}),
 				method: "POST",
 				dataType: "json",
 				data: jsonShopList
 			}).done(function (response) {
-				if (null !== response) {
-					console.log('ok : ' + JSON.stringify(response));
-					document.querySelector(
-						"#loader").style.visibility = "visible";
-					setTimeout(function () {
-						location.reload();
-					}, 2000);
-				} else {
-					console.log('Problème');
-				}
-			}).fail(function (jqXHR, textStatus, error) {
-				console.log(jqXHR);
-				console.log(textStatus);
-				console.log(error);
-			});
+			if (null !== response) {
+				console.log('ok : ' + JSON.stringify(response));
+				document.querySelector(
+					"#loader").style.visibility = "visible";
+				setTimeout(function () {
+					location.reload();
+				}, 2000);
+			} else {
+				console.log('Problème');
+			}
+		}).fail(function (jqXHR, textStatus, error) {
+			console.log(jqXHR);
+			console.log(textStatus);
+			console.log(error);
+		});
 
 	},
 
@@ -191,39 +191,44 @@ var app = {
 		let recipeId = this.children[0].dataset['value'];
 		$.ajax(
 			{
-				url: Routing.generate('shopping_list_create', { id: recipeId }),
+				url: Routing.generate('shopping_list_create', {id: recipeId}),
 				method: "POST",
 				dataType: "json",
 
 			}).done(function (response) {
-				if (null !== response) {
-					console.log('ok : ' + JSON.stringify(response));
-					document.querySelector(
-						"#loader").style.visibility = "visible";
-					setTimeout(function () {
-						location.reload();
-					}, 2000);
-				} else {
-					console.log('Problème');
-				}
-			}).fail(function (jqXHR, textStatus, error) {
-				console.log(jqXHR);
-				console.log(textStatus);
-				console.log(error);
-			});
+			if (null !== response) {
+				console.log('ok : ' + JSON.stringify(response));
+				document.querySelector(
+					"#loader").style.visibility = "visible";
+				setTimeout(function () {
+					location.reload();
+				}, 2000);
+			} else {
+				console.log('Problème');
+			}
+		}).fail(function (jqXHR, textStatus, error) {
+			console.log(jqXHR);
+			console.log(textStatus);
+			console.log(error);
+		});
 	},
 
 	openArticlesModal: function (e) {
 		let modal = $('.add-articles-section');
 		let modalContent = $('.add-articles-section *');
+
 		setTimeout(function () {
 			modalContent.css("visibility", "visible")
 		}, 80);
 		modal.css("height", "278px");
 
 		//Open current shoplist
-		let prevMdodal = this.parentNode.querySelector('.fa-eye');
-		prevMdodal.click();
+		let prevModal = this.parentNode.querySelector('.fa-eye');
+		let openedModal = $('.a-content');
+
+		if (!openedModal.hasClass('a-content-visible')) {
+			prevModal.click();
+		}
 
 		// Send current shoplist Id to another methods
 		let currentId = $(e.currentTarget.childNodes[1]).val();
@@ -249,7 +254,7 @@ var app = {
 
 		//Add articles to shoplist in Frontend
 		let currentShoplist = $('.a-content').find("[data-value='" + shopId + "']");
-		console.log(currentShoplist.data("value"))
+		console.log(currentShoplist.data("value"));
 		console.log(shopId);
 
 		const article = $('.add-article-input').val(),
@@ -258,11 +263,11 @@ var app = {
 			shopList = $(currentShoplist).next(),
 			newLi = $('<li class="newLi">' + article + ': ' + articleAmount + ' ' + articleUnit + '<a href ="#" class = "remove-article"> <i class="fa fa-trash"></i></a></li>');
 
-		if (article == '') {
+		if (article === '') {
 			alert("Merci de renseigner un nom à l'article");
 		} else if (!$.isNumeric(articleAmount)) {
 			alert("Merci de renseigner un nombre valide pour la quantité");
-		} else if ('' == articleUnit) {
+		} else if ('' === articleUnit) {
 			alert("Merci de renseigner une unité de mesure");
 		} else {
 			shopList.append(newLi);
@@ -292,7 +297,7 @@ var app = {
 					"amount": amount,
 					"unit": unit,
 					"id": shopId
-				}
+				};
 				console.log(element)
 			});
 
@@ -305,26 +310,26 @@ var app = {
 		shopId = parseInt(shopId, 10);
 		$.ajax(
 			{
-				url: Routing.generate('shopping_list_add_articles', { id: shopId }),
+				url: Routing.generate('shopping_list_add_articles', {id: shopId}),
 				method: "POST",
 				dataType: "json",
 				data: JSON.stringify(articlesArray),
 			}).done(function (response) {
-				if (null !== response) {
-					console.log('ok : ' + JSON.stringify(response));
-					document.querySelector(
-						"#loader").style.visibility = "visible";
-					setTimeout(function () {
-						location.reload();
-					}, 2000);
-				} else {
-					console.log('Problème');
-				}
-			}).fail(function (jqXHR, textStatus, error) {
-				console.log(jqXHR);
-				console.log(textStatus);
-				console.log(error);
-			});
+			if (null !== response) {
+				console.log('ok : ' + JSON.stringify(response));
+				document.querySelector(
+					"#loader").style.visibility = "visible";
+				setTimeout(function () {
+					location.reload();
+				}, 2000);
+			} else {
+				console.log('Problème');
+			}
+		}).fail(function (jqXHR, textStatus, error) {
+			console.log(jqXHR);
+			console.log(textStatus);
+			console.log(error);
+		});
 	},
 
 	increaseAmount: function (e) {
@@ -344,24 +349,24 @@ var app = {
 		const data = {
 			"id": currentId,
 			"amount": currentAmount
-		}
+		};
 		$.ajax(
 			{
-				url: Routing.generate('article_increase_amount', { id: currentId }),
+				url: Routing.generate('article_increase_amount', {id: currentId}),
 				method: "POST",
 				dataType: "json",
 				data: data,
 			}).done(function (response) {
-				if (null !== response) {
-					console.log('ok : ' + JSON.stringify(response));
-				} else {
-					console.log('Problème');
-				}
-			}).fail(function (jqXHR, textStatus, error) {
-				console.log(jqXHR);
-				console.log(textStatus);
-				console.log(error);
-			});
+			if (null !== response) {
+				console.log('ok : ' + JSON.stringify(response));
+			} else {
+				console.log('Problème');
+			}
+		}).fail(function (jqXHR, textStatus, error) {
+			console.log(jqXHR);
+			console.log(textStatus);
+			console.log(error);
+		});
 	},
 
 	decreaseAmount: function (e) {
@@ -373,7 +378,7 @@ var app = {
 		if (parsedDecreasedAmount >= 1) {
 			currentAmount.textContent = parsedDecreasedAmount;
 		} else {
-			var answer = window.confirm("Supprimer l'article de la liste ?")
+			var answer = window.confirm("Supprimer l'article de la liste ?");
 			if (answer) {
 				$(e.currentTarget).closest(".articles-container").remove();
 				app.deleteArticleApi(currentId);
@@ -384,7 +389,7 @@ var app = {
 	deleteArticleApi: function (id) {
 		let jsonId = {};
 		if ("number" !== typeof id) {
-			var answer = window.confirm("Supprimer l'article de la liste ?")
+			var answer = window.confirm("Supprimer l'article de la liste ?");
 			if (answer) {
 				$(id.currentTarget).closest('.articles-container').remove();
 				jsonId['id'] = id.currentTarget.children[1].dataset['value'];
@@ -395,21 +400,21 @@ var app = {
 
 		$.ajax(
 			{
-				url: Routing.generate('article_delete', { id: id }),
+				url: Routing.generate('article_delete', {id: id}),
 				method: "POST",
 				dataType: "json",
 				data: jsonId,
 			}).done(function (response) {
-				if (null !== response) {
-					console.log('ok : ' + JSON.stringify(response));
-				} else {
-					console.log('Problème');
-				}
-			}).fail(function (jqXHR, textStatus, error) {
-				console.log(jqXHR);
-				console.log(textStatus);
-				console.log(error);
-			});
+			if (null !== response) {
+				console.log('ok : ' + JSON.stringify(response));
+			} else {
+				console.log('Problème');
+			}
+		}).fail(function (jqXHR, textStatus, error) {
+			console.log(jqXHR);
+			console.log(textStatus);
+			console.log(error);
+		});
 	},
 
 	openShopList: function () {
@@ -422,7 +427,10 @@ var app = {
 		$(aContent).toggleClass('a-content-visible');
 
 		let shop = $('.shopping-list-section');
-		$(this).hasClass('fa-eye-slash') ? shop.css({ 'overflow-y': 'hidden', 'height': 'auto' }) : shop.css({ 'overflow-y': 'scroll', 'height': '574px' });
+		$(this).hasClass('fa-eye-slash') ? shop.css({
+			'overflow-y': 'hidden',
+			'height': 'auto'
+		}) : shop.css({'overflow-y': 'scroll', 'height': '574px'});
 
 		/* 		$('.a-container').not('.a-container-visible').toggleClass('hidden'); */
 	},
@@ -441,20 +449,20 @@ var app = {
 				dataType: "json",
 				data: JSON.stringify(userInput),
 			}).done(function (response) {
-				if (null !== response) {
-					console.log('ok : ' + JSON.stringify(response));
-					/* 	let redirectUrl = Routing.generate('recipe_list_api', response, true);
-			
-						response = JSON.stringify(response);
-						window.location.replace(redirectUrl + response); */
-				} else {
-					console.log('Problème');
-				}
-			}).fail(function (jqXHR, textStatus, error) {
-				console.log(jqXHR);
-				console.log(textStatus);
-				console.log(error);
-			});
+			if (null !== response) {
+				console.log('ok : ' + JSON.stringify(response));
+				/* 	let redirectUrl = Routing.generate('recipe_list_api', response, true);
+
+					response = JSON.stringify(response);
+					window.location.replace(redirectUrl + response); */
+			} else {
+				console.log('Problème');
+			}
+		}).fail(function (jqXHR, textStatus, error) {
+			console.log(jqXHR);
+			console.log(textStatus);
+			console.log(error);
+		});
 	},
 
 	removeSearchIcon: function () {
