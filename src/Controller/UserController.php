@@ -45,6 +45,7 @@ class UserController extends AbstractController
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
+            $entityManager->persist($roleUser);
             $entityManager->flush();
 
             $this->addFlash('success', 'Vous êtes enregistré. Vous pouvez maintenant vous connecter.');
