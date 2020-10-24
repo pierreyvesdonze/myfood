@@ -14,7 +14,6 @@ COLORS
 
 body {
   background: url("../images/redox_01.png");
-  overflow: hidden;
   margin: 0 !important;
 }
 
