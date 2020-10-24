@@ -41,10 +41,12 @@ class UserController extends AbstractController
 
             $roleUser = $roleRepository->findOneByRoleString('ROLE_USER');
 
+            // Pas utile mais bon
             $user->setRole($roleUser);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
+            $entityManager->persist($roleUser);
             $entityManager->flush();
 
             $this->addFlash('success', 'Vous êtes enregistré. Vous pouvez maintenant vous connecter.');

@@ -57,11 +57,6 @@ class User implements UserInterface
      */
     private $mealPlans;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $pseudo;
-
     public function __construct()
     {
         $this->shoppingLists = new ArrayCollection();
@@ -235,18 +230,6 @@ class User implements UserInterface
                 $mealPlan->setUser(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getPseudo(): ?string
-    {
-        return $this->pseudo;
-    }
-
-    public function setPseudo(string $pseudo): self
-    {
-        $this->pseudo = $pseudo;
 
         return $this;
     }
