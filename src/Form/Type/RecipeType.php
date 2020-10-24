@@ -104,7 +104,8 @@ class RecipeType extends AbstractType
             'class' => Tag::class,
             'expanded' => 'true',
             'multiple' => true,
-            'label' => false
+            'label' => false,
+            'required' => false,
         ]);
 
         $builder->add(
