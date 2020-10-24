@@ -39,7 +39,7 @@ class UserController extends AbstractController
 
             $user->setPassword($encodedPassword);
 
-            $roleUser = $roleRepository->findOneByRoleString('ROLE_USER');
+            $roleUser = $roleRepository->findOneByRoleString('User');
 
             $user->setRole($roleUser);
 

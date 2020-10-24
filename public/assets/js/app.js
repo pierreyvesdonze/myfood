@@ -62,22 +62,32 @@ var app = {
 	 * NAVBAR
 	 */
 	openNav: function () {
-		document.getElementById("mySidepanel").style.width = "100%";
+		let mySidepanel = document.getElementById("mySidepanel")
+		mySidepanel.style.width = "100%";
 		app.closeArticlesModal();
 
 		// Hide filters buttons
 		$('.filters-sliders').fadeOut('fast');
 		$('.create-recipe').fadeOut('fast');
-
+		
+		//Hide recipe creator
+		// $('.main-add-recipe-container').css('position', 'inherit');
+		// $('.main-add-recipe-container').css('visibility', 'hidden');
+	
 		// Close another modals if open
 		app.closeFiltersModal();
 	},
 
 	closeNav: function () {
-		document.getElementById("mySidepanel").style.width = "0";
+		let mySidepanel = document.getElementById("mySidepanel")
+		mySidepanel.style.width = "0";
 		$('.filters-sliders').fadeIn('fast');
 		$('.create-recipe').fadeIn('fast');
-	},
+
+		// Recover recipe creator
+		// $('.main-add-recipe-container').css('position', 'relative');
+		// $('.main-add-recipe-container').css('visibility', 'visible');
+	 },
 
 	closeAlertModal: function () {
 		app.modal.remove();

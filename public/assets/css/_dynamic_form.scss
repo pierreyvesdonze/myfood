@@ -3,6 +3,13 @@
 DYNAMIC FORM
 ***********************************
 */
+
+
+.main-add-recipe-container {
+  position: inherit;
+  z-index: 1;
+}
+
 #heading {
   text-transform: uppercase;
   color: var(--progress-color);
@@ -11,7 +18,7 @@ DYNAMIC FORM
 
 #msform {
   text-align: center;
-  position: relative;
+  position: inherit;
   margin-top: 20px;
 }
 
@@ -23,7 +30,7 @@ DYNAMIC FORM
   width: 100%;
   margin: 0;
   padding-bottom: 20px;
-  position: relative;
+  position: inherit;
 }
 
 .form-card {
@@ -101,7 +108,7 @@ DYNAMIC FORM
 .card {
   z-index: 0;
   border: none;
-  position: relative;
+  position: inherit;
 }
 
 .fs-title {
@@ -332,18 +339,19 @@ PROGRESS BAR
   color: lightgrey;
 }
 
-#progressbar .active {
-  color: var(--progress-color);
-}
-
 #progressbar li {
   list-style-type: none;
   font-size: 15px;
   width: 8%;
   float: left;
-  position: relative;
+  position: inherit;
   font-weight: 400;
 }
+
+#progressbar .active {
+  color: var(--progress-color);
+}
+
 
 #progressbar #account:before {
   font-family: FontAwesome;
@@ -413,31 +421,34 @@ PROGRESS BAR
   padding: 2px;
 }
 
-#progressbar li:after {
-  content: "";
-  width: 100%;
-  height: 2px;
-  background: lightgray;
-  position: absolute;
-  left: 0;
-  top: 19px;
-  z-index: -1;
-}
+// #progressbar li:after {
+//   content: "";
+//   width: 100%;
+//   height: 2px;
+//   background: lightgray;
+//   position: absolute;
+//   left: 0;
+//   top: 19px;
+//   z-index: -1;
+// }
 
 #progressbar li.active:before,
 #progressbar li.active:after {
   background: var(--progress-color);
 }
 
+#progressbar li:active:before {
+  width: 60px;
+}
+
 .progress {
   height: 20px;
-  position: relative;
+  position: inherit;
 }
 
 .background-progress-bar {
   width: 100%;
   height: 22px;
-  top: -1px;
   background-color: lightgray;
   position: absolute;
   z-index: -2;

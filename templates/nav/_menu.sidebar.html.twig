@@ -2,62 +2,67 @@
     <button class="openbtn">
         <i class="fa fa-bars fa-2x"></i>
     </button>
-    
+
+    <!--***************************FILTERS****************************-->
+    <div class="filters-sliders">
+        <i class="fa fa-sliders fa-2x"></i>
+    </div>
+
+    <!--***************************CREATE NEW****************************-->
+    <div class="create-recipe">
+        <a href="{{ path('recipe_add') }}">
+            <i class="fa fa-plus-circle fa-2x" aria-hidden="true"></i>
+        </a>
+    </div>
+
 
     <!--***************************SEARCH****************************-->
     <div class="search">
-       {{ render(controller('App\\Controller\\SearchController::searchBarAction')) }}
+        {{ render(controller('App\\Controller\\SearchController::searchBarAction')) }}
     </div>
 
 
+    <!--***************************SIDEPANEL****************************-->
     <div id="mySidepanel" class="sidepanel">
         <a href="#" class="closebtn">&times;</a>
-
-        {# LEFT #}
-        <div class="sidepanel-container sidepanel-left">
-
-            <div class="homepage-link">
-                <a href="{{ path('homepage') }}">Accueil</a>
-            </div>
-
-            {% if app.user %}
-            <div class="recipies-link">
-                <a href="{{ path('recipe_list') }}">Mes recettes</a>
-            </div>
-
-            <div class="shopping-list-link">
-                <a href="{{ path('shopping_list_list') }}">Listes de courses</a>
-            </div>
-            {% endif %}
+        <div class="homepage-link">
+            <a href="{{ path('homepage') }}">Accueil</a>
         </div>
 
-        {# RIGHT #}
-        <div class="sidepanel-container sidepanel-right">
-
-            {% if app.user %}
-
-            <div class="meal-plan-link">
-                <a href="{{ path('meal_plan_add') }}">Planning</a>
-            </div>
-
-            <div class="fridge-link">
-                <a href="{{ path('search_list_by_ingredients') }}">Mon frigo</a>
-            </div>
-
-
-            <div class="log-link">
-                <a href="{{ path('logout') }}">Déconnexion</a>
-            </div>
-
-            {% else %}
-            <div class="log-link">
-                <a href="{{ path('login') }}">Se connecter</a>
-            </div>
-
-            <div class="register-link">
-                <a href="{{ path('new') }}">S'inscrire</a>
-            </div>
-            {% endif %}
+        {% if app.user %}
+        <div class="recipies-link">
+            <a href="{{ path('user_recipe_list') }}">Mes recettes</a>
         </div>
+
+        <div class="shopping-list-link">
+            <a href="{{ path('shopping_list_list') }}">Listes de courses</a>
+        </div>
+        {% endif %}
+
+        {% if app.user %}
+
+        <div class="meal-plan-link">
+            <a href="{{ path('meal_plan_add') }}">Planning</a>
+        </div>
+
+        <div class="fridge-link">
+            <a href="{{ path('search_list_by_ingredients') }}">Mon frigo</a>
+        </div>
+
+
+        <div class="log-link">
+            <a href="{{ path('logout') }}">Déconnexion</a>
+        </div>
+
+        {% else %}
+        <div class="log-link">
+            <a href="{{ path('login') }}">Se connecter</a>
+        </div>
+
+        <div class="register-link">
+            <a href="{{ path('new') }}">S'inscrire</a>
+        </div>
+        {% endif %}
     </div>
+
 </nav>

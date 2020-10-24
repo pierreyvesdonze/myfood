@@ -12,15 +12,17 @@ COLORS
   --progress-color: #74ad06;
 }
 
+html, body {
+  overflow: hidden;
+  width: 100%;
+  height: 100vh;
+}
+
 body {
   background: url("../images/redox_01.png");
   margin: 0 !important;
 }
 
-#mySidepanel,
-.filters-container {
-  background-image: url("../images/dark_leather.png");
-}
 
 /*
 ***********************************

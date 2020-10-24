@@ -10,30 +10,11 @@ MENU
   justify-content: space-between;
   align-items: center;
   position: sticky;
+  height: 50px;
   padding: 0 1em;
   box-shadow: 0px 9px 6px -8px;
 }
 
-/*
-***********************************
-SEARCH BAR
-***********************************
-*/
-.search-input {
-  border-radius: 30px;
-  position: relative;
-}
-
-.search i {
-  position: absolute;
-  z-index: 1;
-  top: 23px;
-  margin-left: 10px;
-}
-
-.main-button-search {
-  display: none;
-}
 
 /*
 ***********************************
@@ -45,7 +26,6 @@ FILTERS / NAV
 MIDDLE
 */
 .create-recipe {
-  position: absolute;
   top: 6px;
   left: 45%;
 }
@@ -72,44 +52,59 @@ MIDDLE
 }
 
  .filters-sliders {
-  position: absolute;
   top: 6px;
   right: 45%;
 } 
 
 /*
 ***********************************
-SIDEBAR
+SEARCH BAR
+***********************************
+*/
+.search-input {
+  width: 110px;
+  border-radius: 30px;
+  position: relative;
+}
+
+.search i {
+  position: absolute;
+  z-index: 1;
+  top: 17px;
+  margin-left: 10px;
+}
+
+.main-button-search {
+  display: none;
+}
+
+/*
+***********************************
+SIDEPANEL
 ***********************************
 */
 .sidepanel {
-  height: 100%;
+  height: 100vh;
   width: 0;
-  position: fixed;
+  position: absolute;
   z-index: 6;
-  top: 0;
+  top: 50px;
   left: 0;
   background-color: #111;
   overflow-x: hidden;
-  padding-top: 60px;
   transition: 0.4s;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   align-items: center;
-}
-
-.sidepanel-left,
-.sidepanel-right {
-  display: flex;
   flex-direction: column;
-  transition: 2.5s;
-  margin-bottom: 10%;
 }
 
-.sidepanel-left div,
-.sidepanel-right div {
-  margin-top: 20px;
-  padding: 8px 35px;
+.sidepanel div:first-of-type {
+  margin-top: 55px;
+}
+
+.sidepanel div {
+  margin-bottom: 25px;
 }
 
 .sidepanel a {
@@ -166,14 +161,9 @@ SIDEBAR
 }
 
 .main-title-recipe {
-  font-size: 7vmax;
+  font-size: 3vmax;
   text-align: center;
   font-weight: lighter;
-  text-shadow: 1px -1px 0 #767676, -1px 2px 1px #737272, -2px 3px 1px #767474,
-    -3px 4px 1px #787777, -4px 5px 1px #7b7a7a, -5px 6px 1px #7f7d7d,
-    -6px 7px 1px #828181, -7px 8px 1px #868585, -8px 9px 1px #8b8a89,
-    -9px 10px 1px #a1a09f, -10px 11px 1px #b1afaef6, -11px 12px 1px #c5c5c5ee,
-    -12px 13px 1px #e0e0e0e8;
 }
 
 .main-title-shop-list {
@@ -229,11 +219,12 @@ MAIN
 RECIPIES
 ***********************************
 */
+
 .recipies-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  width: 92%;
+  width: 100%;
   height: 800px;
   overflow: scroll;
   padding-top: 20px;

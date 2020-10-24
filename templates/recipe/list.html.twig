@@ -4,17 +4,7 @@
 <section class="recipies-main-container">
 
     <!--***************************FILTERS****************************-->
-    <div class="filters-sliders">
-        <i class="fa fa-sliders fa-3x"></i>
-    </div>
     {% include "modals/_filters.html.twig" %}
-
-    <!--***************************CREATE NEW****************************-->
-    <div class="create-recipe">
-        <a href="{{ path('recipe_add') }}">
-            <i class="fa fa-plus-circle fa-3x" aria-hidden="true"></i>
-        </a>
-    </div>
 
     <!--***************************ADD TO SHOPPING LIST****************************-->
     {% include "recipe/addtoshoplist.html.twig" %}
@@ -22,6 +12,10 @@
 
     <!--***************************RECIPIES****************************-->
     <div class="recipies-container">
+
+        {% if recipies is empty %}
+            <h2>Vous n'avez aucune recette enregistrée</h2>
+        {% else %}
 
         {% for recipe in recipies %}
         <div class="recipe box" data-menu="{{ recipe.recipeMenu }}" data-category="{{ recipe.recipeCategory }}">
@@ -94,14 +88,8 @@
             </div>
         </div>
         {% endfor %}
+        {% endif %}
     </div>
-
-
-    <!--***************************TITLE****************************-->
-    <div class="main-title-container">
-        <h1 class="main-title-vertical">Recettes</h1>
-    </div>
-
 </section>
 
 {% endblock %}

@@ -35,9 +35,9 @@ class RecipeController extends AbstractController
     }
 
     /**
-     * @Route("/list", name="recipe_list")
+     * @Route("/list", name="user_recipe_list")
      */
-    public function recipeList(
+    public function userRecipeList(
         RecipeCategoryRepository $categoriesRepo,
         RecipeMenuRepository $menusRepo,
         TagRepository $tagRepository,
@@ -50,7 +50,6 @@ class RecipeController extends AbstractController
         $menus      = $menusRepo->findAll();
         $tags       = $tagRepository->findAll();
         $shopLists  = $shopRepo->findAll();
-
 
         return $this->render('recipe/list.html.twig', [
             'recipies'   => $recipies,
