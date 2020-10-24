@@ -41,6 +41,8 @@ class UserController extends AbstractController
 
             $roleUser = $roleRepository->findOneByRoleString('ROLE_USER');
 
+            $user->setRole($roleUser);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();

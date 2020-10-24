@@ -4,6 +4,8 @@ namespace App\DataFixtures;
 
 use App\Entity\RecipeCategory;
 use App\Entity\RecipeMenu;
+use App\Entity\Role;
+use App\Entity\Tag;
 use App\Entity\Unit;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -107,6 +109,10 @@ class AppFixtures extends Fixture
         $poisson->setName('Poisson');
         $manager->persist($poisson);
 
+        $oeufs = new RecipeCategory;
+        $oeufs->setName('Oeufs');
+        $manager->persist($oeufs);
+
         $soupe = new RecipeCategory;
         $soupe->setName('Soupe');;
         $manager->persist($soupe);
@@ -132,7 +138,7 @@ class AppFixtures extends Fixture
         $manager->persist($platmijot);
 
         $gateau = new RecipeCategory;
-        $gateau->setName('Gateau');
+        $gateau->setName('Gâteau');
         $manager->persist($gateau);
 
         $tartesucree = new RecipeCategory;
@@ -142,6 +148,50 @@ class AppFixtures extends Fixture
         $glace = new RecipeCategory;
         $glace->setName('Glace');
         $manager->persist($glace);
+
+        // Tags
+        $sansGluten = new Tag;
+        $sansGluten->setName('Sans gluten');
+        $manager->persist($sansGluten);
+
+        $sansLactose = new Tag;
+        $sansLactose->setName('Sans lactose');
+        $manager->persist($sansLactose);
+
+        $sansOeufs = new Tag;
+        $sansOeufs->setName('Sans oeufs');
+        $manager->persist($sansOeufs);
+
+        $vegetarien = new Tag;
+        $vegetarien->setName('Végétarien');
+        $manager->persist($vegetarien);
+
+        $vegan = new Tag;
+        $vegan->setName('Végan');
+        $manager->persist($vegan);
+
+        $rapide = new Tag;
+        $rapide->setName('Rapide');
+        $manager->persist($rapide);
+
+        $junkFood = new Tag;
+        $junkFood->setName('Junk Food');
+        $manager->persist($junkFood);
+
+        $economic = new Tag;
+        $economic->setName('Economique');
+        $manager->persist($economic);
+
+        // Roles
+        $roleUser = new Role;
+        $roleUser->setName('ROLE_USER');
+        $roleUser->setRoleString('User');
+        $manager->persist($roleUser);
+
+        $roleAdmin = new Role;
+        $roleAdmin->setName('ROLE_ADMIN');
+        $roleAdmin->setRoleString('Admin');
+        $manager->persist($roleAdmin);
 
         $manager->flush();
     }
