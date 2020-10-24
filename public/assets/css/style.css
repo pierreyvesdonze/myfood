@@ -13,7 +13,6 @@ COLORS
 }
 
 html, body {
-  overflow: hidden;
   width: 100%;
   height: 100vh;
 }
@@ -226,6 +225,14 @@ DYNAMIC FORM
   z-index: 1;
 }
 
+.header-form-create-recipe {
+  height: 30%;
+}
+
+.fieldsets-container {
+  height: 60%;
+}
+
 #heading {
   text-transform: uppercase;
   color: var(--progress-color);
@@ -283,14 +290,12 @@ DYNAMIC FORM
 }
 
 #msform .action-button {
-  width: 100px;
+  width: 40px;
   background: var(--primary-color);
   font-weight: bold;
   color: white;
   border: 0 none;
   border-radius: 0px;
-  cursor: pointer;
-  padding: 10px 5px;
   margin: 10px 0px 10px 5px;
   float: right;
 }
@@ -301,14 +306,12 @@ DYNAMIC FORM
 }
 
 #msform .action-button-previous {
-  width: 110px;
+  width: 40px;
   background: #616161;
   font-weight: bold;
   color: white;
   border: 0 none;
   border-radius: 20px 0px 0px 20px;
-  cursor: pointer;
-  padding: 10px 5px;
   margin: 10px 5px 10px 0px;
   float: right;
 }
@@ -352,24 +355,6 @@ DYNAMIC FORM
   height: 200px;
 }
 
-.steps-counter {
-  width: 34%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  font-size: 2em;
-}
-
-.step-counter {
-  margin-right: 0.5em;
-}
-
 .row-step,
 .row-steps,
 .row-ingredients {
@@ -382,7 +367,7 @@ DYNAMIC FORM
 }
 
 .row-ingredients {
-  width: 70%;
+  width: 100%;
 }
 
 .li-step {
@@ -437,16 +422,13 @@ DYNAMIC FORM
 
 .add-step-link,
 .add-ingredient-link {
-  width: 50%;
+  width: 25%;
   background: var(--primary-color);
-  font-size: 20px;
+  font-size: 3em;
   font-weight: bold;
-  letter-spacing: 0.3em;
-  color: var(--secondary-color);
+  color: var(--progress-color);
   border: 0 none;
-  border-radius: 0 20px 20px 0;
-  cursor: pointer;
-  padding: 10px 5px;
+  border-radius: 20px;
 }
 
 .add-step-link:hover,
@@ -459,6 +441,10 @@ DYNAMIC FORM
 .add-ingredient-link:focus,
 .add-ingredient-link:active {
   outline: none;
+}
+
+.textarea-step {
+  height: 60px !important;
 }
 
 .steps-title,
@@ -491,16 +477,6 @@ DYNAMIC FORM
           justify-content: space-between;
 }
 
-.recipe-add-container {
-  width: 50%;
-}
-
-.recipe-menu,
-.recipe-category,
-.recipe-guests {
-  width: 27rem;
-}
-
 #recipe_recipeMenu,
 #recipe_recipeCategory,
 #recipe_person,
@@ -527,7 +503,6 @@ DYNAMIC FORM
   height: 33px;
 }
 
-.recipe-menu-selected,
 .recipe-category-selected,
 .recipe-guests-selected,
 .recipe-time-selected {

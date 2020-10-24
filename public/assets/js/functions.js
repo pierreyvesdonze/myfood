@@ -7,8 +7,8 @@ RECIPIES ADD & REMOVE STEPS & INGREDIENTS
 var $stepCollectionHolder;
 var $ingredientCollectionHolder;
 
-var $addStepButton = $('<button type="button" class="add-step-link">Ajouter une étape</button>');
-var $addIngredientButton = $('<button type="button" class="add-ingredient-link">Ajouter un ingrédient</button>');
+var $addStepButton = $('<button type="button" class="add-step-link">+</button>');
+var $addIngredientButton = $('<button type="button" class="add-ingredient-link">+</button>');
 var $newStepLinkLi = $('<li></li>').append($addStepButton);
 var $newIngredientLinkLi = $('<li></li>').append($addIngredientButton);
 
@@ -59,38 +59,34 @@ function addStepForm($stepCollectionHolder, $newStepLinkLi) {
     var $newFormLi = $('<li class="li-step"></li>').append(newForm);
     $newStepLinkLi.before($newFormLi);
 
-    // Increase Counter
-    let counter = ($('.step-counter'));
-    stepCounterIncrease(counter);
-
     // add a delete link to the new form
     addStepFormDeleteLink($newFormLi);
 }
 
-function stepCounterIncrease(counter) {
-    //Increase
-    let parseCount = parseInt(counter.text());
-    parseCount++;
-    counter.text(parseCount);
+// function stepCounterIncrease(counter) {
+//     //Increase
+//     let parseCount = parseInt(counter.text());
+//     parseCount++;
+//     counter.text(parseCount);
 
-    // If plural
-    let text = $('.step-counter-text');
-    if (parseCount > 1) {
-        text.text("étapes")
-    }
-}
+//     // If plural
+//     let text = $('.step-counter-text');
+//     if (parseCount > 1) {
+//         text.text("étapes")
+//     }
+// }
 
-function stepCounterDecrease(counter) {
-    let parseCount = parseInt(counter.text());
-    parseCount--;
-    counter.text(parseCount);
+// function stepCounterDecrease(counter) {
+//     let parseCount = parseInt(counter.text());
+//     parseCount--;
+//     counter.text(parseCount);
 
-    // If plural
-    let text = $('.step-counter-text');
-    if (parseCount < 2) {
-        text.text("étape")
-    }
-}
+//     // If plural
+//     let text = $('.step-counter-text');
+//     if (parseCount < 2) {
+//         text.text("étape")
+//     }
+// }
 
 function addStepFormDeleteLink($stepFormLi) {
     var $removeFormButton = $('<button type="button" class="remove-step-link"></button>');
@@ -144,29 +140,6 @@ function addIngredientFormDeleteLink($ingredientFormLi) {
     });
 }
 
-/**
- * MENU SELECT OPTION
- */
-
-$(document).ready(function () {
-    // Menu
-    $('#recipe_recipeMenu').change(function() {
-        let selectedValue = $(this).find('option:selected').text();
-        $('.recipe-menu-selected').text('').append(selectedValue);
-    })
-    
-    // Category
-    $('#recipe_recipeCategory').change(function() {
-        let selectedValue = $(this).find('option:selected').text();
-        $('.recipe-category-selected').text('').append(selectedValue);
-    }) 
-
-      // Guests
-      $('#recipe_person').bind('click keyup', function(){
-        $('.recipe-guests-selected').text('').html($(this).val() + " personne(s)"); 
-     })
-
-});
 
 /*
 ****************************************
