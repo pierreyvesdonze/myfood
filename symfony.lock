@@ -184,6 +184,9 @@
     "ralouphie/getallheaders": {
         "version": "3.0.3"
     },
+    "select2/select2": {
+        "version": "4.0.13"
+    },
     "sensio/framework-extra-bundle": {
         "version": "5.2",
         "recipe": {
@@ -551,6 +554,9 @@
     },
     "symfony/yaml": {
         "version": "v5.0.10"
+    },
+    "tetranz/select2entity-bundle": {
+        "version": "v2.10.1"
     },
     "tijsverkoyen/css-to-inline-styles": {
         "version": "2.2.2"

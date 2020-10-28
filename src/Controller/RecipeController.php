@@ -6,6 +6,7 @@ use App\Entity\Ingredient;
 use App\Entity\Recipe;
 use App\Entity\RecipeIngredient;
 use App\Entity\RecipeStep;
+use App\Entity\Tag;
 use App\Form\Type\RecipeType;
 use App\Repository\IngredientRepository;
 use App\Repository\RecipeCategoryRepository;
@@ -18,6 +19,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -160,6 +162,33 @@ class RecipeController extends AbstractController
             'recipe' => $recipe,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @Route("/add/tags", name="add_tags")
+     *
+     * @return Response
+     */
+    public function addTags(Request $request): JsonResponse
+    {
+        $tagRepository = $this->entityManager->getRepository(Tag::class);
+
+        if (isset($_GET['t'])) {
+            $tags = $tagRepository->nameLike($_GET['t']);
+        } else {
+            $tags = $tagRepository->findAll();
+        }
+
+        $tagArray = [];
+        /** @var Tag $tag */
+        foreach ($tags as $tag) {
+            $tagArray[] = ['id' => $tag->getId(), 'text' => $tag->getName()];
+        }
+
+        return new JsonResponse($tagArray);
+
     }
 
     /**

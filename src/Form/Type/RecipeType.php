@@ -6,6 +6,7 @@ use App\Entity\Recipe;
 use App\Entity\RecipeCategory;
 use App\Entity\RecipeMenu;
 use App\Entity\Tag;
+use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -107,6 +108,23 @@ class RecipeType extends AbstractType
             'label' => false,
             'required' => false,
         ]);
+
+        // $builder->add('tags', Select2EntityType::class, [
+        //     'multiple' => true,
+        //     'remote_route' => 'add_tags',
+        //     'class' => 'App\Entity\Tag',
+        //     'primary_key' => 'id',
+        //     'minimum_input_length' => 0,
+        //     'page_limit' => 10,
+        //     'allow_clear' => true,
+        //     'delay' => 250,
+        //     'cache' => true,
+        //     'cache_timeout' => 60000,
+        //     'language' => 'fr',
+        //     'label' => 'Ajouter des filtres',
+        //     'placeholder' => 'Filtres',
+        // ]);
+
 
         $builder->add(
             'save',

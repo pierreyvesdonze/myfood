@@ -79,7 +79,6 @@ height: 60%;
   font-weight: bold;
   color: white;
   border: 0 none;
-  border-radius: 0px;
   margin: 10px 0px 10px 5px;
   float: right;
 }
@@ -267,6 +266,10 @@ height: 60%;
   height: 33px;
 }
 
+.recipe-category div select {
+  overflow-y: scroll;
+}
+
 .recipe-category-selected,
 .recipe-guests-selected,
 .recipe-time-selected {
@@ -278,20 +281,23 @@ height: 60%;
 
 .time-form-container {
   display: flex;
+  flex-direction: column;
   width: 100%;
 }
 
 .time-form-container .left,
 .time-form-container .right
 {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  width: 50%;
+  margin: auto;
 }
 
-.time-cook-container label,
-.time-prepa-container label {
-  font-size: 2em;
+.time-form-container .left div select ,
+.time-form-container .right div select 
+{
+  width: 50% !important;
 }
 
 .recipe-tags {
@@ -299,6 +305,11 @@ height: 60%;
   margin: 2em;
   width: 78%;
   flex-wrap: wrap;
+}
+
+#recipe_tags {
+  display: flex;
+  flex-direction: column;
 }
 
 #recipe_tags input {
@@ -319,12 +330,16 @@ PROGRESS BAR
   margin-bottom: 30px;
   overflow: hidden;
   color: lightgrey;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 #progressbar li {
   list-style-type: none;
   font-size: 15px;
   width: 8%;
+  margin-right: 1em;
   float: left;
   position: inherit;
   font-weight: 400;
@@ -403,24 +418,9 @@ PROGRESS BAR
   padding: 2px;
 }
 
-// #progressbar li:after {
-//   content: "";
-//   width: 100%;
-//   height: 2px;
-//   background: lightgray;
-//   position: absolute;
-//   left: 0;
-//   top: 19px;
-//   z-index: -1;
-// }
-
 #progressbar li.active:before,
 #progressbar li.active:after {
   background: var(--progress-color);
-}
-
-#progressbar li:active:before {
-  width: 60px;
 }
 
 .progress {

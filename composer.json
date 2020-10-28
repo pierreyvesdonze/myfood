@@ -12,6 +12,7 @@
         "intervention/image": "^2.5",
         "oneup/uploader-bundle": "^3.0",
         "phpdocumentor/reflection-docblock": "^5.1",
+        "select2/select2": "^4.0",
         "sensio/framework-extra-bundle": "^5.5",
         "symfony/apache-pack": "^1.0",
         "symfony/asset": "5.0.*",
@@ -40,7 +41,8 @@
         "symfony/yaml": "5.0.*",
         "twig/cssinliner-extra": "^3.0",
         "twig/inky-extra": "^3.0",
-        "twig/intl-extra": "^3.0"
+        "twig/intl-extra": "^3.0",
+        "tetranz/select2entity-bundle": "2.*"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.3",

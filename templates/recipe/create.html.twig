@@ -9,7 +9,7 @@
 
 	{{ form_start(form, {'attr': {'id': 'msform'}}) }}
 	<!-- progressbar -->
-	<ul id="progressbar">
+	<!-- <ul id="progressbar">
 		<li class="active" id="account"></li>
 		<li id="description"></li>
 		<li id="step"></li>
@@ -21,7 +21,7 @@
 		<li id="picture"></li>
 		<li id="tags"></li>
 		<li id="confirm"></li>
-	</ul>
+	</ul> -->
 	<div class="progress">
 		<div class="background-progress-bar">
 
@@ -133,16 +133,16 @@
 					<h2 class="steps-title">5 - 10</h2>
 				</div>
 			</div>
-	
-				<div class="recipe-add-container">
-					<div class="recipe-menu">
-						<span>
-							Choisissez parmi la liste ci-dessous un type de plat
-						</span>
-						{{ form_row(form.recipeMenu) }}
-					</div>
+
+			<div class="recipe-add-container">
+				<div class="recipe-menu">
+					<span>
+						Choisissez parmi la liste ci-dessous un type de plat
+					</span>
+					{{ form_row(form.recipeMenu) }}
 				</div>
-	
+			</div>
+
 		</div>
 	</fieldset>
 
@@ -157,16 +157,16 @@
 				</div>
 			</div>
 
-				<div class="recipe-add-container">
-					<div class="recipe-category">
-						<span>
-							Choisissez parmi la liste ci-dessous une catégorie
-						</span>
-						{{ form_row(form.recipeCategory) }}
-					</div>
-					<div class="recipe-category-selected"></div>
+			<div class="recipe-add-container">
+				<div class="recipe-category">
+					<span>
+						Choisissez parmi la liste ci-dessous une catégorie
+					</span>
+					{{ form_row(form.recipeCategory) }}
 				</div>
-		
+				<div class="recipe-category-selected"></div>
+			</div>
+
 		</div>
 	</fieldset>
 
@@ -202,21 +202,17 @@
 					<h2 class="steps-title">8 - 10</h2>
 				</div>
 			</div>
-			<div class="row-step">
-				<div class="time-form-container">
-					<div class="left">
-						<div class="time-cook-container">
-							<label for="">Temps de préparation</label>
-							{{ form_widget(form.timePrepa) }}
-						</div>
-					</div>
-					<div class="right">
-						<div class="time-prepa-container">
-							<label for="">Temps de cuisson</label>
-							{{ form_widget(form.timeCook) }}
-						</div>
-					</div>
+
+			<div class="time-form-container">
+				<div class="left">
+					<label for="">Temps de préparation (H : Min)</label>
+					{{ form_widget(form.timePrepa) }}
 				</div>
+				<div class="right">
+					<label for="">Temps de cuisson (H : Min)</label>
+					{{ form_widget(form.timeCook) }}
+				</div>
+
 			</div>
 		</div>
 	</fieldset>

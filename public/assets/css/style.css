@@ -295,7 +295,6 @@ DYNAMIC FORM
   font-weight: bold;
   color: white;
   border: 0 none;
-  border-radius: 0px;
   margin: 10px 0px 10px 5px;
   float: right;
 }
@@ -503,6 +502,10 @@ DYNAMIC FORM
   height: 33px;
 }
 
+.recipe-category div select {
+  overflow-y: scroll;
+}
+
 .recipe-category-selected,
 .recipe-guests-selected,
 .recipe-time-selected {
@@ -522,11 +525,16 @@ DYNAMIC FORM
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   width: 100%;
 }
 
 .time-form-container .left,
 .time-form-container .right {
+  width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -534,12 +542,12 @@ DYNAMIC FORM
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  width: 50%;
+  margin: auto;
 }
 
-.time-cook-container label,
-.time-prepa-container label {
-  font-size: 2em;
+.time-form-container .left div select,
+.time-form-container .right div select {
+  width: 50% !important;
 }
 
 .recipe-tags {
@@ -550,6 +558,16 @@ DYNAMIC FORM
   width: 78%;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+}
+
+#recipe_tags {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 #recipe_tags input {
@@ -569,12 +587,21 @@ PROGRESS BAR
   margin-bottom: 30px;
   overflow: hidden;
   color: lightgrey;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 #progressbar li {
   list-style-type: none;
   font-size: 15px;
   width: 8%;
+  margin-right: 1em;
   float: left;
   position: inherit;
   font-weight: 400;
@@ -655,10 +682,6 @@ PROGRESS BAR
 #progressbar li.active:before,
 #progressbar li.active:after {
   background: var(--progress-color);
-}
-
-#progressbar li:active:before {
-  width: 60px;
 }
 
 .progress {
