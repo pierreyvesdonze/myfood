@@ -7,7 +7,11 @@
 
     <div class="nav-menu-recipies">
         <!--***************************FILTERS****************************-->
-        <div class="filters-sliders">
+        <div {% if app.request.get('_route') matches '/recipe_list/' %} 
+        class="filters-sliders active"
+        {% else %}
+        class="filters-sliders hidden"
+        {% endif %}>
             <i class="fa fa-sliders fa-2x"></i>
         </div>
 
