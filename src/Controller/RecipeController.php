@@ -193,11 +193,10 @@ class RecipeController extends AbstractController
 
     /**
      * @Route("/{id}/update", name="recipe_update", methods={"GET","POST"})
-     * @IsGranted("ROLE_USER")
      */
     public function recipeUpdate(Request $request, Recipe $recipe)
     {
-        $this->denyAccessUnlessGranted('edit', $recipe);
+        //$this->denyAccessUnlessGranted('edit', $recipe);
 
         $manager = $this->getDoctrine()->getManager();
 

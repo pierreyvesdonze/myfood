@@ -4,7 +4,7 @@ COLORS
 ***********************************
 */
 :root {
-  --primary-color: #000000;
+  --primary-color: #111;
   --secondary-color: #949494;
   --tertiary-color: white;
   --link-button-color: rgb(145, 142, 142);
@@ -62,8 +62,9 @@ a {
 }
 
 .hr {
-  height: 2px;
+  height: 1px;
   border: 0;
+  width: 90%;
   margin: 20px auto;
   background: #1d1d1d;
   background: radial-gradient(circle, #080808 0%, rgba(219, 219, 219, 0.144) 50%, rgba(209, 209, 209, 0) 100%);
@@ -755,6 +756,7 @@ MIDDLE
 
 .filters-container {
   height: 0;
+  background-color: var(--primary-color);
   width: 100%;
   position: fixed;
   z-index: 3;
@@ -795,15 +797,18 @@ SEARCH BAR
   position: relative;
 }
 
-.search i {
-  position: absolute;
-  z-index: 1;
-  top: 17px;
-  margin-left: 10px;
-}
-
 .main-button-search {
   display: none;
+}
+
+.nav-menu-recipies {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 20%;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 /*
@@ -969,6 +974,39 @@ RECIPIES
   padding-top: 20px;
 }
 
+.recipe-view-container h2 {
+  text-align: center;
+}
+
+.recipe-view-container, .recipe-control {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.photo-recipe-view {
+  width: 50%;
+  margin: auto;
+  text-align: center;
+}
+
+.photo-recipe-view img {
+  max-width: 50%;
+}
+
+.recipe-control {
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
 .recipe {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1043,6 +1081,10 @@ RECIPIES
 .container-summary span {
   text-align: center;
   margin-bottom: 10px;
+}
+
+.recipe-summary table td {
+  padding: 0 20px;
 }
 
 /*

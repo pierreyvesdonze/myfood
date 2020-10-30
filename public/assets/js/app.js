@@ -475,17 +475,17 @@ var app = {
 		});
 	},
 
-	removeSearchIcon: function () {
-		$('.search i').addClass('hide');
-		$('.search i').removeClass('active');
-	},
+	// removeSearchIcon: function () {
+	// 	$('.search i').addClass('hide');
+	// 	$('.search i').removeClass('active');
+	// },
 
-	activeSearchIcon: function (e) {
-		if (e.target.className !== 'search-input') {
-			$('.search i').removeClass('hide');
-			$('.search i').addClass('active');
-		}
-	},
+	// activeSearchIcon: function (e) {
+	// 	if (e.target.className !== 'search-input') {
+	// 		$('.search i').removeClass('hide');
+	// 		$('.search i').addClass('active');
+	// 	}
+	// },
 
 	/**
 	 *SEARCH BY INGREDIENTS

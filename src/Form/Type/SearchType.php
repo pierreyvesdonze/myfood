@@ -19,8 +19,10 @@ class SearchType extends AbstractType
             TextType::class,
             [
                 'label' => false,
+              
                 'attr' => [
-                    'class'       => 'search-input'
+                    'class'       => 'search-input',
+                    'placeholder' => 'Rechercher',
                 ]
             ],
         );

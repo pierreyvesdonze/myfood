@@ -4,7 +4,7 @@ COLORS
 ***********************************
 */
 :root {
-  --primary-color: #000000;
+  --primary-color: #111;
   --secondary-color: #949494;
   --tertiary-color: white;
   --link-button-color: rgb(145, 142, 142);
@@ -60,8 +60,9 @@ a {
 }
 
 .hr {
-  height: 2px;
+  height: 1px;
   border: 0;
+  width: 90%;
   margin: 20px auto;
   background: rgb(29, 29, 29);
   background: radial-gradient(

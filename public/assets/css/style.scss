@@ -32,6 +32,7 @@ MIDDLE
 
 .filters-container {
   height: 0;
+  background-color: var(--primary-color);
   width: 100%;
   position: fixed;
   z-index: 3;
@@ -67,15 +68,14 @@ SEARCH BAR
   position: relative;
 }
 
-.search i {
-  position: absolute;
-  z-index: 1;
-  top: 17px;
-  margin-left: 10px;
-}
-
 .main-button-search {
   display: none;
+}
+
+.nav-menu-recipies {
+    display: flex;
+    width: 20%;
+    justify-content: space-between;
 }
 
 /*
@@ -220,6 +220,7 @@ RECIPIES
 ***********************************
 */
 
+
 .recipies-container {
   display: flex;
   flex-wrap: wrap;
@@ -228,6 +229,30 @@ RECIPIES
   height: 800px;
   overflow: scroll;
   padding-top: 20px;
+}
+
+.recipe-view-container h2 {
+  text-align: center;
+}
+
+.recipe-view-container, .recipe-control {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.photo-recipe-view {
+    width: 50%;
+    margin: auto;
+    text-align: center;
+}
+
+.photo-recipe-view img {
+  max-width: 50%;
+}
+
+.recipe-control {
+  align-items: flex-start;
 }
 
 .recipe {
@@ -294,6 +319,10 @@ RECIPIES
 .container-summary span {
   text-align: center;
   margin-bottom: 10px;
+}
+
+.recipe-summary table td {
+  padding: 0 20px;
 }
 
 /*

@@ -3,22 +3,26 @@
         <i class="fa fa-bars fa-2x"></i>
     </button>
 
-    <!--***************************FILTERS****************************-->
-    <div class="filters-sliders">
-        <i class="fa fa-sliders fa-2x"></i>
-    </div>
+    <div class="nav-menu-navigation"></div>
 
-    <!--***************************CREATE NEW****************************-->
-    <div class="create-recipe">
-        <a href="{{ path('recipe_add') }}">
-            <i class="fa fa-plus-circle fa-2x" aria-hidden="true"></i>
-        </a>
-    </div>
+    <div class="nav-menu-recipies">
+        <!--***************************FILTERS****************************-->
+        <div class="filters-sliders">
+            <i class="fa fa-sliders fa-2x"></i>
+        </div>
+
+        <!--***************************CREATE NEW****************************-->
+        <div class="create-recipe">
+            <a href="{{ path('recipe_add') }}">
+                <i class="fa fa-plus-circle fa-2x" aria-hidden="true"></i>
+            </a>
+        </div>
 
 
-    <!--***************************SEARCH****************************-->
-    <div class="search">
-        {{ render(controller('App\\Controller\\SearchController::searchBarAction')) }}
+        <!--***************************SEARCH****************************-->
+        <div class="search">
+            {{ render(controller('App\\Controller\\SearchController::searchBarAction')) }}
+        </div>
     </div>
 
 

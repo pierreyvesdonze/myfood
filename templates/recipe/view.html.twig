@@ -2,121 +2,141 @@
 
 {% block body %}
 
-{# Title #}
-<h2>{{ recipe.name }}</h2>
-<span>
 
-</span>
+<div class="recipe-view-container">
+    {# Title #}
+    <h1>{{ recipe.name }}</h1>
 
-{% if is_granted('edit', recipe) %}
-    <a href="{{ path('recipe_update',{'id': recipe.id}) }}" class="button">
-        <span class="edit">Editer</span>
-    </a>
-    <a href="{{ path('recipe_delete',{'id': recipe.id}) }}" class="button">
-        <span class="delete">Supprimer</span>
-    </a>
-{% endif %}
+    <hr class="hr">
 
-<a href="{{ path('shopping_list_create',{'id': recipe.id}) }}" class="button">
-    <span class="create">Générer une liste de courses</span>
-</a>
+    {# Control #}
+    <div class="recipe-control">
 
-<a href="{{ path('shopping_list_add',{'id': recipe.id}) }}" class="button">
-    <span class="create">Ajouter à une liste de courses</span>
-</a>
+        {% if is_granted('edit', recipe) %}
+        <a href="{{ path('recipe_update',{'id': recipe.id}) }}" class="button">
+            <i class="fas fa-pencil-alt"></i> Editer
+        </a>
+        <a href="{{ path('recipe_delete',{'id': recipe.id}) }}" class="button">
+            <i class="fas fa-trash-alt"></i> Supprimer
+        </a>
+        {% endif %}
 
-{# Picture #}
-<div class="photo-recipe-view">
-    <img src="{{ asset('uploads/' ~ recipe.recipePhoto) }}" alt="">
-</div>
+        <a href="{{ path('shopping_list_create',{'id': recipe.id}) }}" class="button">
+            <i class="fa fa-cart-plus"></i> Générer une liste de courses
+        </a>
 
-{# Summary #}
-<div class="recipe-summary">
-    <table>
-        <thead>
-            <tr>
-                <th>Type</th>
-                <th>Catégorie</th>
-                <th>Portions</th>
-                <th>Temps de cuisson</th>
-                <th>Temps de préparation</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>    
-                <td>
-                    {{ recipe.recipeMenu }}
-                </td>
-                <td>
-                    {{ recipe.recipeCategory }}
-                </td>
-                <td>{{ recipe.person }} personne(s)</td>
-                <td>
-                    {% if recipe.timeCook %}
-                        {% if hoursCook > 0 %}
-                            {{ hoursCook }} h
-                        {% endif %}
-                        {% if minutesCook > 0 %}
-                            {{ minutesCook }} min
-                        {% endif %}
-                    {% else %}
-                    -
-                    {% endif %}
-                </td>
-                <td>
-                    {% if recipe.timePrepa %}
+        <a href="{{ path('shopping_list_add',{'id': recipe.id}) }}" class="button">
+            <i class="fa fa-cart-arrow-down"></i> Ajouter à une liste de courses
+        </a>
+    </div>
+
+    <hr class="hr">
+
+    {# Picture #}
+    <div class="photo-recipe-view">
+        <img src="{{ asset('uploads/' ~ recipe.recipePhoto) }}" alt="">
+    </div>
+
+    <hr class="hr">
+
+    {# Summary #}
+    <div class="recipe-summary">
+        <table>
+            <thead>
+                <tr>
+                    <th><i class="fas fa-clipboard"></i></th>
+                    <th><i class="fas fa-hamburger"></i></th>
+                    <th><i class="fas fa-utensils"></i></th>
+                    <th><i class="fas fa-clock"></i></th>
+                    <th><i class="fas fa-temperature-high"></i></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        {{ recipe.recipeMenu }}
+                    </td>
+                    <td>
+                        {{ recipe.recipeCategory }}
+                    </td>
+                    <td>{{ recipe.person }}</td>
+                    <td>
+                        {% if recipe.timePrepa %}
                         {% if hoursPrepa > 0 %}
-                            {{ hoursPrepa }} h
+                        {{ hoursPrepa }} h
                         {% endif %}
                         {% if minutesPrepa > 0 %}
-                            {{ minutesPrepa }} min
+                        {{ minutesPrepa }} min
                         {% endif %}
-                    {% else %}
+                        {% else %}
                         -
-                    {% endif %}
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if recipe.timeCook %}
+                        {% if hoursCook > 0 %}
+                        {{ hoursCook }} h
+                        {% endif %}
+                        {% if minutesCook > 0 %}
+                        {{ minutesCook }} min
+                        {% endif %}
+                        {% else %}
+                        -
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-{# Tags #}
-<div class="tags">
-    {% for tag in recipe.tags %}
-        #{{ tag.name }} 
-    {% endfor %}
-</div>
+    <hr class="hr">
 
-{# Ingredients #}
-<div class="recipe-ingredients">
-    <h2>
-        Ingrédients
-    </h2>
-    <ul>
-        {% for ingredient in recipe.Recipeingredients %}
+    {# Tags #}
+    <div class="tags">
+        {% for tag in recipe.tags %}
+        #{{ tag.name }}
+        {% endfor %}
+    </div>
+
+    <hr class="hr">
+
+    {# Ingredients #}
+    <div class="recipe-ingredients">
+        <h2>
+            Ingrédients
+        </h2>
+        <ul>
+            {% for ingredient in recipe.Recipeingredients %}
             <li>
                 {{ ingredient.name }} : {{ ingredient.amount }} {{ ingredient.unit }}
             </li>
-        {% endfor %}
-    </ul>
-</div>
+            {% endfor %}
+        </ul>
+    </div>
 
-{# Description #}
-<div class="recipe-view-description">
-    {{ recipe.description }}
-</div>
+    <hr class="hr">
 
-{# Steps #}
-<div class="recipe-view-steps">
-    <h2>Etapes</h2>
-    <ol>
-        {% for step in recipe.recipesteps %}
-        <li>
-            {{ step.text }}
-        </li>
-        {% endfor %}
-    </ol>
-</div>
+    {# Description #}
+    <div class="recipe-view-description">
+        <h2>
+            Description
+        </h2>
+        {{ recipe.description }}
+    </div>
 
+    <hr class="hr">
+
+    {# Steps #}
+    <div class="recipe-view-steps">
+        <h2>Étapes</h2>
+        <ol>
+            {% for step in recipe.recipesteps %}
+            <li>
+                {{ step.text }}
+            </li>
+            {% endfor %}
+        </ol>
+    </div>
+</div>
 
 {% endblock %}
