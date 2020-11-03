@@ -5,21 +5,18 @@ COLORS
 */
 :root {
   --primary-color: #111;
-  --secondary-color: #949494;
+  --secondary-color: #dee8ff;
+  --main-color: #cedbfa;
   --tertiary-color: white;
-  --link-button-color: rgb(145, 142, 142);
-  --link-color: #b3e1ff;
+  --link-button-color:  #ff785b;
+  --header-button-color:  #2e2e2e;
   --progress-color: #74ad06;
 }
 
 html, body {
+  overflow: hidden;
   width: 100%;
   height: 100vh;
-}
-
-body {
-  background: url("../images/redox_01.png");
-  margin: 0 !important;
 }
 
 /*
@@ -90,13 +87,18 @@ FONTS & ICONS
 
 .fa,
 .fas {
-  color: var(--secondary-color);
+  color: var(--link-button-color);
   margin-right: 5px;
 }
 
-.fa:hover,
-.fas:hover {
-  color: var(--primary-color);
+a .fa:hover, a .fas:hover {
+  color: var(--progress-color);
+  -webkit-transition: ease-in-out .2s;
+  transition: ease-in-out .2s;
+}
+
+.nav-top-container i, .footer a i {
+  color: var(--header-button-color);
 }
 
 .fa-check:hover {
@@ -207,6 +209,12 @@ FLASH MESSAGES
 BUTTONS 
 ***********************************
 */
+.button-icon {
+  background: none;
+  outline: none;
+  border: none;
+}
+
 .circle-btn {
   border-radius: 50% !important;
   padding: 10px;
@@ -214,6 +222,15 @@ BUTTONS
 
 .btn-link:focus {
   text-decoration: none !important;
+}
+
+/*
+***********************************
+TABLES
+***********************************
+*/
+table {
+  margin: auto !important;
 }
 
 /*

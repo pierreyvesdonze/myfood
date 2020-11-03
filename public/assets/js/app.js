@@ -137,14 +137,9 @@ var app = {
 	 * RECIPE
 	 */
 	openAddToShoplistModal: function (e) {
-		let modal = $('.add-articles-section');
-		let modalContent = $('.add-articles-section *');
-		setTimeout(function () {
-			modalContent.css("visibility", "visible")
-		}, 80);
-		modal.css("height", "278px");
 
 		let currentId = e.currentTarget.children[0].dataset['value'];
+
 		// Send to appropriate method
 		$('.submit-add-toshoplist').click(function () {
 			app.sendToBackShopListToAdd(currentId)
@@ -161,14 +156,22 @@ var app = {
 	},
 
 	sendToBackShopListToAdd: function (currentId) {
-		let shopListToAddId = $('.add-shop-select').find(':selected').attr("data-value");
+
+		let className = '.add-shop-select' + currentId.toString();
+				
+		console.log(currentId)
+		console.log(className)
+		let shopListToAddId = $(className).find(':selected').attr("data-value");
 
 		const jsonShopList = {
 			'currentId': currentId,
 			'shopListToAddId': shopListToAddId
 		};
 
+		console.log(currentId);
 		console.log(jsonShopList);
+		console.log(shopListToAddId);
+
 		$.ajax(
 			{
 				url: Routing.generate('shopping_list_add', {id: currentId}),
@@ -262,10 +265,8 @@ var app = {
 
 	addArticlesToShopListFront: function (shopId) {
 
-		//Add articles to shoplist in Frontend
+		// Add articles to shoplist in Frontend
 		let currentShoplist = $('.a-content').find("[data-value='" + shopId + "']");
-		console.log(currentShoplist.data("value"));
-		console.log(shopId);
 
 		const article = $('.add-article-input').val(),
 			articleAmount = $('.add-amount-input').val(),
@@ -291,10 +292,10 @@ var app = {
 		$('.remove-article').click(app.removeArticle);
 
 		// Send article to back		
-		$('.submit-add-article').click(function () {
+		// $('.submit-add-article').click(function () {
 
-			let $articlesArray = [];
 			let newArticles = $('.newLi');
+			let articlesArray = [];
 
 			$.each(newArticles, function (index, element) {
 
@@ -302,22 +303,24 @@ var app = {
 				let amount = $(this).text().split(' ')[1];
 				let unit = $(this).text().split(' ')[2];
 
-				$articlesArray[index] = {
+				articlesArray[index] = {
 					"name": name,
 					"amount": amount,
 					"unit": unit,
 					"id": shopId
 				};
-				console.log(element)
 			});
 
+			console.log(articlesArray)
+
 			//Send to Backend
-			app.addArticlesToShopListBack($articlesArray, shopId)
-		});
+			app.addArticlesToShopListBack(articlesArray, shopId)
+		// });
 	},
 
 	addArticlesToShopListBack: function (articlesArray, shopId) {
 		shopId = parseInt(shopId, 10);
+		console.log(articlesArray)
 		$.ajax(
 			{
 				url: Routing.generate('shopping_list_add_articles', {id: shopId}),
@@ -334,6 +337,7 @@ var app = {
 				}, 2000);
 			} else {
 				console.log('Problème');
+				console.log('Fuck : ' + JSON.stringify(response));
 			}
 		}).fail(function (jqXHR, textStatus, error) {
 			console.log(jqXHR);
@@ -521,3 +525,5 @@ var app = {
 
 // App Loading
 document.addEventListener('DOMContentLoaded', app.init);
+
+

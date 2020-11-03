@@ -1,76 +1,119 @@
 <nav class="menu">
-    <button class="openbtn">
-        <i class="fa fa-bars fa-2x"></i>
-    </button>
 
-    <div class="nav-menu-navigation"></div>
+    {#//////////////////////////////////////////////////
 
-    <div class="nav-menu-recipies">
+TOP MENU BUTTONS
+
+//////////////////////////////////////////////////////#}
+    <div class="nav-top-container">
+
+        <!--***************************RECIPIES****************************-->
+        <button class="button-icon" type="button" data-toggle="collapse" data-target="#recipies-nav"
+            aria-expanded="false" aria-controls="recipies-nav">
+            <i class="fas fa-hamburger fa-2x"></i>
+        </button>
+        <!--***************************SHOPLIST****************************-->
+        <button class="button-icon" type="button" data-toggle="collapse" data-target="#shoplist-nav"
+            aria-expanded="false" aria-controls="shoplist-nav">
+            <i class="fas fa-shopping-cart fa-2x"></i>
+        </button>
         <!--***************************FILTERS****************************-->
-        <div {% if app.request.get('_route') matches '/recipe_list/' %} 
-        class="filters-sliders active"
-        {% else %}
-        class="filters-sliders hidden"
-        {% endif %}>
+        {% if app.request.get('_route') matches '/recipe_list/' %}
+        <button class="button-icon" type="button" data-toggle="collapse" data-target="#filters-nav"
+            aria-expanded="false" aria-controls="filters-nav">
             <i class="fa fa-sliders fa-2x"></i>
-        </div>
-
-        <!--***************************CREATE NEW****************************-->
-        <div class="create-recipe">
-            <a href="{{ path('recipe_add') }}">
-                <i class="fa fa-plus-circle fa-2x" aria-hidden="true"></i>
-            </a>
-        </div>
-
-
+        </button>
+        {% endif %}
+        <!--***************************USER****************************-->
+        <button class="button-icon" type="button" data-toggle="collapse" data-target="#user-nav"
+            aria-expanded="false" aria-controls="user-nav">
+            <i class="fas fa-user fa-2x"></i>
+        </button>
         <!--***************************SEARCH****************************-->
         <div class="search">
             {{ render(controller('App\\Controller\\SearchController::searchBarAction')) }}
         </div>
+
     </div>
 
 
-    <!--***************************SIDEPANEL****************************-->
-    <div id="mySidepanel" class="sidepanel">
-        <a href="#" class="closebtn">&times;</a>
-        <div class="homepage-link">
-            <a href="{{ path('homepage') }}">Accueil</a>
+    {#/////////////////////////////////////////////////
+
+COLLAPSE
+
+/////////////////////////////////////////////////////#}
+
+    <!--***************************RECIPIES****************************-->
+    <div class="row">
+        <div class="col">
+            <div class="collapse multi-collapse" id="recipies-nav">
+                <div class="card card-body">
+                    <ul>
+                        <li>
+                            <a href="{{ path('user_recipe_list') }}">Voir mes recettes</a>
+                            <a href="{{ path('recipe_add') }}">Ajouter une recette</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-
-        {% if app.user %}
-        <div class="recipies-link">
-            <a href="{{ path('user_recipe_list') }}">Mes recettes</a>
-        </div>
-
-        <div class="shopping-list-link">
-            <a href="{{ path('shopping_list_list') }}">Listes de courses</a>
-        </div>
-        {% endif %}
-
-        {% if app.user %}
-
-        <div class="meal-plan-link">
-            <a href="{{ path('meal_plan_add') }}">Planning</a>
-        </div>
-
-        <div class="fridge-link">
-            <a href="{{ path('search_list_by_ingredients') }}">Mon frigo</a>
-        </div>
-
-
-        <div class="log-link">
-            <a href="{{ path('logout') }}">Déconnexion</a>
-        </div>
-
-        {% else %}
-        <div class="log-link">
-            <a href="{{ path('login') }}">Se connecter</a>
-        </div>
-
-        <div class="register-link">
-            <a href="{{ path('new') }}">S'inscrire</a>
-        </div>
-        {% endif %}
     </div>
 
+    <!--***************************FILTERS****************************-->
+    {% if app.request.get('_route') matches '/recipe_list/' %}
+    <div class="row">
+        <div class="col">
+            <div class="collapse multi-collapse" id="filters-nav">
+                <div class="card card-body">
+                    {% include "modals/_filters.html.twig" %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+
+    <!--***************************SHOPLIST****************************-->
+    <div class="row">
+        <div class="col">
+            <div class="collapse multi-collapse" id="shoplist-nav">
+                <div class="card card-body">
+                    <ul>
+                        <li>
+                            <a href="{{ path('user_recipe_list') }}">Mes listes de courses</a>
+                            <a href="{{ path('recipe_add') }}">Créer une liste de courses</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--***************************USER****************************-->
+    <div class="col">
+        <div class="collapse multi-collapse" id="user-nav">
+            <div class="card card-body">
+                {% if app.user %}
+                <ul>
+                    <li>
+                        <a href="{{ path('meal_plan_add') }}">Planning</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('search_list_by_ingredients') }}">Mon frigo</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('logout') }}">Déconnexion</a>
+                    </li>
+                    {% else %}
+                    <li>
+                        <a href="{{ path('login') }}">Se connecter</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('new') }}">S'inscrire</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
 </nav>

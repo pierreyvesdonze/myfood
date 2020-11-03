@@ -188,7 +188,6 @@ class RecipeController extends AbstractController
         }
 
         return new JsonResponse($tagArray);
-
     }
 
     /**
@@ -264,9 +263,9 @@ class RecipeController extends AbstractController
 
             $this->addFlash('success', 'La recette a bien été mise à jour !');
 
-            /*     return $this->redirectToRoute('recipe_view', [
-                    'id' => $recipe->getId()
-                ]); */
+            return $this->redirectToRoute('recipe_view', [
+                'id' => $recipe->getId()
+            ]);
         }
 
         return $this->render(
@@ -280,7 +279,6 @@ class RecipeController extends AbstractController
 
     /**
      * @Route("/{id}/delete", name="recipe_delete", methods={"GET","POST"})
-     * @IsGranted("ROLE_USER")
      */
     public function recipeDelete(Recipe $recipe)
     {
@@ -299,7 +297,7 @@ class RecipeController extends AbstractController
 
         $this->addFlash('success', 'La recette a bien été supprimée');
 
-        return $this->redirectToRoute('recipe_list');
+        return $this->redirectToRoute('user_recipe_list');
     }
 
     /**

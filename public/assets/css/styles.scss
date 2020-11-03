@@ -1,0 +1,130 @@
+@import "./settings";
+
+/*
+***********************************
+NAV
+***********************************
+*/
+.menu {
+    background-color: var(--tertiary-color);
+}
+
+.nav-top-container {
+    display: flex;
+    justify-content: space-evenly;
+    height: 20%;
+    padding-top: 1em;
+}
+
+/*
+***********************************
+SEARCH
+***********************************
+*/
+
+.search form {
+    display: flex;
+}
+
+/*
+***********************************
+MAIN
+***********************************
+*/
+
+main {
+    overflow-y: scroll;
+    height: 80%;
+    background-color: var(--tertiary-color);
+}
+
+
+/*RECIPIES*/
+
+.recipies-list-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 2em;
+    flex-wrap: wrap;
+}
+
+.card-recipe-list {
+    width: 350px;
+    margin: 2em 0 !important;
+    border-radius: 20px;
+    border: none;
+    background: rgb(217,228,255);
+    background: linear-gradient(90deg, rgba(217,228,255,1) 0%, rgba(241,245,255,1) 100%);
+    box-shadow: 15px 38px 69px -10px #d6d6d6;
+}
+
+.img-list-container {
+    position: relative;
+    height: 19rem;
+}
+
+.img-recipe-list {
+    width: 16rem;
+    height: 16rem;
+    margin-top: 2em;
+    border-radius: 50%;
+    box-shadow: -9px 9px 9px -9px rgba(0,0,0,0.5), 15px 19px 36px -10px rgba(214,214,214,1);
+}
+
+.recipe-summary table th {
+    padding: 0 20px;
+}
+
+.button-add {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #ff785b;
+    position: absolute;
+    top: -20px;
+    left: -15px;
+    text-align: center;
+    box-shadow: 14px 13px 35px -4px rgba(228,185,192,0.72);
+    transition: all 0.1s ease-in-out;
+    span{
+        position: absolute;
+        color: var(--tertiary-color);
+        font-size: 35px;
+        top: 1px;
+        left: 14px;
+    }
+}
+
+.add-to-shop-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.add-articles-section {
+    margin-top: 1em;
+}
+
+.add-articles-section .right {
+    margin-top: 1em;
+}
+   
+
+/*
+***********************************
+FOOTER
+***********************************
+*/
+
+.footer {
+    display: flex;
+    justify-content: center;
+    height: 20%;
+    background-color: var(--tertiary-color);
+}
+
+/*
+***********************************
+ANIMATION
+***********************************
+*/
+ 
