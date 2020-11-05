@@ -90,6 +90,11 @@ class Recipe
      */
     private $meals;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isFavs;
+
     public function __construct()
     {
         $this->recipeSteps = new ArrayCollection();
@@ -333,6 +338,18 @@ class Recipe
                 $meal->setRecipies(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIsFavs(): ?bool
+    {
+        return $this->isFavs;
+    }
+
+    public function setIsFavs(bool $isFavs): self
+    {
+        $this->isFavs = $isFavs;
 
         return $this;
     }

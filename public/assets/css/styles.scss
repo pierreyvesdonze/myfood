@@ -10,10 +10,34 @@ NAV
 }
 
 .nav-top-container {
+    position: sticky;
     display: flex;
     justify-content: space-evenly;
     height: 20%;
     padding-top: 1em;
+    box-shadow: 0px 9px 9px -9px rgba(0,0,0,0.5), 0px 19px 36px -10px #cecece;
+}
+
+.supercharged-menu {
+    border: none;
+    transition: 0.2s;
+    background: rgba(217,228,255,1);
+    background: linear-gradient(90deg, rgba(217,228,255,1) 0%, rgba(241,245,255,1) 100%);
+    color: var(--tertiary-color);
+    z-index: 4;
+    box-shadow: 0px 9px 6px -8px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0px 5px 11px -5px rgba(0,0,0,0.5), 0px 13px 25px -10px #cbeefc;
+}
+
+.supercharged-menu  ul li {
+    display: flex;
+    flex-direction: column;
+}
+
+.supercharged-menu a {
+    font-weight: bold;
+    text-decoration: none;
 }
 
 /*
@@ -69,6 +93,12 @@ main {
     margin-top: 2em;
     border-radius: 50%;
     box-shadow: -9px 9px 9px -9px rgba(0,0,0,0.5), 15px 19px 36px -10px rgba(214,214,214,1);
+    transform: scale(1);
+    transition: .2s ease-in-out;
+    &:hover {
+        transform: scale(1.1);
+        box-shadow: -7px 12px 19px -8px rgba(0,0,0,0.5), 15px 19px 36px -10px rgba(214,214,214,1);
+    }
 }
 
 .recipe-summary table th {
@@ -76,23 +106,37 @@ main {
 }
 
 .button-add {
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
-    background: #ff785b;
+    background: rgb(209, 209, 209);
     position: absolute;
+    cursor: pointer;
     top: -20px;
     left: -15px;
     text-align: center;
-    box-shadow: 14px 13px 35px -4px rgba(228,185,192,0.72);
-    transition: all 0.1s ease-in-out;
+    box-shadow: 0px 2px 12px -4px #3a1b14da;
+    transform: scale(1);
+    transition: .2s ease-in-out;
     span{
         position: absolute;
         color: var(--tertiary-color);
-        font-size: 35px;
+        font-size: 30px;
         top: 1px;
         left: 14px;
     }
+    &:hover {
+        transform: scale(1.2);
+        box-shadow: 8px 8px 21px -4px var(--orange-icon-color);
+        span {
+            color: rgb(99, 99, 99);
+        }
+    }
+}
+
+.isFav {
+    background: var(--orange-icon-color);
+    box-shadow: 0px 2px 12px -4px #333333da;
 }
 
 .add-to-shop-container {

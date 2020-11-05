@@ -15,7 +15,6 @@ use App\Repository\RecipeRepository;
 use App\Repository\ShoppingListRepository;
 use App\Repository\TagRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -313,5 +312,39 @@ class RecipeController extends AbstractController
                 'categories' => $categories,
             ]
         );
+    }
+
+
+    /**
+     * @Route("/add/favs/{id}", name="add_to_favs", methods={"GET", "POST"}, options={"expose"=true})
+     */
+    public function setFavsAjax(
+        Request $request,
+        RecipeRepository $recipeRepository
+    ) {
+        if ($request->isMethod('POST')) {
+            $recipeId = $request->getContent();
+            $em = $this->getDoctrine()->getManager();
+            $recipe = $recipeRepository->findOneBy([
+                'id' => $recipeId
+            ]);
+
+            if (null !== $recipe) {
+                $isFav = 0;
+
+                if (false == $recipe->getIsFavs()) {
+                    $recipe->setIsFavs(true);
+                    $isFav = 1;
+                } else {
+                    $recipe->setIsFavs(false);
+                    $isFav = 0;
+                };
+                $em->persist($recipe);
+                $em->flush();
+            }
+        }
+        return $this->json([
+            $isFav
+        ]);
     }
 }

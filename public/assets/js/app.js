@@ -9,14 +9,10 @@ var app = {
 		 * L I S T E N E R S
 		 * *****************************
 		 */
-		//NAVBAR
-		$('.openbtn').click(app.openNav);
-		$('.closebtn').click(app.closeNav);
 
-		//SEARCHBAR
-		//$('.search').submit(app.search);
-		$('.search-input').focus(app.removeSearchIcon);
-		$(document).click(app.activeSearchIcon);
+		//COLLAPSE
+		$('.button-icon').on('click', app.closeCollapse);
+		$('.button-icon').on('click', app.activeButton);
 
 		//CREATE LIST INGREDIENTS
 		$('.search-recipe-form').on('keypress', app.searchByIngredients);
@@ -24,10 +20,9 @@ var app = {
 		//RECIPIES
 		$('.add-to-shoplist').click(app.openAddToShoplistModal);
 		$('.close-addshop-modal').click(app.closeAddToShoplistModal);
+		$('.button-add').click(app.addRecipeToFavs);
 
 		//FILTERS MODAL
-		$('.filters-sliders').click(app.openFiltersModal);
-		$('.close-modal-btn').click(app.closeFiltersModal);
 		$('#submit-form-filters').click(app.closeFiltersModal);
 		$('.filters :checkbox').on('change', app.filtersRecipies);
 		$('.select-all').click(app.uncheckAll);
@@ -58,36 +53,22 @@ var app = {
 	 * *****************************
 	 */
 
-	/**
-	 * NAVBAR
-	 */
-	openNav: function () {
-		let mySidepanel = document.getElementById("mySidepanel")
-		mySidepanel.style.width = "100%";
-		app.closeArticlesModal();
+	closeCollapse: function (e) {
 
-		// Hide filters buttons
-		$('.filters-sliders').fadeOut('fast');
-		$('.create-recipe').fadeOut('fast');
-		
-		//Hide recipe creator
-		// $('.main-add-recipe-container').css('position', 'inherit');
-		// $('.main-add-recipe-container').css('visibility', 'hidden');
-	
-		// Close another modals if open
-		app.closeFiltersModal();
+		e.preventDefault();
+		$('.collapse').removeClass('show');
 	},
 
-	closeNav: function () {
-		let mySidepanel = document.getElementById("mySidepanel")
-		mySidepanel.style.width = "0";
-		$('.filters-sliders').fadeIn('fast');
-		$('.create-recipe').fadeIn('fast');
+	activeButton: function (e) {
+		let activeButton = e.currentTarget.dataset.target;
+		e.preventDefault()
+		setTimeout(function () {
+			if (!$(activeButton).hasClass('show')) {
+				$('.button-icon').blur();
+			}
 
-		// Recover recipe creator
-		// $('.main-add-recipe-container').css('position', 'relative');
-		// $('.main-add-recipe-container').css('visibility', 'visible');
-	 },
+		}, 400);
+	},
 
 	closeAlertModal: function () {
 		app.modal.remove();
@@ -98,16 +79,6 @@ var app = {
 	/**
 	 * FILTERS
 	 */
-	openFiltersModal: function () {
-		let modal = $('.filters-container');
-		modal.css("height", "100%")
-	},
-
-	closeFiltersModal: function () {
-		let closeModal = $('.filters-container');
-		closeModal.css("height", "0%")
-	},
-
 	filtersRecipies: function (e) {
 		e.preventDefault();
 
@@ -158,7 +129,7 @@ var app = {
 	sendToBackShopListToAdd: function (currentId) {
 
 		let className = '.add-shop-select' + currentId.toString();
-				
+
 		console.log(currentId)
 		console.log(className)
 		let shopListToAddId = $(className).find(':selected').attr("data-value");
@@ -174,26 +145,47 @@ var app = {
 
 		$.ajax(
 			{
-				url: Routing.generate('shopping_list_add', {id: currentId}),
+				url: Routing.generate('shopping_list_add', { id: currentId }),
 				method: "POST",
 				dataType: "json",
 				data: jsonShopList
 			}).done(function (response) {
-			if (null !== response) {
-				console.log('ok : ' + JSON.stringify(response));
-				document.querySelector(
-					"#loader").style.visibility = "visible";
-				setTimeout(function () {
-					location.reload();
-				}, 2000);
-			} else {
-				console.log('Problème');
-			}
-		}).fail(function (jqXHR, textStatus, error) {
-			console.log(jqXHR);
-			console.log(textStatus);
-			console.log(error);
-		});
+				if (null !== response) {
+					console.log('ok : ' + JSON.stringify(response));
+					document.querySelector(
+						"#loader").style.visibility = "visible";
+					setTimeout(function () {
+						location.reload();
+					}, 2000);
+				} else {
+					console.log('Problème');
+				}
+			}).fail(function (jqXHR, textStatus, error) {
+				console.log(jqXHR);
+				console.log(textStatus);
+				console.log(error);
+			});
+	},
+
+	addRecipeToFavs: function (e) {
+		let recipeId = e.currentTarget.dataset.id;
+		e.preventDefault();
+		let isFav = $(e.currentTarget);
+		isFav.hasClass('isFav') ? isFav.removeClass('isFav') : isFav.addClass('isFav');
+
+		$.ajax(
+			{
+				url: Routing.generate('add_to_favs', { id: recipeId }),
+				method: "POST",
+				dataType: "json",
+				data: recipeId
+			}).done(function (response) {
+				console.log('ok');
+			}).fail(function (jqXHR, textStatus, error) {
+				console.log(jqXHR);
+				console.log(textStatus);
+				console.log(error);
+			});
 
 	},
 
@@ -204,26 +196,26 @@ var app = {
 		let recipeId = this.children[0].dataset['value'];
 		$.ajax(
 			{
-				url: Routing.generate('shopping_list_create', {id: recipeId}),
+				url: Routing.generate('shopping_list_create', { id: recipeId }),
 				method: "POST",
 				dataType: "json",
 
 			}).done(function (response) {
-			if (null !== response) {
-				console.log('ok : ' + JSON.stringify(response));
-				document.querySelector(
-					"#loader").style.visibility = "visible";
-				setTimeout(function () {
-					location.reload();
-				}, 2000);
-			} else {
-				console.log('Problème');
-			}
-		}).fail(function (jqXHR, textStatus, error) {
-			console.log(jqXHR);
-			console.log(textStatus);
-			console.log(error);
-		});
+				if (null !== response) {
+					console.log('ok : ' + JSON.stringify(response));
+					document.querySelector(
+						"#loader").style.visibility = "visible";
+					setTimeout(function () {
+						location.reload();
+					}, 2000);
+				} else {
+					console.log('Problème');
+				}
+			}).fail(function (jqXHR, textStatus, error) {
+				console.log(jqXHR);
+				console.log(textStatus);
+				console.log(error);
+			});
 	},
 
 	openArticlesModal: function (e) {
@@ -294,27 +286,27 @@ var app = {
 		// Send article to back		
 		// $('.submit-add-article').click(function () {
 
-			let newArticles = $('.newLi');
-			let articlesArray = [];
+		let newArticles = $('.newLi');
+		let articlesArray = [];
 
-			$.each(newArticles, function (index, element) {
+		$.each(newArticles, function (index, element) {
 
-				let name = $(this).text().split(':')[0];
-				let amount = $(this).text().split(' ')[1];
-				let unit = $(this).text().split(' ')[2];
+			let name = $(this).text().split(':')[0];
+			let amount = $(this).text().split(' ')[1];
+			let unit = $(this).text().split(' ')[2];
 
-				articlesArray[index] = {
-					"name": name,
-					"amount": amount,
-					"unit": unit,
-					"id": shopId
-				};
-			});
+			articlesArray[index] = {
+				"name": name,
+				"amount": amount,
+				"unit": unit,
+				"id": shopId
+			};
+		});
 
-			console.log(articlesArray)
+		console.log(articlesArray)
 
-			//Send to Backend
-			app.addArticlesToShopListBack(articlesArray, shopId)
+		//Send to Backend
+		app.addArticlesToShopListBack(articlesArray, shopId)
 		// });
 	},
 
@@ -323,27 +315,27 @@ var app = {
 		console.log(articlesArray)
 		$.ajax(
 			{
-				url: Routing.generate('shopping_list_add_articles', {id: shopId}),
+				url: Routing.generate('shopping_list_add_articles', { id: shopId }),
 				method: "POST",
 				dataType: "json",
 				data: JSON.stringify(articlesArray),
 			}).done(function (response) {
-			if (null !== response) {
-				console.log('ok : ' + JSON.stringify(response));
-				document.querySelector(
-					"#loader").style.visibility = "visible";
-				setTimeout(function () {
-					location.reload();
-				}, 2000);
-			} else {
-				console.log('Problème');
-				console.log('Fuck : ' + JSON.stringify(response));
-			}
-		}).fail(function (jqXHR, textStatus, error) {
-			console.log(jqXHR);
-			console.log(textStatus);
-			console.log(error);
-		});
+				if (null !== response) {
+					console.log('ok : ' + JSON.stringify(response));
+					document.querySelector(
+						"#loader").style.visibility = "visible";
+					setTimeout(function () {
+						location.reload();
+					}, 2000);
+				} else {
+					console.log('Problème');
+					console.log('Fuck : ' + JSON.stringify(response));
+				}
+			}).fail(function (jqXHR, textStatus, error) {
+				console.log(jqXHR);
+				console.log(textStatus);
+				console.log(error);
+			});
 	},
 
 	increaseAmount: function (e) {
@@ -366,21 +358,21 @@ var app = {
 		};
 		$.ajax(
 			{
-				url: Routing.generate('article_increase_amount', {id: currentId}),
+				url: Routing.generate('article_increase_amount', { id: currentId }),
 				method: "POST",
 				dataType: "json",
 				data: data,
 			}).done(function (response) {
-			if (null !== response) {
-				console.log('ok : ' + JSON.stringify(response));
-			} else {
-				console.log('Problème');
-			}
-		}).fail(function (jqXHR, textStatus, error) {
-			console.log(jqXHR);
-			console.log(textStatus);
-			console.log(error);
-		});
+				if (null !== response) {
+					console.log('ok : ' + JSON.stringify(response));
+				} else {
+					console.log('Problème');
+				}
+			}).fail(function (jqXHR, textStatus, error) {
+				console.log(jqXHR);
+				console.log(textStatus);
+				console.log(error);
+			});
 	},
 
 	decreaseAmount: function (e) {
@@ -414,21 +406,21 @@ var app = {
 
 		$.ajax(
 			{
-				url: Routing.generate('article_delete', {id: id}),
+				url: Routing.generate('article_delete', { id: id }),
 				method: "POST",
 				dataType: "json",
 				data: jsonId,
 			}).done(function (response) {
-			if (null !== response) {
-				console.log('ok : ' + JSON.stringify(response));
-			} else {
-				console.log('Problème');
-			}
-		}).fail(function (jqXHR, textStatus, error) {
-			console.log(jqXHR);
-			console.log(textStatus);
-			console.log(error);
-		});
+				if (null !== response) {
+					console.log('ok : ' + JSON.stringify(response));
+				} else {
+					console.log('Problème');
+				}
+			}).fail(function (jqXHR, textStatus, error) {
+				console.log(jqXHR);
+				console.log(textStatus);
+				console.log(error);
+			});
 	},
 
 	openShopList: function () {
@@ -444,7 +436,7 @@ var app = {
 		$(this).hasClass('fa-eye-slash') ? shop.css({
 			'overflow-y': 'hidden',
 			'height': 'auto'
-		}) : shop.css({'overflow-y': 'scroll', 'height': '574px'});
+		}) : shop.css({ 'overflow-y': 'scroll', 'height': '574px' });
 
 		/* 		$('.a-container').not('.a-container-visible').toggleClass('hidden'); */
 	},
@@ -463,33 +455,21 @@ var app = {
 				dataType: "json",
 				data: JSON.stringify(userInput),
 			}).done(function (response) {
-			if (null !== response) {
-				console.log('ok : ' + JSON.stringify(response));
-				/* 	let redirectUrl = Routing.generate('recipe_list_api', response, true);
-
-					response = JSON.stringify(response);
-					window.location.replace(redirectUrl + response); */
-			} else {
-				console.log('Problème');
-			}
-		}).fail(function (jqXHR, textStatus, error) {
-			console.log(jqXHR);
-			console.log(textStatus);
-			console.log(error);
-		});
+				if (null !== response) {
+					console.log('ok : ' + JSON.stringify(response));
+					/* 	let redirectUrl = Routing.generate('recipe_list_api', response, true);
+	
+						response = JSON.stringify(response);
+						window.location.replace(redirectUrl + response); */
+				} else {
+					console.log('Problème');
+				}
+			}).fail(function (jqXHR, textStatus, error) {
+				console.log(jqXHR);
+				console.log(textStatus);
+				console.log(error);
+			});
 	},
-
-	// removeSearchIcon: function () {
-	// 	$('.search i').addClass('hide');
-	// 	$('.search i').removeClass('active');
-	// },
-
-	// activeSearchIcon: function (e) {
-	// 	if (e.target.className !== 'search-input') {
-	// 		$('.search i').removeClass('hide');
-	// 		$('.search i').addClass('active');
-	// 	}
-	// },
 
 	/**
 	 *SEARCH BY INGREDIENTS
@@ -521,9 +501,15 @@ var app = {
 			return false;
 		}
 	}
+
+
 };
 
 // App Loading
 document.addEventListener('DOMContentLoaded', app.init);
 
-
+$(document).click(function (e) {
+	if (!$(e.target).hasClass('sdf')) {
+		$('.collapse').removeClass('show')
+	}
+})

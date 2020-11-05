@@ -18,25 +18,27 @@
         {# <div class="recipe box" data-menu="{{ recipe.recipeMenu }}" data-category="{{ recipe.recipeCategory }}"> #}
 
         <div class="card text-center card-recipe-list">
-            <div class="button-add"><span>
+            <div class="button-add {% if true == recipe.isFavs %}isFav{% endif %}" data-id="{{recipe.id}}" data-isfav="{{recipe.isFavs}}"><span>
                     &hearts;
                 </span></div>
             <!--***************************PHOTO****************************-->
             <div class="img-list-container">
-                {% if recipe.recipePhoto %}
-                <img src="{{ asset('uploads/' ~ recipe.recipePhoto) }}" alt="recipe-img"
-                    class="card-img-top img-recipe-list">
-                {% else %}
-                <img src="{{ asset('assets/images/embossed-diamond.png') }}" alt="recipe-img"
-                    class="card-img-top img-recipe-list">
-                {% endif %}
+                <a href="{{ path('recipe_view', {'id': recipe.id}) }}">
+                    {% if recipe.recipePhoto %}
+                    <img src="{{ asset('uploads/' ~ recipe.recipePhoto) }}" alt="recipe-img"
+                        class="card-img-top img-recipe-list">
+                    {% else %}
+                    <img src="{{ asset('assets/images/embossed-diamond.png') }}" alt="recipe-img"
+                        class="card-img-top img-recipe-list">
+                    {% endif %}
+                </a>
             </div>
 
             <!--***************************BODY****************************-->
             <div class="card-body">
-                <h5 class="card-title"> <a href="{{ path('recipe_view', {'id': recipe.id}) }}">
+                <h4 class="card-title"> <a href="{{ path('recipe_view', {'id': recipe.id}) }}">
                         {{ recipe.name }}
-                    </a></h5>
+                    </a></h4>
                 <div class="card-text">
 
                     {# Summary #}
@@ -44,9 +46,9 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th><i class="fas fa-utensils"></i></th>
-                                    <th><i class="fas fa-clock"></i></th>
-                                    <th><i class="fas fa-temperature-high"></i></th>
+                                    <th><i class="fas fa-utensils orange-icon"></i></th>
+                                    <th><i class="fas fa-clock orange-icon"></i></th>
+                                    <th><i class="fas fa-temperature-high orange-icon"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -74,7 +76,7 @@
 
                 <!--***************************INFOS****************************-->
                 <div class="tab-content">
-                  
+
                     <div class="tab-pane" id="time-tab" role="tabpanel" aria-labelledby="time-tab">
                         <i class="fa fa-user"></i>
                         {{ recipe.person }}
@@ -103,9 +105,9 @@
 
                 <div class="tags">
                     {% if recipe.tags is not null %}
-                        {% for tag in recipe.tags %}
-                            #{{tag}} 
-                        {% endfor %}
+                    {% for tag in recipe.tags %}
+                    #{{tag}}
+                    {% endfor %}
                     {% endif %}
                 </div>
 
@@ -116,8 +118,8 @@
 
                 <div class="add-to-shop-container">
 
-                    <a class="button add-to-shoplist" data-toggle="collapse" href="#modal-add-to-shop{{i}}" role="button"
-                        aria-expanded="false" aria-controls="modal-add-to-shop">
+                    <a class="button add-to-shoplist" data-toggle="collapse" href="#modal-add-to-shop{{i}}"
+                        role="button" aria-expanded="false" aria-controls="modal-add-to-shop">
                         <input type="hidden" data-value="{{ recipe.id }}">
                         <i class="fa fa-cart-arrow-down fa-2x"></i>
                     </a>

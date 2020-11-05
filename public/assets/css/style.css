@@ -7,8 +7,10 @@ COLORS
   --primary-color: #111;
   --secondary-color: #dee8ff;
   --main-color: #cedbfa;
+  --contrast-main-color: #feddea;
   --tertiary-color: white;
-  --link-button-color:  #ff785b;
+  --orange-icon-color:  #ff785b;
+  --link-button-color:  #111;
   --header-button-color:  #2e2e2e;
   --progress-color: #74ad06;
 }
@@ -58,6 +60,10 @@ a {
   text-decoration: none;
 }
 
+a:hover {
+  color: var(--orange-icon-color);
+}
+
 .hr {
   height: 1px;
   border: 0;
@@ -91,10 +97,13 @@ FONTS & ICONS
   margin-right: 5px;
 }
 
-a .fa:hover, a .fas:hover {
-  color: var(--progress-color);
-  -webkit-transition: ease-in-out .2s;
-  transition: ease-in-out .2s;
+.fa:hover,
+.fas:hover {
+  color: var(--orange-icon-color);
+}
+
+.orange-icon {
+  color: var(--orange-icon-color);
 }
 
 .nav-top-container i, .footer a i {
@@ -213,6 +222,10 @@ BUTTONS
   background: none;
   outline: none;
   border: none;
+}
+
+.button-icon:focus {
+  background-color: var(--main-color) !important;
 }
 
 .circle-btn {
