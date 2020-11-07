@@ -56,7 +56,8 @@ var app = {
 	closeCollapse: function (e) {
 
 		e.preventDefault();
-		$('.collapse').removeClass('show');
+		//$('.collapse').removeClass('show');
+	
 	},
 
 	activeButton: function (e) {
@@ -171,17 +172,19 @@ var app = {
 		let recipeId = e.currentTarget.dataset.id;
 		e.preventDefault();
 		let isFav = $(e.currentTarget);
+		console.log(recipeId);
 		isFav.hasClass('isFav') ? isFav.removeClass('isFav') : isFav.addClass('isFav');
 
 		$.ajax(
 			{
-				url: Routing.generate('add_to_favs', { id: recipeId }),
+				url: Routing.generate('set_to_favs', { id: recipeId }),
 				method: "POST",
-				dataType: "json",
+				dataType: "text",
 				data: recipeId
 			}).done(function (response) {
-				console.log('ok');
-			}).fail(function (jqXHR, textStatus, error) {
+				console.log('ok' + response);
+			}).fail(function (response, jqXHR, textStatus, error) {
+				console.log(response);
 				console.log(jqXHR);
 				console.log(textStatus);
 				console.log(error);
@@ -508,6 +511,7 @@ var app = {
 // App Loading
 document.addEventListener('DOMContentLoaded', app.init);
 
+// Close opened collapsed nav
 $(document).click(function (e) {
 	if (!$(e.target).hasClass('sdf')) {
 		$('.collapse').removeClass('show')

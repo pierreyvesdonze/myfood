@@ -3,10 +3,7 @@
 {% block body %}
 
 <main>
-
     <section class='recipies-list-container'>
-
-
 
         {% if recipies is empty %}
         <h2>Vous n'avez aucune recette enregistrée</h2>
@@ -15,12 +12,13 @@
 
         {% for i, recipe in recipies %}
 
-        {# <div class="recipe box" data-menu="{{ recipe.recipeMenu }}" data-category="{{ recipe.recipeCategory }}"> #}
 
         <div class="card text-center card-recipe-list">
-            <div class="button-add {% if true == recipe.isFavs %}isFav{% endif %}" data-id="{{recipe.id}}" data-isfav="{{recipe.isFavs}}"><span>
+            <div class="button-add {% for fav in favs %}{% if fav is not empty  and fav.recipeId == recipe.id %} isFav {% endif %}{% endfor %}"
+                data-id="{{recipe.id}}"><span>
                     &hearts;
-                </span></div>
+                </span>
+            </div>
             <!--***************************PHOTO****************************-->
             <div class="img-list-container">
                 <a href="{{ path('recipe_view', {'id': recipe.id}) }}">

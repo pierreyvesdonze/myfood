@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -89,11 +90,6 @@ class Recipe
      * @ORM\OneToMany(targetEntity=Meal::class, mappedBy="recipies")
      */
     private $meals;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isFavs;
 
     public function __construct()
     {
@@ -338,18 +334,6 @@ class Recipe
                 $meal->setRecipies(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getIsFavs(): ?bool
-    {
-        return $this->isFavs;
-    }
-
-    public function setIsFavs(bool $isFavs): self
-    {
-        $this->isFavs = $isFavs;
 
         return $this;
     }

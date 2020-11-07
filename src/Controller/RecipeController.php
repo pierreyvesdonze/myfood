@@ -7,6 +7,7 @@ use App\Entity\Recipe;
 use App\Entity\RecipeIngredient;
 use App\Entity\RecipeStep;
 use App\Entity\Tag;
+use App\Entity\UserFavRecipe;
 use App\Form\Type\RecipeType;
 use App\Repository\IngredientRepository;
 use App\Repository\RecipeCategoryRepository;
@@ -14,7 +15,9 @@ use App\Repository\RecipeMenuRepository;
 use App\Repository\RecipeRepository;
 use App\Repository\ShoppingListRepository;
 use App\Repository\TagRepository;
+use App\Repository\UserFavRecipeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -28,6 +31,14 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class RecipeController extends AbstractController
 {
+
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
     public function index()
     {
         return $this->render('recipe/index.html.twig', [
@@ -42,7 +53,8 @@ class RecipeController extends AbstractController
         RecipeCategoryRepository $categoriesRepo,
         RecipeMenuRepository $menusRepo,
         TagRepository $tagRepository,
-        ShoppingListRepository $shopRepo
+        ShoppingListRepository $shopRepo,
+        UserFavRecipeRepository $userFavRepo
     ) {
         $user = $this->getUser();
 
@@ -51,14 +63,26 @@ class RecipeController extends AbstractController
         $menus      = $menusRepo->findAll();
         $tags       = $tagRepository->findAll();
         $shopLists  = $shopRepo->findAll();
+        $favs       = $userFavRepo->findExistingFavByUser($user->getId());
 
         return $this->render('recipe/list.html.twig', [
-            'recipies'   => $recipies,
-            'categories' => $categories,
-            'menus'      => $menus,
-            'tags'       => $tags,
-            'shopLists'  => $shopLists
+            'recipies'      => $recipies,
+            'favs'          => $favs,
+            'categories'    => $categories,
+            'menus'         => $menus,
+            'tags'          => $tags,
+            'shopLists'     => $shopLists
         ]);
+    }
+
+    /**
+     * @Route("/favs/list", name="user_favs_recipe_list")
+     */
+    public function userFavsRecipeList()
+    {
+        if (!null == $this->getUser()) {
+            $user = $this->getUser();
+        }
     }
 
     /**
@@ -103,7 +127,6 @@ class RecipeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
             $dataFormIngredients = $form->get('recipeIngredients')->getData();
 
             // If Ingredient no existing in db we create new
@@ -115,7 +138,7 @@ class RecipeController extends AbstractController
                 if (!$isIngredientExist) {
                     $createNewIngredient = new Ingredient();
                     $createNewIngredient->setName($newIngredient->getName());
-                    $entityManager->persist($createNewIngredient);
+                    $this->em->persist($createNewIngredient);
                 }
             }
 
@@ -144,11 +167,10 @@ class RecipeController extends AbstractController
                 $recipe->setRecipePhoto($newFilename);
             }
 
-            $entityManager->persist($recipe);
-            $entityManager->persist($newStep);
-            $entityManager->persist($recipeIngredients);
-
-            $entityManager->flush();
+            $this->em->persist($newStep);
+            $this->em->persist($recipeIngredients);
+            $this->em->persist($recipe);
+            $this->em->flush();
 
             $this->addFlash('success', 'La nouvelle recette ' . $recipe->getName() . 'a bien été ajoutée !');
 
@@ -196,8 +218,6 @@ class RecipeController extends AbstractController
     {
         //$this->denyAccessUnlessGranted('edit', $recipe);
 
-        $manager = $this->getDoctrine()->getManager();
-
         if (null === $recipe) {
             throw $this->createNotFoundException('Recette non existente... ' . $recipe->getId);
         }
@@ -227,14 +247,14 @@ class RecipeController extends AbstractController
             foreach ($originalSteps as $step) {
                 if (false === $recipe->getRecipeSteps()->contains($step)) {
                     $step->setRecipe(null);
-                    $manager->persist($step);
+                    $this->em->persist($step);
                 }
             }
 
             foreach ($originalIngredients as $ingredient) {
                 if (false === $recipe->getRecipeIngredients()->contains($ingredient)) {
                     $ingredient->setRecipe(null);
-                    $manager->persist($ingredient);
+                    $this->em->persist($ingredient);
                 }
             }
 
@@ -257,8 +277,8 @@ class RecipeController extends AbstractController
                 $recipe->setRecipePhoto($newFilename);
             }
 
-            $manager->persist($step);
-            $manager->flush();
+            $this->em->persist($step);
+            $this->em->flush();
 
             $this->addFlash('success', 'La recette a bien été mise à jour !');
 
@@ -283,16 +303,14 @@ class RecipeController extends AbstractController
     {
         $this->denyAccessUnlessGranted('edit', $recipe);
 
-        $manager = $this->getDoctrine()->getManager();
-
         if (!null == $recipe->getRecipePhoto()) {
             $fileSystem = new Filesystem();
             $dir = $this->getParameter('images_directory');
             $photoName = $recipe->getRecipePhoto();
             $fileSystem->remove($dir . '/' . $photoName);
         }
-        $manager->remove($recipe);
-        $manager->flush();
+        $this->em->remove($recipe);
+        $this->em->flush();
 
         $this->addFlash('success', 'La recette a bien été supprimée');
 
@@ -316,35 +334,43 @@ class RecipeController extends AbstractController
 
 
     /**
-     * @Route("/add/favs/{id}", name="add_to_favs", methods={"GET", "POST"}, options={"expose"=true})
+     * @Route("/set/favs/{id}", name="set_to_favs", methods={"GET", "POST"}, options={"expose"=true})
      */
     public function setFavsAjax(
         Request $request,
-        RecipeRepository $recipeRepository
+        RecipeRepository $recipeRepository,
+        UserFavRecipeRepository $userFavRepo
     ) {
+        if (null !== $this->getUser()) {
+            $user = $this->getUser();
+        }
+
         if ($request->isMethod('POST')) {
             $recipeId = $request->getContent();
-            $em = $this->getDoctrine()->getManager();
             $recipe = $recipeRepository->findOneBy([
                 'id' => $recipeId
             ]);
-
-            if (null !== $recipe) {
-                $isFav = 0;
-
-                if (false == $recipe->getIsFavs()) {
-                    $recipe->setIsFavs(true);
-                    $isFav = 1;
-                } else {
-                    $recipe->setIsFavs(false);
-                    $isFav = 0;
-                };
-                $em->persist($recipe);
-                $em->flush();
-            }
         }
+
+        if (null !== $recipe) {
+
+            $isFavExist = $userFavRepo->findOneBy([
+                'recipeId' => $recipeId
+            ]);
+
+            if ($isFavExist) {
+                $this->em->remove($isFavExist);
+            } else {
+                $newFav = new UserFavRecipe;
+                $newFav->setRecipeId($recipeId);
+                $newFav->setUserId($user->getId());
+                $this->em->persist($newFav);
+            }
+            $this->em->flush();
+        }
+        
         return $this->json([
-            $isFav
+            'ok'
         ]);
     }
 }

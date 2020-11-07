@@ -38,11 +38,6 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $username;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\ShoppingList", mappedBy="user")
      */
     private $shoppingLists;
