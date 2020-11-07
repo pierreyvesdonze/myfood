@@ -56,7 +56,9 @@ class RecipeController extends AbstractController
         ShoppingListRepository $shopRepo,
         UserFavRecipeRepository $userFavRepo
     ) {
-        $user = $this->getUser();
+        if (!null == $this->getUser()) {
+            $user = $this->getUser();
+        }
 
         $recipies   = $user->getRecipies();
         $categories = $categoriesRepo->findAll();
@@ -78,31 +80,60 @@ class RecipeController extends AbstractController
     /**
      * @Route("/favs/list", name="user_favs_recipe_list")
      */
-    public function userFavsRecipeList()
-    {
+    public function userFavsRecipeList(
+        RecipeRepository $recipeRepository,
+        RecipeCategoryRepository $categoriesRepo,
+        RecipeMenuRepository $menusRepo,
+        TagRepository $tagRepository,
+        ShoppingListRepository $shopRepo,
+        UserFavRecipeRepository $userFavRepo
+    ) {
         if (!null == $this->getUser()) {
             $user = $this->getUser();
         }
+
+        $favs       = $userFavRepo->findExistingFavByUser($user->getId());
+        $categories = $categoriesRepo->findAll();
+        $menus      = $menusRepo->findAll();
+        $tags       = $tagRepository->findAll();
+        $shopLists  = $shopRepo->findAll();
+
+        foreach ($favs as $i => $fav) {
+            $recipies[$i] = $recipeRepository->findBy([
+                'id' => $fav->getRecipeId()
+            ]);
+        }
+
+        return $this->render('recipe/favs.html.twig', [
+            'recipies'      => $recipies,
+            'categories'    => $categories,
+            'menus'         => $menus,
+            'tags'          => $tags,
+            'shopLists'     => $shopLists
+        ]);
     }
 
     /**
      * @Route("/view/{id}", name="recipe_view", methods={"GET"})
      */
-    public function recipeView(Recipe $recipe): Response
+    public function recipeView(Recipe $recipe, ShoppingListRepository $shopRepo): Response
     {
-        $timePrepa = $recipe->getTimePrepa();
-        $hoursPrepa = $timePrepa->format('H');
+        $timePrepa    = $recipe->getTimePrepa();
+        $hoursPrepa   = $timePrepa->format('H');
         $minutesPrepa = $timePrepa->format('i');
-        $timeCook = $recipe->getTimeCook();
-        $hoursCook = $timeCook->format('H');
-        $minutesCook = $timeCook->format('i');
+        $timeCook     = $recipe->getTimeCook();
+        $hoursCook    = $timeCook->format('H');
+        $minutesCook  = $timeCook->format('i');
+        $shopLists    = $shopRepo->findAll();
+        
 
         return $this->render('recipe/view.html.twig', [
-            'recipe' => $recipe,
-            'hoursPrepa' => $hoursPrepa,
-            'minutesPrepa' => $minutesPrepa,
-            'hoursCook' => $hoursCook,
-            'minutesCook' => $minutesCook,
+            'recipe'        => $recipe,
+            'hoursPrepa'    => $hoursPrepa,
+            'minutesPrepa'  => $minutesPrepa,
+            'hoursCook'     => $hoursCook,
+            'minutesCook'   => $minutesCook,
+            'shopLists'     => $shopLists
         ]);
     }
 
@@ -354,12 +385,10 @@ class RecipeController extends AbstractController
 
         if (null !== $recipe) {
 
-            $isFavExist = $userFavRepo->findOneBy([
-                'recipeId' => $recipeId
-            ]);
+            $isFavExist = $userFavRepo->findFavByUserAndRecipe($recipe->getId(), $user->getId());
 
             if ($isFavExist) {
-                $this->em->remove($isFavExist);
+                $this->em->remove($isFavExist[0]);
             } else {
                 $newFav = new UserFavRecipe;
                 $newFav->setRecipeId($recipeId);
@@ -368,7 +397,40 @@ class RecipeController extends AbstractController
             }
             $this->em->flush();
         }
-        
+
+        return $this->json([
+            'ok'
+        ]);
+    }
+
+    /**
+     * @Route("/remove/favs/{id}", name="remove_favs", methods={"GET", "POST"}, options={"expose"=true})
+     */
+    public function removeFav(
+        Request $request,
+        RecipeRepository $recipeRepository,
+        UserFavRecipeRepository $userFavRepo
+    ) {
+        if (null !== $this->getUser()) {
+            $user = $this->getUser();
+        }
+
+        if ($request->isMethod('POST')) {
+            $recipeId = $request->getContent();
+            $recipe = $recipeRepository->findOneBy([
+                'id' => $recipeId
+            ]);
+        }
+
+        if (null !== $recipe) {
+            $isFavExist = $userFavRepo->findExistingFavByUser($recipeId, $user->getId());
+
+            if ($isFavExist) {
+                $this->em->remove($isFavExist[0]);
+                $this->em->flush();
+            } 
+        }
+
         return $this->json([
             'ok'
         ]);

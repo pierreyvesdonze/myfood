@@ -25,8 +25,8 @@ TOP MENU BUTTONS
         </button>
         {% endif %}
         <!--***************************USER****************************-->
-        <button class="button-icon" type="button" data-toggle="collapse" data-target="#user-nav"
-            aria-expanded="false" aria-controls="user-nav">
+        <button class="button-icon" type="button" data-toggle="collapse" data-target="#user-nav" aria-expanded="false"
+            aria-controls="user-nav">
             <i class="fas fa-user fa-2x"></i>
         </button>
         <!--***************************SEARCH****************************-->
@@ -44,13 +44,14 @@ COLLAPSE
 /////////////////////////////////////////////////////#}
 
     <!--***************************RECIPIES****************************-->
-    <div class="row">
+    <div class="row sub-nav">
         <div class="col">
             <div class="collapse" id="recipies-nav">
                 <div class="card card-body supercharged-menu">
                     <ul>
                         <li>
                             <a href="{{ path('user_recipe_list') }}">Voir mes recettes</a>
+                            <a href="{{ path('user_favs_recipe_list') }}">Voir mes favoris</a>
                             <a href="{{ path('recipe_add') }}">Ajouter une recette</a>
                         </li>
                     </ul>
@@ -61,7 +62,7 @@ COLLAPSE
 
     <!--***************************FILTERS****************************-->
     {% if app.request.get('_route') matches '/recipe_list/' %}
-    <div class="row">
+    <div class="row sub-nav">
         <div class="col">
             <div class="collapse" id="filters-nav">
                 <div class="card card-body supercharged-menu">
@@ -74,7 +75,7 @@ COLLAPSE
 
 
     <!--***************************SHOPLIST****************************-->
-    <div class="row">
+    <div class="row sub-nav">
         <div class="col">
             <div class="collapse" id="shoplist-nav">
                 <div class="card card-body supercharged-menu">
@@ -90,29 +91,31 @@ COLLAPSE
     </div>
 
     <!--***************************USER****************************-->
-    <div class="col">
-        <div class="collapse" id="user-nav">
-            <div class="card card-body supercharged-menu">
-                {% if app.user %}
-                <ul>
-                    <li>
-                        <a href="{{ path('meal_plan_add') }}">Planning</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('search_list_by_ingredients') }}">Mon frigo</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('logout') }}">Déconnexion</a>
-                    </li>
-                    {% else %}
-                    <li>
-                        <a href="{{ path('login') }}">Se connecter</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('new') }}">S'inscrire</a>
-                    </li>
-                    {% endif %}
-                </ul>
+    <div class="row sub-nav">
+        <div class="col">
+            <div class="collapse" id="user-nav">
+                <div class="card card-body supercharged-menu">
+                    {% if app.user %}
+                    <ul>
+                        <li>
+                            <a href="{{ path('meal_plan_add') }}">Planning</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('search_list_by_ingredients') }}">Mon frigo</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('logout') }}">Déconnexion</a>
+                        </li>
+                        {% else %}
+                        <li>
+                            <a href="{{ path('login') }}">Se connecter</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('new') }}">S'inscrire</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

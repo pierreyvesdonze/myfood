@@ -40,11 +40,23 @@ class RecipeRepository extends ServiceEntityRepository
     public function findRecipeByIngredients($keywords)
     {
         return $this->createQueryBuilder('r')
-        ->andWhere('r.name IN (:val)')
-        ->setParameter('val', '%' . ',', $keywords . '%')
-        ->orderBy('r.id', 'ASC')
-        ->setMaxResults(10)
-        ->getQuery()
-        ->getArrayResult();
+            ->andWhere('r.name IN (:val)')
+            ->setParameter('val', '%' . ',', $keywords . '%')
+            ->orderBy('r.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getArrayResult();
+    }
+
+    /**
+     * @return Recipe[] Returns an array of Recipies objects
+     */
+    public function findFavsRecipiesByUser($favsIds)
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.id = :val')
+            ->setParameter('val', $favsIds)
+            ->getQuery()
+            ->getArrayResult();
     }
 }

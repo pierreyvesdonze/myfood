@@ -7,10 +7,12 @@ COLORS
   --primary-color: #111;
   --secondary-color: #dee8ff;
   --main-color: #cedbfa;
+  --title-color: #002140;
+  --font-color: #4e5f74;
   --contrast-main-color: #feddea;
   --tertiary-color: white;
   --orange-icon-color:  #ff785b;
-  --link-button-color:  #111;
+  --link-button-color:  #0b2b4a;
   --header-button-color:  #2e2e2e;
   --progress-color: #74ad06;
 }
@@ -64,6 +66,15 @@ a:hover {
   color: var(--orange-icon-color);
 }
 
+.left-right {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
 .hr {
   height: 1px;
   border: 0;
@@ -71,6 +82,13 @@ a:hover {
   margin: 20px auto;
   background: #1d1d1d;
   background: radial-gradient(circle, #080808 0%, rgba(219, 219, 219, 0.144) 50%, rgba(209, 209, 209, 0) 100%);
+}
+
+.scrollable {
+  overflow-y: scroll;
+  height: 350px;
+  padding: 1em;
+  background-color: var(--tertiary-color) !important;
 }
 
 .hr-white {
@@ -91,10 +109,14 @@ FONTS & ICONS
   font-family: "Cinzel", serif;
 }
 
+p, span {
+  color: var(--font-color);
+}
+
 .fa,
 .fas {
   color: var(--link-button-color);
-  margin-right: 5px;
+  margin-right: 10px;
 }
 
 .fa:hover,
@@ -107,11 +129,16 @@ FONTS & ICONS
 }
 
 .nav-top-container i, .footer a i {
-  color: var(--header-button-color);
+  color: var(--link-button-color);
 }
 
 .fa-check:hover {
   color: #26c526;
+}
+
+h1, h2, h3, h4, h5 {
+  color: var(--title-color);
+  font-weight: bold;
 }
 
 /*
@@ -244,6 +271,30 @@ TABLES
 */
 table {
   margin: auto !important;
+}
+
+/*
+***********************************
+BOOSTRAP
+***********************************
+*/
+.card {
+  background-color: transparent !important;
+  border: none;
+  padding-right: 0 !important;
+}
+
+.card-img {
+  text-align: center;
+}
+
+.navbar-light {
+  background-color: var(--tertiary-color) !important;
+  border-radius: 20px 20px 0 0;
+}
+
+.nav-link .active {
+  background-color: transparent !important;
 }
 
 /*

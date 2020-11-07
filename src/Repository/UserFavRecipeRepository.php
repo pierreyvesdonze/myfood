@@ -20,6 +20,21 @@ class UserFavRecipeRepository extends ServiceEntityRepository
     }
 
     /**
+     * @return UserFavRecipe[] Returns an array of UserFavRecipe objects
+     */
+
+    public function findFavByUserAndRecipe($recipe, $user)
+    {
+        return $this->createQueryBuilder('f')
+            ->where('f.recipeId = :valRecipe')
+            ->andWhere('f.userId = :valUser')
+            ->setParameter('valRecipe', $recipe)
+            ->setParameter('valUser', $user)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * @return UserFavRecipe Returns a UserFavRecipe object
      */
     public function findExistingFavByUser($user)
@@ -30,6 +45,7 @@ class UserFavRecipeRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
 
     /*
     public function findOneBySomeField($value): ?UserFavRecipe

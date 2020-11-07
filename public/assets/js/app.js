@@ -21,6 +21,7 @@ var app = {
 		$('.add-to-shoplist').click(app.openAddToShoplistModal);
 		$('.close-addshop-modal').click(app.closeAddToShoplistModal);
 		$('.button-add').click(app.addRecipeToFavs);
+		$('.removeFav').click(app.removeRecipeFromFavs);
 
 		//FILTERS MODAL
 		$('#submit-form-filters').click(app.closeFiltersModal);
@@ -183,6 +184,31 @@ var app = {
 				data: recipeId
 			}).done(function (response) {
 				console.log('ok' + response);
+			}).fail(function (response, jqXHR, textStatus, error) {
+				console.log(response);
+				console.log(jqXHR);
+				console.log(textStatus);
+				console.log(error);
+			});
+
+	},
+
+	removeRecipeFromFavs: function (e) {
+		let recipeId = e.currentTarget.dataset.id;
+		e.preventDefault();
+		let favToRemove = $(e.currentTarget).closest('.card-recipe-list');
+		console.log(favToRemove);
+		
+
+		$.ajax(
+			{
+				url: Routing.generate('remove_favs', { id: recipeId }),
+				method: "POST",
+				dataType: "text",
+				data: recipeId
+			}).done(function (response) {
+				console.log('ok' + response);
+				favToRemove.fadeOut();
 			}).fail(function (response, jqXHR, textStatus, error) {
 				console.log(response);
 				console.log(jqXHR);

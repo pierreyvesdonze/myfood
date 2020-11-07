@@ -6,15 +6,15 @@
     <section class='recipies-list-container'>
 
         {% if recipies is empty %}
-        <h2>Vous n'avez aucune recette enregistrée</h2>
+        <h2>Votre liste de favoris est vide...</h2>
         {% else %}
 
-        {% for i, recipe in recipies %}
+        {% for recip in recipies %}
+        {% for i, recipe in recip %}
 
-        <div class="card text-center card-recipe-list">
-            <div class="button-add {% for fav in favs %}{% if fav is not empty and fav.recipeId == recipe.id %} isFav {% endif %}{% endfor %}"
-                data-id="{{recipe.id}}"><span>
-                    &hearts;
+        <div class="card text-center fav-recipe-list">
+            <div class="removeFav" data-id="{{recipe.id}}"><span>
+                    &cross;
                 </span>
             </div>
             <!--***************************PHOTO****************************-->
@@ -91,6 +91,9 @@
 
                         <i class="fas fa-clock"></i>
                         {{ recipe.timeCook|date("H\\hi\\") }} min
+
+                    </div>
+                    <div class="tab-pane" id="ingredients-tab" role="tabpanel" aria-labelledby="ingredients-tab">...
                     </div>
                 </div>
 
@@ -126,7 +129,7 @@
                     <a href="{{ path('recipe_update',{'id': recipe.id}) }}" class="button">
                         <i class="fa fa-cog fa-2x"></i>
                     </a>
-                    <a href="{{ path('recipe_delete',{'id': recipe.id}) }}" class="button" onclick="return confirm('Supprimer cette recette ?')">
+                    <a href="{{ path('recipe_delete',{'id': recipe.id}) }}" class="button">
                         <i class="fa fa-trash fa-2x"></i>
                     </a>
                 </div>
@@ -140,6 +143,7 @@
                 {% endif %}
             </div>
         </div>
+        {% endfor %}
         {% endfor %}
         {% endif %}
     </section>
