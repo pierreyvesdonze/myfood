@@ -423,7 +423,7 @@ class RecipeController extends AbstractController
         }
 
         if (null !== $recipe) {
-            $isFavExist = $userFavRepo->findExistingFavByUser($recipeId, $user->getId());
+            $isFavExist = $userFavRepo->findFavByUserAndRecipe($recipeId, $user->getId());
 
             if ($isFavExist) {
                 $this->em->remove($isFavExist[0]);

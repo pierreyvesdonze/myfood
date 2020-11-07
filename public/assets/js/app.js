@@ -196,9 +196,7 @@ var app = {
 	removeRecipeFromFavs: function (e) {
 		let recipeId = e.currentTarget.dataset.id;
 		e.preventDefault();
-		let favToRemove = $(e.currentTarget).closest('.card-recipe-list');
-		console.log(favToRemove);
-		
+		let favToRemove = $(e.currentTarget).closest('.fav-recipe-list');
 
 		$.ajax(
 			{
