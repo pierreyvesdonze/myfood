@@ -4,6 +4,7 @@ COLORS
 ***********************************
 */
 :root {
+  --blue-background: linear-gradient(90deg, #cbd6ec 0%, #dee8ff 100%);
   --primary-color: #111;
   --secondary-color: #dee8ff;
   --main-color: #cedbfa;
@@ -29,6 +30,12 @@ html, body {
 GENERAL
 ***********************************
 */
+
+.main-title {
+  margin-top: 2em;
+  text-align: center;
+}
+
 .active {
   display: block;
   transition: 0.5s;
@@ -132,7 +139,7 @@ p, span {
   color: rgb(38, 197, 38);
 }
 
-h1, h2 ,h3, h4, h5 {
+h1, h2 ,h3, h4, h5, h6 {
   color: var(--title-color);
   font-weight: bold;
 }
@@ -267,15 +274,24 @@ BOOSTRAP
   padding-right: 0 !important;
 }
 
+.card-title {
+  margin-left: .75rem;
+}
+
+.card-body {
+  padding: 0 !important;
+}
+
 .card-img {
   text-align: center;
+  margin-bottom: 2em;
 }
 
 .navbar-light {
   background-color: var(--tertiary-color) !important;
-  border-radius: 20px 20px 0 0;
+  border-radius: 40px 40px 0 0;
 }
 
-.nav-link .active {
-  background-color: transparent !important;
+.nav-pills .nav-link.active{
+  background-color: var(--orange-icon-color) !important;
 }

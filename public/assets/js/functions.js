@@ -296,4 +296,14 @@ $(document).ready(function () {
     $(".submit").click(function () {
         return false;
     })
+
+    /*
+    ***********************************
+    BOOTSTRAP MANAGE ACTIVE LINKS
+    ***********************************
+    */
+    $(".nav .nav-link").on("click", function () {
+        $(".nav").find(".active").removeClass("active");
+        $(this).addClass("active");
+    });
 });

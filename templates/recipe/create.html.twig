@@ -1,276 +1,250 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-<div class="main-add-recipe-container">
-	{# MAIN TITLE #}
-	<div class="main-main-title">
-		<h1 class="main-title-recipe">Ajouter une recette</h1>
-	</div>
 
-	{{ form_start(form, {'attr': {'id': 'msform'}}) }}
-	<!-- progressbar -->
-	<!-- <ul id="progressbar">
-		<li class="active" id="account"></li>
-		<li id="description"></li>
-		<li id="step"></li>
-		<li id="ingredients"></li>
-		<li id="shopping-card"></li>
-		<li id="filter"></li>
-		<li id="guests"></li>
-		<li id="clock"></li>
-		<li id="picture"></li>
-		<li id="tags"></li>
-		<li id="confirm"></li>
-	</ul> -->
+<main class="main-create-recipe">
 	<div class="progress">
 		<div class="background-progress-bar">
-
+	
 		</div>
 		<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0"
 			aria-valuemax="100">
 		</div>
 	</div>
+	<div class="main-add-recipe-container">
+		{# MAIN TITLE #}
+		<div class="main-title">
+			<h4>Ajouter une recette</h4>
+		</div>		
 
-	<br>
+		{{ form_start(form, {'attr': {'id': 'msform'}}) }}
 
-	<!-- fieldsets -->
+		<br>
 
-	{# Title #}
-	<fieldset>
-		<input type="button" name="next" class="next action-button" value=">>">
-		<div class="form-card">
-			<div class="row-step">
-				<div class="col-5">
-					<h2 class="steps-title">1 - 10</h2>
-				</div>
-				<div class="next-prev-control">
+		<!-- fieldsets -->
 
-				</div>
-			</div> <label class="fieldlabels">{{ form_row(form.name) }}</label>
-		</div>
-
-	</fieldset>
-
-	{# Description #}
-	<fieldset>
-		<input type="button" name="next" class="next action-button" value=">>" /> <input type="button" name="previous"
-			class="previous action-button-previous" value="<<" />
-		<div class="form-card">
-			<div class="row-step">
-				<div class="col-5">
-					<h2 class="steps-title">2 - 10</h2>
-				</div>
+		{# Title #}
+		<fieldset>
+			<div class="col-12">
+				<h2 class="steps-title">1 - 10</h2>
 			</div>
-			{{ form_row(form.description) }}
-		</div>
-
-	</fieldset>
-
-	{# Steps #}
-	<fieldset>
-		<input type="button" name="next" class="next action-button" value=">>" /> <input type="button" name="previous"
-			class="previous action-button-previous" value="<<" />
-		<div class="form-card">
-			<div class="row-step">
-				<div class="col-5">
-					<h2 class="steps-title">3 - 10</h2>
-				</div>
-			</div>
-			<div class="row-steps">
-				<div class="steps-container">
-					<ul class="steps"
-						data-prototype="{{ form_widget(form.recipeSteps.vars.prototype)|e('html_attr') }}">
-						{# iterate over each existing step and render its only field: name #}
-						{% for key, step in form.recipeSteps %}
-						<li class="li-step">
-							{{ form_row(step.text) }}
-						</li>
-						{% endfor %}
-					</ul>
-				</div>
-			</div>
-		</div>
-	</fieldset>
-
-	{# Ingredients #}
-	<fieldset>
-		<input type="button" name="next" class="next action-button" value=">>" /> <input type="button" name="previous"
-			class="previous action-button-previous" value="<<" />
-		<div class="form-card">
-			<div class="row-step">
-				<div class="col-5">
-					<h2 class="steps-title">4 - 10</h2>
-				</div>
-			</div>
-			<div class="row-ingredients">
-				<div class="steps-container">
-					<ul class="ingredients"
-						data-prototype="{{ form_widget(form.recipeIngredients.vars.prototype)|e('html_attr') }}">
-
-						{# iterate over each existing step and render its only field: name #}
-						{% for ingredient in form.recipeIngredients %}
-						<li class="li-ingredient">
-							{{ form_row(ingredient.name) }}
-
-							{{ form_row(ingredient.amount, {'type':'number', 'lang': app.request.locale}) }}
-
-							{{ form_row(ingredient.unit) }}
-						</li>
-						{% endfor %}
-					</ul>
-				</div>
-			</div>
-		</div>
-	</fieldset>
-
-	{# Menu #}
-	<fieldset>
-		<input type="button" name="next" class="next action-button" value=">>" /> <input type="button" name="previous"
-			class="previous action-button-previous" value="<<" />
-		<div class="form-card">
-			<div class="row-step">
-				<div class="col-5">
-					<h2 class="steps-title">5 - 10</h2>
-				</div>
+			<a type="button" name="next" class="next action-button" value=""><i class="fas fa-arrow-right fa-2x"></i></a>
+			<br><br>
+			<div class="form-card">
+				 <label class="fieldlabels">{{ form_row(form.name) }}</label>
 			</div>
 
-			<div class="recipe-add-container">
-				<div class="recipe-menu">
-					<span>
-						Choisissez parmi la liste ci-dessous un type de plat
-					</span>
-					{{ form_row(form.recipeMenu) }}
-				</div>
+		</fieldset>
+
+		{# Description #}
+		<fieldset>
+			<div class="col-12">
+				<h2 class="steps-title">2 - 10</h2>
+			</div>
+			<a type="button" name="next" class="next action-button" value=""><i class="fas fa-arrow-right fa-2x"></i></a>
+			<a type="button" name="next" class="previous action-button-previous" value=""><i class="fas fa-arrow-left fa-2x"></i></a>
+			<br><br>
+			<div class="form-card">
+				{{ form_row(form.description) }}
 			</div>
 
-		</div>
-	</fieldset>
+		</fieldset>
 
-	{# Category #}
-	<fieldset>
-		<input type="button" name="next" class="next action-button" value=">>" /> <input type="button" name="previous"
-			class="previous action-button-previous" value="<<" />
-		<div class="form-card">
-			<div class="row-step">
-				<div class="col-5">
-					<h2 class="steps-title">6 - 10</h2>
+		{# Steps #}
+		<fieldset>
+			<div class="col-12">
+				<h2 class="steps-title">3 - 10</h2>
+			</div>
+			<a type="button" name="next" class="next action-button" value=""><i class="fas fa-arrow-right fa-2x"></i></a>
+			<a type="button" name="next" class="previous action-button-previous" value=""><i class="fas fa-arrow-left fa-2x"></i></a>
+				<br>
+			<div class="form-card">
+				<div class="row-steps">
+					<div class="steps-container">
+						<ul class="steps"
+							data-prototype="{{ form_widget(form.recipeSteps.vars.prototype)|e('html_attr') }}">
+							{# iterate over each existing step and render its only field: name #}
+							{% for key, step in form.recipeSteps %}
+							<li class="li-step">
+								{{ form_row(step.text) }}
+							</li>
+							{% endfor %}
+						</ul>
+					</div>
 				</div>
 			</div>
+		</fieldset>
 
-			<div class="recipe-add-container">
-				<div class="recipe-category">
-					<span>
-						Choisissez parmi la liste ci-dessous une catégorie
-					</span>
-					{{ form_row(form.recipeCategory) }}
-				</div>
-				<div class="recipe-category-selected"></div>
+		{# Ingredients #}
+		<fieldset>
+			<div class="col-12">
+				<h2 class="steps-title">4 - 10</h2>
 			</div>
+			<a type="button" name="next" class="next action-button" value=""><i class="fas fa-arrow-right fa-2x"></i></a>
+			<a type="button" name="next" class="previous action-button-previous" value=""><i class="fas fa-arrow-left fa-2x"></i></a>
+			<div class="form-card">
+		
+				<div class="row-ingredients">
+					<div class="steps-container">
+						<ul class="ingredients"
+							data-prototype="{{ form_widget(form.recipeIngredients.vars.prototype)|e('html_attr') }}">
 
-		</div>
-	</fieldset>
+							{# iterate over each existing step and render its only field: name #}
+							{% for ingredient in form.recipeIngredients %}
+							<li class="li-ingredient">
+								{{ form_row(ingredient.name) }}
 
-	{# How Many Guests #}
-	<fieldset>
-		<input type="button" name="next" class="next action-button" value=">>" /> <input type="button" name="previous"
-			class="previous action-button-previous" value="<<" />
-		<div class="form-card">
-			<div class="row-step">
-				<div class="col-5">
-					<h2 class="steps-title">7 - 10</h2>
+								{{ form_row(ingredient.amount, {'type':'number', 'lang': app.request.locale}) }}
+
+								{{ form_row(ingredient.unit) }}
+							</li>
+							{% endfor %}
+						</ul>
+					</div>
 				</div>
 			</div>
-			<div class="row-step">
+		</fieldset>
+
+		{# Menu #}
+		<fieldset>
+			<div class="col-12">
+				<h2 class="steps-title">5 - 10</h2>
+			</div>
+			<a type="button" name="next" class="next action-button" value=""><i class="fas fa-arrow-right fa-2x"></i></a>
+			<a type="button" name="next" class="previous action-button-previous" value=""><i class="fas fa-arrow-left fa-2x"></i></a>
+			<br><br>
+			<div class="form-card">
 				<div class="recipe-add-container">
-					<div class="recipe-guests">
-						<div class="recipe-guest-range">
-							{{ form_row(form.person) }}
+					<div class="recipe-menu">
+						<span>
+							Choisissez parmi la liste ci-dessous un type de plat
+						</span>
+						{{ form_row(form.recipeMenu) }}
+					</div>
+				</div>
+
+			</div>
+		</fieldset>
+
+		{# Category #}
+		<fieldset>
+			<div class="col-12">
+				<h2 class="steps-title">6 - 10</h2>
+			</div>
+			<a type="button" name="next" class="next action-button" value=""><i class="fas fa-arrow-right fa-2x"></i></a>
+			<a type="button" name="next" class="previous action-button-previous" value=""><i class="fas fa-arrow-left fa-2x"></i></a>
+			<br><br>
+			<div class="form-card">
+				<div class="recipe-add-container">
+					<div class="recipe-category">
+						<span>
+							Choisissez parmi la liste ci-dessous une catégorie
+						</span>
+						{{ form_row(form.recipeCategory) }}
+					</div>
+					<div class="recipe-category-selected"></div>
+				</div>
+
+			</div>
+		</fieldset>
+
+		{# How Many Guests #}
+		<fieldset>
+			<div class="col-12">
+				<h2 class="steps-title">7 - 10</h2>
+			</div>
+			<a type="button" name="next" class="next action-button" value=""><i class="fas fa-arrow-right fa-2x"></i></a>
+			<a type="button" name="next" class="previous action-button-previous" value=""><i class="fas fa-arrow-left fa-2x"></i></a>
+			<br><br>
+			<div class="form-card">
+				<div class="row-step">
+					<div class="recipe-add-container">
+						<div class="recipe-guests">
+							<div class="recipe-guest-range">
+								{{ form_row(form.person) }}
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</fieldset>
+		</fieldset>
 
-	{# Times #}
-	<fieldset>
-		<input type="button" name="next" class="next action-button" value=">>" /> <input type="button" name="previous"
-			class="previous action-button-previous" value="<<" />
-		<div class="form-card">
-			<div class="row-step">
-				<div class="col-5">
-					<h2 class="steps-title">8 - 10</h2>
+		{# Times #}
+		<fieldset>
+			<div class="col-12">
+				<h2 class="steps-title">8 - 10</h2>
+			</div>
+			<a type="button" name="next" class="next action-button" value=""><i class="fas fa-arrow-right fa-2x"></i></a>
+			<a type="button" name="next" class="previous action-button-previous" value=""><i class="fas fa-arrow-left fa-2x"></i></a>
+			<br><br>
+			<div class="form-card">
+				<div class="time-form-container">
+					<div class="left">
+						<label for="">Temps de préparation (H : Min)</label>
+						{{ form_widget(form.timePrepa) }}
+					</div>
+					<div class="right">
+						<label for="">Temps de cuisson (H : Min)</label>
+						{{ form_widget(form.timeCook) }}
+					</div>
 				</div>
 			</div>
+		</fieldset>
 
-			<div class="time-form-container">
-				<div class="left">
-					<label for="">Temps de préparation (H : Min)</label>
-					{{ form_widget(form.timePrepa) }}
+		{# Images #}
+		<fieldset>
+			<div class="col-12">
+				<h2 class="steps-title">9 - 10</h2>
+			</div>
+			<a type="button" name="next" class="next action-button" value=""><i class="fas fa-arrow-right fa-2x"></i></a>
+			<a type="button" name="next" class="previous action-button-previous" value=""><i class="fas fa-arrow-left fa-2x"></i></a>
+			<br><br>
+			<div class="form-card">
+				<div class="row">
 				</div>
-				<div class="right">
-					<label for="">Temps de cuisson (H : Min)</label>
-					{{ form_widget(form.timeCook) }}
+				<div class="row-step">
+					<div class="recipe-create-images">
+						{{ form_row(form.recipePhoto) }}
+					</div>
 				</div>
+			</div>
+		</fieldset>
 
+		{# Tags #}
+		<fieldset>
+			<div class="col-12">
+				<h2 class="steps-title">Étape 10 - 10</h2>
 			</div>
-		</div>
-	</fieldset>
+			<a type="button" name="next" class="next action-button" value=""><i class="fas fa-arrow-right fa-2x"></i></a>
+			<a type="button" name="next" class="previous action-button-previous" value=""><i class="fas fa-arrow-left fa-2x"></i></a>
+			<br><br>
+			<div class="form-card">
+				<div class="row-step">
+					<div class="recipe-tags">
+						{{ form_row(form.tags) }}
+					</div>
+				</div>
+			</div>
+		</fieldset>
 
-	{# Images #}
-	<fieldset>
-		<input type="button" name="next" class="next action-button" value=">>" /> <input type="button" name="previous"
-			class="previous action-button-previous" value="<<" />
-		<div class="form-card">
-			<div class="row">
-				<div class="col-5">
-					<h2 class="steps-title">9 - 10</h2>
-				</div>
+		<fieldset>
+			<div class="col-12">
+				<h2 class="steps-title">Fin</h2>
 			</div>
-			<div class="row-step">
-				<div class="recipe-create-images">
-					{{ form_row(form.recipePhoto) }}
+			<a type="button" name="next" class="previous action-button-previous" value=""><i class="fas fa-arrow-left fa-2x"></i></a>
+			<div class="form-card">
+				<div class="row-step">
+					<div class="col-7">
+						<h2 class="fs-title">Valider le formulaire ?</h2>
+					</div>
 				</div>
-			</div>
-		</div>
-	</fieldset>
+				<div class="row-step">
+					{{ form_widget(form.save) }}
+				</div>
+			</div> <br><br>
 
-	{# Tags #}
-	<fieldset>
-		<input type="button" name="next" class="next action-button" value=">>" /> <input type="button" name="previous"
-			class="previous action-button-previous" value="<<" />
-		<div class="form-card">
-			<div class="row">
-				<div class="col-5">
-					<h2 class="steps-title">Étape 10 - 10</h2>
-				</div>
-			</div>
-			<div class="row-step">
-				<div class="recipe-tags">
-					{{ form_row(form.tags) }}
-				</div>
-			</div>
-		</div>
-	</fieldset>
-
-	<fieldset>
-		<input type="button" name="previous" class="previous action-button-previous" value="<<" />
-		<div class="form-card">
-			<div class="row-step">
-				<div class="col-7">
-					<h2 class="fs-title">Valider le formulaire ?</h2>
-				</div>
-				<div class="col-5">
-					<h2 class="steps-title">Fin</h2>
-				</div>
-			</div>
-			<div class="row-step">
-				{{ form_widget(form.save) }}
-			</div>
-		</div> <br><br>
-
-	</fieldset>
-	{{ form_end(form) }}
-</div>
-</div>
+		</fieldset>
+		{{ form_end(form) }}
+	</div>
+</main>
 {% endblock %}

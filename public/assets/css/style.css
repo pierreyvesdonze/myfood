@@ -4,6 +4,7 @@ COLORS
 ***********************************
 */
 :root {
+  --blue-background: linear-gradient(90deg, #cbd6ec 0%, #dee8ff 100%);
   --primary-color: #111;
   --secondary-color: #dee8ff;
   --main-color: #cedbfa;
@@ -28,6 +29,11 @@ html, body {
 GENERAL
 ***********************************
 */
+.main-title {
+  margin-top: 2em;
+  text-align: center;
+}
+
 .active {
   display: block;
   -webkit-transition: 0.5s;
@@ -136,7 +142,7 @@ p, span {
   color: #26c526;
 }
 
-h1, h2, h3, h4, h5 {
+h1, h2, h3, h4, h5, h6 {
   color: var(--title-color);
   font-weight: bold;
 }
@@ -284,17 +290,26 @@ BOOSTRAP
   padding-right: 0 !important;
 }
 
+.card-title {
+  margin-left: .75rem;
+}
+
+.card-body {
+  padding: 0 !important;
+}
+
 .card-img {
   text-align: center;
+  margin-bottom: 2em;
 }
 
 .navbar-light {
   background-color: var(--tertiary-color) !important;
-  border-radius: 20px 20px 0 0;
+  border-radius: 40px 40px 0 0;
 }
 
-.nav-link .active {
-  background-color: transparent !important;
+.nav-pills .nav-link.active {
+  background-color: var(--orange-icon-color) !important;
 }
 
 /*
@@ -303,6 +318,8 @@ DYNAMIC FORM
 ***********************************
 */
 .main-add-recipe-container {
+  width: 72%;
+  margin: auto;
   position: inherit;
   z-index: 1;
 }
@@ -363,6 +380,10 @@ DYNAMIC FORM
   letter-spacing: 1px;
 }
 
+#msform textarea {
+  height: 200px;
+}
+
 #msform input:focus,
 #msform textarea:focus {
   -webkit-box-shadow: none !important;
@@ -372,28 +393,15 @@ DYNAMIC FORM
 }
 
 #msform .action-button {
-  width: 40px;
-  background: var(--primary-color);
-  font-weight: bold;
-  color: white;
-  border: 0 none;
-  margin: 10px 0px 10px 5px;
   float: right;
 }
 
 #msform .action-button:hover,
 #msform .action-button:focus {
-  background-color: var(--progress-color);
+  color: var(--orange-button-color);
 }
 
 #msform .action-button-previous {
-  width: 40px;
-  background: #616161;
-  font-weight: bold;
-  color: white;
-  border: 0 none;
-  border-radius: 20px 0px 0px 20px;
-  margin: 10px 5px 10px 0px;
   float: right;
 }
 
@@ -403,13 +411,7 @@ DYNAMIC FORM
 
 #msform .action-button-previous:hover,
 #msform .action-button-previous:focus {
-  background-color: #000000;
-}
-
-.card {
-  z-index: 0;
-  border: none;
-  position: inherit;
+  color: var(--orange-button-color);
 }
 
 .fs-title {
@@ -436,8 +438,11 @@ DYNAMIC FORM
   height: 200px;
 }
 
+.steps, .steps-container {
+  padding: 0;
+}
+
 .row-step,
-.row-steps,
 .row-ingredients {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -492,7 +497,7 @@ DYNAMIC FORM
 .remove-ingredient-link:before {
   font-family: FontAwesome;
   content: "\f00d";
-  font-size: 3em;
+  font-size: 2em;
   color: #aa1515;
 }
 
@@ -525,7 +530,7 @@ DYNAMIC FORM
 }
 
 .textarea-step {
-  height: 60px !important;
+  height: 100px !important;
 }
 
 .steps-title,
@@ -767,8 +772,9 @@ PROGRESS BAR
 }
 
 .progress {
-  height: 20px;
-  position: inherit;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0%;
 }
 
 .background-progress-bar {

@@ -1,11 +1,11 @@
 <section class="add-articles-section">
 
     <div class="title">
-        <h6>Ajouter à une liste de course</h6>
+        <h6>Ajouter à une liste de courses</h6>
     </div>
     <div class="left">
         <select name="add-shop-select" class="add-shop-select{{recipe.id}}" data-currentId="{{recipe.id}}">
-            <option value="">--Choisissez une liste de courses--</option>
+            <option value="">--Choisissez une liste--</option>
             {% for shoplist in shopLists %}
             <option value="{{ shoplist.description }}" data-value="{{ shoplist.id }}">
                 {{ shoplist.description }}

@@ -3,9 +3,13 @@
 DYNAMIC FORM
 ***********************************
 */
+.main-create-recipe {
 
+}
 
 .main-add-recipe-container {
+  width: 72%;
+  margin: auto;
   position: inherit;
   z-index: 1;
 }
@@ -64,6 +68,10 @@ height: 60%;
   letter-spacing: 1px;
 }
 
+#msform textarea {
+  height: 200px;
+}
+
 #msform input:focus,
 #msform textarea:focus {
   -moz-box-shadow: none !important;
@@ -74,28 +82,15 @@ height: 60%;
 }
 
 #msform .action-button {
-  width: 40px;
-  background: var(--primary-color);
-  font-weight: bold;
-  color: white;
-  border: 0 none;
-  margin: 10px 0px 10px 5px;
   float: right;
 }
 
 #msform .action-button:hover,
 #msform .action-button:focus {
-  background-color: var(--progress-color);
+  color: var(--orange-button-color);
 }
 
 #msform .action-button-previous {
-  width: 40px;
-  background: #616161;
-  font-weight: bold;
-  color: white;
-  border: 0 none;
-  border-radius: 20px 0px 0px 20px;
-  margin: 10px 5px 10px 0px;
   float: right;
 }
 
@@ -105,13 +100,7 @@ height: 60%;
 
 #msform .action-button-previous:hover,
 #msform .action-button-previous:focus {
-  background-color: #000000;
-}
-
-.card {
-  z-index: 0;
-  border: none;
-  position: inherit;
+  color: var(--orange-button-color);
 }
 
 .fs-title {
@@ -138,8 +127,11 @@ height: 60%;
   height: 200px;
 }
 
+.steps, .steps-container {
+  padding: 0;
+}
+
 .row-step,
-.row-steps,
 .row-ingredients {
   display: flex;
   justify-content: space-between;
@@ -181,7 +173,7 @@ height: 60%;
 .remove-ingredient-link:before {
   font-family: FontAwesome;
   content: "\f00d";
-  font-size: 3em;
+  font-size: 2em;
   color: rgb(170, 21, 21);
 }
 
@@ -213,7 +205,7 @@ height: 60%;
 }
 
 .textarea-step {
-  height: 60px !important;
+  height: 100px !important;
 }
 
 .steps-title,
@@ -424,8 +416,8 @@ PROGRESS BAR
 }
 
 .progress {
-  height: 20px;
-  position: inherit;
+  position: sticky;
+  top: 0%
 }
 
 .background-progress-bar {
