@@ -165,6 +165,44 @@ input:focus {
   outline: none;
 }
 
+.search-input, input:not([type="checkbox"]), textarea, select, option {
+  background: #2b2b3d;
+  border-radius: 2rem;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  color: wheat;
+  text-align: center;
+  -webkit-filter: blur(0.4px);
+          filter: blur(0.4px);
+  -webkit-box-shadow: -0.05rem -0.05rem 0.08rem rgba(17, 0, 51, 0.6), 0.05rem 0.05rem 0.1rem #b6fbc2, inset 0.5rem 0.5rem 2rem rgba(17, 0, 51, 0.5), inset 0.1rem 0.1rem 0.2rem rgba(17, 0, 51, 0.75), inset -0.5rem -0.5rem 4rem rgba(182, 251, 194, 0.5);
+          box-shadow: -0.05rem -0.05rem 0.08rem rgba(17, 0, 51, 0.6), 0.05rem 0.05rem 0.1rem #b6fbc2, inset 0.5rem 0.5rem 2rem rgba(17, 0, 51, 0.5), inset 0.1rem 0.1rem 0.2rem rgba(17, 0, 51, 0.75), inset -0.5rem -0.5rem 4rem rgba(182, 251, 194, 0.5);
+}
+
+.search-input::-webkit-input-placeholder, input:not([type="checkbox"])::-webkit-input-placeholder, textarea::-webkit-input-placeholder, select::-webkit-input-placeholder, option::-webkit-input-placeholder {
+  color: var(--tertiary-color);
+}
+
+.search-input:-ms-input-placeholder, input:not([type="checkbox"]):-ms-input-placeholder, textarea:-ms-input-placeholder, select:-ms-input-placeholder, option:-ms-input-placeholder {
+  color: var(--tertiary-color);
+}
+
+.search-input::-ms-input-placeholder, input:not([type="checkbox"])::-ms-input-placeholder, textarea::-ms-input-placeholder, select::-ms-input-placeholder, option::-ms-input-placeholder {
+  color: var(--tertiary-color);
+}
+
+.search-input::placeholder, input:not([type="checkbox"])::placeholder, textarea::placeholder, select::placeholder, option::placeholder {
+  color: var(--tertiary-color);
+}
+
+textarea, input {
+  background: #3e4c5c;
+}
+
+select:focus {
+  outline: none;
+}
+
 /*
 ***********************************
 CONTAINERS
@@ -317,8 +355,12 @@ BOOSTRAP
 DYNAMIC FORM
 ***********************************
 */
+.main-create-recipe {
+  background-color: var(--main-color) !important;
+}
+
 .main-add-recipe-container {
-  width: 72%;
+  width: 80%;
   margin: auto;
   position: inherit;
   z-index: 1;
@@ -345,7 +387,7 @@ DYNAMIC FORM
 }
 
 #msform fieldset {
-  background: white;
+  background: transparent;
   border: 0 none;
   border-radius: 0.5rem;
   -webkit-box-sizing: border-box;
@@ -367,15 +409,7 @@ DYNAMIC FORM
 #msform input,
 #msform textarea {
   padding: 8px 15px 8px 15px;
-  border: 1px solid #ccc;
-  border-radius: 0px;
-  margin-bottom: 25px;
-  margin-top: 2px;
   width: 100%;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  color: #2c3e50;
-  background-color: #eceff1;
   font-size: 16px;
   letter-spacing: 1px;
 }
@@ -508,13 +542,9 @@ DYNAMIC FORM
 
 .add-step-link,
 .add-ingredient-link {
-  width: 25%;
-  background: var(--primary-color);
-  font-size: 3em;
-  font-weight: bold;
-  color: var(--progress-color);
-  border: 0 none;
-  border-radius: 20px;
+  border: none;
+  outline: none;
+  background-color: transparent;
 }
 
 .add-step-link:hover,
@@ -775,12 +805,13 @@ PROGRESS BAR
   position: -webkit-sticky;
   position: sticky;
   top: 0%;
+  background-color: #ff785b !important;
 }
 
 .background-progress-bar {
   width: 100%;
   height: 22px;
-  background-color: lightgray;
+  background-color: var(--orange-button-color);
   position: absolute;
   z-index: -2;
   -webkit-box-shadow: inset 0px 0px 15px 0px rgba(0, 0, 0, 0.75);

@@ -162,6 +162,43 @@ input:focus {
   outline: none;
 }
 
+$hue: 220;
+$light: hsl($hue - 90,90%,85%);
+$base: hsl($hue - 20,10%,70%);
+// $mid: hsl($hue + 20,40%,30%);
+$mid: rgb(43, 43, 61);
+$dark: hsl($hue + 40,100%,10%);
+
+.search-input, input:not([type="checkbox"]), textarea, select, option{
+  background: $mid;
+  border-radius: 2rem;
+  appearance: none;
+  color: wheat;
+  text-align: center;
+  filter: blur(0.4px);
+              //dark rim
+  box-shadow: -0.05rem -0.05rem 0.08rem rgba($dark,0.6),
+              //light rim
+              0.05rem 0.05rem 0.1rem rgba($light,1),
+              //inner dark
+              inset 0.5rem 0.5rem 2rem rgba($dark,0.5),
+              //inner dark fine
+              inset 0.1rem 0.1rem 0.2rem rgba($dark,0.75),
+              //inner light
+              inset -0.5rem -0.5rem 4rem rgba($light,0.5);
+    &::placeholder {
+        color: var(--tertiary-color);
+    }
+}
+
+textarea, input {
+    background: #3e4c5c;
+}
+
+select:focus {
+    outline: none;
+}
+
 /*
 ***********************************
 CONTAINERS

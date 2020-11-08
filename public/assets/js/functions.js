@@ -7,8 +7,8 @@ RECIPIES ADD & REMOVE STEPS & INGREDIENTS
 var $stepCollectionHolder;
 var $ingredientCollectionHolder;
 
-var $addStepButton = $('<button type="button" class="add-step-link">+</button>');
-var $addIngredientButton = $('<button type="button" class="add-ingredient-link">+</button>');
+var $addStepButton = $('<button type="button" class="add-step-link"><i class="fas fa-plus-circle fa-2x"></button>');
+var $addIngredientButton = $('<button type="button" class="add-ingredient-link"><i class="fas fa-plus-circle fa-2x"></i></button>');
 var $newStepLinkLi = $('<li></li>').append($addStepButton);
 var $newIngredientLinkLi = $('<li></li>').append($addIngredientButton);
 
