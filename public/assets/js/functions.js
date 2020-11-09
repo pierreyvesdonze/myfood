@@ -306,4 +306,12 @@ $(document).ready(function () {
         $(".nav").find(".active").removeClass("active");
         $(this).addClass("active");
     });
+
+  
+});  
+$(document).ready(function() {
+    $('input[type="file"]').change(function() {
+        var val = ($(this).val() != "") ? $(this).val() : "No file selected";
+        $('.filename').attr('placeholder', val);
+    });
 });

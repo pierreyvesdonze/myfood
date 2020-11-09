@@ -4,7 +4,7 @@ DYNAMIC FORM
 ***********************************
 */
 .main-create-recipe {
-  background-color: var(--main-color) !important;
+  background: var(--form-background) !important;
 }
 
 .main-add-recipe-container {
@@ -221,7 +221,6 @@ height: 60%;
 }
 
 .fieldlabels {
-  color: gray;
   text-align: left;
 }
 
@@ -288,6 +287,11 @@ height: 60%;
   width: 50% !important;
 }
 
+.ingredients {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 .recipe-tags {
   display: flex;
   margin: 2em;
@@ -306,6 +310,10 @@ height: 60%;
 
 .recipe-tags label {
   margin-right: 1em;
+}
+
+.custom-input-image {
+
 }
 
 /*
@@ -445,3 +453,8 @@ PROGRESS BAR
   width: 100%;
   object-fit: cover;
 }
+
+
+
+
+

@@ -1,21 +1,24 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
 
 <main class="main-create-recipe">
 	<div class="progress">
 		<div class="background-progress-bar">
-	
+
 		</div>
 		<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0"
 			aria-valuemax="100">
 		</div>
+
 	</div>
 	<div class="main-add-recipe-container">
+
 		{# MAIN TITLE #}
 		<div class="main-title">
 			<h4>Ajouter une recette</h4>
-		</div>		
+		</div>
 
 		{{ form_start(form, {'attr': {'id': 'msform'}}) }}
 
@@ -28,10 +31,12 @@
 			<div class="col-12">
 				<h2 class="steps-title">1 - 10</h2>
 			</div>
-			<a type="button" name="next" class="next action-button" value=""><i class="fas fa-arrow-right fa-2x"></i></a>
+			<a type="button" name="next" class="next action-button" value="">
+				<i class="fas fa-arrow-right fa-2x"></i>
+			</a>
 			<br><br>
 			<div class="form-card">
-				 <label class="fieldlabels">{{ form_row(form.name) }}</label>
+				<label class="fieldlabels">{{ form_row(form.name) }}</label>
 			</div>
 
 		</fieldset>
@@ -41,8 +46,12 @@
 			<div class="col-12">
 				<h2 class="steps-title">2 - 10</h2>
 			</div>
-			<a type="button" name="next" class="next action-button" value=""><i class="fas fa-arrow-right fa-2x"></i></a>
-			<a type="button" name="next" class="previous action-button-previous" value=""><i class="fas fa-arrow-left fa-2x"></i></a>
+			<a type="button" name="next" class="next action-button" value="">
+				<i class="fas fa-arrow-right fa-2x"></i>
+			</a>
+			<a type="button" name="previous" class="previous action-button-previous" value="">
+				<i class="fas fa-arrow-left fa-2x"></i>
+			</a>
 			<br><br>
 			<div class="form-card">
 				{{ form_row(form.description) }}
@@ -55,9 +64,14 @@
 			<div class="col-12">
 				<h2 class="steps-title">3 - 10</h2>
 			</div>
-			<a type="button" name="next" class="next action-button" value=""><i class="fas fa-arrow-right fa-2x"></i></a>
-			<a type="button" name="next" class="previous action-button-previous" value=""><i class="fas fa-arrow-left fa-2x"></i></a>
-				<br>
+			<a type="button" name="next" class="next action-button" value="">
+				<i class="fas fa-arrow-right fa-2x"></i>
+			</a>
+			<a type="button" name="previous" class="previous action-button-previous" value="">
+				<i class="fas fa-arrow-left fa-2x"></i>
+			</a>
+			<br><br>
+			<br>
 			<div class="form-card">
 				<div class="row-steps">
 					<div class="steps-container">
@@ -80,10 +94,15 @@
 			<div class="col-12">
 				<h2 class="steps-title">4 - 10</h2>
 			</div>
-			<a type="button" name="next" class="next action-button" value=""><i class="fas fa-arrow-right fa-2x"></i></a>
-			<a type="button" name="next" class="previous action-button-previous" value=""><i class="fas fa-arrow-left fa-2x"></i></a>
+			<a type="button" name="next" class="next action-button" value="">
+				<i class="fas fa-arrow-right fa-2x"></i>
+			</a>
+			<a type="button" name="previous" class="previous action-button-previous" value="">
+				<i class="fas fa-arrow-left fa-2x"></i>
+			</a>
+			<br><br>
 			<div class="form-card">
-		
+
 				<div class="row-ingredients">
 					<div class="steps-container">
 						<ul class="ingredients"
@@ -110,10 +129,16 @@
 			<div class="col-12">
 				<h2 class="steps-title">5 - 10</h2>
 			</div>
-			<a type="button" name="next" class="next action-button" value=""><i class="fas fa-arrow-right fa-2x"></i></a>
-			<a type="button" name="next" class="previous action-button-previous" value=""><i class="fas fa-arrow-left fa-2x"></i></a>
+			<a type="button" name="next" class="next action-button" value="">
+				<i class="fas fa-arrow-right fa-2x"></i>
+			</a>
+			<a type="button" name="previous" class="previous action-button-previous" value="">
+				<i class="fas fa-arrow-left fa-2x"></i>
+			</a>
 			<br><br>
 			<div class="form-card">
+
+
 				<div class="recipe-add-container">
 					<div class="recipe-menu">
 						<span>
@@ -131,10 +156,16 @@
 			<div class="col-12">
 				<h2 class="steps-title">6 - 10</h2>
 			</div>
-			<a type="button" name="next" class="next action-button" value=""><i class="fas fa-arrow-right fa-2x"></i></a>
-			<a type="button" name="next" class="previous action-button-previous" value=""><i class="fas fa-arrow-left fa-2x"></i></a>
+			<a type="button" name="next" class="next action-button" value="">
+				<i class="fas fa-arrow-right fa-2x"></i>
+			</a>
+			<a type="button" name="previous" class="previous action-button-previous" value="">
+				<i class="fas fa-arrow-left fa-2x"></i>
+			</a>
 			<br><br>
 			<div class="form-card">
+
+
 				<div class="recipe-add-container">
 					<div class="recipe-category">
 						<span>
@@ -153,10 +184,15 @@
 			<div class="col-12">
 				<h2 class="steps-title">7 - 10</h2>
 			</div>
-			<a type="button" name="next" class="next action-button" value=""><i class="fas fa-arrow-right fa-2x"></i></a>
-			<a type="button" name="next" class="previous action-button-previous" value=""><i class="fas fa-arrow-left fa-2x"></i></a>
+			<a type="button" name="next" class="next action-button" value="">
+				<i class="fas fa-arrow-right fa-2x"></i>
+			</a>
+			<a type="button" name="previous" class="previous action-button-previous" value="">
+				<i class="fas fa-arrow-left fa-2x"></i>
+			</a>
 			<br><br>
 			<div class="form-card">
+
 				<div class="row-step">
 					<div class="recipe-add-container">
 						<div class="recipe-guests">
@@ -174,10 +210,16 @@
 			<div class="col-12">
 				<h2 class="steps-title">8 - 10</h2>
 			</div>
-			<a type="button" name="next" class="next action-button" value=""><i class="fas fa-arrow-right fa-2x"></i></a>
-			<a type="button" name="next" class="previous action-button-previous" value=""><i class="fas fa-arrow-left fa-2x"></i></a>
+			<a type="button" name="next" class="next action-button" value="">
+				<i class="fas fa-arrow-right fa-2x"></i>
+			</a>
+			<a type="button" name="previous" class="previous action-button-previous" value="">
+				<i class="fas fa-arrow-left fa-2x"></i>
+			</a>
 			<br><br>
 			<div class="form-card">
+
+
 				<div class="time-form-container">
 					<div class="left">
 						<label for="">Temps de préparation (H : Min)</label>
@@ -187,6 +229,7 @@
 						<label for="">Temps de cuisson (H : Min)</label>
 						{{ form_widget(form.timeCook) }}
 					</div>
+
 				</div>
 			</div>
 		</fieldset>
@@ -196,15 +239,21 @@
 			<div class="col-12">
 				<h2 class="steps-title">9 - 10</h2>
 			</div>
-			<a type="button" name="next" class="next action-button" value=""><i class="fas fa-arrow-right fa-2x"></i></a>
-			<a type="button" name="next" class="previous action-button-previous" value=""><i class="fas fa-arrow-left fa-2x"></i></a>
+			<a type="button" name="next" class="next action-button" value="">
+				<i class="fas fa-arrow-right fa-2x"></i>
+			</a>
+			<a type="button" name="previous" class="previous action-button-previous" value="">
+				<i class="fas fa-arrow-left fa-2x"></i>
+			</a>
 			<br><br>
 			<div class="form-card">
 				<div class="row">
 				</div>
 				<div class="row-step">
 					<div class="recipe-create-images">
-						{{ form_row(form.recipePhoto) }}
+						<div class="custom-input">
+							{{ form_row(form.recipePhoto) }}
+						</div>
 					</div>
 				</div>
 			</div>
@@ -215,13 +264,17 @@
 			<div class="col-12">
 				<h2 class="steps-title">Étape 10 - 10</h2>
 			</div>
-			<a type="button" name="next" class="next action-button" value=""><i class="fas fa-arrow-right fa-2x"></i></a>
-			<a type="button" name="next" class="previous action-button-previous" value=""><i class="fas fa-arrow-left fa-2x"></i></a>
+			<a type="button" name="next" class="next action-button" value="">
+				<i class="fas fa-arrow-right fa-2x"></i>
+			</a>
+			<a type="button" name="previous" class="previous action-button-previous" value="">
+				<i class="fas fa-arrow-left fa-2x"></i>
+			</a>
 			<br><br>
 			<div class="form-card">
 				<div class="row-step">
 					<div class="recipe-tags">
-						{{ form_row(form.tags) }}
+						{{ form_row(form.tags,  {label_attr: {id: 'checkbox-custom'} }) }}
 					</div>
 				</div>
 			</div>
@@ -231,19 +284,19 @@
 			<div class="col-12">
 				<h2 class="steps-title">Fin</h2>
 			</div>
-			<a type="button" name="next" class="previous action-button-previous" value=""><i class="fas fa-arrow-left fa-2x"></i></a>
-			<div class="form-card">
-				<div class="row-step">
-					<div class="col-7">
-						<h2 class="fs-title">Valider le formulaire ?</h2>
-					</div>
+			<a type="button" name="previous" class="previous action-button-previous" value="">
+				<i class="fas fa-arrow-left fa-2x"></i>
+			</a>
+			<br><br>
+			<div class="row-step">
+				<div class="col-12">
+					<h2>Valider le formulaire ?</h2>
 				</div>
-				<div class="row-step">
-					{{ form_widget(form.save) }}
-				</div>
-			</div> <br><br>
-
+			</div>
+			{{ form_widget(form.save) }}
+			<br><br>
 		</fieldset>
+
 		{{ form_end(form) }}
 	</div>
 </main>

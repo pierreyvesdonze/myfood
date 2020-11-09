@@ -5,6 +5,7 @@ COLORS
 */
 :root {
   --blue-background: linear-gradient(90deg, #cbd6ec 0%, #dee8ff 100%);
+  --form-background: linear-gradient(90deg, rgba(111,112,121,1) 0%, rgba(230,238,255,1) 100%);
   --primary-color: #111;
   --secondary-color: #dee8ff;
   --main-color: #cedbfa;
@@ -117,6 +118,12 @@ p, span {
   color: var(--font-color);
 }
 
+h1, h2 ,h3, h4, h5, h6 {
+  color: var(--title-color) !important;
+  font-weight: bold !important;
+}
+
+
 .fa,
 .fas {
   color: var(--link-button-color);
@@ -139,11 +146,6 @@ p, span {
   color: rgb(38, 197, 38);
 }
 
-h1, h2 ,h3, h4, h5, h6 {
-  color: var(--title-color);
-  font-weight: bold;
-}
-
 /*
 ***********************************
 LISTS
@@ -158,6 +160,11 @@ ul li {
 INPUTS
 ***********************************
 */
+
+// input[type=file]{
+//   opacity:0;
+// }
+
 input:focus {
   outline: none;
 }
@@ -169,11 +176,17 @@ $base: hsl($hue - 20,10%,70%);
 $mid: rgb(43, 43, 61);
 $dark: hsl($hue + 40,100%,10%);
 
-.search-input, input:not([type="checkbox"]), textarea, select, option{
-  background: $mid;
-  border-radius: 2rem;
+.search-input,
+input:not([type="checkbox"]),
+textarea,
+select,
+option, 
+.custom-file-input
+{
+  background: $mid !important;
+  border-radius: 2rem !important;
   appearance: none;
-  color: wheat;
+  color: wheat !important;
   text-align: center;
   filter: blur(0.4px);
               //dark rim
@@ -271,6 +284,21 @@ FLASH MESSAGES
 BUTTONS 
 ***********************************
 */
+
+.button-save {
+  background:var(--link-button-color);
+  cursor: pointer;
+  text-align: center;
+  color: var(--tertiary-color);
+  box-shadow: 0px 2px 12px -4px #3a1b14da;
+  transform: scale(1);
+  transition: .2s ease-in-out;
+  &:hover {
+    background-color: var(--orange-icon-color);
+    transform: scale(1.2);
+    box-shadow: 8px 8px 21px -4px var(--orange-icon-color);
+  }
+}
 
 .button-icon {
   background: none;

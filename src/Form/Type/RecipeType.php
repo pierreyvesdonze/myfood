@@ -24,7 +24,8 @@ class RecipeType extends AbstractType
     public function buildForm(\Symfony\Component\Form\FormBuilderInterface $builder, array $options)
     {
         $builder->add(
-            'name', TextType::class,
+            'name',
+            TextType::class,
             [
                 'label' => 'Nom de la recette',
             ]
@@ -87,6 +88,9 @@ class RecipeType extends AbstractType
                     ],
                 ]),
             ],
+            'attr' => [
+                'class' => 'filename'
+            ]
         ]);
 
         $builder->add('recipeCategory', EntityType::class, [
@@ -105,6 +109,7 @@ class RecipeType extends AbstractType
             'class' => Tag::class,
             'expanded' => 'true',
             'multiple' => true,
+            'label_attr' => ['class' => 'custom-switch'],
             'label' => false,
             'required' => false,
         ]);
@@ -132,7 +137,7 @@ class RecipeType extends AbstractType
             [
                 'label' => 'Valider',
                 'attr' => [
-                    'class' => 'button',
+                    'class' => 'button-save',
                 ],
             ]
         );
@@ -145,6 +150,8 @@ class RecipeType extends AbstractType
             'attr' => [
                 'novalidate' => 'novalidate',
             ],
+            'mapped' => false,
+
         ]);
     }
 }
