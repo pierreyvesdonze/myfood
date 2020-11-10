@@ -13,6 +13,7 @@ var app = {
 		//COLLAPSE
 		$('.button-icon').on('click', app.closeCollapse);
 		$('.button-icon').on('click', app.activeButton);
+		$('.filters-menu').on('click', app.lockFiltersCollapse);
 
 		//CREATE LIST INGREDIENTS
 		$('.search-recipe-form').on('keypress', app.searchByIngredients);
@@ -58,7 +59,11 @@ var app = {
 
 		e.preventDefault();
 		//$('.collapse').removeClass('show');
-	
+
+	},
+
+	lockFiltersCollapse: function (e) {
+		$('#filters-nav *').addClass('show-protected');
 	},
 
 	activeButton: function (e) {
@@ -85,7 +90,7 @@ var app = {
 		e.preventDefault();
 
 		const checks = $('.filters :checkbox'),
-			boxes = $('.recipe'),
+			boxes = $('.card-recipe-list'),
 			matches = {};
 
 		checks.filter(':checked').each(function () {
@@ -94,9 +99,18 @@ var app = {
 			matches[name].push('[data-' + name + '="' + $(this).data(name) + '"]');
 		});
 
+		console.log(matches)
+
+
 		const menus = matches.menu ? matches.menu.join() : '*';
-		const categories = matches.category ? matches.category.join() : '*';
-		boxes.hide().filter(menus).filter(categories).show();
+		// const categories = matches.category ? matches.category.join() : '*';
+		boxes.hide().filter(menus).show();
+		console.log(menus)
+		console.log(boxes)
+	},
+
+	closeFiltersModal: function () {
+		$('.collapse').removeClass('show')
 	},
 
 	uncheckAll: function () {
@@ -537,7 +551,8 @@ document.addEventListener('DOMContentLoaded', app.init);
 
 // Close opened collapsed nav
 $(document).click(function (e) {
-	if (!$(e.target).hasClass('sdf')) {
+	console.log(e.target);
+	if (!$(e.target).hasClass('show-protected')) {
 		$('.collapse').removeClass('show')
 	}
 })

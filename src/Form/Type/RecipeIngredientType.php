@@ -41,6 +41,7 @@ class RecipeIngredientType extends AbstractType
             [
                 'class' => Unit::class,
                 'choice_label' => 'name',
+                'label' => "Unité de mesure",
             ]
         );
     }

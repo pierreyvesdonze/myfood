@@ -47,14 +47,20 @@ class RecipeController extends AbstractController
     }
 
     /**
-     * @Route("/list", name="user_recipe_list")
+     * @Route("/list/{filters}",
+     *  name="user_recipe_list",
+     *  defaults={"filters" = null}
+     * )
+     * 
+     * @param $filters
      */
     public function userRecipeList(
         RecipeCategoryRepository $categoriesRepo,
         RecipeMenuRepository $menusRepo,
         TagRepository $tagRepository,
         ShoppingListRepository $shopRepo,
-        UserFavRecipeRepository $userFavRepo
+        UserFavRecipeRepository $userFavRepo,
+        $filters
     ) {
         if (!null == $this->getUser()) {
             $user = $this->getUser();
@@ -66,6 +72,7 @@ class RecipeController extends AbstractController
         $tags       = $tagRepository->findAll();
         $shopLists  = $shopRepo->findAll();
         $favs       = $userFavRepo->findExistingFavByUser($user->getId());
+        $filters    = [];
 
         return $this->render('recipe/list.html.twig', [
             'recipies'      => $recipies,
@@ -243,7 +250,7 @@ class RecipeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/update", name="recipe_update", methods={"GET","POST"})
+     * @Route("/update/{id}", name="recipe_update", methods={"GET","POST"})
      */
     public function recipeUpdate(Request $request, Recipe $recipe)
     {
@@ -319,7 +326,7 @@ class RecipeController extends AbstractController
         }
 
         return $this->render(
-            'recipe/edit.html.twig',
+            'recipe/create.html.twig',
             [
                 'recipe' => $recipe,
                 'form' => $form->createView(),

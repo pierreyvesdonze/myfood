@@ -7,6 +7,7 @@ use App\Entity\RecipeCategory;
 use App\Entity\RecipeMenu;
 use App\Entity\ShoppingList;
 use App\Entity\Tag;
+use App\Form\Type\FiltersSearchRecipeType;
 use App\Form\Type\SearchRecipeType;
 use App\Form\Type\SearchType;
 use App\Repository\RecipeCategoryRepository;
@@ -60,7 +61,7 @@ class SearchController extends AbstractController
             $data     = $form->getData();
             $recipies = $recipeRepository->findRecipeByName($data);
 
-            return $this->redirectToRoute('recipe_list', [
+            return $this->redirectToRoute('user_recipe_list', [
                 'recipies' => $recipies
             ]);
         }
@@ -229,6 +230,35 @@ class SearchController extends AbstractController
         }
         return $this->render('shopList/create.by.ingredients.html.twig', [
             'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/result/filters", name="advanced_filters_list", methods={"GET","POST"})
+     */
+    public function filtersList(
+        Request $request,
+        RecipeRepository $recipeRepository
+    ) {
+
+        $form = $this->createForm(FiltersSearchRecipeType::class, null);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $recipeMenu = $form->get('recipeMenu')->getData();
+            $recipeCategory = $form->get('recipeCategory')->getData();
+            $tags = $form->get('tags')->getData();
+
+            $resultSearch = $recipeRepository->findRecipiesByFilters($recipeMenu, $recipeCategory);
+            dd($resultSearch);
+
+            return $this->redirectToRoute('user_recipe_list', [
+                'resultSearch' => $resultSearch
+            ]);
+        }
+
+        return $this->render('search/filters.search.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 }

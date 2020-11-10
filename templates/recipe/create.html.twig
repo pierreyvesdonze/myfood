@@ -16,8 +16,14 @@
 	<div class="main-add-recipe-container">
 
 		{# MAIN TITLE #}
+		{% if app.request.get('_route') matches '/recipe_add/' %}
+		{% set mainTitle = "Ajouter une recette" %}
+		{% else %}
+		{% set mainTitle = "Modifier la recette" %}
+		{% endif %}
+
 		<div class="main-title">
-			<h4>Ajouter une recette</h4>
+			<h4>{{ mainTitle }}</h4>
 		</div>
 
 		{{ form_start(form, {'attr': {'id': 'msform'}}) }}

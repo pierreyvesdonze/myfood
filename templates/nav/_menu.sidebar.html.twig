@@ -19,7 +19,7 @@ TOP MENU BUTTONS
         </button>
         <!--***************************FILTERS****************************-->
         {% if app.request.get('_route') matches '/recipe_list/' %}
-        <button class="button-icon" type="button" data-toggle="collapse" data-target="#filters-nav"
+        <button class="button-icon filters-menu" type="button" data-toggle="collapse" data-target="#filters-nav"
             aria-expanded="false" aria-controls="filters-nav">
             <i class="fa fa-sliders fa-2x"></i>
         </button>
@@ -72,6 +72,12 @@ COLLAPSE
         </div>
     </div>
     {% endif %}
+
+    <div class="row sub-nav">
+        <div class="col">
+                <a href="{{ path('advanced_filters_list') }}">Filtrer</a>
+        </div>
+    </div>
 
 
     <!--***************************SHOPLIST****************************-->

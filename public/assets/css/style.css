@@ -10,7 +10,7 @@ COLORS
   --secondary-color: #dee8ff;
   --main-color: #cedbfa;
   --title-color: #002140;
-  --font-color: #4e5f74;
+  --font-color: #222830;
   --contrast-main-color: #feddea;
   --tertiary-color: white;
   --orange-icon-color:  #ff785b;
@@ -376,7 +376,7 @@ BOOSTRAP
 }
 
 .card-title {
-  margin-left: .75rem;
+  margin-left: 3.75rem;
 }
 
 .card-body {

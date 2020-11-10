@@ -9,14 +9,22 @@
         <h2>Vous n'avez aucune recette enregistrée</h2>
         {% else %}
 
-        {% for i, recipe in recipies %}
+        {% if resultSearch is defined %}
+            {% set recipies = resultSearch %}
+            {{dump ("pouet")}}
+        {% endif %}
 
-        <div class="card text-center card-recipe-list">
+        {% for i, recipe in recipies %}
+        
+        <div class="card text-center card-recipe-list" >
+            {% if favs is defined %}
             <div class="button-add {% for fav in favs %}{% if fav is not empty and fav.recipeId == recipe.id %} isFav {% endif %}{% endfor %}"
                 data-id="{{recipe.id}}"><span>
                     &hearts;
                 </span>
             </div>
+            {% endif %}
+    
             <!--***************************PHOTO****************************-->
             <div class="img-list-container">
                 <a href="{{ path('recipe_view', {'id': recipe.id}) }}">
@@ -31,7 +39,7 @@
             </div>
 
             <!--***************************BODY****************************-->
-            <div class="card-body">
+            <div class="card-body" data-menu="{{ recipe.recipeMenu }}" data-category="{{ recipe.recipeCategory }}">
                 <h4 class="card-title"> <a href="{{ path('recipe_view', {'id': recipe.id}) }}">
                         {{ recipe.name }}
                     </a></h4>

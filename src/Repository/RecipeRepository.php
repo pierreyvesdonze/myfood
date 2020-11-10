@@ -59,4 +59,28 @@ class RecipeRepository extends ServiceEntityRepository
             ->getQuery()
             ->getArrayResult();
     }
+
+    public function findRecipiesByFilters($recipeMenu, $recipeCategory)
+    {
+        $qb = $this->createQueryBuilder('r');
+
+        $baseCondition = $qb->expr()->andX(
+            $qb->expr()->eq('r.recipeMenu', ':reM')
+        );
+
+        if ($recipeMenu) {
+            $optionalCondition = $qb->expr()->andX(
+                $qb->expr()->eq('r.recipeCategory', ':rC')
+            );
+
+            $qb->where($qb->expr()->orX($baseCondition, $optionalCondition))
+                ->setParameter('rC', $recipeCategory);
+        } else {
+            $qb->where($baseCondition);
+        }
+
+        $qb->setParameter('reM', $recipeMenu);
+
+        return $qb->getQuery()->getResult();
+    }
 }
