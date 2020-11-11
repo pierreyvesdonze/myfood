@@ -10,7 +10,12 @@
 
                 {# Picture #}
                 <div class="card-img">
+                    {% if recipe.recipePhoto %}
                     <img src="{{ asset('uploads/' ~ recipe.recipePhoto) }}" alt="" class="card-img-top img-recipe-list">
+                    {% else %}
+                    <img src="{{ asset('assets/images/empty-plate.jpeg') }}" alt="recipe-img"
+                    class="card-img-top img-recipe-list">
+                {% endif %}
                 </div>
             </div>
 

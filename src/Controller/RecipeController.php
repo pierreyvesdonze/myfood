@@ -340,6 +340,7 @@ class RecipeController extends AbstractController
             $photoName = $recipe->getRecipePhoto();
             $fileSystem->remove($dir . '/' . $photoName);
         }
+
         $this->em->remove($recipe);
         $this->em->flush();
 
