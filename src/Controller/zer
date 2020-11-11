@@ -1,0 +1,39 @@
+    /**
+     * @Route("/favs/list", name="user_favs_recipe_list")
+     */
+    public function userFavsRecipeList(
+        RecipeRepository $recipeRepository,
+        RecipeCategoryRepository $categoriesRepo,
+        RecipeMenuRepository $menusRepo,
+        TagRepository $tagRepository,
+        ShoppingListRepository $shopRepo,
+        UserFavRecipeRepository $userFavRepo,
+        Request $request
+    ) {
+        if (!null == $this->getUser()) {
+            $user = $this->getUser();
+        }
+
+        dump($request->getPathInfo());
+
+        $favs       = $userFavRepo->findExistingFavByUser($user->getId());
+        $categories = $categoriesRepo->findAll();
+        $menus      = $menusRepo->findAll();
+        $tags       = $tagRepository->findAll();
+        $shopLists  = $shopRepo->findAll();
+
+        $recipies = [];
+        foreach ($favs as $i => $fav) {
+            $recipies[$i] = $recipeRepository->findBy([
+                'id' => $fav->getRecipeId()
+            ]);
+        }
+
+        return $this->render('recipe/favs.html.twig', [
+            'recipies'      => $recipies,
+            'categories'    => $categories,
+            'menus'         => $menus,
+            'tags'          => $tags,
+            'shopLists'     => $shopLists
+        ]);
+    }

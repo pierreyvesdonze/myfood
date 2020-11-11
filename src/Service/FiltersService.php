@@ -28,7 +28,6 @@ class FiltersService extends AbstractController
             $return['form'] = $form->createView();
             $return['recipies'] = $recipies;
 
-            dd($return);
             return $return;
         }
     }
