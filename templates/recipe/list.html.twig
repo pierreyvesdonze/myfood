@@ -5,16 +5,20 @@
 <main>
     <section class='recipies-list-container'>
 
+    
         {% if recipies is empty %}
         <h2>Vous n'avez aucune recette enregistrée</h2>
         {% else %}
+           
+      
 
         {% for i, recipe in recipies %}
        
         {% include "recipe/_recipe.template.html.twig" %}
 
         {% endfor %}
-        {% endif %
+        {% endif %}
+
         
     </section>
 </main>
