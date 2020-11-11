@@ -16,6 +16,7 @@ use App\Repository\RecipeRepository;
 use App\Repository\ShoppingListRepository;
 use App\Repository\TagRepository;
 use App\Repository\UserFavRecipeRepository;
+use App\Service\RecipeListService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -47,32 +48,59 @@ class RecipeController extends AbstractController
     }
 
     /**
-     * @Route("/list/{filters}",
-     *  name="user_recipe_list",
-     *  defaults={"filters" = null}
-     * )
+     * @Route("/list",
+     *  name="recipe_list")
      * 
-     * @param $filters
+     * @Route("/user/list",
+     *  name="user_recipe_list")
+     * 
+     * @Route("/favs/list", name="user_favs_recipe_list")
+     *
      */
     public function userRecipeList(
         RecipeCategoryRepository $categoriesRepo,
+        RecipeRepository $recipeRepository,
         RecipeMenuRepository $menusRepo,
         TagRepository $tagRepository,
         ShoppingListRepository $shopRepo,
         UserFavRecipeRepository $userFavRepo,
-        $filters
+        RecipeListService $RecipeListService,
+        Request $request
+    
     ) {
         if (!null == $this->getUser()) {
-            $user = $this->getUser();
+            $currentUser = $this->getUser();
         }
 
-        $recipies   = $user->getRecipies();
+        $pathInfo   = $request->getPathInfo();
         $categories = $categoriesRepo->findAll();
         $menus      = $menusRepo->findAll();
         $tags       = $tagRepository->findAll();
         $shopLists  = $shopRepo->findAll();
-        $favs       = $userFavRepo->findExistingFavByUser($user->getId());
-        $filters    = [];
+        $favs       = $userFavRepo->findExistingFavByUser($currentUser->getId());
+
+        if ("/recipe/user/list" == $pathInfo) {
+            $recipies   = $currentUser->getRecipies();
+        } elseif ("/recipe/list" == $pathInfo) {
+            $recipies = $recipeRepository->findAll();
+        } elseif ("/recipe/favs/list" == $pathInfo) {
+            $recipies = [];
+            foreach ($favs as $i => $fav) {
+                $recipies[$i] = $recipeRepository->findBy([
+                    'id' => $fav->getRecipeId()
+                ]);
+            }
+
+            return $this->render('recipe/favs.html.twig', [
+                'recipies'      => $recipies,
+                'categories'    => $categories,
+                'menus'         => $menus,
+                'tags'          => $tags,
+                'shopLists'     => $shopLists
+            ]);
+        }
+    
+        // $array = $RecipeListService->getRecipiesList();
 
         return $this->render('recipe/list.html.twig', [
             'recipies'      => $recipies,
@@ -84,42 +112,6 @@ class RecipeController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/favs/list", name="user_favs_recipe_list")
-     */
-    public function userFavsRecipeList(
-        RecipeRepository $recipeRepository,
-        RecipeCategoryRepository $categoriesRepo,
-        RecipeMenuRepository $menusRepo,
-        TagRepository $tagRepository,
-        ShoppingListRepository $shopRepo,
-        UserFavRecipeRepository $userFavRepo
-    ) {
-        if (!null == $this->getUser()) {
-            $user = $this->getUser();
-        }
-
-        $favs       = $userFavRepo->findExistingFavByUser($user->getId());
-        $categories = $categoriesRepo->findAll();
-        $menus      = $menusRepo->findAll();
-        $tags       = $tagRepository->findAll();
-        $shopLists  = $shopRepo->findAll();
-
-        $recipies = [];
-        foreach ($favs as $i => $fav) {
-            $recipies[$i] = $recipeRepository->findBy([
-                'id' => $fav->getRecipeId()
-            ]);
-        }
-
-        return $this->render('recipe/favs.html.twig', [
-            'recipies'      => $recipies,
-            'categories'    => $categories,
-            'menus'         => $menus,
-            'tags'          => $tags,
-            'shopLists'     => $shopLists
-        ]);
-    }
 
     /**
      * @Route("/view/{id}", name="recipe_view", methods={"GET"})
