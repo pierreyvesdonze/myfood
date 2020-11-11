@@ -249,15 +249,17 @@ class SearchController extends AbstractController
             $recipeCategory = $form->get('recipeCategory')->getData();
             $tags = $form->get('tags')->getData();
 
-            $resultSearch = $recipeRepository->findRecipiesByFilters($recipeMenu, $recipeCategory);
-            dd($resultSearch);
-
-            return $this->redirectToRoute('user_recipe_list', [
-                'resultSearch' => $resultSearch
+            $recipies = $recipeRepository->findRecipiesByFilters($recipeMenu, $recipeCategory);
+            
+            // return $this->redirectToRoute('user_recipe_list', [
+            //     'recipies' => $recipies,
+            // ]);
+            return $this->render('search/result.search.html.twig', [
+                'recipies' => $recipies
             ]);
         }
 
-        return $this->render('search/filters.search.html.twig', [
+        return $this->render('modals/_filters.form.html.twig', [
             'form' => $form->createView(),
         ]);
     }

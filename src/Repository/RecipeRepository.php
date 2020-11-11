@@ -64,23 +64,50 @@ class RecipeRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('r');
 
-        $baseCondition = $qb->expr()->andX(
-            $qb->expr()->eq('r.recipeMenu', ':reM')
+        $menuCondition = $qb->expr()->andX(
+            $qb->expr()->eq('r.recipeMenu', ':rM')
+        );
+        $recipeCondition = $qb->expr()->andX(
+            $qb->expr()->eq('r.recipeCategory', ':rC')
         );
 
-        if ($recipeMenu) {
-            $optionalCondition = $qb->expr()->andX(
-                $qb->expr()->eq('r.recipeCategory', ':rC')
-            );
+        if ($recipeMenu && $recipeCategory) {
 
-            $qb->where($qb->expr()->orX($baseCondition, $optionalCondition))
-                ->setParameter('rC', $recipeCategory);
-        } else {
-            $qb->where($baseCondition);
+            $qb->where($qb->expr()->andX($menuCondition, $recipeCondition));
+        } elseif ($recipeMenu || $recipeCategory) {
+            $qb->where($qb->expr()->orX($menuCondition, $recipeCondition));
         }
 
-        $qb->setParameter('reM', $recipeMenu);
-
+        $qb->setParameter('rM', $recipeMenu);
+        $qb->setParameter('rC', $recipeCategory);
+        
         return $qb->getQuery()->getResult();
     }
+
+    // public function findRecipiesByFilters($recipeMenu, $recipeCategory)
+    // {
+    //     $qb = $this->createQueryBuilder('r');
+
+    //     $menuCondition = $qb->expr()->andX(
+    //         $qb->expr()->eq('r.recipeMenu', ':rM')
+    //     );
+    //     $recipeCondition = $qb->expr()->andX(
+    //         $qb->expr()->eq('r.recipeCategory', ':rC')
+    //     );
+
+    //     if ($recipeMenu) {
+
+    //         $qb->where($qb->expr()->orX($menuCondition, $recipeCondition))
+    //             ->setParameter('rC', $recipeCategory);
+
+    //         $qb->setParameter('rM', $recipeMenu);
+    //     } else {
+    //         //$qb->where($menuCondition);
+    //         $qb->where($qb->expr()->eq('r.recipeCategory', ':rC'));
+    //         $qb->setParameter('rC', $recipeCategory);
+    //     }
+
+
+    //     return $qb->getQuery()->getResult();
+    // }
 }

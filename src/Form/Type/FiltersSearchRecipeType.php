@@ -43,7 +43,7 @@ class FiltersSearchRecipeType extends AbstractType
             [
                 'label' => 'Filtrer',
                 'attr' => [
-                    'class' => 'button submit-search',
+                    'class' => 'button-save',
                 ],
             ]
         );

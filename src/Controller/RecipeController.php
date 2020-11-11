@@ -105,6 +105,7 @@ class RecipeController extends AbstractController
         $tags       = $tagRepository->findAll();
         $shopLists  = $shopRepo->findAll();
 
+        $recipies = [];
         foreach ($favs as $i => $fav) {
             $recipies[$i] = $recipeRepository->findBy([
                 'id' => $fav->getRecipeId()
@@ -132,7 +133,7 @@ class RecipeController extends AbstractController
         $hoursCook    = $timeCook->format('H');
         $minutesCook  = $timeCook->format('i');
         $shopLists    = $shopRepo->findAll();
-        
+
 
         return $this->render('recipe/view.html.twig', [
             'recipe'        => $recipe,
@@ -435,7 +436,7 @@ class RecipeController extends AbstractController
             if ($isFavExist) {
                 $this->em->remove($isFavExist[0]);
                 $this->em->flush();
-            } 
+            }
         }
 
         return $this->json([

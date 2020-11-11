@@ -1,0 +1,36 @@
+
+
+
+<div class="filters-container">
+
+    {# Menus #}
+    <div class="container">
+        {{ form_start(form) }}
+        <div class="filters">
+            <h2>Menu</h2>
+            {{ form_row(form.recipeMenu) }}
+        </div>
+
+        <hr class="hr-white">
+
+        {# Categories #}
+        <div class="filters">
+            <h2>Préférences</h2>
+            {{ form_row(form.recipeCategory) }}
+        </div>
+
+        <hr class="hr-white">
+
+        {# Tags #}
+        <div class="filters">
+            <h2>Tags</h2>
+            {{ form_row(form.tags) }}
+        </div>
+
+        {# save #}
+        {{ form_row(form.save) }}
+        <br>
+        <input type="button" class="select-all" value="Tout sélectionner" />
+        {{ form_end(form) }}
+    </div>
+</div>

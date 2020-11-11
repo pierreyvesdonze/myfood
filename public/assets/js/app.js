@@ -13,7 +13,7 @@ var app = {
 		//COLLAPSE
 		$('.button-icon').on('click', app.closeCollapse);
 		$('.button-icon').on('click', app.activeButton);
-		$('.filters-menu').on('click', app.lockFiltersCollapse);
+		$('.filters-menu').on('click', app.setupFiltersCollapse);
 
 		//CREATE LIST INGREDIENTS
 		$('.search-recipe-form').on('keypress', app.searchByIngredients);
@@ -26,7 +26,7 @@ var app = {
 
 		//FILTERS MODAL
 		$('#submit-form-filters').click(app.closeFiltersModal);
-		$('.filters :checkbox').on('change', app.filtersRecipies);
+		//$('.filters :checkbox').on('change', app.filtersRecipies);
 		$('.select-all').click(app.uncheckAll);
 
 		//SHOPPING LISTS & ARTICLES & MODAL
@@ -62,8 +62,33 @@ var app = {
 
 	},
 
-	lockFiltersCollapse: function (e) {
+	setupFiltersCollapse: function (e) {
 		$('#filters-nav *').addClass('show-protected');
+
+		// let dataPouet = "iet"
+
+		// $.ajax(
+		// 	{
+		// 		url: Routing.generate('user_recipe_list'),
+		// 		method: "POST",
+		// 		dataType: "json",
+		// 		data: dataPouet
+		// 	}).done(function (response) {
+		// 		if (null !== response) {
+		// 			console.log('ok : ' + JSON.stringify(response));
+		// 			document.querySelector(
+		// 				"#loader").style.visibility = "visible";
+		// 			setTimeout(function () {
+		// 				location.reload();
+		// 			}, 2000);
+		// 		} else {
+		// 			console.log('Problème');
+		// 		}
+		// 	}).fail(function (jqXHR, textStatus, error) {
+		// 		console.log(jqXHR);
+		// 		console.log(textStatus);
+		// 		console.log(error);
+		// 	});
 	},
 
 	activeButton: function (e) {
@@ -86,28 +111,27 @@ var app = {
 	/**
 	 * FILTERS
 	 */
-	filtersRecipies: function (e) {
-		e.preventDefault();
+	// filtersRecipies: function (e) {
+	// 	e.preventDefault();
 
-		const checks = $('.filters :checkbox'),
-			boxes = $('.card-recipe-list'),
-			matches = {};
+	// 	const checks = $('.filters :checkbox'),
+	// 		boxes = $('.card-recipe-list'),
+	// 		matches = {};
 
-		checks.filter(':checked').each(function () {
-			let name = $(this).attr('name');
-			matches[name] = (matches[name] || []);
-			matches[name].push('[data-' + name + '="' + $(this).data(name) + '"]');
-		});
+	// 	checks.filter(':checked').each(function () {
+	// 		let name = $(this).attr('name');
+	// 		matches[name] = (matches[name] || []);
+	// 		matches[name].push('[data-' + name + '="' + $(this).data(name) + '"]');
+	// 	});
 
-		console.log(matches)
+	// 	console.log(matches)
 
 
-		const menus = matches.menu ? matches.menu.join() : '*';
-		// const categories = matches.category ? matches.category.join() : '*';
-		boxes.hide().filter(menus).show();
-		console.log(menus)
-		console.log(boxes)
-	},
+	// 	const menus = matches.menu ? matches.menu.join() : '*';
+	// 	boxes.hide().filter(menus).show();
+	// 	console.log(menus)
+	// 	console.log(boxes)
+	// },
 
 	closeFiltersModal: function () {
 		$('.collapse').removeClass('show')
@@ -542,8 +566,6 @@ var app = {
 			return false;
 		}
 	}
-
-
 };
 
 // App Loading
