@@ -1,45 +1,37 @@
 <div class="filters-container">
 
-    {# Menus #}
     <div class="container">
         <div class="filters">
+
+            {# Menus #}
             <h2>Menu</h2>
-            {% for menu in menus %}
-            <input type="checkbox" id="input-recipe-menu" name="menu" value="{{ menu }}" data-menu="{{ menu }}">
-            <label for="input-recipe-menu" class="filters-label">
-                <span>{{ menu }}</span>
-            </label>
-            {% endfor %}
+            <form action="{{ path('recipe_list') }}" class="filters-form" method="POST">
+            <select name="filter-recipies-menu" id="filter-recipies-menu">
+                <option value="">--Choisissez un type de plat--</option>
+                {% for menu in menus %}
+                <option value="{{ menu }}" data-menu="{{ menu.id }}">{{ menu }}</option>
+                {% endfor %}
+            </select>
+
+            <hr class="hr">
+
+            {# Categories #}
+            <h2>Catégorie</h2>
+            <select name="filter-recipies-category" id="filter-recipies-category">
+                <option value="">--Choisissez une catégorie--</option>
+                {% for category in categories %}
+                <option value="{{ category }}" data-category="{{ category.id }}">{{ category }}
+                </option>
+                {% endfor %}
+            </select>
+
+            <br><br>
+
+            <button type="submit" id="submit-form-filters" class="button-save">Filtrer</button>
+            <br>
+            <br>
+            <input type="button" class="select-all" value="Tout sélectionner" />
+
+            </form>
         </div>
-
-        <hr class="hr-white">
-
-        {# Categories #}
-        <div class="filters">
-            <h2>Préférences</h2>
-            {% for category in categories %}
-            <input type="checkbox" id="input-recipe-category" name="category" value="{{ category }}"
-                data-category="{{ category }}">
-            <label for="input-recipe-menu" id="input-recipe-categpry" class="filters-label">
-                <span>{{ category }}</span>
-            </label>
-            {% endfor %}
-        </div>
-
-        <hr class="hr-white">
-
-        {# Tags #}
-        <div class="filters">
-            <h2>Tags</h2>
-            {% for tag in tags %}
-            <input type="checkbox" name="tags" value="{{ tag }}" data-tag="{{ tag }}">
-            {{ tag }}
-            {% endfor %}
-        </div>
-
-        <button type="button" id="submit-form-filters" class="button-save">Ok</button>
-        <br>
-        <input type="button" class="select-all" value="Tout sélectionner" />
-
     </div>
-</div>

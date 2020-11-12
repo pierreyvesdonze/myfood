@@ -25,8 +25,8 @@ var app = {
 		$('.removeFav').click(app.removeRecipeFromFavs);
 
 		//FILTERS MODAL
-		$('#submit-form-filters').click(app.closeFiltersModal);
-		//$('.filters :checkbox').on('change', app.filtersRecipies);
+		//$('#submit-form-filters').click(app.closeFiltersModal);
+		// $('#submit-form-filters').on('click', app.filtersRecipies);
 		$('.select-all').click(app.uncheckAll);
 
 		//SHOPPING LISTS & ARTICLES & MODAL
@@ -63,32 +63,46 @@ var app = {
 	},
 
 	setupFiltersCollapse: function (e) {
+		e.preventDefault();
+
 		$('#filters-nav *').addClass('show-protected');
+		let recipies = $('.card-recipe-list');
 
-		// let dataPouet = "iet"
+		// $('#submit-form-filters').on('click', function () {
+		// 	let menuId = $('#filter-recipies-menu option:selected').data('menu');
+		// 	let categoryId = $('#filter-recipies-category option:selected').data('category');
 
-		// $.ajax(
-		// 	{
-		// 		url: Routing.generate('user_recipe_list'),
-		// 		method: "POST",
-		// 		dataType: "json",
-		// 		data: dataPouet
-		// 	}).done(function (response) {
-		// 		if (null !== response) {
-		// 			console.log('ok : ' + JSON.stringify(response));
-		// 			document.querySelector(
-		// 				"#loader").style.visibility = "visible";
-		// 			setTimeout(function () {
-		// 				location.reload();
-		// 			}, 2000);
-		// 		} else {
-		// 			console.log('Problème');
-		// 		}
-		// 	}).fail(function (jqXHR, textStatus, error) {
-		// 		console.log(jqXHR);
-		// 		console.log(textStatus);
-		// 		console.log(error);
-		// 	});
+		// 	const dataArray = {
+		// 		'menuId': menuId,
+		// 		'categoryId': categoryId
+		// 	};
+		
+		// 	console.log(dataArray)
+		// 	$.ajax(
+		// 		{
+		// 			url: Routing.generate('advanced_filters_list'),
+		// 			method: "POST",
+		// 			dataType: "json",
+		// 			data: JSON.stringify(dataArray)
+
+		// 		}).done(function (response) {
+		// 			if (null !== response) {
+		// 				console.log('ok : ' + JSON.stringify(response));
+		// 				document.querySelector(
+		// 					"#loader").style.visibility = "visible";
+		// 				setTimeout(function () {
+		// 					location.reload();
+		// 				}, 2000);
+		// 			} else {
+		// 				console.log('Problème');
+		// 			}
+		// 		}).fail(function (jqXHR, textStatus, error) {
+		// 			console.log(jqXHR);
+		// 			console.log(textStatus);
+		// 			console.log(error);
+		// 		});
+
+		//  });
 	},
 
 	activeButton: function (e) {
@@ -111,30 +125,32 @@ var app = {
 	/**
 	 * FILTERS
 	 */
-	// filtersRecipies: function (e) {
-	// 	e.preventDefault();
+	filtersRecipies: function (e) {
+		e.preventDefault();
 
-	// 	const checks = $('.filters :checkbox'),
-	// 		boxes = $('.card-recipe-list'),
-	// 		matches = {};
+		console.log($('#filter.recipies-menu'))
 
-	// 	checks.filter(':checked').each(function () {
-	// 		let name = $(this).attr('name');
-	// 		matches[name] = (matches[name] || []);
-	// 		matches[name].push('[data-' + name + '="' + $(this).data(name) + '"]');
-	// 	});
+		// 	const checks = $('.filters :checkbox'),
+		// 		boxes = $('.card-recipe-list'),
+		// 		matches = {};
 
-	// 	console.log(matches)
+		// 	checks.filter(':checked').each(function () {
+		// 		let name = $(this).attr('name');
+		// 		matches[name] = (matches[name] || []);
+		// 		matches[name].push('[data-' + name + '="' + $(this).data(name) + '"]');
+		// 	});
+
+		// 	console.log(matches)
 
 
-	// 	const menus = matches.menu ? matches.menu.join() : '*';
-	// 	boxes.hide().filter(menus).show();
-	// 	console.log(menus)
-	// 	console.log(boxes)
-	// },
+		// 	const menus = matches.menu ? matches.menu.join() : '*';
+		// 	boxes.hide().filter(menus).show();
+		// 	console.log(menus)
+		// 	console.log(boxes)
+	},
 
 	closeFiltersModal: function () {
-		$('.collapse').removeClass('show')
+		//$('.collapse').removeClass('show')
 	},
 
 	uncheckAll: function () {
@@ -170,18 +186,12 @@ var app = {
 
 		let className = '.add-shop-select' + currentId.toString();
 
-		console.log(currentId)
-		console.log(className)
 		let shopListToAddId = $(className).find(':selected').attr("data-value");
 
 		const jsonShopList = {
 			'currentId': currentId,
 			'shopListToAddId': shopListToAddId
 		};
-
-		console.log(currentId);
-		console.log(jsonShopList);
-		console.log(shopListToAddId);
 
 		$.ajax(
 			{
@@ -573,7 +583,7 @@ document.addEventListener('DOMContentLoaded', app.init);
 
 // Close opened collapsed nav
 $(document).click(function (e) {
-	console.log(e.target);
+
 	if (!$(e.target).hasClass('show-protected')) {
 		$('.collapse').removeClass('show')
 	}

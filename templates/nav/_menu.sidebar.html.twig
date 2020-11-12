@@ -62,7 +62,9 @@ COLLAPSE
     </div>
 
     <!--***************************FILTERS****************************-->
-    {% if app.request.get('_route') matches '/user_recipe_list/' %}
+    {% set matchingRoute = app.request.get('_route') %}
+
+    {% if matchingRoute matches '/recipe_list/' or matchingRoute matches '/user_recipe_list/' or matchingRoute matches '/user_favs_recipe_list/' %}
     <div class="row sub-nav">
         <div class="col">
             <div class="collapse" id="filters-nav">
@@ -88,8 +90,11 @@ COLLAPSE
                 <div class="card card-body supercharged-menu">
                     <ul>
                         <li>
-                            <a href="{{ path('user_recipe_list') }}">Mes listes de courses</a>
-                            <a href="{{ path('recipe_add') }}">Créer une liste de courses</a>
+                            <a href="{{ path('shopping_list_list') }}">Mes listes de courses</a>
+                            <a href="#">Créer une liste de courses</a>
+                            <div class="fridge-link">
+                                <a href="{{ path('search_list_by_ingredients') }}">Mon frigo</a>
+                            </div>
                         </li>
                     </ul>
                 </div>

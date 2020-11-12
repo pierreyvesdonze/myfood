@@ -1,13 +1,13 @@
 {% if favs is defined %}
 
 <div class="card text-center card-recipe-list">
-    {% if favs is defined %}
+
     <div class="button-add {% for fav in favs %}{% if fav is not empty and fav.recipeId == recipe.id %} isFav {% endif %}{% endfor %}"
         data-id="{{recipe.id}}"><span>
             &hearts;
         </span>
     </div>
-    {% endif %}
+
 
     {% else %}
     <div class="card text-center fav-recipe-list">
@@ -96,15 +96,13 @@
 
             <hr class="hr">
 
-            <div class="tags">
+            {# <div class="tags">
                 {% if recipe.tags is not null %}
                 {% for tag in recipe.tags %}
                 #{{tag}}
                 {% endfor %}
                 {% endif %}
-            </div>
-
-            <hr class="hr">
+            </div> #}
 
 
             <!--***************************ADD TO SHOPPING LIST****************************-->

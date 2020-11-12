@@ -50,7 +50,61 @@ class RecipeController extends AbstractController
     /**
      * @Route("/list",
      *  name="recipe_list")
-     * 
+     */
+    public function allRecipies(
+        RecipeCategoryRepository $categoriesRepo,
+        RecipeRepository $recipeRepository,
+        RecipeMenuRepository $menusRepo,
+        TagRepository $tagRepository,
+        ShoppingListRepository $shopRepo,
+        UserFavRecipeRepository $userFavRepo,
+        Request $request
+    )
+    {
+        if (!null == $this->getUser()) {
+            $currentUser = $this->getUser();
+        }
+
+        $recipeMenu = '';
+        $recipeCategory = '';
+        if ($request->isMethod('POST')) {
+            if (!empty($_POST['filter-recipies-menu'])) {
+                $recipeMenuStr = $_POST['filter-recipies-menu'];
+                $recipeMenuRepo = $menusRepo->findOneBy([
+                    'name' => $recipeMenuStr
+                ]);
+                $recipeMenu = $recipeMenuRepo->getId();
+            }
+            if (!empty($_POST['filter-recipies-category'])) {
+                $recipeCategoryStr = $_POST['filter-recipies-category'];
+                $recipeCategRepo = $categoriesRepo->findOneBy([
+                    'name' => $recipeCategoryStr
+                ]);
+                $recipeCategory = $recipeCategRepo->getId();
+            }
+            $recipies = $recipeRepository->findRecipiesByFilters($recipeMenu, $recipeCategory);
+          
+        } else {
+            $recipies   = $recipeRepository->findAll();
+        }
+
+        $categories = $categoriesRepo->findAll();
+        $menus      = $menusRepo->findAll();
+        $tags       = $tagRepository->findAll();
+        $shopLists  = $shopRepo->findAll();
+        $favs       = $userFavRepo->findExistingFavByUser($currentUser->getId());
+
+        return $this->render('recipe/all.recipies.html.twig', [
+            'recipies'      => $recipies,
+            'favs'          => $favs,
+            'categories'    => $categories,
+            'menus'         => $menus,
+            'tags'          => $tags,
+            'shopLists'     => $shopLists
+        ]);
+    }
+
+    /**
      * @Route("/user/list",
      *  name="user_recipe_list")
      * 
@@ -64,9 +118,7 @@ class RecipeController extends AbstractController
         TagRepository $tagRepository,
         ShoppingListRepository $shopRepo,
         UserFavRecipeRepository $userFavRepo,
-        RecipeListService $RecipeListService,
         Request $request
-    
     ) {
         if (!null == $this->getUser()) {
             $currentUser = $this->getUser();
@@ -81,8 +133,6 @@ class RecipeController extends AbstractController
 
         if ("/recipe/user/list" == $pathInfo) {
             $recipies   = $currentUser->getRecipies();
-        } elseif ("/recipe/list" == $pathInfo) {
-            $recipies = $recipeRepository->findAll();
         } elseif ("/recipe/favs/list" == $pathInfo) {
             $recipies = [];
             foreach ($favs as $i => $fav) {
@@ -99,8 +149,6 @@ class RecipeController extends AbstractController
                 'shopLists'     => $shopLists
             ]);
         }
-    
-        // $array = $RecipeListService->getRecipiesList();
 
         return $this->render('recipe/list.html.twig', [
             'recipies'      => $recipies,

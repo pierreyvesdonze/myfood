@@ -63,23 +63,31 @@ class RecipeRepository extends ServiceEntityRepository
     public function findRecipiesByFilters($recipeMenu, $recipeCategory)
     {
         $qb = $this->createQueryBuilder('r');
-
+ 
         $menuCondition = $qb->expr()->andX(
             $qb->expr()->eq('r.recipeMenu', ':rM')
         );
+        $qb->setParameter('rM', $recipeMenu);
+
         $recipeCondition = $qb->expr()->andX(
             $qb->expr()->eq('r.recipeCategory', ':rC')
         );
+        $qb->setParameter('rC', $recipeCategory);
+        //$tagsCondition = 
+            // $qb->join('r.tags', 't')
+            //     ->where('r.name IN (:rT)')
+            // ->setParameter('rT', array($recipeTags));
 
         if ($recipeMenu && $recipeCategory) {
 
             $qb->where($qb->expr()->andX($menuCondition, $recipeCondition));
         } elseif ($recipeMenu || $recipeCategory) {
             $qb->where($qb->expr()->orX($menuCondition, $recipeCondition));
+        } else {
+            return false;
         }
 
-        $qb->setParameter('rM', $recipeMenu);
-        $qb->setParameter('rC', $recipeCategory);
+        //$qb->setParameter('rT', $recipeTags);
         
         return $qb->getQuery()->getResult();
     }

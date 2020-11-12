@@ -1,0 +1,143 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+<main>
+    <section class='recipies-list-container'>
+
+        {% if recipies is empty %}
+        <h2>Aucune recette trouvée</h2>
+        {% else %}
+
+        {% for i, recipe in recipies %}
+
+        <div class="card text-center card-recipe-list" data-menu="{{ recipe.recipeMenu.id }}" data-category="{{ recipe.recipeCategory.id }}">
+            {% if favs is defined %}
+
+            <div class="button-add {% for fav in favs %}{% if fav is not empty and fav.recipeId == recipe.id %} isFav {% endif %}{% endfor %}"
+                data-id="{{recipe.id}}"><span>
+                    &hearts;
+                </span>
+            </div>
+            {% endif %}
+
+            <!--***************************PHOTO****************************-->
+            <div class="img-list-container">
+                <a href="{{ path('recipe_view', {'id': recipe.id}) }}">
+                    {% if recipe.recipePhoto %}
+                    <img src="{{ asset('uploads/' ~ recipe.recipePhoto) }}" alt="recipe-img"
+                        class="card-img-top img-recipe-list">
+                    {% else %}
+                    <img src="{{ asset('assets/images/empty-plate.jpeg') }}" alt="recipe-img"
+                        class="card-img-top img-recipe-list">
+                    {% endif %}
+                </a>
+            </div>
+
+            <!--***************************BODY****************************-->
+            <div class="card-body" data-menu="{{ recipe.recipeMenu }}" data-category="{{ recipe.recipeCategory }}">
+                <h4 class="card-title"> <a href="{{ path('recipe_view', {'id': recipe.id}) }}">
+                        {{ recipe.name }}
+                    </a></h4>
+                <div class="card-text">
+
+                    {# Summary #}
+                    <div class="recipe-summary">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th><i class="fas fa-user orange-icon"></i></th>
+                                    <th><i class="fas fa-clock orange-icon"></i></th>
+                                    <th><i class="fas fa-temperature-high orange-icon"></i></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{ recipe.person }}</td>
+                                    <td>
+                                        {% if recipe.timePrepa %}
+                                        {{ recipe.timePrepa|date('H:i') }}
+                                        {% else %}
+                                        -
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if recipe.timeCook %}
+                                        {{ recipe.timeCook|date('H:i') }}
+                                        {% else %}
+                                        -
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!--***************************INFOS****************************-->
+                <div class="tab-content">
+
+                    <div class="tab-pane" id="time-tab" role="tabpanel" aria-labelledby="time-tab">
+                        <i class="fa fa-user"></i>
+                        {{ recipe.person }}
+
+                        {% if recipe.person > 1 %}
+                        personnes
+                        {% else %}
+                        personne
+                        {% endif %}
+
+                        <br>
+
+                        <i class="fas fa-temperature-high"></i>
+                        {{ recipe.timePrepa|date("H\\hi") }} min
+                        <br>
+
+                        <i class="fas fa-clock"></i>
+                        {{ recipe.timeCook|date("H\\hi\\") }} min
+                    </div>
+                </div>
+
+                <hr class="hr">
+
+                <!--***************************ADD TO SHOPPING LIST****************************-->
+
+                <div class="add-to-shop-container">
+
+                    <a class="button add-to-shoplist" data-toggle="collapse" href="#modal-add-to-shop{{i}}"
+                        role="button" aria-expanded="false" aria-controls="modal-add-to-shop">
+                        <input type="hidden" data-value="{{ recipe.id }}">
+                        <i class="fa fa-cart-arrow-down fa-2x"></i>
+                    </a>
+
+                    <a href="#" class="button shoplist-create">
+                        <input type="hidden" data-value="{{ recipe.id }}">
+                        <i class="fa fa-cart-plus fa-2x"></i>
+                    </a>
+
+                    {% if is_granted('edit', recipe) %}
+                    <a href="{{ path('recipe_update',{'id': recipe.id}) }}" class="button">
+                        <i class="fa fa-cog fa-2x"></i>
+                    </a>
+                    <a href="{{ path('recipe_delete',{'id': recipe.id}) }}" class="button"
+                        onclick="return confirm('Supprimer cette recette ?')">
+                        <i class="fa fa-trash fa-2x"></i>
+                    </a>
+                    {% endif %}
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="collapse multi-collapse" id="modal-add-to-shop{{i}}">
+                            {% include "recipe/addtoshoplist.html.twig" %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+        {% endif %}
+
+    </section>
+</main>
+{% endblock %}
