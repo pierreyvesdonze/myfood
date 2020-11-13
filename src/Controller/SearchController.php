@@ -202,27 +202,37 @@ class SearchController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $dataFormIngredients = $form->get('ingredient')->getData();
 
+            $recipeIngredients = [];
+            $userRequestIngr = [];
             foreach ($dataFormIngredients as $key => $dataFormIngredient) {
 
                 /**
                  * @var RecipeIngredient()
                  */
-                $recipeIngredients[] = $recipeIngredientRepository->findBy([
+                $recipeIngredients[$key] = $recipeIngredientRepository->findBy([
                     'name' => $dataFormIngredient->getName()
                 ]);
+
+                $userRequestIngr[] = $dataFormIngredient->getName();
+         
             }
-
+            
+            // Recipies
             $recipiesArray = [];
-
+            $recipeIngrArray = [];
             foreach ($recipeIngredients as $key => $value) {
                 foreach ($value as $recipe) {
                     $recipiesArray[] = $recipe->getRecipe();
+                    $recipeIngrArray[] = $recipe->getName();
                 }
             }
 
+            $missingIngredients = array_diff($userRequestIngr, $recipeIngrArray);
+
             if (!null == $recipiesArray) {
-                return $this->render('recipe/list.html.twig', [
+                return $this->render('search/result.search.html.twig', [
                     'recipies' => $recipiesArray,
+                    'missingIngredients' => $missingIngredients
                 ]);
             } else {
                 $this->addFlash("error", "Désolé, nous n'avons pas trouvé de recette correspondante");

@@ -1,7 +1,85 @@
-{% extends "base.html.twig" %} 
+{% extends "base.html.twig" %}
 
 {% block body %}
-{% for recipe in recipies %}
-    {{ recipe.name }}
-{% endfor %}
+<main>
+    {% for recipe in recipies %}
+    <div class="card mb-12 m-4">
+      <div class="row no-gutters container-shadow">
+        <div class="col-md-4">
+          <!--***************************PHOTO****************************-->
+
+          <a href="{{ path('recipe_view', {'id': recipe.id}) }}">
+            {% if recipe.recipePhoto %}
+            <img src="{{ asset('uploads/' ~ recipe.recipePhoto) }}" alt="recipe-img" class="card-img-top img-result-search">
+            {% else %}
+            <img src="{{ asset('assets/images/empty-plate.jpeg') }}" alt="recipe-img" class="card-img-top img-result-search">
+            {% endif %}
+          </a>
+
+        </div>
+        <div class="col-md-3">
+          <h5 class="card-title-view">{{ recipe.name }}</h5>
+          <div class="recipe-resume">
+            <i class="fa fa-user orange-icon"></i>
+            {{ recipe.person }}
+
+            {% if recipe.person > 1 %}
+            personnes
+            {% else %}
+            personne
+            {% endif %}
+
+            <br>
+
+            <i class="fas fa-temperature-high orange-icon"></i>
+            {{ recipe.timePrepa|date("H\\hi") }} min
+            <br>
+
+            <i class="fas fa-clock orange-icon"></i>
+            {{ recipe.timeCook|date("H\\hi\\") }} min
+        </div>
+        </div>
+        <div class="col-md-5">
+          <div class="card-body">
+            <div class="scrollable-auto">
+              <div class="left-right">
+
+                {# Recipe ingredients #}
+                <div class="left">
+                  <ul>
+                    <i class="material-icons md-36">fastfood</i>
+                    {% for ingredient in recipe.recipeIngredients %}
+                    <li class="available">
+                      {{ ingredient }}
+                    </li>
+                    {% endfor %}
+                  </ul>
+              
+                </div>
+
+                {# Request ingredients #}
+                <div class="right">
+                  <ul>
+                    <i class="material-icons md-36">no_food</i>
+                    {% for requestIngredient in missingIngredients %}
+                    {% if requestIngredient not in recipe.RecipeIngredients %}
+                    <li class="unavailable">
+                      {{ requestIngredient }}
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                  </ul>
+              
+                </div>
+              </div>
+              <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+
+</main>
 {% endblock %}

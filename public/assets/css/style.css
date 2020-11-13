@@ -17,6 +17,8 @@ COLORS
   --link-button-color:  #0b2b4a;
   --header-button-color:  #2e2e2e;
   --progress-color: #74ad06;
+  --available-color: green;
+  --unavailable-color: red;
 }
 
 html, body {
@@ -92,10 +94,15 @@ a:hover {
 }
 
 .scrollable {
+  background-color: var(--tertiary-color) !important;
+  padding: 1em;
   overflow-y: scroll;
   height: 350px;
-  padding: 1em;
-  background-color: var(--tertiary-color) !important;
+}
+
+.scrollable-auto {
+  padding: 1em 2em;
+  height: auto;
 }
 
 .hr-white {
@@ -136,8 +143,9 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--orange-icon-color);
 }
 
-.orange-icon {
-  color: var(--orange-icon-color);
+.orange-icon,
+.material-icons {
+  color: var(--orange-icon-color) !important;
 }
 
 .nav-top-container i, .footer a i {
@@ -155,6 +163,14 @@ LISTS
 */
 ul li {
   list-style-type: none;
+}
+
+.available {
+  color: var(--available-color);
+}
+
+.unavailable {
+  color: var(--unavailable-color);
 }
 
 /*
@@ -426,9 +442,11 @@ BOOSTRAP
 
 .card-title-view {
   margin-left: 3.75rem;
+  margin-top: 1em;
 }
 
 .card-body {
+  padding: 0 !important;
   padding: 0 !important;
 }
 

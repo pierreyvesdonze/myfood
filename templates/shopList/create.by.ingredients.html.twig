@@ -5,23 +5,29 @@
 Yo
 {% endblock %}
 
-<div class="search-recipe-form">
+<main>
+<div class="scrollable">
 
-    {{ form_start(form) }}
-
-    {# Ingredients #}
-    <ul class="ingredients" data-prototype="{{ form_widget(form.ingredient.vars.prototype)|e('html_attr') }}">
-        {# iterate over each existing step and render its only field: name #}
-        {% for ingredient in form.ingredient %}
-        <li>{{ form_row(ingredient) }}</li>
-
-        <li class="li-ingredient">*</li>
-        {% endfor %}
-    </ul>
-
-    <div class="col">
-        {{ form_widget(form.save) }}
-        {{ form_end(form) }}
+    
+    <div class="search-recipe-form">
+        
+        {{ form_start(form) }}
+        
+        {# Ingredients #}
+        <ul class="ingredients" data-prototype="{{ form_widget(form.ingredient.vars.prototype)|e('html_attr') }}">
+            {# iterate over each existing step and render its only field: name #}
+            {% for ingredient in form.ingredient %}
+            <li>{{ form_row(ingredient) }}</li>
+            
+            <li class="li-ingredient">*</li>
+            {% endfor %}
+        </ul>
+        
+        <div class="col">
+            {{ form_widget(form.save) }}
+            {{ form_end(form) }}
+        </div>
     </div>
 </div>
+</main>
 {% endblock  %}

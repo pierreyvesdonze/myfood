@@ -11,7 +11,6 @@ var app = {
 		 */
 
 		//COLLAPSE
-		$('.button-icon').on('click', app.closeCollapse);
 		$('.button-icon').on('click', app.activeButton);
 		$('.filters-menu').on('click', app.setupFiltersCollapse);
 
@@ -23,11 +22,6 @@ var app = {
 		$('.close-addshop-modal').click(app.closeAddToShoplistModal);
 		$('.button-add').click(app.addRecipeToFavs);
 		$('.removeFav').click(app.removeRecipeFromFavs);
-
-		//FILTERS MODAL
-		//$('#submit-form-filters').click(app.closeFiltersModal);
-		// $('#submit-form-filters').on('click', app.filtersRecipies);
-		$('.select-all').click(app.uncheckAll);
 
 		//SHOPPING LISTS & ARTICLES & MODAL
 		$('.shoplist-create').click(app.shoplistCreate);
@@ -55,54 +49,11 @@ var app = {
 	 * *****************************
 	 */
 
-	closeCollapse: function (e) {
-
-		e.preventDefault();
-		//$('.collapse').removeClass('show');
-
-	},
-
+	// Prevent filters nav to uncollapse 
 	setupFiltersCollapse: function (e) {
 		e.preventDefault();
 
 		$('#filters-nav *').addClass('show-protected');
-		let recipies = $('.card-recipe-list');
-
-		// $('#submit-form-filters').on('click', function () {
-		// 	let menuId = $('#filter-recipies-menu option:selected').data('menu');
-		// 	let categoryId = $('#filter-recipies-category option:selected').data('category');
-
-		// 	const dataArray = {
-		// 		'menuId': menuId,
-		// 		'categoryId': categoryId
-		// 	};
-		
-		// 	console.log(dataArray)
-		// 	$.ajax(
-		// 		{
-		// 			url: Routing.generate('advanced_filters_list'),
-		// 			method: "POST",
-		// 			dataType: "json",
-		// 			data: JSON.stringify(dataArray)
-
-		// 		}).done(function (response) {
-		// 			if (null !== response) {
-		// 				console.log('ok : ' + JSON.stringify(response));
-		// 				document.querySelector(
-		// 					"#loader").style.visibility = "visible";
-		// 				setTimeout(function () {
-		// 					location.reload();
-		// 				}, 2000);
-		// 			} else {
-		// 				console.log('Problème');
-		// 			}
-		// 		}).fail(function (jqXHR, textStatus, error) {
-		// 			console.log(jqXHR);
-		// 			console.log(textStatus);
-		// 			console.log(error);
-		// 		});
-
-		//  });
 	},
 
 	activeButton: function (e) {
@@ -112,7 +63,6 @@ var app = {
 			if (!$(activeButton).hasClass('show')) {
 				$('.button-icon').blur();
 			}
-
 		}, 400);
 	},
 
@@ -122,43 +72,6 @@ var app = {
 		app.close.remove();
 	},
 
-	/**
-	 * FILTERS
-	 */
-	filtersRecipies: function (e) {
-		e.preventDefault();
-
-		console.log($('#filter.recipies-menu'))
-
-		// 	const checks = $('.filters :checkbox'),
-		// 		boxes = $('.card-recipe-list'),
-		// 		matches = {};
-
-		// 	checks.filter(':checked').each(function () {
-		// 		let name = $(this).attr('name');
-		// 		matches[name] = (matches[name] || []);
-		// 		matches[name].push('[data-' + name + '="' + $(this).data(name) + '"]');
-		// 	});
-
-		// 	console.log(matches)
-
-
-		// 	const menus = matches.menu ? matches.menu.join() : '*';
-		// 	boxes.hide().filter(menus).show();
-		// 	console.log(menus)
-		// 	console.log(boxes)
-	},
-
-	closeFiltersModal: function () {
-		//$('.collapse').removeClass('show')
-	},
-
-	uncheckAll: function () {
-		var checked = !$(this).data('checked');
-		$('input:checkbox').prop('checked', checked);
-		$(this).val(checked ? 'Tout désélectionner' : 'Tout sélectionner');
-		$(this).data('checked', checked);
-	},
 
 	/**
 	 * RECIPE
@@ -173,19 +86,10 @@ var app = {
 		});
 	},
 
-	closeAddToShoplistModal: function () {
-		let closeModal = $('.add-articles-section');
-		let modalContent = $('.add-articles-section *');
-		setTimeout(function () {
-			modalContent.css("visibility", "hidden")
-		}, 80);
-		closeModal.css("height", "0px");
-	},
 
 	sendToBackShopListToAdd: function (currentId) {
 
 		let className = '.add-shop-select' + currentId.toString();
-
 		let shopListToAddId = $(className).find(':selected').attr("data-value");
 
 		const jsonShopList = {
@@ -217,6 +121,10 @@ var app = {
 			});
 	},
 
+
+	/**
+	 * ADD RECIPE TO FAVS
+	 */
 	addRecipeToFavs: function (e) {
 		let recipeId = e.currentTarget.dataset.id;
 		e.preventDefault();
@@ -238,7 +146,6 @@ var app = {
 				console.log(textStatus);
 				console.log(error);
 			});
-
 	},
 
 	removeRecipeFromFavs: function (e) {
@@ -261,7 +168,6 @@ var app = {
 				console.log(textStatus);
 				console.log(error);
 			});
-
 	},
 
 	/**

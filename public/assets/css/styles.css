@@ -17,6 +17,8 @@ COLORS
   --link-button-color:  #0b2b4a;
   --header-button-color:  #2e2e2e;
   --progress-color: #74ad06;
+  --available-color: green;
+  --unavailable-color: red;
 }
 
 html, body {
@@ -92,10 +94,15 @@ a:hover {
 }
 
 .scrollable {
+  background-color: var(--tertiary-color) !important;
+  padding: 1em;
   overflow-y: scroll;
   height: 350px;
-  padding: 1em;
-  background-color: var(--tertiary-color) !important;
+}
+
+.scrollable-auto {
+  padding: 1em 2em;
+  height: auto;
 }
 
 .hr-white {
@@ -136,8 +143,9 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--orange-icon-color);
 }
 
-.orange-icon {
-  color: var(--orange-icon-color);
+.orange-icon,
+.material-icons {
+  color: var(--orange-icon-color) !important;
 }
 
 .nav-top-container i, .footer a i {
@@ -155,6 +163,14 @@ LISTS
 */
 ul li {
   list-style-type: none;
+}
+
+.available {
+  color: var(--available-color);
+}
+
+.unavailable {
+  color: var(--unavailable-color);
 }
 
 /*
@@ -426,9 +442,11 @@ BOOSTRAP
 
 .card-title-view {
   margin-left: 3.75rem;
+  margin-top: 1em;
 }
 
 .card-body {
+  padding: 0 !important;
   padding: 0 !important;
 }
 
@@ -1071,6 +1089,12 @@ main {
           box-shadow: 3px 5px 16px -9px rgba(0, 0, 0, 0.5), 19px 21px 54px -14px #d6d6d6;
 }
 
+.container-shadow {
+  -webkit-box-shadow: -7px 12px 19px -8px rgba(0, 0, 0, 0.5), 15px 19px 36px -10px #d6d6d6;
+          box-shadow: -7px 12px 19px -8px rgba(0, 0, 0, 0.5), 15px 19px 36px -10px #d6d6d6;
+  border-radius: 20px;
+}
+
 .fav-recipe-list {
   background: #feddea;
   background: -webkit-gradient(linear, left top, right top, from(#feddea), to(#f7eaef));
@@ -1085,10 +1109,10 @@ main {
 }
 
 .img-recipe-list {
+  border-radius: 50%;
   width: 16rem;
   height: 16rem;
   margin-top: 2em;
-  border-radius: 50%;
   -webkit-box-shadow: -9px 9px 9px -9px rgba(0, 0, 0, 0.5), 15px 19px 36px -10px #d6d6d6;
           box-shadow: -9px 9px 9px -9px rgba(0, 0, 0, 0.5), 15px 19px 36px -10px #d6d6d6;
   -webkit-transform: scale(1);
@@ -1102,6 +1126,10 @@ main {
           transform: scale(1.1);
   -webkit-box-shadow: -7px 12px 19px -8px rgba(0, 0, 0, 0.5), 15px 19px 36px -10px #d6d6d6;
           box-shadow: -7px 12px 19px -8px rgba(0, 0, 0, 0.5), 15px 19px 36px -10px #d6d6d6;
+}
+
+.img-result-search {
+  border-radius: 20px;
 }
 
 .recipe-summary table th {
