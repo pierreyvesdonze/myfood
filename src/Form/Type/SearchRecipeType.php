@@ -23,9 +23,9 @@ class SearchRecipeType extends AbstractType
             'save',
             SubmitType::class,
             [
-                'label' => 'Enregistrer',
+                'label' => 'Rechercher',
                 'attr' => [
-                    'class' => 'button submit-search',
+                    'class' => 'button-save',
                 ],
             ]
         );

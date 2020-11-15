@@ -8,7 +8,7 @@ var $stepCollectionHolder;
 var $ingredientCollectionHolder;
 
 var $addStepButton = $('<button type="button" class="add-step-link"><i class="fas fa-plus-circle fa-2x"></button>');
-var $addIngredientButton = $('<button type="button" class="add-ingredient-link"><i class="fas fa-plus-circle fa-2x"></i></button>');
+var $addIngredientButton = $('<button type="button" class="button-save">Ajouter un ingrédient</button>');
 var $newStepLinkLi = $('<li></li>').append($addStepButton);
 var $newIngredientLinkLi = $('<li></li>').append($addIngredientButton);
 
@@ -123,8 +123,6 @@ function addIngredientForm($ingredientCollectionHolder, $newIngredientLinkLi) {
 
     // add a delete link to the new form
     addIngredientFormDeleteLink($newFormLi);
-
-    console.log($ingredientCollectionHolder);
 }
 
 function addIngredientFormDeleteLink($ingredientFormLi) {

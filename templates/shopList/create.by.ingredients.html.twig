@@ -1,33 +1,37 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-{% block title %}
-Yo
-{% endblock %}
-
 <main>
-<div class="scrollable">
+    <div class="jumbotron">
+        <h1>Qu'y a-t-il dans votre frigo ?</h1>
+        <p class="lead">Cette section vous permet de rechercher des recettes en fonction des ingrédients que vous avez
+            en votre possession.</p>
+        <hr class="my-4">
+        <p>Utilisez le bouton <span class="fake-button">Ajouter un ingredient</span> ci-dessous pour chaque ingrédient
+            que vous voulez ajouter.
+        </p>
+    </div>
+    <div class="scrollable">
+        <div class="search-recipe-form">
+            {{ form_start(form) }}
 
-    
-    <div class="search-recipe-form">
-        
-        {{ form_start(form) }}
-        
-        {# Ingredients #}
-        <ul class="ingredients" data-prototype="{{ form_widget(form.ingredient.vars.prototype)|e('html_attr') }}">
-            {# iterate over each existing step and render its only field: name #}
-            {% for ingredient in form.ingredient %}
-            <li>{{ form_row(ingredient) }}</li>
-            
-            <li class="li-ingredient">*</li>
-            {% endfor %}
-        </ul>
-        
-        <div class="col">
-            {{ form_widget(form.save) }}
+                {# Ingredients #}
+            <ul class="ingredients" data-prototype="{{ form_widget(form.ingredient.vars.prototype)|e('html_attr') }}">
+                {# iterate over each existing step and render its only field: name #}
+                {% for ingredient in form.ingredient %}
+                <li>{{ form_row(ingredient) }}</li>
+                {% endfor %}
+            </ul>
+            <br><br>
+            <div class="row">
+                <div class="col-md-12">
+                    {{ form_widget(form.save) }}
+                </div>
+            </div>
+   
             {{ form_end(form) }}
+ 
         </div>
     </div>
-</div>
 </main>
 {% endblock  %}

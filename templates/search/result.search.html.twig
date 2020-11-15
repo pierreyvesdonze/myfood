@@ -56,41 +56,22 @@
       <div class="col-md-5">
         <div class="card-body">
           <div class="scrollable-auto">
-            <div class="left-right">
+            <h6>Ingrédients</h6>
+            <ul>
+              {% for ingredient in recipe.recipeIngredients %}
+              {% if ingredient.name in userRequestIngr %}
 
-              {# Recipe ingredients #}
-              <div class="left">
-                <ul>
-                  <i class="fas fa-check fa-2x available"></i>
-                  {% for ingredient in recipe.recipeIngredients %}
-                  {% if ingredient.name in userRequestIngr %}
-                    
-                  <li class="available">
-                    {{ ingredient }}
-                  </li>
-                  {% else %}
-                  <li class="unvailable">
-                    {{ ingredient }}
-                  </li>
-                  {% endif %}
+              <li class="available">
+                {{ ingredient }} <i class="fas fa-check available"></i>
+              </li>
+              {% else %}
+              <li class="unvailable">
+                {{ ingredient }} <i class="fas fa-times unvailable"></i>
+              </li>
+              {% endif %}
 
-                  {% endfor %}
-                </ul>
-              </div>
-
-
-              {# Request ingredients #}
-              <div class="right">
-                <ul>
-                  <i class="fas fa-times fa-2x unvailable"></i>
-                  {% for req in userRequestIngr %}
-                  <li>
-                    {{ req }}
-                  </li>
-                  {% endfor %}
-                </ul>
-              </div>
-            </div>
+              {% endfor %}
+            </ul>
           </div>
         </div>
       </div>

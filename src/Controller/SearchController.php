@@ -203,7 +203,7 @@ class SearchController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $dataFormIngredients = $form->get('ingredient')->getData();
-          
+
             $recipeIngredients = [];
             $userRequestIngr = [];
             foreach ($dataFormIngredients as $key => $dataFormIngredient) {
@@ -216,38 +216,28 @@ class SearchController extends AbstractController
                 ]);
 
                 $userRequestIngr[$key] = $dataFormIngredient->getName();
-            }    
-            
+            }
+
             // Get Recipies
             $recipiesArray = [];
             foreach ($recipeIngredients as $key => $value) {
                 foreach ($value as $recipe) {
                     $recipiesArray[] = $recipe->getRecipe();
-                    $ingredientRequested[$key] = $recipeIngredientRepository->findOneBy([
-                        'id' => $recipe->getId()
-                    ]);
-                      
                 }
             }
 
-            // TODO Faire un arrayMerge des ingredients recettes et ingrédients demandés
-
-
-            $ingredientRequested = array_values($ingredientRequested);
-                        
             /**
              * @var Recipe $recipeIngr  
              */
             $ingredientsNeeded = [];
-            foreach($recipiesArray as $recipeIngr) {
-                foreach($recipeIngr->getRecipeIngredients() as $ing) {
+            foreach ($recipiesArray as $recipeIngr) {
+                foreach ($recipeIngr->getRecipeIngredients() as $ing) {
                     $ingredientsNeeded[] = $ing->getName();
                 }
             }
 
             $recipiesArray = array_unique($recipiesArray);
-            
-            
+
             if (!null == $recipiesArray) {
                 return $this->render('search/result.search.html.twig', [
                     'recipies' => $recipiesArray,
@@ -280,7 +270,7 @@ class SearchController extends AbstractController
             $tags = $form->get('tags')->getData();
 
             $recipies = $recipeRepository->findRecipiesByFilters($recipeMenu, $recipeCategory);
-            
+
 
             return $this->render('search/result.search.html.twig', [
                 'recipies' => $recipies

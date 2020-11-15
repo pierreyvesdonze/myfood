@@ -321,6 +321,14 @@ BUTTONS
   }
 }
 
+.fake-button {
+  padding-left: 8px;
+  padding-right: 8px;
+  background-color :var(--link-button-color);
+  color: var(--tertiary-color);
+  border-radius: 10px;
+}
+
 .button-icon {
   background: none;
   outline: none;
@@ -415,4 +423,8 @@ BOOSTRAP
 
 .nav-pills .nav-link.active{
   background-color: var(--orange-icon-color) !important;
+}
+
+.jumbotron {
+  background: var(--main-color) !important;
 }

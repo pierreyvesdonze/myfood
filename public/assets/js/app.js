@@ -4,6 +4,9 @@ var app = {
 
 		console.log('app init');
 
+		// Aberration incompréhensible pour le moment
+		$(".col-form-label").remove();
+
 		/**
 		 * *****************************
 		 * L I S T E N E R S
@@ -457,7 +460,6 @@ var app = {
 	 */
 	searchByIngredients: function (e) {
 
-		console.log('Recherche de recettes');
 
 		// Disable submit form on Enter keypress
 		const keyCode = e.keyCode || e.which;
