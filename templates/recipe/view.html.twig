@@ -14,8 +14,8 @@
                     <img src="{{ asset('uploads/' ~ recipe.recipePhoto) }}" alt="" class="card-img-top img-recipe-list">
                     {% else %}
                     <img src="{{ asset('assets/images/empty-plate.jpeg') }}" alt="recipe-img"
-                    class="card-img-top img-recipe-list">
-                {% endif %}
+                        class="card-img-top img-recipe-list">
+                    {% endif %}
                 </div>
             </div>
 
@@ -118,7 +118,7 @@
 
                     {# NAVBAR #}
                     <nav id="navbar-recipe-steps" class="navbar navbar-light">
-                     
+
                         <a class="navbar-brand" href="#"></a>
                         <br>
                         <ul class="nav nav-pills">
@@ -141,7 +141,7 @@
                             </li>
                         </ul>
                     </nav>
-                    
+
                     {# RECIPE #}
                     <div class="scrollable">
                         <div data-spy="scroll" data-target="#navbar-recipe-steps" data-offset="0">
@@ -153,7 +153,7 @@
                             <ul>
                                 {% for ingredient in recipe.Recipeingredients %}
                                 <li>
-                                    {{ ingredient.name }} : {{ ingredient.amount }} {{ ingredient.unit }}
+                                    <span class="orange-icon">{{ ingredient.name }}</span> : {{ ingredient.amount }} {{ ingredient.unit }}
                                 </li>
                                 {% endfor %}
                             </ul>
@@ -163,7 +163,7 @@
                             <h4 id="ingredients">Étapes</h4>
 
                             {% for i, step in recipe.recipesteps %}
-                            <h4 id="{{i}}">{{i + 1}}</h4>
+                            <h4 id="{{i}}"><span class="orange-icon">{{i + 1}}</span></h4>
 
                             {{ step.text }}
 

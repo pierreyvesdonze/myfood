@@ -8,10 +8,10 @@ NAV
 */
 .menu {
     background-color: var(--tertiary-color);
-    
 }
 
 .nav-top-container {
+    z-index: 200;
     position: sticky;
     display: flex;
     justify-content: space-evenly;

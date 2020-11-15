@@ -16,6 +16,7 @@ use App\Repository\RecipeMenuRepository;
 use App\Repository\RecipeRepository;
 use App\Repository\ShoppingListRepository;
 use App\Repository\TagRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -194,14 +195,15 @@ class SearchController extends AbstractController
      */
     public function searchByIngredients(
         Request $request,
-        RecipeIngredientRepository $recipeIngredientRepository
+        RecipeIngredientRepository $recipeIngredientRepository,
+        RecipeRepository $recipeRepository
     ) {
         $form = $this->createForm(SearchRecipeType::class, null);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $dataFormIngredients = $form->get('ingredient')->getData();
-
+          
             $recipeIngredients = [];
             $userRequestIngr = [];
             foreach ($dataFormIngredients as $key => $dataFormIngredient) {
@@ -213,26 +215,44 @@ class SearchController extends AbstractController
                     'name' => $dataFormIngredient->getName()
                 ]);
 
-                $userRequestIngr[] = $dataFormIngredient->getName();
-         
-            }
+                $userRequestIngr[$key] = $dataFormIngredient->getName();
+            }    
             
-            // Recipies
+            // Get Recipies
             $recipiesArray = [];
-            $recipeIngrArray = [];
             foreach ($recipeIngredients as $key => $value) {
                 foreach ($value as $recipe) {
                     $recipiesArray[] = $recipe->getRecipe();
-                    $recipeIngrArray[] = $recipe->getName();
+                    $ingredientRequested[$key] = $recipeIngredientRepository->findOneBy([
+                        'id' => $recipe->getId()
+                    ]);
+                      
                 }
             }
 
-            $missingIngredients = array_diff($userRequestIngr, $recipeIngrArray);
+            // TODO Faire un arrayMerge des ingredients recettes et ingrédients demandés
 
+
+            $ingredientRequested = array_values($ingredientRequested);
+                        
+            /**
+             * @var Recipe $recipeIngr  
+             */
+            $ingredientsNeeded = [];
+            foreach($recipiesArray as $recipeIngr) {
+                foreach($recipeIngr->getRecipeIngredients() as $ing) {
+                    $ingredientsNeeded[] = $ing->getName();
+                }
+            }
+
+            $recipiesArray = array_unique($recipiesArray);
+            
+            
             if (!null == $recipiesArray) {
                 return $this->render('search/result.search.html.twig', [
                     'recipies' => $recipiesArray,
-                    'missingIngredients' => $missingIngredients
+                    'ingredientsNeeded' => $ingredientsNeeded,
+                    'userRequestIngr' => $userRequestIngr
                 ]);
             } else {
                 $this->addFlash("error", "Désolé, nous n'avons pas trouvé de recette correspondante");

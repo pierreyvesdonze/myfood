@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Recipe;
+use App\Entity\RecipeIngredient;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
@@ -39,14 +40,28 @@ class RecipeRepository extends ServiceEntityRepository
      */
     public function findRecipeByIngredients($keywords)
     {
+
+        // SELECT * FROM `recipe` INNER JOIN recipe_ingredient ON recipe.id = recipe_ingredient.recipe_id WHERE recipe_ingredient.name IN ( 'saumon', 'poisson')
+
+        $request = "SELECT * FROM `recipe` INNER JOIN recipe_ingredient ON `recipe.id` = `recipe_ingredient.recipe_id` WHERE `recipe_ingredient.id` IN (" . implode(', ', $keywords) . ")";
+
+        $query = $this->getEntityManager()->createQuery($request);
+
+        return $query->getResult();
+    }
+
+   /**
+     * @return Recipe[] Returns an array of Recipies objects
+     */
+    public function test($ingId)
+    {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.name IN (:val)')
-            ->setParameter('val', '%' . ',', $keywords . '%')
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('r.recipeIngredients IN (:val)')
+            ->setParameter('val', $ingId)
             ->getQuery()
             ->getArrayResult();
     }
+
 
     /**
      * @return Recipe[] Returns an array of Recipies objects
@@ -63,7 +78,7 @@ class RecipeRepository extends ServiceEntityRepository
     public function findRecipiesByFilters($recipeMenu, $recipeCategory)
     {
         $qb = $this->createQueryBuilder('r');
- 
+
         $menuCondition = $qb->expr()->andX(
             $qb->expr()->eq('r.recipeMenu', ':rM')
         );
@@ -74,9 +89,9 @@ class RecipeRepository extends ServiceEntityRepository
         );
         $qb->setParameter('rC', $recipeCategory);
         //$tagsCondition = 
-            // $qb->join('r.tags', 't')
-            //     ->where('r.name IN (:rT)')
-            // ->setParameter('rT', array($recipeTags));
+        // $qb->join('r.tags', 't')
+        //     ->where('r.name IN (:rT)')
+        // ->setParameter('rT', array($recipeTags));
 
         if ($recipeMenu && $recipeCategory) {
 
@@ -88,7 +103,7 @@ class RecipeRepository extends ServiceEntityRepository
         }
 
         //$qb->setParameter('rT', $recipeTags);
-        
+
         return $qb->getQuery()->getResult();
     }
 
