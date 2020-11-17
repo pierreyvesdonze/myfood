@@ -345,7 +345,7 @@ SHOPPING LIST
   text-align: left;
   border-radius: 20px;
   box-shadow: 0 2px 3px rgba(0, 8, 14, 0.7) inset,
-    0 10px 18px rgba(207, 165, 25, 0.397) inset;
+    0 10px 18px rgba(103, 131, 224, 0.397) inset;
   opacity: 0;
   height: 0;
   transition: ease-out 0.2s;
@@ -358,6 +358,11 @@ SHOPPING LIST
   height: 600px;
   display: flex;
   transition: ease-in 0.2s;
+  background-color: var(--tertiary-color) !important;
+}
+
+.a-content {
+  background-color: var(--tertiary-color) !important;
 }
 
 .a-content ul {
@@ -375,14 +380,14 @@ SHOPPING LIST
 }
 
 .a-container ul li {
-  font-size: 2em;
+  font-size: 1.2em;
   text-shadow: -1px 1px 3px rgb(10, 10, 10);
 }
 
 .a-container label {
   display: block;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
 }
 
@@ -391,12 +396,16 @@ SHOPPING LIST
   justify-content: space-between;
 }
 
+.amount-value {
+  color: var(--orange-color-icon) !important;
+}
+
 /*
 *****
 MODAL
 ****
 */
-.add-articles-section {
+.add-to-shoplist-section{
   height: 0;
   transition: 0.2s;
   background: #000000c7;

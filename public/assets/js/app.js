@@ -29,7 +29,7 @@ var app = {
 		//SHOPPING LISTS & ARTICLES & MODAL
 		$('.shoplist-create').click(app.shoplistCreate);
 		$('.add-article').click(app.openArticlesModal);
-		$('.close-articles-modal').click(app.closeArticlesModal);
+		$('.cancel-add-article').click(app.closeArticlesModal);
 		$('.increase-amount').click(app.increaseAmount);
 		$('.decrease-amount').click(app.decreaseAmount);
 		$('.delete-article').click(app.deleteArticleApi);
@@ -82,11 +82,14 @@ var app = {
 	openAddToShoplistModal: function (e) {
 
 		let currentId = e.currentTarget.children[0].dataset['value'];
+		console.log(e.currentTarget);
+		$('.add-articles-section *').addClass('show-protected');
 
 		// Send to appropriate method
 		$('.submit-add-toshoplist').click(function () {
 			app.sendToBackShopListToAdd(currentId)
 		});
+		
 	},
 
 
@@ -203,13 +206,17 @@ var app = {
 	},
 
 	openArticlesModal: function (e) {
-		let modal = $('.add-articles-section');
-		let modalContent = $('.add-articles-section *');
+		let modal = $('.add-articles-to-shoplist-section');
+		let modalContent = $('.add-articles-to-shoplist-section *');
+		let jumbocontainer = $('.jumbo-container');
+		let jumbotron = $('.jumbotron-shoplist');
 
 		setTimeout(function () {
 			modalContent.css("visibility", "visible")
+			jumbotron.css("visibility", "hidden")
 		}, 80);
-		modal.css("height", "278px");
+		modal.css("height", "300px");
+		jumbocontainer.css("height", "0px");
 
 		//Open current shoplist
 		let prevModal = this.parentNode.querySelector('.fa-eye');
@@ -227,12 +234,18 @@ var app = {
 	},
 
 	closeArticlesModal: function () {
-		let closeModal = $('.add-articles-section');
-		let modalContent = $('.add-articles-section *');
+		let closeModal = $('.add-articles-to-shoplist-section');
+		let modalContent = $('.add-articles-to-shoplist-section *');
+		let jumbocontainer = $('.jumbo-container');
+		let jumbotron = $('.jumbotron-shoplist');
+
+		
 		setTimeout(function () {
 			modalContent.css("visibility", "hidden")
+			jumbotron.css("visibility", "visible")
 		}, 80);
 		closeModal.css("height", "0px");
+		jumbocontainer.css("height", "auto");
 	},
 
 	removeArticle: function (e) {
@@ -416,11 +429,11 @@ var app = {
 		$(aContainer).prevUntil('.shopping-list-section', '.a-container').toggleClass('hide-height');
 		$(aContent).toggleClass('a-content-visible');
 
-		let shop = $('.shopping-list-section');
-		$(this).hasClass('fa-eye-slash') ? shop.css({
-			'overflow-y': 'hidden',
-			'height': 'auto'
-		}) : shop.css({ 'overflow-y': 'scroll', 'height': '574px' });
+		// let shop = $('.shopping-list-section');
+		// $(this).hasClass('fa-eye-slash') ? shop.css({
+		// 	'overflow-y': 'hidden',
+		// 	'height': 'auto'
+		// }) : shop.css({ 'overflow-y': 'scroll', 'height': '574px' });
 
 		/* 		$('.a-container').not('.a-container-visible').toggleClass('hidden'); */
 	},
@@ -492,7 +505,8 @@ document.addEventListener('DOMContentLoaded', app.init);
 // Close opened collapsed nav
 $(document).click(function (e) {
 
-	if (!$(e.target).hasClass('show-protected')) {
+	if (
+		!$(e.target).hasClass('show-protected')) {
 		$('.collapse').removeClass('show')
 	}
 })

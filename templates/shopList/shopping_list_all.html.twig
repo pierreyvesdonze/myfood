@@ -2,15 +2,22 @@
 
 {% block body %}
 
+
 {# ADD ARTICLES #}
 {% include "shopList/addIngredientsModal.html.twig" %}
 
+<div class="main-shoplists">
 {# MAIN TITLE #}
-<div class="main-main-title">
-    <h1 class="main-title">Shopping</h1>
+<div class="jumbo-container">
+    <div class="jumbotron jumbotron-shoplist">
+        <h1>Vos listes de courses</h1>
+        <p class="lead">Cette section vous permet de gérer vos listes de courses.</p>
+        <hr class="my-4">
+        <p>Utilisez les boutons <i class="fa fa-eye open-shoplist"></i>pour visualiser vos listes de courses, 
+            <i class="fa fa-cart-plus "></i>pour y ajouter des ingrédients ou <i class="fa fa-trash"></i>pour supprimer la liste définitivement.
+        </p>
+    </div>
 </div>
-
-<hr class="hr">
 
 <section class="shopping-list-section">
     {% for key, shoplist in shoppingList %}
@@ -46,10 +53,10 @@
                                     <input type="hidden" data-value="{{ article.id }}" class="hidden-article-id">
                                 </a>
                                 {% apply spaceless %}{% if article.unit and "unité" != article.unit %}
-                                {{ article.name|capitalize }} : <span class="amount-value">{{ article.amount }}</span>
+                                {{ article.name|capitalize }} : <span class="amount-value orange-icon-color">{{ article.amount }}</span>
                                 {{ article.unit }}
                                 {% else %}
-                                {{ article.name|capitalize }} : <span class="amount-value">{{ article.amount }}</span>
+                                {{ article.name|capitalize }} : <span class="amount-value orange-icon-color">{{ article.amount }}</span>
                                 {% endif %}{% endapply %}</div>
                             <div class="control-articles">
                                 <a href="#" class="increase-amount">
@@ -67,6 +74,11 @@
             </div>
         </li>
     </ul>
+
+<hr class="hr">
+
     {% endfor %}
 </section>
+</div>
+
 {% endblock %}

@@ -242,6 +242,162 @@ main {
     border-bottom: 1px solid #00000042;
 }
 
+
+/*
+***********************************
+SHOPPING LIST
+***********************************
+*/
+
+.main-shoplists {
+    overflow-y: scroll;
+    height: 80%;
+    background-color: var(--main-color);
+}
+
+.main-title-shop-list {
+    color: var(--orange-icon-color) !important;
+}
+  
+.hidden-radio {
+display: none;
+}
+
+.amount-value {
+    color: var(--orange-color-icon) !important;
+  }
+  
+
+.a-content {
+visibility: hidden;
+text-align: left;
+border-radius: 20px;
+box-shadow: 0 2px 3px rgba(0, 8, 14, 0.7) inset,
+    0 10px 18px rgba(207, 165, 25, 0.397) inset;
+opacity: 0;
+height: 0;
+transition: ease-out 0.2s;
+}
+
+.a-content-visible {
+background-color: var(--tertiary-color);
+opacity: 1;
+visibility: visible;
+overflow-y: scroll;
+height: calc(100% - 80px);
+display: flex;
+transition: ease-in 0.2s;
+}
+
+.a-content ul {
+width: 100%;
+padding: 2em;
+}
+
+.a-container {
+text-align: center;
+flex-direction: column;
+width: 80%;
+margin: auto;
+padding: 0;
+display: flex;
+}
+
+.a-container ul li {
+font-size: 1.2em;
+text-shadow: -1px 1px 3px rgb(10, 10, 10);
+}
+
+.a-container label {
+display: block;
+cursor: pointer;
+font-size: 16px;
+font-weight: bold;
+}
+
+.articles-container {
+margin-bottom: 1em;
+display: flex;
+justify-content: space-between;
+}
+
+/*
+*****
+MODAL
+****
+*/
+.add-articles-to-shoplist-section{
+height: 0;
+transition: 0.2s;
+position: fixed;
+z-index: 4;
+width: 100%;
+display: flex;
+justify-content: space-evenly;
+align-items: center;
+flex-direction: column;
+box-shadow: 0px 9px 6px -8px;
+backdrop-filter: blur(10px);
+}
+
+.add-article-to-shoplist-btn {
+    color: var(--orange-icon-color) !important;
+}
+
+.add-articles-to-shoplist-section * {
+visibility: hidden;
+}
+
+.add-articles-to-shoplist-section .left {
+display: flex;
+flex-direction: column;
+}
+
+.add-articles-to-shoplist-section .title h2 {
+color: var(--orange-icon-color) !important;
+}
+
+.add-articles-to-shoplist-section input {
+width: 20em;
+}
+
+.add-articles-to-shoplist-section .right a {
+margin: 0 2em;
+}
+
+.jumbo-container {
+    transition: 0.2s;
+}
+
+/*
+***********************************
+CONTROL
+***********************************
+*/
+.control {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+.control-recipe {
+display: flex;
+justify-content: space-around;
+margin: 20px 0;
+}
+
+  .a-items .control label i,
+  .a-items .control a i {
+    padding: 0 1em;
+  }
+  
+
+
+
+
+
+
+
 /*
 ***********************************
 FOOTER
