@@ -10,13 +10,15 @@ TOP MENU BUTTONS
         <!--***************************RECIPIES****************************-->
         <button class="button-icon" type="button" data-toggle="collapse" data-target="#recipies-nav"
             aria-expanded="false" aria-controls="recipies-nav">
-            <i class="fas fa-hamburger fa-2x"></i>
+            <i class="fas fa-book fa-2x"></i>
         </button>
         <!--***************************SHOPLIST****************************-->
+        {% if app.user %}
         <button class="button-icon" type="button" data-toggle="collapse" data-target="#shoplist-nav"
             aria-expanded="false" aria-controls="shoplist-nav">
             <i class="fas fa-shopping-cart fa-2x"></i>
         </button>
+        {% endif %}
         <!--***************************FILTERS****************************-->
         {% if app.request.get('_route') matches '/recipe_list/' %}
         <button class="button-icon filters-menu" type="button" data-toggle="collapse" data-target="#filters-nav"
@@ -50,9 +52,12 @@ COLLAPSE
                     <ul>
                         <li>
                             <a href="{{ path('recipe_list') }}">Explorer les recettes</a>
+                            {% if app.user %}
+
                             <a href="{{ path('user_recipe_list') }}">Voir mes recettes</a>
                             <a href="{{ path('user_favs_recipe_list') }}">Voir mes favoris</a>
                             <a href="{{ path('recipe_add') }}">Ajouter une recette</a>
+                            {% endif %}
                         </li>
                     </ul>
                 </div>
@@ -124,4 +129,3 @@ COLLAPSE
         </div>
     </div>
 </nav>
-

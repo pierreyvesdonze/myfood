@@ -50,6 +50,7 @@ NAV
 .supercharged-menu a {
     font-weight: bold;
     text-decoration: none;
+    margin-bottom: 1em;
 }
 
 .collapse, .collapsing {
@@ -84,6 +85,24 @@ FILTERS
 
 .filters-container label span {
     color: var(--primary-color);
+}
+
+
+/*
+***********************************
+LOGIN
+***********************************
+*/
+
+.login-div {
+    width: 70%;
+    margin: 20% auto;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
 }
 
 /*
