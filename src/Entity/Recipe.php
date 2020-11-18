@@ -86,17 +86,11 @@ class Recipe
      */
     private $tags;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Meal::class, mappedBy="recipies")
-     */
-    private $meals;
-
     public function __construct()
     {
         $this->recipeSteps = new ArrayCollection();
         $this->recipeIngredients = new ArrayCollection();
         $this->tags = new ArrayCollection();
-        $this->meals = new ArrayCollection();
     }
 
     public function __toString()
@@ -302,37 +296,6 @@ class Recipe
         if ($this->tags->contains($tag)) {
             $this->tags->removeElement($tag);
             $tag->removeRecipe($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Meal[]
-     */
-    public function getMeals(): Collection
-    {
-        return $this->meals;
-    }
-
-    public function addMeal(Meal $meal): self
-    {
-        if (!$this->meals->contains($meal)) {
-            $this->meals[] = $meal;
-            $meal->setRecipies($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMeal(Meal $meal): self
-    {
-        if ($this->meals->contains($meal)) {
-            $this->meals->removeElement($meal);
-            // set the owning side to null (unless already changed)
-            if ($meal->getRecipies() === $this) {
-                $meal->setRecipies(null);
-            }
         }
 
         return $this;

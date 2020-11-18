@@ -47,16 +47,10 @@ class User implements UserInterface
      */
     private $recipies;
 
-    /**
-     * @ORM\OneToMany(targetEntity=MealPlan::class, mappedBy="user")
-     */
-    private $mealPlans;
-
     public function __construct()
     {
         $this->shoppingLists = new ArrayCollection();
         $this->recipies = new ArrayCollection();
-        $this->mealPlans = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -192,37 +186,6 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($recipe->getUser() === $this) {
                 $recipe->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|MealPlan[]
-     */
-    public function getMealPlans(): Collection
-    {
-        return $this->mealPlans;
-    }
-
-    public function addMealPlan(MealPlan $mealPlan): self
-    {
-        if (!$this->mealPlans->contains($mealPlan)) {
-            $this->mealPlans[] = $mealPlan;
-            $mealPlan->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMealPlan(MealPlan $mealPlan): self
-    {
-        if ($this->mealPlans->contains($mealPlan)) {
-            $this->mealPlans->removeElement($mealPlan);
-            // set the owning side to null (unless already changed)
-            if ($mealPlan->getUser() === $this) {
-                $mealPlan->setUser(null);
             }
         }
 

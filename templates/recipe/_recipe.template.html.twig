@@ -72,7 +72,6 @@
 
             <!--***************************INFOS****************************-->
             <div class="tab-content">
-
                 <div class="tab-pane" id="time-tab" role="tabpanel" aria-labelledby="time-tab">
                     <i class="fa fa-user"></i>
                     {{ recipe.person }}
@@ -94,44 +93,47 @@
                 </div>
             </div>
 
-            <hr class="hr">
+            <br>
 
-            {# <div class="tags">
-                {% if recipe.tags is not null %}
-                {% for tag in recipe.tags %}
-                #{{tag}}
-                {% endfor %}
-                {% endif %}
-            </div> #}
+            <button class="button-icon filters-menu" type="button" data-toggle="collapse" data-target=".infos-nav{{i}}"
+                aria-expanded="false" aria-controls="#pouet{{i}}">
+                <i class="fa fa-plus-circle fa-2x"></i>
+            </button>
 
+            <br>
+            <br>
+        
 
             <!--***************************ADD TO SHOPPING LIST****************************-->
 
-            <div class="add-to-shop-container">
+            <div class="collapse infos-nav{{i}}" id="pouet{{i}}">
+                <div class="add-to-shop-container">
 
-                <a class="button add-to-shoplist" data-toggle="collapse" href="#modal-add-to-shop{{i}}" role="button"
-                    aria-expanded="false" aria-controls="modal-add-to-shop">
-                    <input type="hidden" data-value="{{ recipe.id }}">
-                    <i class="fa fa-cart-arrow-down fa-2x"></i>
-                </a>
+                    <a class="button add-to-shoplist" data-toggle="collapse" href=".modal-add-to-shop{{i}}"
+                        role="button" aria-expanded="false" aria-controls="modal-add-to-shop{{i}}">
+                        <input type="hidden" data-value="{{ recipe.id }}">
+                        <i class="fa fa-cart-arrow-down fa-2x"></i>
+                    </a>
 
-                <a href="#" class="button shoplist-create">
-                    <input type="hidden" data-value="{{ recipe.id }}">
-                    <i class="fa fa-cart-plus fa-2x"></i>
-                </a>
+                    <a href="#" class="button shoplist-create">
+                        <input type="hidden" data-value="{{ recipe.id }}">
+                        <i class="fa fa-cart-plus fa-2x"></i>
+                    </a>
 
-                {% if is_granted('edit', recipe) %}
-                <a href="{{ path('recipe_update',{'id': recipe.id}) }}" class="button">
-                    <i class="fa fa-cog fa-2x"></i>
-                </a>
-                <a href="{{ path('recipe_delete',{'id': recipe.id}) }}" class="button"
-                    onclick="return confirm('Supprimer cette recette ?')">
-                    <i class="fa fa-trash fa-2x"></i>
-                </a>
+                    {% if is_granted('edit', recipe) %}
+                    <a href="{{ path('recipe_update',{'id': recipe.id}) }}" class="button">
+                        <i class="fa fa-cog fa-2x"></i>
+                    </a>
+                    <a href="{{ path('recipe_delete',{'id': recipe.id}) }}" class="button"
+                        onclick="return confirm('Supprimer cette recette ?')">
+                        <i class="fa fa-trash fa-2x"></i>
+                    </a>
+                </div>
             </div>
+
             <div class="row">
                 <div class="col">
-                    <div class="collapse multi-collapse" id="modal-add-to-shop{{i}}">
+                    <div class="collapse multi-collapse modal-add-to-shop{{i}}">
                         {% include "recipe/addtoshoplist.html.twig" %}
                     </div>
                 </div>

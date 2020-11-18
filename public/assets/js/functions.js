@@ -138,51 +138,6 @@ function addIngredientFormDeleteLink($ingredientFormLi) {
     });
 }
 
-
-/*
-****************************************
-MEAL PLAN ADD RECIPIES
-****************************************
-*/
-
-var $addMealButton = $('<button type="button" class="add_meal_link">Add a meal</button>');
-var $newLinkLi = $('<li></li>').append($addMealButton);
-
-$(document).ready(function () {
-
-    $collectionHolder = $('ul.meals');
-    $collectionHolder.append($newLinkLi);
-    $collectionHolder.data('index', $collectionHolder.find('input').length);
-    $addMealButton.on('click', function (e) {
-        addMealForm($collectionHolder, $newLinkLi);
-    });
-});
-
-function addMealForm($collectionHolder, $newLinkLi) {
-    var prototype = $collectionHolder.data('prototype');
-    var index = $collectionHolder.data('index');
-
-    var newForm = prototype;
-    newForm = newForm.replace(/__name__/g, index);
-
-    $collectionHolder.data('index', index + 1);
-
-    var $newFormLi = $('<li></li>').append(newForm);
-    $newLinkLi.before($newFormLi);
-
-    addMealFormDeleteLink($newFormLi);
-}
-
-function addMealFormDeleteLink($stepFormLi) {
-    var $removeFormButton = $('<button type="button" class="remove-meal-link">Supprimer</button>');
-    $stepFormLi.append($removeFormButton);
-
-    $removeFormButton.on('click', function (e) {
-        // remove the li for the article form
-        $stepFormLi.remove();
-    });
-}
-
 ////////////////////////////////////////
 // Prevent double click/submit function
 ///////////////////////////////////////
