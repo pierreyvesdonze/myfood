@@ -241,6 +241,15 @@ main {
     margin-top: 1em;
 }
 
+
+.left-right {
+    display: flex;
+    justify-content: space-between;
+    @include xs {
+      flex-direction: column;;
+    }
+  }
+  
 .left-info-recipe {
     width: 35%;
 }
@@ -248,6 +257,9 @@ main {
 .right-info-recipe {
     display: flex;
     width: 65%;
+    @include xs {
+        margin: 3em auto 0 auto;
+    }
 }
    
 .p-description {

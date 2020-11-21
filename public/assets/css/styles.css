@@ -80,15 +80,6 @@ a:hover {
   color: var(--orange-icon-color);
 }
 
-.left-right {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-}
-
 .center-element {
   text-align: center;
 }
@@ -479,6 +470,11 @@ BOOSTRAP
   background: var(--main-color) !important;
 }
 
+/*
+***********************************
+MEDIA QUERIES
+***********************************
+*/
 /*
 ***********************************
 DYNAMIC FORM
@@ -1246,6 +1242,24 @@ main {
   margin-top: 1em;
 }
 
+.left-right {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+@media (min-width: 300px) and (max-width: 576px) {
+  .left-right {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+}
+
 .left-info-recipe {
   width: 35%;
 }
@@ -1255,6 +1269,12 @@ main {
   display: -ms-flexbox;
   display: flex;
   width: 65%;
+}
+
+@media (min-width: 300px) and (max-width: 576px) {
+  .right-info-recipe {
+    margin: 3em auto 0 auto;
+  }
 }
 
 .p-description {

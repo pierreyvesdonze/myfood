@@ -3,12 +3,15 @@
 {% block body %}
 
 <section class="main">
-    <div class="jumbotron">
-        <h1>Bienvenue sur MyFood !</h1>
-        <p class="lead">Grâce à ce site vous pourrez créer vos propres recettes, visualisez celles d'autres utilisateurs et générer vos propres listes de courses ! </p>
-        <hr class="my-4">
-        <p>En manque d'inspiration pour votre repas du jour ? Ajoutez quelques ingrédients via la fonction <a href="{{ path('search_list_by_ingredients') }}" class="orange-icon">Mon frigo</a> et découvrez ce que vous pourrez potentiellement cuisiner !
-        </p>
+    <div class="scrollable">
+
+        <div class="jumbotron">
+            <h1>Bienvenue sur MyFood !</h1>
+            <p class="lead">Grâce à ce site vous pourrez créer vos propres recettes, visualiser celles d'autres utilisateurs et générer vos propres listes de courses ! </p>
+            <hr class="my-4">
+            <p>En manque d'inspiration pour votre repas du jour ? Ajoutez quelques ingrédients via la fonction <a href="{{ path('search_list_by_ingredients') }}" class="orange-icon">Mon frigo</a> et découvrez ce que vous pourriez potentiellement cuisiner !
+            </p>
+        </div>
     </div>
 </section>
 {% endblock  %}
