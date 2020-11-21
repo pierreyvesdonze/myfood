@@ -12,6 +12,8 @@ COLORS
   --title-color: #002140;
   --font-color: #222830;
   --contrast-main-color: #feddea;
+  --contrast-main-color-2: #9ba7b2;
+  --contrast-main-color-3: #f7fbff;
   --tertiary-color: white;
   --orange-icon-color:  #ff785b;
   --link-button-color:  #0b2b4a;
@@ -39,9 +41,8 @@ GENERAL
   margin: auto;
 }
 
-
 .main-title {
-  margin-top: 2em;
+  margin-top: .5em;
   text-align: center;
 }
 

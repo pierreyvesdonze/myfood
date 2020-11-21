@@ -12,6 +12,8 @@ COLORS
   --title-color: #002140;
   --font-color: #222830;
   --contrast-main-color: #feddea;
+  --contrast-main-color-2: #9ba7b2;
+  --contrast-main-color-3: #f7fbff;
   --tertiary-color: white;
   --orange-icon-color:  #ff785b;
   --link-button-color:  #0b2b4a;
@@ -38,7 +40,7 @@ GENERAL
 }
 
 .main-title {
-  margin-top: 2em;
+  margin-top: .5em;
   text-align: center;
 }
 
@@ -1096,6 +1098,83 @@ main {
   background-color: var(--tertiary-color);
 }
 
+/*
+***********************************
+HOMEPAGE
+***********************************
+*/
+.custom-section {
+  padding: 2em;
+}
+
+.section-2 {
+  background-color: var(--contrast-main-color-2);
+}
+
+.section-2 .right .big {
+  color: var(--title-color) !important;
+}
+
+.section-3 {
+  background-color: #d3d7fa;
+}
+
+.section-3 .left .big {
+  color: var(--orange-icon-color) !important;
+}
+
+.section-4 {
+  background-color: var(--tertiary-color);
+}
+
+.section-4 .left .big {
+  color: var(--contrast-main-color-2) !important;
+}
+
+.main-homepage {
+  height: 80%;
+  overflow-y: scroll;
+}
+
+.big {
+  font-size: 7em;
+  color: var(--orange-icon-color);
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+  .big {
+    font-size: 3em;
+  }
+}
+
+@media (min-width: 300px) and (max-width: 576px) {
+  .big {
+    font-size: 3em;
+  }
+}
+
+.img-center {
+  margin: auto;
+}
+
+.exemple-img {
+  width: 100%;
+  -webkit-filter: grayscale(0);
+  filter: grayscale(0);
+  -webkit-transition: .3s ease-in-out;
+  transition: .3s ease-in-out;
+}
+
+.exemple-img:hover {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+}
+
+/*
+***********************************
+RECIPIES
+***********************************
+*/
 /*RECIPIES*/
 .recipies-list-container {
   display: -webkit-box;
