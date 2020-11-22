@@ -98,6 +98,7 @@ a:hover {
 .scrollable-auto {
   padding: 1em 2em;
   height: auto;
+  margin-bottom: 1em;
 }
 
 .hr-white {
@@ -1178,6 +1179,12 @@ RECIPIES
 @media (min-width: 1280px) {
   .scrollable {
     height: 1200px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .scrollable {
+    height: 800px;
   }
 }
 
