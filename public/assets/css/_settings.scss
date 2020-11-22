@@ -97,13 +97,6 @@ a {
   );
 }
 
-.scrollable {
-  background-color: var(--tertiary-color) !important;
-  padding: 1em;
-  overflow-y: scroll;
-  height: 350px;
-}
-
 .scrollable-auto {
   padding: 1em 2em;
   height: auto;
