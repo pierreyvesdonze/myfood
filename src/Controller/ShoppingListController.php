@@ -6,6 +6,7 @@ use App\Entity\Article;
 use App\Entity\Ingredient;
 use App\Entity\Recipe;
 use App\Entity\ShoppingList;
+use App\Form\Type\ShoppingListType;
 use App\Repository\ArticleRepository;
 use App\Repository\IngredientRepository;
 use App\Repository\ShoppingListRepository;
@@ -53,6 +54,7 @@ class ShoppingListController extends AbstractController
             'shoppingList' => $shoppingList,
         ]);
     }
+
 
     /**
      * @Route("/create/{id}", name="shopping_list_create", methods={"GET", "POST"}, options={"expose"=true})
