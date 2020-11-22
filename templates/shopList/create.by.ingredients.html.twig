@@ -2,36 +2,40 @@
 
 {% block body %}
 <main>
-    <div class="jumbotron">
-        <h2>Qu'y a-t-il dans votre frigo ?</h2>
-        <p class="lead">Recherchez des recettes en fonction des ingrédients que vous avez en votre possession.</p>
-        <hr class="my-4">
-        <p class="center-element">Utilisez le bouton <br>
-            <span class="fake-button">Ajouter un ingredient</span> <br>
-            ci-dessous pour chaque ingrédient
-            que vous voulez ajouter.
-        </p>
-    </div>
-    <div class="center-div">
-        <div class="search-recipe-form">
-            {{ form_start(form) }}
+    <div class="scrollable">
+
+        <div class="jumbotron">
+            <h2>Qu'y a-t-il dans votre frigo ?</h2>
+            <p class="lead">Recherchez des recettes en fonction des ingrédients que vous avez en votre possession.</p>
+            <hr class="my-4">
+            <p class="center-element">Utilisez le bouton <br>
+                <span class="fake-button">Ajouter un ingredient</span> <br>
+                ci-dessous pour chaque ingrédient
+                que vous voulez ajouter.
+            </p>
+        </div>
+        <div class="center-div">
+            <div class="search-recipe-form">
+                {{ form_start(form) }}
 
                 {# Ingredients #}
-            <ul class="ingredients" data-prototype="{{ form_widget(form.ingredient.vars.prototype)|e('html_attr') }}">
-                {# iterate over each existing step and render its only field: name #}
-                {% for ingredient in form.ingredient %}
-                <li>{{ form_row(ingredient) }}</li>
-                {% endfor %}
-            </ul>
-            <br><br>
-            <div class="row">
-                <div class="col-md-12">
-                    {{ form_widget(form.save) }}
+                <ul class="ingredients"
+                    data-prototype="{{ form_widget(form.ingredient.vars.prototype)|e('html_attr') }}">
+                    {# iterate over each existing step and render its only field: name #}
+                    {% for ingredient in form.ingredient %}
+                    <li>{{ form_row(ingredient) }}</li>
+                    {% endfor %}
+                </ul>
+                <br><br>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{ form_widget(form.save) }}
+                    </div>
                 </div>
+
+                {{ form_end(form) }}
+
             </div>
-   
-            {{ form_end(form) }}
- 
         </div>
     </div>
 </main>
