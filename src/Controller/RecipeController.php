@@ -16,7 +16,6 @@ use App\Repository\RecipeRepository;
 use App\Repository\ShoppingListRepository;
 use App\Repository\TagRepository;
 use App\Repository\UserFavRecipeRepository;
-use App\Service\RecipeListService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -63,6 +62,8 @@ class RecipeController extends AbstractController
     {
         if (!null == $this->getUser()) {
             $currentUser = $this->getUser();
+        } else {
+            $currentUser = null;
         }
 
         $recipeMenu = '';
@@ -92,7 +93,12 @@ class RecipeController extends AbstractController
         $menus      = $menusRepo->findAll();
         $tags       = $tagRepository->findAll();
         $shopLists  = $shopRepo->findAll();
-        $favs       = $userFavRepo->findExistingFavByUser($currentUser->getId());
+
+        if(null !== $currentUser) {
+            $favs = $userFavRepo->findExistingFavByUser($currentUser->getId());
+        } else {
+            $favs = null;
+        }
 
         return $this->render('recipe/all.recipies.html.twig', [
             'recipies'      => $recipies,
