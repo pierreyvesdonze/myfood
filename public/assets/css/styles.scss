@@ -198,6 +198,9 @@ RECIPIES
     padding: 1em;
     overflow-y: scroll;
     height: 350px;
+    @include xl {
+        height: 1200px;
+    }
     @include xs {
         height: 450px;
     }
