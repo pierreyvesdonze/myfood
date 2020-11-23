@@ -97,7 +97,8 @@
                 </div>
 
                 <br>
-
+                
+                {% if app.user %}
                 <button class="button-icon filters-menu" type="button" data-toggle="collapse"
                     data-target=".infos-nav{{i}}" aria-expanded="false" aria-controls="#pouet{{i}}">
                     <i class="fa fa-plus-circle fa-2x"></i>
@@ -107,6 +108,7 @@
                 <br>
 
                 <!--***************************ADD TO SHOPPING LIST****************************-->
+
 
                 <div class="collapse infos-nav{{i}}" id="pouet{{i}}">
                     <div class="add-to-shop-container">
@@ -139,6 +141,7 @@
                         </div>
                     </div>
                 </div>
+                {% endif %}
                 {% endif %}
             </div>
         </div>

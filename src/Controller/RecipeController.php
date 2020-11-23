@@ -92,7 +92,12 @@ class RecipeController extends AbstractController
         $categories = $categoriesRepo->findAll();
         $menus      = $menusRepo->findAll();
         $tags       = $tagRepository->findAll();
-        $shopLists  = $currentUser->getShoppingLists();
+
+        if (null !== $currentUser) {
+            $shopLists  = $currentUser->getShoppingLists();
+        } else {
+            $shopLists = null;
+        }
 
         if(null !== $currentUser) {
             $favs = $userFavRepo->findExistingFavByUser($currentUser->getId());

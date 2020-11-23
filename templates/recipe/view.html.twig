@@ -77,6 +77,8 @@
                                     {% endif %}
                                 </div>
                             </div>
+
+                            {% if app.user %}
                             <div class="right-info-recipe">
                                 {# Control #}
                                 <div class="add-to-shop-container">
@@ -111,6 +113,7 @@
                                     {% include "recipe/addtoshoplist.html.twig" %}
                                 </div>
                             </div>
+                            {% endif %}
                         </div>
                     </div>
 
