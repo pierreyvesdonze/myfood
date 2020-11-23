@@ -84,24 +84,26 @@ var app = {
 	openAddToShoplistModal: function (e) {
 
 		let currentId = e.currentTarget.children[0].dataset['value'];
-		console.log(e.currentTarget);
+		let currentUser = e.currentTarget.children[0].dataset['user'];
+		
+		console.log(currentUser);
 		$('.add-articles-section *').addClass('show-protected');
 
 		// Send to appropriate method
 		$('.submit-add-toshoplist').click(function () {
-			app.sendToBackShopListToAdd(currentId)
+			app.sendToBackShopListToAdd(currentId, currentUser)
 		});
 
 	},
 
-
-	sendToBackShopListToAdd: function (currentId) {
+	sendToBackShopListToAdd: function (currentId, currentUser) {
 
 		let className = '.add-shop-select' + currentId.toString();
 		let shopListToAddId = $(className).find(':selected').attr("data-value");
 
 		const jsonShopList = {
 			'currentId': currentId,
+			'currentUser' : currentUser,
 			'shopListToAddId': shopListToAddId
 		};
 
