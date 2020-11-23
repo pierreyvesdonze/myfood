@@ -6,12 +6,13 @@ use App\Entity\Article;
 use App\Entity\Ingredient;
 use App\Entity\Recipe;
 use App\Entity\ShoppingList;
-use App\Form\Type\ShoppingListType;
 use App\Repository\ArticleRepository;
 use App\Repository\IngredientRepository;
 use App\Repository\ShoppingListRepository;
 use App\Repository\UnitRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,6 +22,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ShoppingListController extends AbstractController
 {
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
     public function index()
     {
         return $this->render('shopping_list/show.html.twig', [
@@ -29,21 +37,52 @@ class ShoppingListController extends AbstractController
     }
 
     /**
-     * @Route("/list", name="shopping_list_list")
+     * @Route("/list", name="shopping_list_list", options={"expose"=true})
      */
-    public function shoppingListList(ShoppingListRepository $shoppingListRepository)
+    public function shoppingListList()
     {
-        $shopList = $shoppingListRepository->findAll();
+        if (null !== $this->getUser()) {
+            $user = $this->getUser();
+        } else {
+            return $this->redirectToRoute('login');
+        }
+
+        $shopList = $user->getShoppingLists();
+
         return $this->render('shopList/shopping_list_all.html.twig', [
             'shoppingList' => $shopList,
         ]);
     }
 
     /**
-     * **************************
-     * OPTIONAL
-     * **************************
+     * @Route("/new", name="new-shopping-list", options={"expose"=true})
      */
+    public function shoppingListNew(Request $request): JsonResponse
+    {
+        if (null !== $this->getUser()) {
+            $user = $this->getUser();
+        }
+
+        if ($request->isMethod('POST')) {
+
+            $shoplistName = json_decode($request->getContent());
+
+            /**@var ShoppingList $shopList */
+            $shopList = new ShoppingList();
+            $shopList->setDescription($shoplistName);
+            $shopList->setUser($user);
+            $this->em->persist($shopList);
+            $this->em->flush();
+
+            return new JsonResponse('ok');
+        }
+
+        $allShopLists = $user->getShoppingLists();
+
+        return  $this->render('shopList/shopping_list_all.html.twig', [
+            'shoppingList' => $allShopLists
+        ]);
+    }
 
     /**
      * @Route("/view/{id}", name="shopping_list_view", methods={"GET"})
@@ -61,8 +100,8 @@ class ShoppingListController extends AbstractController
      */
     public function shoppingListCreate(Request $request, Recipe $recipe): Response
     {
-        $em = $this->getDoctrine()->getManager();
         if ($request->isMethod('POST')) {
+
             /** @var ShoppingList */
             $shoppingList = new ShoppingList();
             $ingredients = $recipe->getRecipeIngredients();
@@ -75,9 +114,9 @@ class ShoppingListController extends AbstractController
                 $article->setAmount($ingredient->amount);
                 $article->setUnit($ingredient->getUnit());
                 $article->setShoppingList($shoppingList);
-                $em->persist($article);
+                $this->em->persist($article);
             }
-            $em->flush();
+            $this->em->flush();
 
             $this->addFlash('success', 'La liste de course a bien été créé !');
             return $this->json([
@@ -97,7 +136,6 @@ class ShoppingListController extends AbstractController
      */
     public function shoppingListAdd(Request $request, Recipe $recipe, ShoppingListRepository $shoppingListRepository)
     {
-        $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
 
         if ($request->isMethod('POST')) {
@@ -149,8 +187,8 @@ class ShoppingListController extends AbstractController
             $oldShopListName = $shoppingList->getDescription();
 
             // Remove old shopping list
-            $em->remove($shoppingList);
-            $em->flush();
+            $this->em->remove($shoppingList);
+            $this->em->flush();
 
             // Set new shopping list with old values + new articles
             $newShoppingList = new ShoppingList();
@@ -164,10 +202,10 @@ class ShoppingListController extends AbstractController
                 $newArticle->setAmount($final['amount']);
                 $newArticle->setUnit($final['unit']);
                 $newArticle->setShoppingList($newShoppingList);
-                $em->persist($newArticle);
+                $this->em->persist($newArticle);
             }
-            $em->persist($newShoppingList);
-            $em->flush();
+            $this->em->persist($newShoppingList);
+            $this->em->flush();
 
             $this->addFlash('success', "La liste de courses a bien été ajoutée !");
 
@@ -194,7 +232,6 @@ class ShoppingListController extends AbstractController
     ) {
         if ($request->isMethod('POST')) {
             $requestIngredients =  json_decode($request->getContent());
-            $em = $this->getDoctrine()->getManager();
 
             foreach ($requestIngredients as $key => $article) {
                 $shopListId = $article->id;
@@ -216,7 +253,7 @@ class ShoppingListController extends AbstractController
                 if (null == $dataIngredient) {
                     $newIngredient = new Ingredient();
                     $newIngredient->setName($article->name);
-                    $em->persist($newIngredient);
+                    $this->em->persist($newIngredient);
                 }
 
                 $newAmount = (int)$article->amount;
@@ -232,13 +269,13 @@ class ShoppingListController extends AbstractController
                     $newArticle->setUnit($newUnit);
                 }
                 foreach ($newArticle as $art) {
-                    $em->persist($art[$key]);
+                    $this->em->persist($art[$key]);
                 }
                 $shopList->addArticle($newArticle);
             }
 
-            $em->persist($shopList);
-            $em->flush();
+            $this->em->persist($shopList);
+            $this->em->flush();
 
             return $this->json([
                 'ok'
@@ -257,9 +294,8 @@ class ShoppingListController extends AbstractController
      */
     public function shoppingListDelete(ShoppingList $shoppingList): Response
     {
-        $manager = $this->getDoctrine()->getManager();
-        $manager->remove($shoppingList);
-        $manager->flush();
+        $this->em->remove($shoppingList);
+        $this->em->flush();
 
         $this->addFlash('success', 'La liste de courses a bien été supprimée');
 
@@ -273,14 +309,14 @@ class ShoppingListController extends AbstractController
     {
         if ($request->isMethod('POST')) {
             $articleRequest =  $request->getContent();
-            $em = $this->getDoctrine()->getManager();
+
             $articleRequest = preg_replace('/[^0-9]/', '', $articleRequest);
             $article = $articleRepository->findOneBy([
                 'id' => $articleRequest
             ]);
 
-            $em->remove($article);
-            $em->flush();
+            $this->em->remove($article);
+            $this->em->flush();
 
             return $this->json([
                 'ok'
@@ -300,7 +336,6 @@ class ShoppingListController extends AbstractController
     public function increaseAmountApi(Request $request, ArticleRepository $articleRepository)
     {
         if ($request->isMethod('POST')) {
-            $em             = $this->getDoctrine()->getManager();
             $articleRequest =  $request->getContent();
             $strparts       = explode("amount", $articleRequest);
             $articleArray   = preg_replace('/[^0-9]/', '', $strparts);
@@ -312,8 +347,8 @@ class ShoppingListController extends AbstractController
             ]);
 
             $article->setAmount($articleAmount);
-            $em->persist($article);
-            $em->flush();
+            $this->em->persist($article);
+            $this->em->flush();
 
             return $this->json([
                 'ok'

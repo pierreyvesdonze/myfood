@@ -53,8 +53,7 @@ COLLAPSE
                         <li>
                             <a href="{{ path('recipe_list') }}">Explorer les recettes</a>
                             {% if app.user %}
-
-                            <a href="{{ path('user_recipe_list') }}">Voir mes recettes</a>
+                            <a href="{{ path('user_recipe_list', {'attr': {'id': app.user.id }} ) }}">Voir mes recettes</a>
                             <a href="{{ path('user_favs_recipe_list') }}">Voir mes favoris</a>
                             <a href="{{ path('recipe_add') }}">Ajouter une recette</a>
                             {% endif %}
@@ -87,8 +86,13 @@ COLLAPSE
                 <div class="card card-body supercharged-menu">
                     <ul>
                         <li>
-                            <a href="{{ path('shopping_list_list') }}">Mes listes de courses</a>
-                            <a href="#" class="create-new-shoplist">Créer une liste de courses</a>
+                            {% if app.user %}
+                            <a href="{{ path('shopping_list_list')}}">Mes listes de courses</a>
+                            <button type="button" class="create-new-shoplist-button " data-toggle="modal"
+                                data-target="#create-shoplist-modal">
+                                Créer une nouvelle liste de courses
+                            </button>
+                            {% endif %}
                         </li>
                     </ul>
                 </div>
@@ -97,14 +101,28 @@ COLLAPSE
     </div>
 
     <!--***************************MODAL SHOPLIST****************************-->
-    <!-- <div class="modal-new-shoplist">
-        <div class="center-element">
-            <label for="input-new-shoplist">Donnez un nom à votre liste de courses !</label>
-            <br>
-            <input type="text" id="input-new-shoplist">
-
+    <div class="modal fade" id="create-shoplist-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Créer une liste de courses</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body d-flex flex-column justify-content-center">
+                    <label for="input-new-shoplist">Donnez un nom à votre liste de courses !</label>
+                    <br>
+                    <input type="text" class="input-new-shoplist">
+                </div>
+                <div class="modal-footer d-flex justify-content-around">
+                    <i class="fa fa-ban fa-2x" data-dismiss="modal"></i>
+                    <i class="fas fa-check fa-2x validate-new-shoplist"></i>
+                </div>
+            </div>
         </div>
-    </div> -->
+    </div>
 
     <!--***************************USER****************************-->
     <div class="row sub-nav">

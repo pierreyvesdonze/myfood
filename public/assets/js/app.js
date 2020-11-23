@@ -7,6 +7,7 @@ var app = {
 		// Aberration incompréhensible pour le moment
 		$(".col-form-label").remove();
 
+
 		/**
 		 * *****************************
 		 * L I S T E N E R S
@@ -34,6 +35,7 @@ var app = {
 		$('.decrease-amount').click(app.decreaseAmount);
 		$('.delete-article').click(app.deleteArticleApi);
 		$('.open-shoplist').click(app.openShopList);
+		$('.validate-new-shoplist').click(app.newShopList);
 
 		//ALERT MODAL
 		app.close = $('.close').on('click', app.closeAlertModal);
@@ -89,7 +91,7 @@ var app = {
 		$('.submit-add-toshoplist').click(function () {
 			app.sendToBackShopListToAdd(currentId)
 		});
-		
+
 	},
 
 
@@ -239,7 +241,7 @@ var app = {
 		let jumbocontainer = $('.jumbo-container');
 		let jumbotron = $('.jumbotron-shoplist');
 
-		
+
 		setTimeout(function () {
 			modalContent.css("visibility", "hidden")
 			jumbotron.css("visibility", "visible")
@@ -428,15 +430,35 @@ var app = {
 		$('.main-main-title').toggleClass('hide-height');
 		$(aContainer).prevUntil('.shopping-list-section', '.a-container').toggleClass('hide-height');
 		$(aContent).toggleClass('a-content-visible');
-
-		// let shop = $('.shopping-list-section');
-		// $(this).hasClass('fa-eye-slash') ? shop.css({
-		// 	'overflow-y': 'hidden',
-		// 	'height': 'auto'
-		// }) : shop.css({ 'overflow-y': 'scroll', 'height': '574px' });
-
-		/* 		$('.a-container').not('.a-container-visible').toggleClass('hidden'); */
 	},
+
+	newShopList: function (e) {
+		let input = $('.input-new-shoplist');
+
+		$.ajax(
+			{
+				url: Routing.generate('new-shopping-list'),
+				method: 'POST',
+				data: JSON.stringify(input.val())
+			}).done(function () {
+				app.prepareNewList(input)
+			})
+	},
+
+	prepareNewList: function(newList) {
+		window.document.location = Routing.generate('shopping_list_list');
+
+		$list = $('.main-title-shop-list');
+		let = $('.fas.fa-shopping-cart').trigger();
+
+		setTimeout(function () {
+			console.log('pouet');
+		}, 3000);
+
+
+		
+	},
+
 
 	/**
 	 *SEARCH
@@ -454,10 +476,6 @@ var app = {
 			}).done(function (response) {
 				if (null !== response) {
 					console.log('ok : ' + JSON.stringify(response));
-					/* 	let redirectUrl = Routing.generate('recipe_list_api', response, true);
-	
-						response = JSON.stringify(response);
-						window.location.replace(redirectUrl + response); */
 				} else {
 					console.log('Problème');
 				}

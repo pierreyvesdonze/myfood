@@ -1388,12 +1388,23 @@ RECIPIES
 SHOPPING LIST
 ***********************************
 */
-.modal-new-shoplist {
-  width: 100%;
-  height: 500px;
-  background-color: beige;
-  position: absolute;
-  z-index: 600;
+.create-new-shoplist-button {
+  border: none;
+  background: transparent;
+  text-align: left;
+  font-family: montserrat;
+  padding: 0;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--font-color);
+}
+
+.create-new-shoplist-button:focus {
+  outline: none;
+}
+
+.create-new-shoplist-button:hover {
+  color: var(--orange-icon-color);
 }
 
 .main-shoplists {
