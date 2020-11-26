@@ -55,7 +55,6 @@ class RecipeController extends AbstractController
         RecipeRepository $recipeRepository,
         RecipeMenuRepository $menusRepo,
         TagRepository $tagRepository,
-        ShoppingListRepository $shopRepo,
         UserFavRecipeRepository $userFavRepo,
         Request $request
     )
@@ -201,8 +200,11 @@ class RecipeController extends AbstractController
      */
     public function recipeAdd(Request $request, IngredientRepository $ingredientRepository): Response
     {
+        if (null !== $this->getUser()) {
+            $user = $this->getUser();
+        }
+
         $recipe = new Recipe();
-        $user = $this->getUser();
         $recipe->setUser($user);
 
         $newStep = new RecipeStep();
@@ -219,7 +221,7 @@ class RecipeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $dataFormIngredients = $form->get('recipeIngredients')->getData();
 
-            // If Ingredient no existing in db we create new
+            // If Ingredient no existing in db we create a new one
             foreach ($dataFormIngredients as $newIngredient) {
                 $isIngredientExist = $ingredientRepository->findOneBy([
                     'name' => $newIngredient->getName()

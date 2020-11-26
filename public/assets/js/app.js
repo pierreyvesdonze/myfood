@@ -232,7 +232,7 @@ var app = {
 
 		// Send current shoplist Id to another methods
 		let currentId = $(e.currentTarget.childNodes[1]).val();
-		$('.add-article-to-shoplist-btn').click(function () {
+		$('.add-article-to-array').click(function () {
 			app.addArticlesToShopListFront(currentId);
 		});
 	},
@@ -307,8 +307,8 @@ var app = {
 		console.log(articlesArray)
 
 		//Send to Backend
-		app.addArticlesToShopListBack(articlesArray, shopId)
-		// });
+		//app.addArticlesToShopListBack(articlesArray, shopId);
+
 	},
 
 	addArticlesToShopListBack: function (articlesArray, shopId) {
