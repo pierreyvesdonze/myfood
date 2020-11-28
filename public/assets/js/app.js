@@ -85,7 +85,7 @@ var app = {
 
 		let currentId = e.currentTarget.children[0].dataset['value'];
 		let currentUser = e.currentTarget.children[0].dataset['user'];
-		
+
 		console.log(currentUser);
 		$('.add-articles-section *').addClass('show-protected');
 
@@ -93,7 +93,6 @@ var app = {
 		$('.submit-add-toshoplist').click(function () {
 			app.sendToBackShopListToAdd(currentId, currentUser)
 		});
-
 	},
 
 	sendToBackShopListToAdd: function (currentId, currentUser) {
@@ -103,7 +102,7 @@ var app = {
 
 		const jsonShopList = {
 			'currentId': currentId,
-			'currentUser' : currentUser,
+			'currentUser': currentUser,
 			'shopListToAddId': shopListToAddId
 		};
 
@@ -219,7 +218,7 @@ var app = {
 			modalContent.css("visibility", "visible")
 			jumbotron.css("visibility", "hidden")
 		}, 80);
-		modal.css("height", "300px");
+		modal.css("height", "80%");
 		jumbocontainer.css("height", "0px");
 
 		//Open current shoplist
@@ -253,19 +252,23 @@ var app = {
 	},
 
 	removeArticle: function (e) {
-		e.target.parentNode.parentNode.remove();
+		e.target.parentNode.remove();
 	},
 
 	addArticlesToShopListFront: function (shopId) {
 
 		// Add articles to shoplist in Frontend
-		let currentShoplist = $('.a-content').find("[data-value='" + shopId + "']");
+		//let currentShoplist = $('.a-content').find("[data-value='" + shopId + "']");
 
 		const article = $('.add-article-input').val(),
 			articleAmount = $('.add-amount-input').val(),
 			articleUnit = $('.add-unit-select').val(),
-			shopList = $(currentShoplist).next(),
-			newLi = $('<li class="newLi">' + article + ': ' + articleAmount + ' ' + articleUnit + '<a href ="#" class = "remove-article"> <i class="fa fa-trash"></i></a></li>');
+			//shopList = $(currentShoplist).next(),
+			shopListTemp = $('.temp-list'),
+			newLi = $('<li class="newLi">' + article + ': ' + articleAmount + ' ' + articleUnit + '<a href ="#" class = "remove-article"></a></li>');
+		newLi.css('visibility', 'visible');
+		newLi.children().css('visibility', 'visible');
+	
 
 		if (article === '') {
 			alert("Merci de renseigner un nom à l'article");
@@ -274,7 +277,7 @@ var app = {
 		} else if ('' === articleUnit) {
 			alert("Merci de renseigner une unité de mesure");
 		} else {
-			shopList.append(newLi);
+			shopListTemp.append(newLi);
 		}
 
 		// Clear inputs
@@ -284,36 +287,40 @@ var app = {
 		// Delete article listener
 		$('.remove-article').click(app.removeArticle);
 
-		// Send article to back		
-		// $('.submit-add-article').click(function () {
+		//Send article to back		
+		$('.add-article-to-shoplist-btn').click(function (e) {
+			e.preventDefault()
+			let newArticles = $('.newLi');
 
-		let newArticles = $('.newLi');
-		let articlesArray = [];
+			let articlesArray = [];
 
-		$.each(newArticles, function (index, element) {
+			newArticles.each(function (index, element) {
+				
+				let name = $(this).text().split(':')[0];
+				let amount = $(this).text().split(' ')[1];
+				let unit = $(this).text().split(' ')[2];
+				
+				articlesArray[index] = {
+					"name": name,
+					"amount": amount,
+					"unit": unit,
+					"id": shopId
+				};
+			});
+			
+			console.log(articlesArray);
+	
 
-			let name = $(this).text().split(':')[0];
-			let amount = $(this).text().split(' ')[1];
-			let unit = $(this).text().split(' ')[2];
 
-			articlesArray[index] = {
-				"name": name,
-				"amount": amount,
-				"unit": unit,
-				"id": shopId
-			};
-		});
-
-		console.log(articlesArray)
-
-		//Send to Backend
-		//app.addArticlesToShopListBack(articlesArray, shopId);
-
+			//Send to Backend
+			//app.addArticlesToShopListBack(articlesArray, shopId);
+		})
 	},
+
 
 	addArticlesToShopListBack: function (articlesArray, shopId) {
 		shopId = parseInt(shopId, 10);
-		console.log(articlesArray)
+		
 		$.ajax(
 			{
 				url: Routing.generate('shopping_list_add_articles', { id: shopId }),
@@ -447,18 +454,15 @@ var app = {
 			})
 	},
 
-	prepareNewList: function(newList) {
+	prepareNewList: function (newList) {
 		window.document.location = Routing.generate('shopping_list_list');
 
 		$list = $('.main-title-shop-list');
 		let = $('.fas.fa-shopping-cart').trigger();
 
-		setTimeout(function () {
-			console.log('pouet');
-		}, 3000);
-
-
-		
+		// setTimeout(function () {
+		// 	console.log('pouet');
+		// }, 3000);		
 	},
 
 
