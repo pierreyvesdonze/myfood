@@ -4,7 +4,7 @@ DYNAMIC FORM
 ***********************************
 */
 .main-create-recipe {
-  background: var(--form-background) !important;
+  background: var(--main-color) !important;
 }
 
 .main-add-recipe-container {
@@ -155,6 +155,9 @@ height: 60%;
 
 .li-ingredient select {
   margin-bottom: 2em;
+}
+.li-ingredient .button-save {
+  margin-left: 1em;
 }
 
 .remove-step-link,

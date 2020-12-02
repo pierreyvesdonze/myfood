@@ -7,7 +7,7 @@ NAV
 ***********************************
 */
 .menu {
-    background-color: var(--tertiary-color);
+    background-color: var(--main-color);
 }
 
 .nav-top-container {
@@ -34,7 +34,7 @@ NAV
 .supercharged-menu {
     border: none;
     transition: 0.2s;
-    background-color: #ffffffc4 !important;
+    background-color: #4e4e4ec4 !important;
     color: var(--primary-color);
     z-index: 4;
     box-shadow: 0px 9px 6px -8px;
@@ -114,7 +114,7 @@ MAIN
 main {
     overflow-y: auto;
     height: 80%;
-    background-color: var(--tertiary-color);
+    background-color: var(--main-color);
 }
 
 /*
@@ -213,6 +213,11 @@ RECIPIES
 
 /*RECIPIES*/
 
+.card-title {
+    margin: 1em;
+    height: 70px;
+}
+
 .recipies-list-container {
     display: flex;
     justify-content: space-around;
@@ -226,30 +231,29 @@ RECIPIES
     margin: 1em !important;
     border-radius: 20px;
     border: none;
-   
+    transition: .2s ease-in-out;
+   &:hover {
+    box-shadow: inset 0px 0px 7px -1px rgba(0, 0, 0, 0.75);
+   }
 }
 
 .card-recipe-list, 
 .recipe-view-container {
-    //background: rgb(217,228,255);
-    background: var(--blue-background);
-    box-shadow: 3px 5px 16px -9px rgba(0,0,0,0.5), 19px 21px 54px -14px #d6d6d6;
+    -webkit-box-shadow: inset 0px 0px 24px -1px rgba(0,0,0,0.75);
+    -moz-box-shadow: inset 0px 0px 24px -1px rgba(0,0,0,0.75);
+    box-shadow: inset 0px 0px 24px -1px rgba(0,0,0,0.75);
 }
-
-// .recipe-view-container {
-//     height: 100%;
-// }
 
 .container-shadow {
     box-shadow: -7px 12px 19px -8px rgba(0,0,0,0.5), 15px 19px 36px -10px rgba(214,214,214,1);
     border-radius: 20px;
 }
 
-.fav-recipe-list {
-    background: #feddea;
-    background: linear-gradient(90deg, #feddea 0%, #f7eaef);
-    box-shadow: 3px 5px 16px -9px rgba(0,0,0,0.5), 19px 21px 54px -14px #f5c8d9;
-}
+// .fav-recipe-list {
+//     background: #feddea;
+//     background: linear-gradient(90deg, #feddea 0%, #f7eaef);
+//     box-shadow: 3px 5px 16px -9px rgba(0,0,0,0.5), 19px 21px 54px -14px #f5c8d9;
+// }
 
 .img-list-container {
     position: relative;
@@ -287,7 +291,6 @@ RECIPIES
     height: 45px;
     border-radius: 50%;
     background: rgb(209, 209, 209);
-    position: absolute;
     cursor: pointer;
     top: -20px;
     left: -15px;
@@ -296,7 +299,6 @@ RECIPIES
     transform: scale(1);
     transition: .2s ease-in-out;
     span{
-        position: absolute;
         color: var(--tertiary-color);
         font-size: 30px;
         top: 1px;
@@ -573,8 +575,8 @@ FOOTER
     display: flex;
     justify-content: center;
     height: 13%;
-    background-color: var(--tertiary-color);
-    box-shadow: 0px -9px 14px -6px rgba(0,0,0,0.5), 0px 19px 36px -10px #cecece;
+    background-color: var(--main-color);
+    box-shadow: 0px -9px 14px -6px rgba(0,0,0,0.5);
 }
 
 .footer a {

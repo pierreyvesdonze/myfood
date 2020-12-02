@@ -6,10 +6,10 @@ COLORS
 */
 :root {
   --blue-background: linear-gradient(90deg, #cbd6ec 0%, #dee8ff 100%);
-  --form-background: linear-gradient(90deg, rgba(111,112,121,1) 0%, rgba(230,238,255,1) 100%);
-  --primary-color: #111;
-  --secondary-color: #dee8ff;
-  --main-color: #cedbfa;
+  --form-background: linear-gradient(90deg, rgb(14, 14, 15) 0%, rgb(49, 49, 49) 100%);
+  --primary-color: #b3b3b3;
+  --secondary-color: #1b1b1b ;
+  --main-color: #151414;
   --title-color: #002140;
   --font-color: #222830;
   --contrast-main-color: #feddea;
@@ -17,7 +17,7 @@ COLORS
   --contrast-main-color-3: #f7fbff;
   --tertiary-color: white;
   --orange-icon-color:  #ff785b;
-  --link-button-color:  #0b2b4a;
+  --link-button-color:  #cccccc;
   --header-button-color:  #2e2e2e;
   --progress-color: #74ad06;
   --available-color: green;
@@ -83,6 +83,10 @@ a:hover {
   color: var(--orange-icon-color);
 }
 
+label {
+  color: var(--primary-color);
+}
+
 .center-element {
   text-align: center;
 }
@@ -121,11 +125,11 @@ FONTS & ICONS
 }
 
 p, span {
-  color: var(--font-color);
+  color: var(--primary-color);
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: var(--title-color) !important;
+  color: var(--primary-color) !important;
   font-weight: bold !important;
 }
 
@@ -332,7 +336,7 @@ BUTTONS
   outline: none;
   cursor: pointer;
   text-align: center;
-  color: var(--tertiary-color);
+  color: var(--font-color);
   -webkit-box-shadow: 0px 2px 12px -4px #3a1b14da;
           box-shadow: 0px 2px 12px -4px #3a1b14da;
   -webkit-transform: scale(1);
@@ -351,6 +355,10 @@ BUTTONS
 
 .button-save:focus {
   outline: none;
+}
+
+.mg-left {
+  margin-left: 2em;
 }
 
 .fake-button {
@@ -382,6 +390,10 @@ TABLES
 */
 table {
   margin: auto !important;
+}
+
+tr td {
+  color: var(--primary-color);
 }
 
 /*
@@ -432,7 +444,7 @@ BOOSTRAP
 ***********************************
 */
 .card {
-  background-color: transparent !important;
+  background-color: var(--secondary-color) !important;
   border: none;
   padding-right: 0 !important;
 }
@@ -476,7 +488,7 @@ DYNAMIC FORM
 ***********************************
 */
 .main-create-recipe {
-  background: var(--form-background) !important;
+  background: var(--main-color) !important;
 }
 
 .main-add-recipe-container {
@@ -633,6 +645,10 @@ DYNAMIC FORM
 
 .li-ingredient select {
   margin-bottom: 2em;
+}
+
+.li-ingredient .button-save {
+  margin-left: 1em;
 }
 
 .remove-step-link,
@@ -966,7 +982,7 @@ NAV
 ***********************************
 */
 .menu {
-  background-color: var(--tertiary-color);
+  background-color: var(--main-color);
 }
 
 .nav-top-container {
@@ -999,7 +1015,7 @@ NAV
   border: none;
   -webkit-transition: 0.2s;
   transition: 0.2s;
-  background-color: #ffffffc4 !important;
+  background-color: #4e4e4ec4 !important;
   color: var(--primary-color);
   z-index: 4;
   -webkit-box-shadow: 0px 9px 6px -8px;
@@ -1088,7 +1104,7 @@ MAIN
 main {
   overflow-y: auto;
   height: 80%;
-  background-color: var(--tertiary-color);
+  background-color: var(--main-color);
 }
 
 /*
@@ -1194,6 +1210,11 @@ RECIPIES
 }
 
 /*RECIPIES*/
+.card-title {
+  margin: 1em;
+  height: 70px;
+}
+
 .recipies-list-container {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1211,27 +1232,26 @@ RECIPIES
   margin: 1em !important;
   border-radius: 20px;
   border: none;
+  -webkit-transition: .2s ease-in-out;
+  transition: .2s ease-in-out;
+}
+
+.card-recipe-list:hover,
+.fav-recipe-list:hover {
+  -webkit-box-shadow: inset 0px 0px 7px -1px rgba(0, 0, 0, 0.75);
+          box-shadow: inset 0px 0px 7px -1px rgba(0, 0, 0, 0.75);
 }
 
 .card-recipe-list,
 .recipe-view-container {
-  background: var(--blue-background);
-  -webkit-box-shadow: 3px 5px 16px -9px rgba(0, 0, 0, 0.5), 19px 21px 54px -14px #d6d6d6;
-          box-shadow: 3px 5px 16px -9px rgba(0, 0, 0, 0.5), 19px 21px 54px -14px #d6d6d6;
+  -webkit-box-shadow: inset 0px 0px 24px -1px rgba(0, 0, 0, 0.75);
+  box-shadow: inset 0px 0px 24px -1px rgba(0, 0, 0, 0.75);
 }
 
 .container-shadow {
   -webkit-box-shadow: -7px 12px 19px -8px rgba(0, 0, 0, 0.5), 15px 19px 36px -10px #d6d6d6;
           box-shadow: -7px 12px 19px -8px rgba(0, 0, 0, 0.5), 15px 19px 36px -10px #d6d6d6;
   border-radius: 20px;
-}
-
-.fav-recipe-list {
-  background: #feddea;
-  background: -webkit-gradient(linear, left top, right top, from(#feddea), to(#f7eaef));
-  background: linear-gradient(90deg, #feddea 0%, #f7eaef);
-  -webkit-box-shadow: 3px 5px 16px -9px rgba(0, 0, 0, 0.5), 19px 21px 54px -14px #f5c8d9;
-          box-shadow: 3px 5px 16px -9px rgba(0, 0, 0, 0.5), 19px 21px 54px -14px #f5c8d9;
 }
 
 .img-list-container {
@@ -1276,7 +1296,6 @@ RECIPIES
   height: 45px;
   border-radius: 50%;
   background: #d1d1d1;
-  position: absolute;
   cursor: pointer;
   top: -20px;
   left: -15px;
@@ -1290,7 +1309,6 @@ RECIPIES
 }
 
 .button-add span, .removeFav span {
-  position: absolute;
   color: var(--tertiary-color);
   font-size: 30px;
   top: 1px;
@@ -1625,9 +1643,9 @@ FOOTER
       -ms-flex-pack: center;
           justify-content: center;
   height: 13%;
-  background-color: var(--tertiary-color);
-  -webkit-box-shadow: 0px -9px 14px -6px rgba(0, 0, 0, 0.5), 0px 19px 36px -10px #cecece;
-          box-shadow: 0px -9px 14px -6px rgba(0, 0, 0, 0.5), 0px 19px 36px -10px #cecece;
+  background-color: var(--main-color);
+  -webkit-box-shadow: 0px -9px 14px -6px rgba(0, 0, 0, 0.5);
+          box-shadow: 0px -9px 14px -6px rgba(0, 0, 0, 0.5);
 }
 
 .footer a {

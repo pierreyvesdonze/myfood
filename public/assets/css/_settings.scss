@@ -5,10 +5,10 @@ COLORS
 */
 :root {
   --blue-background: linear-gradient(90deg, #cbd6ec 0%, #dee8ff 100%);
-  --form-background: linear-gradient(90deg, rgba(111,112,121,1) 0%, rgba(230,238,255,1) 100%);
-  --primary-color: #111;
-  --secondary-color: #dee8ff;
-  --main-color: #cedbfa;
+  --form-background: linear-gradient(90deg, rgb(14, 14, 15) 0%, rgb(49, 49, 49) 100%);
+  --primary-color: #b3b3b3;;
+  --secondary-color: #1b1b1b ;
+  --main-color: #151414;
   --title-color: #002140;
   --font-color: #222830;
   --contrast-main-color: #feddea;
@@ -16,7 +16,7 @@ COLORS
   --contrast-main-color-3: #f7fbff;
   --tertiary-color: white;
   --orange-icon-color:  #ff785b;
-  --link-button-color:  #0b2b4a;
+  --link-button-color:  #cccccc;
   --header-button-color:  #2e2e2e;
   --progress-color: #74ad06;
   --available-color : green;
@@ -79,6 +79,10 @@ a {
   }
 }
 
+label {
+  color: var(--primary-color);
+}
+
 .center-element {
   text-align: center;
 }
@@ -122,11 +126,11 @@ FONTS & ICONS
 }
 
 p, span {
-  color: var(--font-color);
+  color: var(--primary-color);
 }
 
 h1, h2 ,h3, h4, h5, h6 {
-  color: var(--title-color) !important;
+  color: var(--primary-color) !important;
   font-weight: bold !important;
 }
 
@@ -175,10 +179,6 @@ ul li, li {
 INPUTS
 ***********************************
 */
-
-// input[type=file]{
-//   opacity:0;
-// }
 
 input:focus {
   outline: none;
@@ -306,7 +306,7 @@ BUTTONS
   outline: none;
   cursor: pointer;
   text-align: center;
-  color: var(--tertiary-color);
+  color: var(--font-color);
   box-shadow: 0px 2px 12px -4px #3a1b14da;
   transform: scale(1);
   transition: .2s ease-in-out;
@@ -318,6 +318,10 @@ BUTTONS
   &:focus {
     outline: none;
   }
+}
+
+.mg-left {
+  margin-left: 2em;
 }
 
 .fake-button {
@@ -349,6 +353,10 @@ TABLES
 
 table {
   margin: auto !important;
+}
+
+tr td {
+  color: var(--primary-color);
 }
 
 /*
@@ -390,7 +398,7 @@ BOOSTRAP
 ***********************************
 */
 .card {
-  background-color: transparent !important;
+  background-color: var(--secondary-color) !important;
   border: none;
   padding-right: 0 !important;
 }

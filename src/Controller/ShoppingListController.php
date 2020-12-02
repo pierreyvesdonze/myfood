@@ -228,7 +228,8 @@ class ShoppingListController extends AbstractController
         Request $request,
         IngredientRepository $ingredientRepository,
         ShoppingListRepository $shoppingListRepository,
-        UnitRepository $unitRepository
+        UnitRepository $unitRepository,
+        ArticleRepository $articleRepository
     ) {
         if ($request->isMethod('POST')) {
             $requestIngredients = json_decode($request->getContent());
@@ -278,7 +279,7 @@ class ShoppingListController extends AbstractController
             $this->em->flush();
 
             return $this->json([
-                gettype($requestIngredients)
+                'ok'
             ]);
         }
 
