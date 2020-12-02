@@ -114,23 +114,6 @@ class RecipeType extends AbstractType
             'required' => false,
         ]);
 
-        // $builder->add('tags', Select2EntityType::class, [
-        //     'multiple' => true,
-        //     'remote_route' => 'add_tags',
-        //     'class' => 'App\Entity\Tag',
-        //     'primary_key' => 'id',
-        //     'minimum_input_length' => 0,
-        //     'page_limit' => 10,
-        //     'allow_clear' => true,
-        //     'delay' => 250,
-        //     'cache' => true,
-        //     'cache_timeout' => 60000,
-        //     'language' => 'fr',
-        //     'label' => 'Ajouter des filtres',
-        //     'placeholder' => 'Filtres',
-        // ]);
-
-
         $builder->add(
             'save',
             SubmitType::class,

@@ -21,7 +21,7 @@
             {% endif %}
 
             <!--***************************PHOTO****************************-->
-            <div class="img-list-container">
+            {# <div class="img-list-container">
                 <a href="{{ path('recipe_view', {'id': recipe.id}) }}">
                     {% if recipe.recipePhoto %}
                     <img src="{{ asset('uploads/' ~ recipe.recipePhoto) }}" alt="recipe-img"
@@ -31,7 +31,7 @@
                         class="card-img-top img-recipe-list">
                     {% endif %}
                 </a>
-            </div>
+            </div> #}
 
             <!--***************************BODY****************************-->
             <div class="card-body" data-menu="{{ recipe.recipeMenu }}" data-category="{{ recipe.recipeCategory }}">
