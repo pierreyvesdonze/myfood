@@ -36,6 +36,7 @@ var app = {
 		$('.delete-article').click(app.deleteArticleApi);
 		$('.open-shoplist').click(app.openShopList);
 		$('.validate-new-shoplist').click(app.newShopList);
+		$('.add-article-to-shoplist-btn').click(app.addArticlesToShopListBack);
 
 		//ALERT MODAL
 		app.close = $('.close').on('click', app.closeAlertModal);
@@ -231,6 +232,8 @@ var app = {
 
 		// Send current shoplist Id to another methods
 		let currentId = $(e.currentTarget.childNodes[1]).val();
+		sessionStorage.setItem('id', currentId);
+
 		$('.add-article-to-array').click(function () {
 			app.addArticlesToShopListFront(currentId);
 		});
@@ -255,11 +258,9 @@ var app = {
 		e.target.parentNode.remove();
 	},
 
-	addArticlesToShopListFront: function (shopId) {
+	addArticlesToShopListFront: function () {
 
 		// Add articles to shoplist in Frontend
-		//let currentShoplist = $('.a-content').find("[data-value='" + shopId + "']");
-
 		const article = $('.add-article-input').val(),
 			articleAmount = $('.add-amount-input').val(),
 			articleUnit = $('.add-unit-select').val(),
@@ -268,7 +269,6 @@ var app = {
 			newLi = $('<li class="newLi">' + article + ': ' + articleAmount + ' ' + articleUnit + '<a href ="#" class = "remove-article"></a></li>');
 		newLi.css('visibility', 'visible');
 		newLi.children().css('visibility', 'visible');
-	
 
 		if (article === '') {
 			alert("Merci de renseigner un nom à l'article");
@@ -286,41 +286,30 @@ var app = {
 
 		// Delete article listener
 		$('.remove-article').click(app.removeArticle);
-
-		//Send article to back		
-		$('.add-article-to-shoplist-btn').click(function (e) {
-			e.preventDefault()
-			let newArticles = $('.newLi');
-
-			let articlesArray = [];
-
-			newArticles.each(function (index, element) {
-				
-				let name = $(this).text().split(':')[0];
-				let amount = $(this).text().split(' ')[1];
-				let unit = $(this).text().split(' ')[2];
-				
-				articlesArray[index] = {
-					"name": name,
-					"amount": amount,
-					"unit": unit,
-					"id": shopId
-				};
-			});
-			
-			console.log(articlesArray);
-	
-
-
-			//Send to Backend
-			//app.addArticlesToShopListBack(articlesArray, shopId);
-		})
 	},
 
 
-	addArticlesToShopListBack: function (articlesArray, shopId) {
-		shopId = parseInt(shopId, 10);
-		
+	addArticlesToShopListBack: function () {
+
+		let sessionId = sessionStorage.getItem('id'),
+			shopId = parseInt(sessionId, 10),
+			newArticles = $('.newLi'),
+			articlesArray = [];
+
+		newArticles.each(function (index, element) {
+
+			let name = $(this).text().split(':')[0];
+			let amount = $(this).text().split(' ')[1];
+			let unit = $(this).text().split(' ')[2];
+
+			articlesArray[index] = {
+				"name": name,
+				"amount": amount,
+				"unit": unit,
+				"id" : shopId
+			};
+		});
+
 		$.ajax(
 			{
 				url: Routing.generate('shopping_list_add_articles', { id: shopId }),
@@ -329,14 +318,12 @@ var app = {
 				data: JSON.stringify(articlesArray),
 			}).done(function (response) {
 				if (null !== response) {
-					console.log('ok : ' + JSON.stringify(response));
 					document.querySelector(
 						"#loader").style.visibility = "visible";
 					setTimeout(function () {
 						location.reload();
 					}, 2000);
 				} else {
-					console.log('Problème');
 					console.log('Fuck : ' + JSON.stringify(response));
 				}
 			}).fail(function (jqXHR, textStatus, error) {

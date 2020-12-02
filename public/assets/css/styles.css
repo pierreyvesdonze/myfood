@@ -1556,6 +1556,7 @@ MODAL
 
 .temp-list {
   height: 300px;
+  overflow-y: scroll;
   background: var(--contrast-main-color-2);
   width: 100%;
 }
