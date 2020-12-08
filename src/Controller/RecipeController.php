@@ -57,8 +57,7 @@ class RecipeController extends AbstractController
         TagRepository $tagRepository,
         UserFavRecipeRepository $userFavRepo,
         Request $request
-    )
-    {
+    ) {
         if (!null == $this->getUser()) {
             $currentUser = $this->getUser();
         } else {
@@ -83,7 +82,6 @@ class RecipeController extends AbstractController
                 $recipeCategory = $recipeCategRepo->getId();
             }
             $recipies = $recipeRepository->findRecipiesByFilters($recipeMenu, $recipeCategory);
-          
         } else {
             $recipies   = $recipeRepository->findAll();
         }
@@ -98,7 +96,7 @@ class RecipeController extends AbstractController
             $shopLists = null;
         }
 
-        if(null !== $currentUser) {
+        if (null !== $currentUser) {
             $favs = $userFavRepo->findExistingFavByUser($currentUser->getId());
         } else {
             $favs = null;
@@ -222,15 +220,18 @@ class RecipeController extends AbstractController
             $dataFormIngredients = $form->get('recipeIngredients')->getData();
 
             // If Ingredient no existing in db we create a new one
-            foreach ($dataFormIngredients as $newIngredient) {
-                $isIngredientExist = $ingredientRepository->findOneBy([
-                    'name' => $newIngredient->getName()
-                ]);
+            if (null !== $dataFormIngredients) {
 
-                if (!$isIngredientExist) {
-                    $createNewIngredient = new Ingredient();
-                    $createNewIngredient->setName($newIngredient->getName());
-                    $this->em->persist($createNewIngredient);
+                foreach ($dataFormIngredients as $newIngredient) {
+                    $isIngredientExist = $ingredientRepository->findOneBy([
+                        'name' => $newIngredient->getName()
+                    ]);
+
+                    if (!$isIngredientExist) {
+                        $createNewIngredient = new Ingredient();
+                        $createNewIngredient->setName($newIngredient->getName());
+                        $this->em->persist($createNewIngredient);
+                    }
                 }
             }
 

@@ -35,7 +35,7 @@ class Recipe
     private $user;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $description;
 
@@ -55,13 +55,12 @@ class Recipe
     private $timePrepa;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $person;
 
     /**
      * @ORM\OneToMany(targetEntity=RecipeIngredient::class, mappedBy="recipe", cascade={"persist", "remove"}, fetch="EAGER")
-     * @ORM\JoinColumn(nullable=true)
      */
     private $recipeIngredients;
 
