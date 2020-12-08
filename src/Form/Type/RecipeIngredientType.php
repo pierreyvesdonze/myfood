@@ -18,7 +18,8 @@ class RecipeIngredientType extends AbstractType
             'name',
             TextType::class,
             [
-                'label' => "Nom de l'ingrédient",
+                'label' => "Nom de l'ingrédient *",
+                'required' => false,
             ]
         );
 
@@ -26,7 +27,7 @@ class RecipeIngredientType extends AbstractType
             'amount',
             NumberType::class,
             [
-                'label' => "Quantité d'ingrédient(s)",
+                'label' => "Quantité d'ingrédient(s) *",
                 'scale' => 1,
                 'attr' => [
                     'step' => '.5',

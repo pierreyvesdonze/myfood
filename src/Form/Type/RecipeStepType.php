@@ -16,6 +16,7 @@ class RecipeStepType extends AbstractType
             TextareaType::class,
             [
                 'label' => "Description de l'étape",
+                'required' => true,
                 'attr' => [
                     'class' => 'textarea-step'
                 ]

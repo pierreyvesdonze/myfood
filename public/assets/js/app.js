@@ -484,7 +484,6 @@ var app = {
 	 */
 	searchByIngredients: function (e) {
 
-
 		// Disable submit form on Enter keypress
 		const keyCode = e.keyCode || e.which;
 		if (keyCode === 13) {
@@ -521,3 +520,10 @@ $(document).click(function (e) {
 		$('.collapse').removeClass('show')
 	}
 })
+
+$('*').bind("keypress", function(e) {
+	if (e.keyCode == 13) {               
+	  e.preventDefault();
+	  return false;
+	}
+});

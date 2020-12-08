@@ -44,6 +44,7 @@ class RecipeType extends AbstractType
         $builder->add('recipeIngredients', CollectionType::class, [
             'entry_type' => RecipeIngredientType::class,
             'entry_options' => ['label' => false],
+            'required' => true,
             'allow_add' => true,
             'by_reference' => false,
             'allow_delete' => true,
