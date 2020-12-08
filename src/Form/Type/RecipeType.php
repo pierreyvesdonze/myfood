@@ -28,6 +28,7 @@ class RecipeType extends AbstractType
             TextType::class,
             [
                 'label' => 'Nom de la recette',
+                'required' => true,
             ]
         );
 
@@ -37,6 +38,7 @@ class RecipeType extends AbstractType
             'allow_add' => true,
             'by_reference' => false,
             'allow_delete' => true,
+            'required' => true,
         ]);
 
         $builder->add('recipeIngredients', CollectionType::class, [
@@ -45,10 +47,12 @@ class RecipeType extends AbstractType
             'allow_add' => true,
             'by_reference' => false,
             'allow_delete' => true,
+            'required' => true,
         ]);
 
         $builder->add('person', IntegerType::class, [
             'label' => 'Nb de personnes',
+            'required' => true,
             'attr' => [
                 'min' => 1,
                 'max' => 12,
