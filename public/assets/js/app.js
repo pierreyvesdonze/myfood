@@ -88,6 +88,7 @@ var app = {
 		let currentUser = e.currentTarget.children[0].dataset['user'];
 
 		console.log(currentUser);
+		console.log(currentId);
 		$('.add-articles-section *').addClass('show-protected');
 
 		// Send to appropriate method
