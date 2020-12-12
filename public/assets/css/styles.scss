@@ -245,7 +245,7 @@ RECIPIES
 }
 
 .container-shadow {
-    box-shadow: -7px 12px 19px -8px rgba(0,0,0,0.5), 15px 19px 36px -10px rgba(214,214,214,1);
+    box-shadow: -7px 12px 19px -8px rgba(0,0,0,0.5);
     border-radius: 20px;
 }
 
@@ -265,12 +265,12 @@ RECIPIES
     width: 16rem;
     height: 16rem;
     margin-top: 2em;
-    box-shadow: -9px 9px 9px -9px rgba(0,0,0,0.5), 15px 19px 36px -10px rgba(214,214,214,1);
+    box-shadow: -9px 9px 9px -9px rgba(0,0,0,0.5);
     transform: scale(1);
     transition: .2s ease-in-out;
     &:hover {
         transform: scale(1.1);
-        box-shadow: -7px 12px 19px -8px rgba(0,0,0,0.5), 15px 19px 36px -10px rgba(214,214,214,1);
+        box-shadow: -7px 12px 19px -8px rgba(0,0,0,0.5);
     }
 }
 
