@@ -34,3 +34,5 @@ Un formulaire permet de rechercher des recettes à partir d'ingrédients. Il suf
 - A la racine du dossier "public" créer un dossier et nommez-le "uploads". Ce dernier contiendra les images que vos utilisateurs chargeront pour vos recettes
 - N'oubliez pas d'attribuer des droits en lecture et écriture nécessaires sur certains dossiers
 - Enjoy, il reste sûrement plein de bugs et/ou de choses à améliorer.
+
+NB : N'hésitez pas à ouvrir une issue si vous avez la moindre question ou le moindre doute quant à l'installation/configuration du projet.
