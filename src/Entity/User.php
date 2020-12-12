@@ -38,7 +38,7 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ShoppingList", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\ShoppingList", mappedBy="user", fetch="EAGER")
      */
     private $shoppingLists;
 

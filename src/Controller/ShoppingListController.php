@@ -102,11 +102,14 @@ class ShoppingListController extends AbstractController
     {
         if ($request->isMethod('POST')) {
 
+            $user = $this->getUser();
+
             /** @var ShoppingList */
             $shoppingList = new ShoppingList();
             $ingredients = $recipe->getRecipeIngredients();
             $description = $recipe->getName();
             $shoppingList->setDescription($description);
+            $shoppingList->setUser($user);
 
             foreach ($ingredients as $ingredient) {
                 $article = new Article();
@@ -118,7 +121,7 @@ class ShoppingListController extends AbstractController
             }
             $this->em->flush();
 
-            $this->addFlash('success', 'La liste de course a bien été créé !');
+            $this->addFlash('success', 'La liste de course a bien été créée !');
             return $this->json([
                 'ok'
             ]);
