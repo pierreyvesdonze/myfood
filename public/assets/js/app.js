@@ -514,7 +514,7 @@ var app = {
 document.addEventListener('DOMContentLoaded', app.init);
 
 // Close opened collapsed nav
-$(document).click(function (e) {
+$(document).click(function (e) {$(document).click(function (e) {
 
 	if (
 		!$(e.target).hasClass('show-protected')) {
