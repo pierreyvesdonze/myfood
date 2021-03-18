@@ -307,7 +307,7 @@ var app = {
 				"name": name,
 				"amount": amount,
 				"unit": unit,
-				"id" : shopId
+				"id": shopId
 			};
 		});
 
@@ -514,17 +514,19 @@ var app = {
 document.addEventListener('DOMContentLoaded', app.init);
 
 // Close opened collapsed nav
-$(document).click(function (e) {$(document).click(function (e) {
+$(document).click(function (e) {
+	$(document).click(function (e) {
 
-	if (
-		!$(e.target).hasClass('show-protected')) {
-		$('.collapse').removeClass('show')
-	}
+		if (
+			!$(e.target).hasClass('show-protected')) {
+			$('.collapse').removeClass('show')
+		}
+	})
 })
 
-$('*').bind("keypress", function(e) {
-	if (e.keyCode == 13) {               
-	  e.preventDefault();
-	  return false;
+$('*').bind("keypress", function (e) {
+	if (e.keyCode == 13) {
+		e.preventDefault();
+		return false;
 	}
-});
+})
