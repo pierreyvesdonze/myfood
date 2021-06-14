@@ -31,9 +31,9 @@ class SearchType extends AbstractType
             'save',
             SubmitType::class,
             [
-                'label' => 'Filtrer',
+                'label' => false,
                 'attr' => [
-                    'class' => 'main-button-search'
+                    'class' => 'fas fa-search fa-2x button-search'
                 ],
             ]
         );

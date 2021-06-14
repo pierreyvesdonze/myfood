@@ -16,7 +16,6 @@ use App\Repository\RecipeMenuRepository;
 use App\Repository\RecipeRepository;
 use App\Repository\ShoppingListRepository;
 use App\Repository\TagRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -67,7 +66,8 @@ class SearchController extends AbstractController
             ]);
         }
         return $this->render('search/searchbar.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'errors' => $errors
         ]);
     }
 

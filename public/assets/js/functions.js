@@ -63,31 +63,6 @@ function addStepForm($stepCollectionHolder, $newStepLinkLi) {
     addStepFormDeleteLink($newFormLi);
 }
 
-// function stepCounterIncrease(counter) {
-//     //Increase
-//     let parseCount = parseInt(counter.text());
-//     parseCount++;
-//     counter.text(parseCount);
-
-//     // If plural
-//     let text = $('.step-counter-text');
-//     if (parseCount > 1) {
-//         text.text("étapes")
-//     }
-// }
-
-// function stepCounterDecrease(counter) {
-//     let parseCount = parseInt(counter.text());
-//     parseCount--;
-//     counter.text(parseCount);
-
-//     // If plural
-//     let text = $('.step-counter-text');
-//     if (parseCount < 2) {
-//         text.text("étape")
-//     }
-// }
-
 function addStepFormDeleteLink($stepFormLi) {
     var $removeFormButton = $('<button type="button" class="remove-step-link"></button>');
     $stepFormLi.append($removeFormButton);
