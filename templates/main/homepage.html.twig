@@ -1,84 +1,95 @@
-{% extends "base.html.twig" %}
-
-{% block body %}
-
-
+{% extends "base.html.twig" %} {% block body %}
 
 <section class="main-homepage">
-    <h1 class="main-title">Bienvenue sur MyFood !</h1>
+  <h1 class="main-title">Bienvenue sur MyFood !</h1>
 
-    <hr class="hr">
+  <hr class="hr" />
 
-    <!-- SECTION 1 -->
-    <div class="custom-section section-1">
-        <div class="left-right">
-            <div class="left">
-                <span class="big">Explorez</span> <br>
-                <span class="big">Des recettes</span> <br>
-                <span class="big">Originales</span> <br>
-            </div>
-            <div class="right">
-                <figure>
-                    <a href="{{ path('recipe_list') }}">
-                        <img src="{{ asset('assets/images/exemple-recipe.png') }}" alt="recipe-img" class="exemple-img">
-                    </a>
-                </figure>
-            </div>
-        </div>
+  <!-- SECTION 1 -->
+  <div class="custom-section section-1">
+    <div class="left-right">
+      <div class="left">
+        <span class="big">Explorez</span> <br />
+        <span class="big">Des recettes</span> <br />
+        <span class="big">Originales</span> <br />
+      </div>
+      <div class="right">
+        <figure>
+          <a href="{{ path('recipe_list') }}">
+            <img
+              src="{{ asset('assets/images/exemple-recipe.png') }}"
+              alt="recipe-img"
+              class="exemple-img"
+            />
+          </a>
+        </figure>
+      </div>
     </div>
+  </div>
 
-    <!-- SECTION 2 -->
-    <div class="custom-section section-2">
-        <div class="left-right">
-            <div class="left img-center">
-                <figure>
-                    <img src="{{ asset('assets/images/exemple-create-recipe.png') }}" alt="recipe-img"
-                        class="exemple-img">
-                </figure>
-            </div>
-            <div class="right d-flex flex-column align-items-end">
-                <span class="big">Créez</span> <br>
-                <span class="big">Simplement</span> <br>
-                <span class="big">Les</span> <br>
-                <span class="big">Vôtres</span> <br>
-            </div>
-        </div>
+  <!-- SECTION 2 -->
+  <div class="custom-section section-2">
+    <div class="left-right">
+      <div class="left img-center">
+        <figure>
+          <img
+            src="{{ asset('assets/images/exemple-create-recipe.png') }}"
+            alt="recipe-img"
+            class="exemple-img"
+          />
+        </figure>
+      </div>
+      <div class="right d-flex flex-column align-items-end">
+        <span class="big">Créez</span> <br />
+        <span class="big">Simplement</span> <br />
+        <span class="big">Les</span> <br />
+        <span class="big">Vôtres</span> <br />
+      </div>
     </div>
+  </div>
 
-    <!-- SECTION 3 -->
-    <div class="custom-section section-3">
-        <div class="left-right">
-            <div class="left center-spans">
-                <span class="big">Générez</span> <br>
-                <span class="big">Vos propres</span> <br>
-                <span class="big">Listes</span> <br>
-                <span class="big">De courses</span> <br>
-            </div>
-            <div class="right img-center">
-                <figure>
-                    <img src="{{ asset('assets/images/exemple-groceries.png') }}" alt="recipe-img" class="exemple-img">
-                </figure>
-            </div>
-        </div>
+  <!-- SECTION 3 -->
+  <div class="custom-section section-3">
+    <div class="left-right">
+      <div class="left center-spans">
+        <span class="big">Générez</span> <br />
+        <span class="big">Vos propres</span> <br />
+        <span class="big">Listes</span> <br />
+        <span class="big">De courses</span> <br />
+      </div>
+      <div class="right img-center">
+        <figure>
+          <img
+            src="{{ asset('assets/images/exemple-groceries.png') }}"
+            alt="recipe-img"
+            class="exemple-img"
+          />
+        </figure>
+      </div>
     </div>
+  </div>
 
-        <!-- SECTION 4 -->
-        <div class="custom-section section-4">
-            <div class="left-right">
-                <div class="left">
-                    <span class="big">Recherchez</span> <br>
-                    <span class="big">Des recettes</span> <br>
-                    <span class="big">par</span> <br>
-                    <span class="big">Ingrédients</span> <br>
-                </div>
-                <div class="right">
-                    <figure>
-                        <a href="{{ path('search_list_by_ingredients') }}">
-                            <img src="{{ asset('assets/images/exemple-fridge.png') }}" alt="recipe-img" class="exemple-img">
-                        </a>
-                    </figure>
-                </div>
-            </div>
-        </div>
+  <!-- SECTION 4 -->
+  <div class="custom-section section-4">
+    <div class="left-right">
+      <div class="left">
+        <span class="big">Recherchez</span> <br />
+        <span class="big">Des recettes</span> <br />
+        <span class="big">par</span> <br />
+        <span class="big">Ingrédients</span> <br />
+      </div>
+      <div class="right">
+        <figure>
+          <a href="{{ path('search_list_by_ingredients') }}">
+            <img
+              src="{{ asset('assets/images/exemple-fridge.png') }}"
+              alt="recipe-img"
+              class="exemple-img"
+            />
+          </a>
+        </figure>
+      </div>
+    </div>
+  </div>
 </section>
-{% endblock  %}
+{% endblock %}
