@@ -1649,7 +1649,7 @@ FOOTER
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  height: 13%;
+  height: 6%;
   background-color: var(--main-color);
   -webkit-box-shadow: 0px -9px 14px -6px rgba(0, 0, 0, 0.5);
           box-shadow: 0px -9px 14px -6px rgba(0, 0, 0, 0.5);
