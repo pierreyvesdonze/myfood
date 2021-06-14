@@ -23,7 +23,7 @@
             <!--***************************PHOTO****************************-->
             <div class="img-list-container">
                 <a href="{{ path('recipe_view', {'id': recipe.id}) }}">
-                    {% if recipe.recipePhoto %}
+                    {% if recipe.recipePhoto is defined and recipe.recipePhoto is not empty %}
                     <img src="{{ asset('uploads/' ~ recipe.recipePhoto) }}" alt="recipe-img"
                         class="card-img-top img-recipe-list">
                     {% else %}
