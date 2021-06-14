@@ -6,29 +6,29 @@ COLORS
 :root {
   --blue-background: linear-gradient(90deg, #cbd6ec 0%, #dee8ff 100%);
   --form-background: linear-gradient(90deg, rgb(14, 14, 15) 0%, rgb(49, 49, 49) 100%);
-  --primary-color: #b3b3b3;;
-  --secondary-color: #1b1b1b ;
-  --main-color: #151414;
+  --primary-color: #7f7171;
+  --secondary-color: #1b1b1b;
+  --main-color: #ffffff;
   --title-color: #002140;
   --font-color: #222830;
   --contrast-main-color: #feddea;
   --contrast-main-color-2: #9ba7b2;
   --contrast-main-color-3: #f7fbff;
   --tertiary-color: white;
-  --orange-icon-color:  #ff785b;
-  --link-button-color:  #cccccc;
-  --header-button-color:  #2e2e2e;
+  --orange-icon-color: #ff785b;
+  --link-button-color: #918c8c;
+  --header-button-color: #2e2e2e;
   --progress-color: #74ad06;
-  --available-color : green;
-  --unavailable-color : red;
+  --available-color: green;
+  --unavailable-color: red;
 }
 
-html, body {
+html,
+body {
   overflow: hidden;
   width: 100%;
   height: 100vh;
 }
-
 
 /*
 ***********************************
@@ -42,7 +42,7 @@ GENERAL
 }
 
 .main-title {
-  margin-top: .5em;
+  margin-top: 0.5em;
   text-align: center;
 }
 
@@ -65,7 +65,7 @@ GENERAL
 }
 
 .hide-height {
-  transform:scaleY(0);
+  transform: scaleY(0);
   height: 0;
   transition: 0.3s;
 }
@@ -75,7 +75,7 @@ a {
   margin: 0;
   text-decoration: none;
   &:hover {
-    color: var(--orange-icon-color)
+    color: var(--orange-icon-color);
   }
 }
 
@@ -93,12 +93,7 @@ label {
   width: 90%;
   margin: 20px auto;
   background: rgb(29, 29, 29);
-  background: radial-gradient(
-    circle,
-    rgb(8, 8, 8) 0%,
-    rgba(219, 219, 219, 0.144) 50%,
-    rgba(209, 209, 209, 0) 100%
-  );
+  background: radial-gradient(circle, rgb(8, 8, 8) 0%, rgba(219, 219, 219, 0.144) 50%, rgba(209, 209, 209, 0) 100%);
 }
 
 .scrollable-auto {
@@ -107,14 +102,13 @@ label {
   margin-bottom: 1em;
 }
 
-.hr-white{
+.hr-white {
   border: 0;
   height: 1px;
   width: 400px;
   background: #333;
   background-image: linear-gradient(to right, #ccc, rgb(255, 255, 255), #ccc);
 }
-
 
 /*
 ***********************************
@@ -125,21 +119,26 @@ FONTS & ICONS
   font-family: "Cinzel", serif;
 }
 
-p, span {
+p,
+span {
   color: var(--primary-color);
 }
 
-h1, h2 ,h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: var(--primary-color) !important;
   font-weight: bold !important;
 }
-
 
 .fa,
 .fas {
   color: var(--link-button-color);
   margin-right: 10px;
-  &:hover{
+  &:hover {
     color: var(--orange-icon-color);
   }
 }
@@ -148,8 +147,8 @@ h1, h2 ,h3, h4, h5, h6 {
   color: var(--orange-icon-color) !important;
 }
 
-
-.nav-top-container i, .footer a i {
+.nav-top-container i,
+.footer a i {
   color: var(--link-button-color);
 }
 
@@ -162,7 +161,8 @@ h1, h2 ,h3, h4, h5, h6 {
 LISTS
 ***********************************
 */
-ul li, li {
+ul li,
+li {
   list-style-type: none !important;
 }
 
@@ -185,45 +185,45 @@ input:focus {
 }
 
 $hue: 220;
-$light: hsl($hue - 90,90%,85%);
-$base: hsl($hue - 20,10%,70%);
+$light: hsl($hue - 90, 90%, 85%);
+$base: hsl($hue - 20, 10%, 70%);
 // $mid: hsl($hue + 20,40%,30%);
 $mid: rgb(43, 43, 61);
-$dark: hsl($hue + 40,100%,10%);
+$dark: hsl($hue + 40, 100%, 10%);
 
 .search-input,
 input:not([type="checkbox"]),
 textarea,
 select,
-option, 
-.custom-file-input
-{
+option,
+.custom-file-input {
   background: $mid !important;
   border-radius: 2rem !important;
   appearance: none;
   color: wheat !important;
   text-align: center;
-              //dark rim
-  box-shadow: -0.05rem -0.05rem 0.08rem rgba($dark,0.6),
-              //light rim
-              0.05rem 0.05rem 0.1rem rgba($light,1),
-              //inner dark
-              inset 0.5rem 0.5rem 2rem rgba($dark,0.5),
-              //inner dark fine
-              inset 0.1rem 0.1rem 0.2rem rgba($dark,0.75),
-              //inner light
-              inset -0.5rem -0.5rem 4rem rgba($light,0.5);
-    &::placeholder {
-        color: var(--tertiary-color);
-    }
+  //dark rim
+  box-shadow: -0.05rem -0.05rem 0.08rem rgba($dark, 0.6),
+    //light rim
+    0.05rem 0.05rem 0.1rem rgba($light, 1),
+    //inner dark
+    inset 0.5rem 0.5rem 2rem rgba($dark, 0.5),
+    //inner dark fine
+    inset 0.1rem 0.1rem 0.2rem rgba($dark, 0.75),
+    //inner light
+    inset -0.5rem -0.5rem 4rem rgba($light, 0.5);
+  &::placeholder {
+    color: var(--tertiary-color);
+  }
 }
 
-textarea, input {
-    background: #3e4c5c;
+textarea,
+input {
+  background: #3e4c5c;
 }
 
 select:focus {
-    outline: none;
+  outline: none;
 }
 
 /*
@@ -292,7 +292,6 @@ FLASH MESSAGES
   color: green !important;
 }
 
-
 /*
 ***********************************
 BUTTONS 
@@ -300,7 +299,7 @@ BUTTONS
 */
 
 .button-save {
-  background:var(--link-button-color);
+  background: var(--link-button-color);
   border: none;
   border-radius: 10px;
   outline: none;
@@ -309,7 +308,7 @@ BUTTONS
   color: var(--font-color);
   box-shadow: 0px 2px 12px -4px #3a1b14da;
   transform: scale(1);
-  transition: .2s ease-in-out;
+  transition: 0.2s ease-in-out;
   &:hover {
     background-color: var(--orange-icon-color);
     transform: scale(1.2);
@@ -327,16 +326,17 @@ BUTTONS
 .fake-button {
   padding-left: 8px;
   padding-right: 8px;
-  background-color :var(--link-button-color);
+  background-color: var(--link-button-color);
   color: var(--tertiary-color);
   border-radius: 10px;
+  user-select: none;
 }
 
 .button-icon {
   background: none;
   outline: none;
   border: none;
-  &:focus{
+  &:focus {
     background-color: var(--main-color) !important;
   }
 }
@@ -398,7 +398,7 @@ BOOSTRAP
 ***********************************
 */
 .card {
-  background-color: var(--secondary-color) !important;
+  background-color: var(--blue-background) !important;
   border: none;
   padding-right: 0 !important;
 }
@@ -423,17 +423,13 @@ BOOSTRAP
   border-radius: 40px 40px 0 0;
 }
 
-.nav-pills .nav-link.active{
+.nav-pills .nav-link.active {
   background-color: var(--orange-icon-color) !important;
 }
 
 .jumbotron {
   background: var(--main-color) !important;
 }
-
-
-
-
 
 /*
 ***********************************

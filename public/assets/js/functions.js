@@ -8,7 +8,7 @@ var $stepCollectionHolder;
 var $ingredientCollectionHolder;
 
 var $addStepButton = $('<button type="button" class="add-step-link"><i class="fas fa-plus-circle fa-2x"></button>');
-var $addIngredientButton = $('<button type="button" class="button-save">Ajouter un autre ingrédient</button>');
+var $addIngredientButton = $('<button type="button" class="button-save">Ajouter un ingrédient</button>');
 var $newStepLinkLi = $('<li></li>').append($addStepButton);
 var $newIngredientLinkLi = $('<li></li>').append($addIngredientButton);
 

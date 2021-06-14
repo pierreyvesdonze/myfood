@@ -9,11 +9,9 @@
             <p class="lead">Recherchez des recettes en fonction des ingrédients que vous avez en votre possession.</p>
             <hr class="my-4">
             <p class="center-element">
-                <a href="#button-add-ingredient">
-                    <span class="fake-button">Ajouter un ingredient</span></a>
-                    ci-dessous pour chaque ingrédient
-                    que vous voulez ajouter.</a>
-                
+                <span class="fake-button">Ajouter un ingredient</span></a>
+                ci-dessous pour chaque ingrédient
+                que vous voulez ajouter.
                 <br>
             </p>
         </div>
@@ -24,7 +22,6 @@
                 {# Ingredients #}
                 <ul class="ingredients"
                     data-prototype="{{ form_widget(form.ingredient.vars.prototype)|e('html_attr') }}">
-                    {# iterate over each existing step and render its only field: name #}
                     {% for ingredient in form.ingredient %}
                     <li>{{ form_row(ingredient, {'attr': {'id': 'button-add-ingredient'}} ) }}</li>
                     {% endfor %}

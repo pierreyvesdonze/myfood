@@ -7,24 +7,25 @@ COLORS
 :root {
   --blue-background: linear-gradient(90deg, #cbd6ec 0%, #dee8ff 100%);
   --form-background: linear-gradient(90deg, rgb(14, 14, 15) 0%, rgb(49, 49, 49) 100%);
-  --primary-color: #b3b3b3;
-  --secondary-color: #1b1b1b ;
-  --main-color: #151414;
+  --primary-color: #7f7171;
+  --secondary-color: #1b1b1b;
+  --main-color: #ffffff;
   --title-color: #002140;
   --font-color: #222830;
   --contrast-main-color: #feddea;
   --contrast-main-color-2: #9ba7b2;
   --contrast-main-color-3: #f7fbff;
   --tertiary-color: white;
-  --orange-icon-color:  #ff785b;
-  --link-button-color:  #cccccc;
-  --header-button-color:  #2e2e2e;
+  --orange-icon-color: #ff785b;
+  --link-button-color: #918c8c;
+  --header-button-color: #2e2e2e;
   --progress-color: #74ad06;
   --available-color: green;
   --unavailable-color: red;
 }
 
-html, body {
+html,
+body {
   overflow: hidden;
   width: 100%;
   height: 100vh;
@@ -41,7 +42,7 @@ GENERAL
 }
 
 .main-title {
-  margin-top: .5em;
+  margin-top: 0.5em;
   text-align: center;
 }
 
@@ -124,11 +125,17 @@ FONTS & ICONS
   font-family: "Cinzel", serif;
 }
 
-p, span {
+p,
+span {
   color: var(--primary-color);
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: var(--primary-color) !important;
   font-weight: bold !important;
 }
@@ -148,7 +155,8 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--orange-icon-color) !important;
 }
 
-.nav-top-container i, .footer a i {
+.nav-top-container i,
+.footer a i {
   color: var(--link-button-color);
 }
 
@@ -161,7 +169,8 @@ h1, h2, h3, h4, h5, h6 {
 LISTS
 ***********************************
 */
-ul li, li {
+ul li,
+li {
   list-style-type: none !important;
 }
 
@@ -235,7 +244,8 @@ option::placeholder,
   color: var(--tertiary-color);
 }
 
-textarea, input {
+textarea,
+input {
   background: #3e4c5c;
 }
 
@@ -341,8 +351,8 @@ BUTTONS
           box-shadow: 0px 2px 12px -4px #3a1b14da;
   -webkit-transform: scale(1);
           transform: scale(1);
-  -webkit-transition: .2s ease-in-out;
-  transition: .2s ease-in-out;
+  -webkit-transition: 0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
 }
 
 .button-save:hover {
@@ -367,6 +377,10 @@ BUTTONS
   background-color: var(--link-button-color);
   color: var(--tertiary-color);
   border-radius: 10px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .button-icon {
@@ -444,7 +458,7 @@ BOOSTRAP
 ***********************************
 */
 .card {
-  background-color: var(--secondary-color) !important;
+  background-color: var(--blue-background) !important;
   border: none;
   padding-right: 0 !important;
 }
@@ -1015,7 +1029,6 @@ NAV
   border: none;
   -webkit-transition: 0.2s;
   transition: 0.2s;
-  background-color: #4e4e4ec4 !important;
   color: var(--primary-color);
   z-index: 4;
   -webkit-box-shadow: 0px 9px 6px -8px;
@@ -1266,15 +1279,9 @@ RECIPIES
   margin-top: 2em;
   -webkit-box-shadow: -9px 9px 9px -9px rgba(0, 0, 0, 0.5);
           box-shadow: -9px 9px 9px -9px rgba(0, 0, 0, 0.5);
-  -webkit-transform: scale(1);
-          transform: scale(1);
-  -webkit-transition: .2s ease-in-out;
-  transition: .2s ease-in-out;
 }
 
 .img-recipe-list:hover {
-  -webkit-transform: scale(1.1);
-          transform: scale(1.1);
   -webkit-box-shadow: -7px 12px 19px -8px rgba(0, 0, 0, 0.5);
           box-shadow: -7px 12px 19px -8px rgba(0, 0, 0, 0.5);
 }
@@ -1328,11 +1335,6 @@ RECIPIES
 
 .isFav, .removeFav {
   background: var(--orange-icon-color);
-}
-
-.isFav:hover, .removeFav:hover {
-  -webkit-box-shadow: 8px 8px 21px -4px var(--orange-icon-color);
-          box-shadow: 8px 8px 21px -4px var(--orange-icon-color);
 }
 
 .add-to-shop-container {
@@ -1415,7 +1417,7 @@ SHOPPING LIST
   padding: 0;
   font-weight: 600;
   font-size: 15px;
-  color: var(--font-color);
+  color: var(--link-button-color);
 }
 
 .create-new-shoplist-button:focus {

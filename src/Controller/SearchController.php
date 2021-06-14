@@ -195,8 +195,7 @@ class SearchController extends AbstractController
      */
     public function searchByIngredients(
         Request $request,
-        RecipeIngredientRepository $recipeIngredientRepository,
-        RecipeRepository $recipeRepository
+        RecipeIngredientRepository $recipeIngredientRepository
     ) {
         $form = $this->createForm(SearchRecipeType::class, null);
         $form->handleRequest($request);
