@@ -184,13 +184,13 @@ class AppFixtures extends Fixture
 
         // Roles
         $roleUser = new Role;
-        $roleUser->setName('ROLE_USER');
-        $roleUser->setRoleString('User');
+        $roleUser->setName('User');
+        $roleUser->setRoleString('ROLE_USER');
         $manager->persist($roleUser);
 
         $roleAdmin = new Role;
-        $roleAdmin->setName('ROLE_ADMIN');
-        $roleAdmin->setRoleString('Admin');
+        $roleAdmin->setName('Admin');
+        $roleAdmin->setRoleString('ROLE_ADMIN');
         $manager->persist($roleAdmin);
 
         $manager->flush();

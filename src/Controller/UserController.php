@@ -59,13 +59,11 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/myprofile", name="user_profile", methods={"GET"})
+     * @Route("/myprofile/{id}", name="user_profile", methods={"GET"})
      * @IsGranted("ROLE_USER")
      */
-    public function myProfile(): Response
+    public function myProfile(User $user): Response
     {
-        $user = $this->getUser();
-
         return $this->render('user/show.html.twig', [
             'user' => $user,
         ]);
@@ -74,38 +72,28 @@ class UserController extends AbstractController
     /**
      * @Route("/edit", name="user_edit_profile", methods={"GET","POST"})
      */
-    public function edit(Request $request): Response
+    public function edit(
+        Request $request,
+        UserPasswordEncoderInterface $passwordEncoder
+        ): Response
     {
         $user = $this->getUser();
-        $form = $this->createForm(UserType::class, $user);
 
+        if (!$user) {
+            return $this->redirectToRoute('login');
+        }
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $brochureFile = $form->get('brochure')->getData();
-
-            if ($brochureFile) {
-                $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
-                $safeFilename = $originalFilename;
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$brochureFile->guessExtension();
-
-                // Move the file to the directory where brochures are stored
-                try {
-                    $brochureFile->move(
-                        $this->getParameter('brochures_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    echo "L'image n'a pas été chargée";
-                }
-
-                $user->setBrochureFilename($newFilename);
-            }
-
+            $password = $form->get("password")->getData();
+            $user->setPassword($passwordEncoder->encodePassword($user, $password));
+                    
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('user_profile');
+            $this->addFlash('success', 'Le mot de passe a bien été réinitialisé, veuillez vous reconnecter');
+
+            return $this->redirectToRoute('logout');
         }
 
         return $this->render('user/edit.html.twig', [

@@ -132,6 +132,9 @@ COLLAPSE
                     {% if app.user %}
                     <ul>
                         <li>
+                            <a href="{{ path('user_profile', {'id':app.user.id}) }}">Voir mon profil</a>
+                        </li>
+                        <li>
                             <a href="{{ path('logout') }}">Déconnexion</a>
                         </li>
                         {% else %}

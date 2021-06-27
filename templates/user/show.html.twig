@@ -5,10 +5,6 @@
 
 {% block body %}
 	<div class="myprofile">
-		<div class="avatar-profile">
-			<img src="{{ asset('uploads/images/' ~ user.brochureFilename) }}" alt="avatar">
-		</div>
-
 		<table class="table">
 			<tbody>
 				<tr>
@@ -25,8 +21,8 @@
 		<hr class="hr">
 
 		<div class="control">
-			<a href="{{ path('user_edit_profile') }}" class="button">
-				<img src="{{ asset('assets/images/settings.png') }}" alt="update">
+			<a href="{{ path('user_edit_profile') }}" class="btn btn-primary">
+				Réinitialiser le mdp
 			</a>
 
 			{{ include('user/_delete_form.html.twig') }}
