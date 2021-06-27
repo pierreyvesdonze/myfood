@@ -5,9 +5,6 @@
 
 {% block body %}
 		<div class="login-div">
-			{% if errorCredential is defined and errorCrediential is not null %}
-			{{ dump(errorCredential) }}
-			{% endif %}
 			<form method="post" class="login-form">
 				{% if error %}
 					<div class="alert alert-danger">{{ error }}</div>
