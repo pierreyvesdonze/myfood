@@ -31,4 +31,25 @@ class ShoppingListRepository extends ServiceEntityRepository
           ->getResult()
       ;
     }
+
+    public function findOneByIdAndUser($id, $user)
+    {
+        return $this->createQueryBuilder('s')
+            ->where('s.id = :shoplist')
+            ->andWhere('s.user_id = :user')
+            ->setParameter('shoplist', $id)
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function findByUser($user)
+    {
+        return $this->createQueryBuilder('s')
+            ->where('s.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
 }

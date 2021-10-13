@@ -85,10 +85,11 @@ var app = {
 	openAddToShoplistModal: function (e) {
 
 		let currentId = e.currentTarget.children[0].dataset['value'];
-		let currentUser = e.currentTarget.children[0].dataset['user'];
+		let currentUser = e.currentTarget.children[1].dataset['user'];
 
 		console.log(currentUser);
 		console.log(currentId);
+	
 		$('.add-articles-section *').addClass('show-protected');
 
 		// Send to appropriate method

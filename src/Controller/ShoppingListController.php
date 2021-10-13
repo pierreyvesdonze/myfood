@@ -234,6 +234,9 @@ class ShoppingListController extends AbstractController
         UnitRepository $unitRepository,
         ArticleRepository $articleRepository
     ) {
+
+        $user = $this->getUser();
+
         if ($request->isMethod('POST')) {
             $requestIngredients = json_decode($request->getContent());
 
@@ -241,9 +244,7 @@ class ShoppingListController extends AbstractController
                 $shopListId = $article->id;
             }
 
-            $shopList = $shoppingListRepository->findOneBy([
-                'id' => $shopListId
-            ]);
+            $shopList = $shoppingListRepository->findOneByIdAndUser($shopListId, $user);
 
             foreach ($requestIngredients as $key => $article) {
 
@@ -278,7 +279,6 @@ class ShoppingListController extends AbstractController
                 $shopList->addArticle($newArticle);
             }
 
-            $this->em->persist($shopList);
             $this->em->flush();
 
             return $this->json([

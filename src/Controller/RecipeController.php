@@ -176,7 +176,7 @@ class RecipeController extends AbstractController
         $timeCook     = $recipe->getTimeCook();
         $hoursCook    = $timeCook->format('H');
         $minutesCook  = $timeCook->format('i');
-        $shopLists    = $shopRepo->findAll();
+        $shopLists    = $shopRepo->findByUser($this->getUser());
 
 
         return $this->render('recipe/view.html.twig', [
