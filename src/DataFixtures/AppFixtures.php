@@ -18,7 +18,7 @@ class AppFixtures extends Fixture
 
         // Units
         $unit = new Unit;
-        $unit->setName('unité');
+        $unit->setName('unité(s)');
         $manager->persist($unit);
 
         $mg = new Unit;
@@ -47,23 +47,23 @@ class AppFixtures extends Fixture
         $manager->persist($cl);
 
         $l = new Unit;
-        $l->setName('Litre');
+        $l->setName('Litre(s)');
         $manager->persist($l);
 
         $pincee = new Unit;
-        $pincee->setName('pincée');
+        $pincee->setName('pincée(s)');
         $manager->persist($pincee);
 
         $cf = new Unit;
-        $cf->setName('cuillère à café');
+        $cf->setName('cuillère(s) à café');
         $manager->persist($cf);
 
         $cs = new Unit;
-        $cs->setName('cuillère à soupe');
+        $cs->setName('cuillère(s) à soupe');
         $manager->persist($cs);
 
         $tasse = new Unit;
-        $tasse->setName('tasse');
+        $tasse->setName('tasse(s)');
         $manager->persist($tasse);
 
         // Type
@@ -126,7 +126,7 @@ class AppFixtures extends Fixture
         $manager->persist($burger);
 
         $fruitsdemer = new RecipeCategory;
-        $fruitsdemer->setName('Friuts de mer');
+        $fruitsdemer->setName('Fruits de mer');
         $manager->persist($fruitsdemer);
 
         $sauce = new RecipeCategory;

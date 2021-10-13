@@ -157,7 +157,7 @@
                             <ul>
                                 {% for ingredient in recipe.Recipeingredients %}
                                 <li>
-                                    <span class="orange-icon">{{ ingredient.name }}</span> : {{ ingredient.amount }} {{ ingredient.unit }}
+                                    <span class="orange-icon">{{ ingredient.name }}</span> : {{ ingredient.amount|round }} {{ ingredient.unit }}
                                 </li>
                                 {% endfor %}
                             </ul>
