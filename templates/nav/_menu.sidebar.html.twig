@@ -10,26 +10,26 @@ TOP MENU BUTTONS
         <!--***************************RECIPIES****************************-->
         <button class="button-icon" type="button" data-toggle="collapse" data-target="#recipies-nav"
             aria-expanded="false" aria-controls="recipies-nav">
-            <i class="fas fa-book fa-2x"></i>
+            <i class="fas fa-book fa-2x" data-toggle="tooltip" data-placement="top" title="Recettes"></i>
         </button>
         <!--***************************SHOPLIST****************************-->
         {% if app.user %}
         <button class="button-icon" type="button" data-toggle="collapse" data-target="#shoplist-nav"
             aria-expanded="false" aria-controls="shoplist-nav">
-            <i class="fas fa-shopping-cart fa-2x"></i>
+            <i class="fas fa-shopping-cart fa-2x" data-toggle="tooltip" data-placement="top" title="Listes de courses"></i>
         </button>
         {% endif %}
         <!--***************************FILTERS****************************-->
         {% if app.request.get('_route') matches '/recipe_list/' %}
         <button class="button-icon filters-menu" type="button" data-toggle="collapse" data-target="#filters-nav"
             aria-expanded="false" aria-controls="filters-nav">
-            <i class="fa fa-sliders fa-2x"></i>
+            <i class="fa fa-sliders fa-2x" data-toggle="tooltip" data-placement="top" title="Filtres"></i>
         </button>
         {% endif %}
         <!--***************************USER****************************-->
         <button class="button-icon" type="button" data-toggle="collapse" data-target="#user-nav" aria-expanded="false"
             aria-controls="user-nav">
-            <i class="fas fa-user fa-2x"></i>
+            <i class="fas fa-user fa-2x" data-toggle="tooltip" data-placement="top" title="Profil"></i>
         </button>
         <!--***************************SEARCH****************************-->
         <div class="search">
@@ -132,7 +132,7 @@ COLLAPSE
                     {% if app.user %}
                     <ul>
                         <li>
-                            <a href="{{ path('user_profile', {'id':app.user.id}) }}">Voir mon profil</a>
+                            <a href="{{ path('user_profile', {'id':app.user.id}) }}" >Voir mon profil</a>
                         </li>
                         <li>
                             <a href="{{ path('logout') }}">Déconnexion</a>

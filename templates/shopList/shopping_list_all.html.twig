@@ -31,14 +31,14 @@
             <input type="radio" name="ac" id="a{{ key }}" class="hidden-radio" />
             <div class="control">
                 <label for="a{{ key }}">
-                    <i class="fa fa-eye fa-2x open-shoplist"></i>
+                    <i class="fa fa-eye fa-2x open-shoplist" data-toggle="tooltip" data-placement="top" title="Afficher/Masquer la liste"></i>
                 </label>
                 <a href="#" class="add-article" data-shopId = "{{ shoplist.id}}">
                     <input type="hidden" value="{{ shoplist.id }}" class="hidden-shoplist-id">
-                    <i class="fa fa-cart-plus fa-2x"></i>
+                    <i class="fa fa-cart-plus fa-2x" data-toggle="tooltip" data-placement="top" title="Ajouter à la liste"></i>
                 </a>
                 <a href="{{ path('shopping_list_delete', {"id":shoplist.id}) }}" onclick="return confirm('Supprimer la liste ?')">
-                    <i class="fa fa-trash fa-2x"></i>
+                    <i class="fa fa-trash fa-2x data-toggle="tooltip" data-placement="top" title="Supprimer la liste"></i>
                 </a>
             </div>
             <div class="a-content">

@@ -87,21 +87,21 @@
                                         role="button" aria-expanded="false" aria-controls="modal-add-to-shop">
                                         <input type="hidden" data-value="{{ recipe.id }}">
                                         <input type="hidden" data-user="{{ app.user.id }}">
-                                        <i class="fa fa-cart-arrow-down fa-2x"></i>
+                                        <i class="fa fa-cart-arrow-down fa-2x" data-toggle="tooltip" data-placement="top" title="Ajouter à une liste de courses"></i>
                                     </a>
 
                                     <a href="#" class="button shoplist-create">
                                         <input type="hidden" data-value="{{ recipe.id }}">
-                                        <i class="fa fa-cart-plus fa-2x"></i>
+                                        <i class="fa fa-cart-plus fa-2x" data-toggle="tooltip" data-placement="top" title="Créer une liste de courses avec ces ingrédients"></i>
                                     </a>
 
                                     {% if is_granted('edit', recipe) %}
                                     <a href="{{ path('recipe_update',{'id': recipe.id}) }}" class="button">
-                                        <i class="fa fa-cog fa-2x"></i>
+                                        <i class="fa fa-cog fa-2x" data-toggle="tooltip" data-placement="top" title="Modifier la liste de courses"></i>
                                     </a>
                                     <a href="{{ path('recipe_delete',{'id': recipe.id}) }}" class="button"
                                         onclick="return confirm('Supprimer cette recette ?')">
-                                        <i class="fa fa-trash fa-2x"></i>
+                                        <i class="fa fa-trash fa-2x" data-toggle="tooltip" data-placement="top" title="Supprimer la liste de courses"></i>
                                     </a>
                                 </div>
                                 {% endif %}
